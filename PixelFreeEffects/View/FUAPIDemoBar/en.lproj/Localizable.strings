@@ -1,0 +1,44 @@
+/* 
+  Localizable.strings
+  FUAPIDemoBar
+
+  Created by L on 2018/7/10.
+  Copyright © 2018年 刘洋. All rights reserved.
+*/
+
+
+"精准美肤" = "Skin Detect" ;
+"清晰磨皮" = "Light Blur" ;
+"朦胧磨皮" = "Heavy Blur" ;
+"磨皮" = "Blur" ;
+"美白" = "Whiten" ;
+"红润" = "Ruddy" ;
+"亮眼" = "Eye Brighten" ;
+"美牙" = "Tooth Whiten" ;
+
+"脸型" = "Face Shape" ;
+"大眼" = "Eye Enlarge" ;
+"瘦脸" = "Cheek Thin" ;
+"下巴" = "Chin" ;
+"额头" = "Forehead" ;
+"瘦鼻" = "Nose" ;
+"嘴型" = "Mouth" ;
+
+"原图" = "Origin" ;
+"自然" = "Nature" ;
+"淡雅" = "Elegant" ;
+"粉嫩" = "Pink" ;
+"清新" = "Fresh" ;
+"红润" = "Ruddy" ;
+
+"自定义" =  "Customize" ;
+"默认" =  "Default" ;
+"女神" =  "Fairy" ;
+"网红" =  "Belle" ;
+"自然" =  "Nature" ;
+
+
+"精准美肤 开启" = "Skin Detect ON" ;
+"精准美肤 关闭" = "Skin Detect OFF" ;
+"当前为清晰磨皮模式" = "Light Blur mode" ;
+"当前为朦胧磨皮模式" = "Heavy Blur mode" ;

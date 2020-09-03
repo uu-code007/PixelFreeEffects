@@ -1,0 +1,15 @@
+
+/* Class = "UIButton"; normalTitle = "美颜滤镜"; ObjectID = "0jq-Oa-c5T"; */
+"0jq-Oa-c5T.normalTitle" = "Beauty Filter";
+
+/* Class = "UIButton"; normalTitle = "美肤"; ObjectID = "Pt2-fx-Wpc"; */
+"Pt2-fx-Wpc.normalTitle" = "Skin";
+
+/* Class = "UIButton"; normalTitle = "滤镜"; ObjectID = "RCj-vX-Kw2"; */
+"RCj-vX-Kw2.normalTitle" = "Filter";
+
+/* Class = "UIButton"; normalTitle = "美型"; ObjectID = "UdX-KP-ajT"; */
+"UdX-KP-ajT.normalTitle" = "Style";
+
+/* Class = "UIButton"; normalTitle = "贴纸"; ObjectID = "qcS-JC-xSy"; */
+"qcS-JC-xSy.normalTitle" = "Sticker";
