@@ -16,7 +16,7 @@ SDK 免费开放，目前仅支持iOS平台，人脸部分依赖face++提供的1
 
 演示参数：美白（0.6），红润（0.6），磨皮（0.7），锐化（0.2）
 
-![aaa](/Users/sunmu/Desktop/sunmu/%E6%85%95%E8%AE%A1%E5%88%92/SMBeautyEngine/comp_image_1.png)
+![](./comp_image_1.png)
 
 ![](./comp_image_2.png)
 
