@@ -36,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 /* 美妆相关ss设置 */
 @property(nonatomic, strong) SMMakeUpFilterModel *makeupModle;
 
+#pragma  mark -  render接口
 /**
  处理纹理数据
  
@@ -44,6 +45,13 @@ NS_ASSUME_NONNULL_BEGIN
  @param height 高度
  */
 - (void)processWithTexture:(GLuint)texture width:(GLint)width height:(GLint)height;
+
+
+
+#pragma  mark -  查询接口
+
++(NSString*)getSDKversion;
+ 
 
 @end
 

@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <pixelFree/SMFaceInfoManager.h>
 
 @interface AppDelegate ()
 
@@ -14,9 +15,11 @@
 
 @implementation AppDelegate
 
+@synthesize window = _window;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [SMFaceInfoManager.shareManager faceLicenseAuthorization];
     return YES;
 }
 
