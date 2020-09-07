@@ -7,7 +7,7 @@
 //
 
 #import "SMEffectFilter.h"
-#import <pixelFree/SMPixelFree.h>
+#import <PixelFree/SMPixelFree.h>
 
 @interface SMEffectFilter()
 

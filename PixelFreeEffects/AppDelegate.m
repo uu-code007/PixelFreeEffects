@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import <pixelFree/SMFaceInfoManager.h>
+#import <PixelFree/SMFaceInfoManager.h>
 
 @interface AppDelegate ()
 

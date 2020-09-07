@@ -13,13 +13,13 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSInteger, SMFilterType)
 {
     SMFilterTypeBeauty,         // 磨皮、瘦脸等
-    SMFilterTypeStyle,          // 滤镜
-    SMFilterTypeEffects,         // 人脸道具特效
-    SMFilterTypeMakeup,          // 美妆
+    SMFilterTypeStyle,          // 风格滤镜
+    SMFilterTypeEffects         // 人脸特效
 };
 
 /* 美颜 */
 @interface SMBeautyFilterModel : NSObject
+
 //大眼
 @property (nonatomic, assign) float enlargeEyeStrength;
 //瘦脸
@@ -36,18 +36,16 @@ typedef NS_ENUM(NSInteger, SMFilterType)
 @property (nonatomic, assign) float ruddyStrength;
 //锐化
 @property (nonatomic, assign) float sharpenStrength;
+
 /* 滤镜输入 */
 @property (nonatomic, strong) UIImage *lutImage;
 @property (nonatomic, assign) float lutImageStrength;
 @end
 
-/* 美妆 */
+
 @interface SMMakeUpFilterModel : NSObject
-// 口红强度
 @property (nonatomic, assign) float lipStrength;
-
 @end
-
 
 /* 人脸特效道具 */
 @interface SMNodeModel : NSObject

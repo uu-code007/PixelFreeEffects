@@ -11,7 +11,7 @@
 #import "GPUImageVideoCamera.h"
 #import "SMEffectFilter.h"
 #import "GPUImageContext.h"
-#import  <pixelFree/SMFilterModel.h>
+#import  <PixelFree/SMFilterModel.h>
 #import "GPUImagePicture.h"
 #import "FUAPIDemoBar.h"
 
