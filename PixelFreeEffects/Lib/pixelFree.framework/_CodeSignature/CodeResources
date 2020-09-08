@@ -22,7 +22,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		qsrEmwXzQ3GUFjRIp3JRvUaCENQ=
+		YqBeqy53uunZiLLKoooRiW263nI=
 		</data>
 		<key>lut.png</key>
 		<data>
@@ -53,6 +53,10 @@
 	<dict>
 		<key>Headers/MGNetAccount.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			HUUm25IB3kkGkU5ZRNw1fRGp+Zk=
+			</data>
 			<key>hash2</key>
 			<data>
 			vzEBGFeih+bCr8iYkuoCZY5njGb5DOt1KruaKHdgVBg=
@@ -60,6 +64,10 @@
 		</dict>
 		<key>Headers/SMFaceInfoManager.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			tfnCIPXbQIo/6kLIkdKoE/ba2JM=
+			</data>
 			<key>hash2</key>
 			<data>
 			VMjDMI8Fw/kks0pvQuZCFYZbrhZJrun/IkTP5/LXzOE=
@@ -67,6 +75,10 @@
 		</dict>
 		<key>Headers/SMFilterModel.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			a36gR2BQg7aDkHeGTZfY6TQ45R0=
+			</data>
 			<key>hash2</key>
 			<data>
 			RAfTsiJn9nBJ4OwsTw9RriSD6CNV7bvDpAqxd4fwWDE=
@@ -74,6 +86,10 @@
 		</dict>
 		<key>Headers/SMPixelFree.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			9XzNQQoVh31TU8x3c1uQmVABAx0=
+			</data>
 			<key>hash2</key>
 			<data>
 			1nrKwcahXdyT4zidybjFDuasDu8DhDx+E1hHkhFhqnU=
@@ -81,6 +97,10 @@
 		</dict>
 		<key>lut.png</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			KtgXfP3ejLGMXLi6WQq16oLmJDI=
+			</data>
 			<key>hash2</key>
 			<data>
 			hFVlvvIxVIt/29kprXIrsMgGpNzKu9oXuHGqXVrFbvY=
@@ -88,6 +108,10 @@
 		</dict>
 		<key>makeup_lips_mask.png</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			aRS6+Rff7FN3I05CLLxxXMJdpaM=
+			</data>
 			<key>hash2</key>
 			<data>
 			/UWioNL9ppIIJnGdaEs26l3DjpLmw6jGIUHs0dPn3A8=
@@ -95,6 +119,10 @@
 		</dict>
 		<key>megviifacepp_0_5_2_model</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			p9dNXhLzHSvDXrTDaR7ZLuuPrUk=
+			</data>
 			<key>hash2</key>
 			<data>
 			CTCjvmJ2oAtwvz9y7HwoywhEqzx+0hMOiRg5zm3EY/w=
@@ -102,6 +130,10 @@
 		</dict>
 		<key>runddy.png</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			JvIRxadWRlM1n7QlK6ZI/pq6ATI=
+			</data>
 			<key>hash2</key>
 			<data>
 			yShyPIGUj+wA2eKoB7zDE8YGanyIMllxG2a7hErYlvk=
@@ -109,6 +141,10 @@
 		</dict>
 		<key>uContrast.png</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			v+LbQ3bkL4QeO9xb4JXj8SqKH40=
+			</data>
 			<key>hash2</key>
 			<data>
 			19O781JR1lmFcvOswmeq0R+xM8Xqyy3Dtgf27c3AaBE=
@@ -116,6 +152,10 @@
 		</dict>
 		<key>writen.png</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			ebSycL9reBQdjZzU7JUAyZinwHA=
+			</data>
 			<key>hash2</key>
 			<data>
 			IZAIhRpBrsgoAEHbOFEFVnFuA7Iufyt0UvZpKxPjtNA=
