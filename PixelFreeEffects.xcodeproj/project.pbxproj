@@ -33,6 +33,7 @@
 		E309913E2500E98D008DF058 /* FUDateHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = E30990652500E98D008DF058 /* FUDateHandle.m */; };
 		E309913F2500E98D008DF058 /* SMEffectFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = E309906C2500E98D008DF058 /* SMEffectFilter.m */; };
 		E30991422500E9D3008DF058 /* Stickers in Resources */ = {isa = PBXBuildFile; fileRef = E30991412500E9D3008DF058 /* Stickers */; };
+		E3489769251090480075D43F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E3489768251090420075D43F /* libc++.tbd */; };
 		E3A7A60425062B7900DA3F86 /* PixelFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3A7A60225062B6000DA3F86 /* PixelFree.framework */; };
 		E3A7A60525062B7900DA3F86 /* PixelFree.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E3A7A60225062B6000DA3F86 /* PixelFree.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -98,6 +99,7 @@
 		E309906C2500E98D008DF058 /* SMEffectFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMEffectFilter.m; sourceTree = "<group>"; };
 		E309906F2500E98D008DF058 /* SMEffectFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMEffectFilter.h; sourceTree = "<group>"; };
 		E30991412500E9D3008DF058 /* Stickers */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Stickers; sourceTree = "<group>"; };
+		E3489768251090420075D43F /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		E3A7A60225062B6000DA3F86 /* PixelFree.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PixelFree.framework; sourceTree = "<group>"; };
 		EEC98CB76814260373C7DB28 /* libPods-PixelFreeEffects.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PixelFreeEffects.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -107,6 +109,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3489769251090480075D43F /* libc++.tbd in Frameworks */,
 				D1F87789D81E3179A4054192 /* libPods-PixelFreeEffects.a in Frameworks */,
 				E3A7A60425062B7900DA3F86 /* PixelFree.framework in Frameworks */,
 			);
@@ -118,6 +121,7 @@
 		2F79B7AAF371900B0991C737 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E3489768251090420075D43F /* libc++.tbd */,
 				EEC98CB76814260373C7DB28 /* libPods-PixelFreeEffects.a */,
 			);
 			name = Frameworks;
