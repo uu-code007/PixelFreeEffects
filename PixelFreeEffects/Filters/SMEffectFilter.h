@@ -6,7 +6,7 @@
 //  Copyright © 2020 孙慕. All rights reserved.
 //
 #import "GPUImageFilter.h"
-#import <pixelFree/SMFilterModel.h>
+#import <PixelFree/SMFilterModel.h>
 
 
 NS_ASSUME_NONNULL_BEGIN
