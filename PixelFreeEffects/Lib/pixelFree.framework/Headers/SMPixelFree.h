@@ -15,7 +15,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SMPixelFree : NSObject
+__attribute__((visibility("default"))) @interface SMPixelFree : NSObject
 
 
 /// 初始化
