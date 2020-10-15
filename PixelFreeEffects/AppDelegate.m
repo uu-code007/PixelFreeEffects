@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import <PixelFree/SMFaceInfoManager.h>
+#import <PixelFree/PixelFree.h>
 
 @interface AppDelegate ()
 
@@ -19,7 +19,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [SMFaceInfoManager.shareManager faceLicenseAuthorization];
+    [PixelFree setupPixelFree];
     return YES;
 }
 
