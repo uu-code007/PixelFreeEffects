@@ -19,14 +19,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /// 初始化
-/// @param context sdk 运行的上线文，context != nil  所有着色器程序将在这里优化， 否在视频第一帧处理时候初始化
+/// @param context sdk 运行的上线文，context != nil  所有着色器程序将在这里初始化， 否在视频第一帧处理时候初始化
 - (instancetype)initWithProcessContext:(EAGLContext *)context;
 
 /* 动态贴纸 */
 @property(nonatomic, strong) SMStickerModel *stickerModel;
 /* 美颜 美型 滤镜*/
 @property(nonatomic, strong) SMBeautyFilterModel *beautyModel;
-
 /* 美妆*/
 @property(nonatomic, strong) SMMakeUpFilterModel *makeupModle;
 

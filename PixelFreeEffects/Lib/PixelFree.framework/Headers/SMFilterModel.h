@@ -17,6 +17,12 @@ typedef NS_ENUM(NSInteger, SMFilterType)
     SMFilterTypeEffects         // 人脸特效
 };
 
+typedef NS_ENUM(NSInteger, SMStickerType)
+{
+    SMStickerType2D,
+    SMStickerType3D,
+};
+
 /* 美颜 */
 @interface SMBeautyFilterModel : NSObject
 
@@ -36,6 +42,11 @@ typedef NS_ENUM(NSInteger, SMFilterType)
 @property (nonatomic, assign) float ruddyStrength;
 //锐化
 @property (nonatomic, assign) float sharpenStrength;
+//新美白算法
+@property (nonatomic, assign) float m_newWhitenStrength;
+//画质增强
+@property (nonatomic, assign) float h_qualityStrength;
+
 
 /* 滤镜输入 */
 @property (nonatomic, strong) UIImage *lutImage;
@@ -65,6 +76,16 @@ typedef NS_ENUM(NSInteger, SMFilterType)
 @property (nonatomic, assign) float offsetX;
 /// 贴纸y轴偏移量
 @property (nonatomic, assign) float offsetY;
+
+/// 贴纸模型x轴旋转 pi * x
+@property (nonatomic, assign) float rotationX;
+/// 贴纸模型y轴旋转 pi * x
+@property (nonatomic, assign) float rotationY;
+/// 贴纸模型z轴旋转 pi * x
+@property (nonatomic, assign) float rotationZ;
+
+@property (nonatomic, assign) float scale;
+
 /// 贴纸缩放倍数(相对于人脸)
 @property (nonatomic, assign) float ratio;
 /// 素材图片的个数
@@ -78,12 +99,14 @@ typedef NS_ENUM(NSInteger, SMFilterType)
 @property (nonatomic, assign) NSInteger isloop;
 /// 最多支持人脸数
 @property (nonatomic, assign) NSInteger maxcount;
+
+
 @end
 
 @interface SMStickerModel : NSObject
 
-//@property (nonatomic, assign) SMFilterType type;
-//@property (nonatomic, strong) NSString *fileName;
+@property (nonatomic, assign) SMStickerType type;
+@property (nonatomic, strong) NSString *filePath;
 @property (nonatomic, strong) NSString *name;
 //@property (nonatomic, strong) NSString *icon;
 

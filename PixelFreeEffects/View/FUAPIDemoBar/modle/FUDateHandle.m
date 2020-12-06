@@ -31,10 +31,9 @@
 }
 
 +(NSArray<FUBeautyParam *>*)setupSkinData{
-    
-    NSArray *prams = @[@"writen",@"runddy",@"blur",@"sharpen"];//
-    NSDictionary *titelDic = @{@"writen":@"美白",@"runddy":@"红润",@"blur":@"磨皮",@"sharpen":@"锐化"};
-    NSDictionary *defaultValueDic = @{@"runddy":@(0.6),@"writen":@(0.6),@"blur":@(0.7),@"sharpen":@(0.2)};
+    NSArray *prams = @[@"writen",@"newWhitenStrength",@"runddy",@"blur",@"sharpen",@"qualityStrength"];//
+    NSDictionary *titelDic = @{@"writen":@"美白",@"runddy":@"红润",@"blur":@"磨皮",@"sharpen":@"锐化",@"newWhitenStrength":@"新美白",@"qualityStrength":@"增强画质"};
+    NSDictionary *defaultValueDic = @{@"runddy":@(0.6),@"writen":@(0.6),@"blur":@(0.7),@"sharpen":@(0.2),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.2)};
     
     
     NSMutableArray *array = [[NSMutableArray alloc] init];
@@ -57,7 +56,7 @@
 +(NSArray<FUBeautyParam *>*)setupShapData{
    NSArray *prams = @[@"enlargeEyeStrength",@"faceLiftStrength",@"faceShaveStrength",@"chinChangeStrength"];
     NSDictionary *titelDic = @{@"faceLiftStrength":@"瘦脸",@"faceShaveStrength":@"v脸",@"enlargeEyeStrength":@"大眼",@"chinChangeStrength":@"下巴"};
-   NSDictionary *defaultValueDic = @{@"faceLiftStrength":@(0),@"faceShaveStrength":@(0.0),@"enlargeEyeStrength":@(0),@"chinChangeStrength":@(0)
+   NSDictionary *defaultValueDic = @{@"faceLiftStrength":@(1),@"faceShaveStrength":@(1.0),@"enlargeEyeStrength":@(1),@"chinChangeStrength":@(1)
    };
    
    NSMutableArray *array = [[NSMutableArray alloc] init];
@@ -80,9 +79,9 @@
 }
 
 +(NSArray<FUBeautyParam *>*)setupSticker{
-   NSArray *prams = @[@"makeup_noitem",@"baixiaomaohuxu",@"halo"];//,@"chri1"
+   NSArray *prams = @[@"makeup_noitem",@"baixiaomaohuxu",@"ballCap"];//,@"chri1"
 
-  NSDictionary *titelDic = @{@"makeup_noitem":@"取消",@"baixiaomaohuxu":@"猫",@"halo":@"halo"};
+  NSDictionary *titelDic = @{@"makeup_noitem":@"取消",@"baixiaomaohuxu":@"猫",@"ballCap":@"ballCap"};
     
    NSMutableArray *array = [[NSMutableArray alloc] init];
    for (NSString *str in prams) {
@@ -100,13 +99,16 @@
 +(NSArray<FUBeautyParam *>*)setupMakeupData{
    NSArray *prams = @[@"makeup_noitem",@"lip"];
     NSDictionary *titelDic = @{@"makeup_noitem":@"卸妆",@"lip":@"口红"};
+    
+    NSDictionary *defaultValueDic = @{@"makeup_noitem":@(0),@"lip":@(0.5)};
+
    NSMutableArray *array = [[NSMutableArray alloc] init];
    for (NSString *str in prams) {
        FUBeautyParam *modle = [[FUBeautyParam alloc] init];
        modle.mParam = str;
        modle.mTitle = [titelDic valueForKey:str];
        modle.type = FUDataTypeMakeup;
-       modle.mValue = 0.7;
+       modle.mValue = [[defaultValueDic valueForKey:str] floatValue];;
        [array addObject:modle];
    }
     

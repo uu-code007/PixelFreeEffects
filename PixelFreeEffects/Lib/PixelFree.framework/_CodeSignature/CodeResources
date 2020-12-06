@@ -4,6 +4,10 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>.editorconfig</key>
+		<data>
+		iq+nX5Wr8ZO5uFsb6NEwyzoF4uw=
+		</data>
 		<key>Headers/MGNetAccount.h</key>
 		<data>
 		HUUm25IB3kkGkU5ZRNw1fRGp+Zk=
@@ -18,15 +22,15 @@
 		</data>
 		<key>Headers/SMFilterModel.h</key>
 		<data>
-		a36gR2BQg7aDkHeGTZfY6TQ45R0=
+		OX295xhQGuaagjLNeCFYPxHuaWs=
 		</data>
 		<key>Headers/SMPixelFree.h</key>
 		<data>
-		9XzNQQoVh31TU8x3c1uQmVABAx0=
+		SefgrDkl76zQpNJEjT3e2qPlP2k=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		g+HDTyESJDXSIIUANx9jl2hEb78=
+		kot9/t1qsX4diTaj8Nf+7X5Nh2o=
 		</data>
 		<key>LICENSE</key>
 		<data>
@@ -40,6 +44,18 @@
 		<data>
 		vJ2nccdjfkMWneKyrcIxOP8XwYU=
 		</data>
+		<key>SmoothingGroups.inl</key>
+		<data>
+		tILf8rC0sUjlf2NakghhbA4g1kM=
+		</data>
+		<key>color4.inl</key>
+		<data>
+		dXDVbd+VU6dz6FyEsohyEfTrvfA=
+		</data>
+		<key>config.h.in</key>
+		<data>
+		blJQfX5PEseioX+fjf9rYPdTrk8=
+		</data>
 		<key>lut.png</key>
 		<data>
 		KtgXfP3ejLGMXLi6WQq16oLmJDI=
@@ -48,9 +64,25 @@
 		<data>
 		aRS6+Rff7FN3I05CLLxxXMJdpaM=
 		</data>
+		<key>material.inl</key>
+		<data>
+		y85oHvFrQ8upLzIhaMRB13yB/lI=
+		</data>
+		<key>matrix3x3.inl</key>
+		<data>
+		NBYUCwui4pGlEBXFRWSWE/yjzKw=
+		</data>
+		<key>matrix4x4.inl</key>
+		<data>
+		FG4rKkr4REUhHzxJHmeWDmpToU8=
+		</data>
 		<key>megviifacepp_0_5_2_model</key>
 		<data>
 		p9dNXhLzHSvDXrTDaR7ZLuuPrUk=
+		</data>
+		<key>quaternion.inl</key>
+		<data>
+		BcOA9Tkm1yGo9P4ylJhfrXD9gzw=
 		</data>
 		<key>runddy.png</key>
 		<data>
@@ -60,6 +92,14 @@
 		<data>
 		v+LbQ3bkL4QeO9xb4JXj8SqKH40=
 		</data>
+		<key>vector2.inl</key>
+		<data>
+		rP6USe8eGlIapfXaqJ81R3F9e+w=
+		</data>
+		<key>vector3.inl</key>
+		<data>
+		ci9oBZJT6IIxPxqpr9qHhL/JDwY=
+		</data>
 		<key>writen.png</key>
 		<data>
 		ebSycL9reBQdjZzU7JUAyZinwHA=
@@ -67,6 +107,17 @@
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>.editorconfig</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			iq+nX5Wr8ZO5uFsb6NEwyzoF4uw=
+			</data>
+			<key>hash2</key>
+			<data>
+			8J8mCK5xcMIopw/SJlSbTz2rwhSvImpj7GixjS59uto=
+			</data>
+		</dict>
 		<key>Headers/MGNetAccount.h</key>
 		<dict>
 			<key>hash</key>
@@ -104,22 +155,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			a36gR2BQg7aDkHeGTZfY6TQ45R0=
+			OX295xhQGuaagjLNeCFYPxHuaWs=
 			</data>
 			<key>hash2</key>
 			<data>
-			RAfTsiJn9nBJ4OwsTw9RriSD6CNV7bvDpAqxd4fwWDE=
+			F5ciILdAN33VwKpiChEhdHMjepSxpH0xlHNYPOqtJ4U=
 			</data>
 		</dict>
 		<key>Headers/SMPixelFree.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			9XzNQQoVh31TU8x3c1uQmVABAx0=
+			SefgrDkl76zQpNJEjT3e2qPlP2k=
 			</data>
 			<key>hash2</key>
 			<data>
-			1nrKwcahXdyT4zidybjFDuasDu8DhDx+E1hHkhFhqnU=
+			eQhtQuUPuf/J5e5FDWAy82FixF5xmJr6P18kw6LyWP0=
 			</data>
 		</dict>
 		<key>LICENSE</key>
@@ -155,6 +206,39 @@
 			gMgmIDiEfQ/TTU/B8NVJ7v1vKWEuqjZv3nyoiQf/0Is=
 			</data>
 		</dict>
+		<key>SmoothingGroups.inl</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			tILf8rC0sUjlf2NakghhbA4g1kM=
+			</data>
+			<key>hash2</key>
+			<data>
+			hATdq8JClqhaYvA107hYKpYSoEkTLqug90xQ0YA4Ksw=
+			</data>
+		</dict>
+		<key>color4.inl</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			dXDVbd+VU6dz6FyEsohyEfTrvfA=
+			</data>
+			<key>hash2</key>
+			<data>
+			Ym+LKX0s50Jahu8LgZNVqa+Xaxzsh82vU6Io6LH3ABs=
+			</data>
+		</dict>
+		<key>config.h.in</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			blJQfX5PEseioX+fjf9rYPdTrk8=
+			</data>
+			<key>hash2</key>
+			<data>
+			1aGwf6Ou4rdop+4aZPJhhQci1VSgsClc17uJHPABPfM=
+			</data>
+		</dict>
 		<key>lut.png</key>
 		<dict>
 			<key>hash</key>
@@ -177,6 +261,39 @@
 			/UWioNL9ppIIJnGdaEs26l3DjpLmw6jGIUHs0dPn3A8=
 			</data>
 		</dict>
+		<key>material.inl</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			y85oHvFrQ8upLzIhaMRB13yB/lI=
+			</data>
+			<key>hash2</key>
+			<data>
+			mTvbUw/DdPLP4Jky5WYbmHFjqytBZ1ruRU9gBVvkh3U=
+			</data>
+		</dict>
+		<key>matrix3x3.inl</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			NBYUCwui4pGlEBXFRWSWE/yjzKw=
+			</data>
+			<key>hash2</key>
+			<data>
+			RBDRF1q8DjXFTVFVAL0AQ/H6T/Jh8EYQJNH8SfkOcko=
+			</data>
+		</dict>
+		<key>matrix4x4.inl</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			FG4rKkr4REUhHzxJHmeWDmpToU8=
+			</data>
+			<key>hash2</key>
+			<data>
+			IbRk1pR1fLDXhJ64z5t6zNp6yo1n930rh0GnpUfS8Hs=
+			</data>
+		</dict>
 		<key>megviifacepp_0_5_2_model</key>
 		<dict>
 			<key>hash</key>
@@ -186,6 +303,17 @@
 			<key>hash2</key>
 			<data>
 			CTCjvmJ2oAtwvz9y7HwoywhEqzx+0hMOiRg5zm3EY/w=
+			</data>
+		</dict>
+		<key>quaternion.inl</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			BcOA9Tkm1yGo9P4ylJhfrXD9gzw=
+			</data>
+			<key>hash2</key>
+			<data>
+			XbyNbMwb2GoijN9PLvG+nJX4KfgaySx7D2sAiDYt+Rg=
 			</data>
 		</dict>
 		<key>runddy.png</key>
@@ -208,6 +336,28 @@
 			<key>hash2</key>
 			<data>
 			19O781JR1lmFcvOswmeq0R+xM8Xqyy3Dtgf27c3AaBE=
+			</data>
+		</dict>
+		<key>vector2.inl</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			rP6USe8eGlIapfXaqJ81R3F9e+w=
+			</data>
+			<key>hash2</key>
+			<data>
+			UIdnoAmo8v3BLlvf4Kh6wab9aImRH7vpwstGdmb+pLc=
+			</data>
+		</dict>
+		<key>vector3.inl</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			ci9oBZJT6IIxPxqpr9qHhL/JDwY=
+			</data>
+			<key>hash2</key>
+			<data>
+			8ZmZmJuOOrW+uYdrXizq2S/xbAq2iOvUDBV1YkHK16I=
 			</data>
 		</dict>
 		<key>writen.png</key>
