@@ -15,6 +15,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
 @interface SMPixelFree : NSObject
 
 
@@ -37,6 +38,14 @@ NS_ASSUME_NONNULL_BEGIN
  @param height 高度
  */
 - (void)processWithTexture:(GLuint)texture width:(GLint)width height:(GLint)height;
+
+/**
+处理cpu数据
+
+@param pixelBuffer 纹理数据
+
+*/
+- (void)processWithBuffer:(CVPixelBufferRef)pixelBuffer;
 
 @end
 

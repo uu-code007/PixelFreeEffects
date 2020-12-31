@@ -26,6 +26,9 @@ typedef NS_ENUM(NSInteger, SMStickerType)
 /* 美颜 */
 @interface SMBeautyFilterModel : NSObject
 
+
+//是否使用cpu，默认使用
+@property (nonatomic, assign) BOOL use_cpu;
 //大眼
 @property (nonatomic, assign) float enlargeEyeStrength;
 //瘦脸

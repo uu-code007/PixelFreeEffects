@@ -55,8 +55,8 @@
 
 +(NSArray<FUBeautyParam *>*)setupShapData{
    NSArray *prams = @[@"enlargeEyeStrength",@"faceLiftStrength",@"faceShaveStrength",@"chinChangeStrength"];
-    NSDictionary *titelDic = @{@"faceLiftStrength":@"瘦脸",@"faceShaveStrength":@"v脸",@"enlargeEyeStrength":@"大眼",@"chinChangeStrength":@"下巴"};
-   NSDictionary *defaultValueDic = @{@"faceLiftStrength":@(1),@"faceShaveStrength":@(1.0),@"enlargeEyeStrength":@(1),@"chinChangeStrength":@(1)
+    NSDictionary *titelDic = @{@"faceLiftStrength":@"瘦脸",@"faceShaveStrength":@"窄脸",@"enlargeEyeStrength":@"大眼",@"chinChangeStrength":@"下巴"};
+   NSDictionary *defaultValueDic = @{@"faceLiftStrength":@(0.2),@"faceShaveStrength":@(0.2),@"enlargeEyeStrength":@(0.2),@"chinChangeStrength":@(0.2)
    };
    
    NSMutableArray *array = [[NSMutableArray alloc] init];
