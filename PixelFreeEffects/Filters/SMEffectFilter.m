@@ -49,15 +49,10 @@ static float total = 0;
             NSLog(@"render 耗时----%lf",total / 100);
             total = 0;
         }
-        
-        glEnableVertexAttribArray(filterPositionAttribute);
-        glEnableVertexAttribArray(filterTextureCoordinateAttribute);
-        
-        [filterProgram use];
     }
-
     //------------->绘制特效图像<--------------//
     [super renderToTextureWithVertices:vertices textureCoordinates:textureCoordinates];
+
 }
 
 /* 美颜相关 */
@@ -82,4 +77,5 @@ static float total = 0;
 -(void)renderState:(BOOL)isRender{
     _isRender = isRender;
 }
+
 @end

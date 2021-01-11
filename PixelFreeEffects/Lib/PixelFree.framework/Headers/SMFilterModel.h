@@ -28,15 +28,33 @@ typedef NS_ENUM(NSInteger, SMStickerType)
 
 
 //是否使用cpu，默认使用
-@property (nonatomic, assign) BOOL use_cpu;
+//@property (nonatomic, assign) BOOL use_cpu;
 //大眼
-@property (nonatomic, assign) float enlargeEyeStrength;
+@property (nonatomic, assign) float face_EyeStrength;
 //瘦脸
-@property (nonatomic, assign) float faceLiftStrength;
-//削脸
-@property (nonatomic, assign) float faceShaveStrength;
+@property (nonatomic, assign) float face_thinning;
+//窄脸
+@property (nonatomic, assign) float face_narrow;
 //下巴
-@property (nonatomic, assign) float chinChangeStrength;
+@property (nonatomic, assign) float face_chin;
+//v脸
+@property (nonatomic, assign) float face_V;
+//small
+@property (nonatomic, assign) float face_small;
+//鼻子
+@property (nonatomic, assign) float face_nose;
+//额头
+@property (nonatomic, assign) float face_forehead;
+//嘴巴
+@property (nonatomic, assign) float face_mouth;
+//人中
+@property (nonatomic, assign) float face_philtrum;
+//长鼻
+@property (nonatomic, assign) float face_long_nose;
+//眼距
+@property (nonatomic, assign) float face_eye_space;
+
+
 //磨皮
 @property (nonatomic, assign) float blurStrength;
 //美白
@@ -49,6 +67,8 @@ typedef NS_ENUM(NSInteger, SMStickerType)
 @property (nonatomic, assign) float m_newWhitenStrength;
 //画质增强
 @property (nonatomic, assign) float h_qualityStrength;
+
++(SMBeautyFilterModel *)defaultConfig;
 
 
 /* 滤镜输入 */

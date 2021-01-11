@@ -54,23 +54,36 @@
 
 
 +(NSArray<FUBeautyParam *>*)setupShapData{
-   NSArray *prams = @[@"enlargeEyeStrength",@"faceLiftStrength",@"faceShaveStrength",@"chinChangeStrength"];
-    NSDictionary *titelDic = @{@"faceLiftStrength":@"瘦脸",@"faceShaveStrength":@"窄脸",@"enlargeEyeStrength":@"大眼",@"chinChangeStrength":@"下巴"};
-   NSDictionary *defaultValueDic = @{@"faceLiftStrength":@(0.2),@"faceShaveStrength":@(0.2),@"enlargeEyeStrength":@(0.2),@"chinChangeStrength":@(0.2)
-   };
+//   NSArray *prams = @[@"enlargeEyeStrength",@"faceLiftStrength",@"faceShaveStrength",@"chinChangeStrength"];
+//    NSDictionary *titelDic = @{@"faceLiftStrength":@"瘦脸",@"faceShaveStrength":@"v脸",@"enlargeEyeStrength":@"大眼",@"chinChangeStrength":@"下巴"};
+//   NSDictionary *defaultValueDic = @{@"faceLiftStrength":@(0.2),@"faceShaveStrength":@(0.2),@"enlargeEyeStrength":@(0.2),@"chinChangeStrength":@(0.2)
+//   };
    
+    NSArray *prams = @[@"face_EyeStrength",@"face_thinning",@"face_narrow",@"face_chin",
+                                      @"face_V",@"face_small",@"face_nose",@"face_forehead",
+                       @"face_mouth",@"face_philtrum",@"face_long_nose",@"face_eye_space"];
+     NSDictionary *titelDic = @{@"face_EyeStrength":@"大眼",@"face_thinning":@"瘦脸",@"face_narrow":@"窄脸",@"face_chin":@"下巴",
+                                @"face_V":@"v脸",@"face_small":@"小脸",@"face_nose":@"瘦鼻",@"face_forehead":@"额头",
+                                @"face_mouth":@"嘴巴",@"face_philtrum":@"人中",@"face_long_nose":@"长鼻",@"face_eye_space":@"眼距"
+     };
+    NSDictionary *defaultValueDic = @{@"face_EyeStrength":@(0.2),@"face_thinning":@(0.2),@"face_narrow":@(0.2),@"face_chin":@(0.5),
+                                      @"face_V":@(0.2),@"face_small":@(0.2),@"face_nose":@(0.2),@"face_forehead":@(0.5),
+                                      @"face_mouth":@(0.5),@"face_philtrum":@(0.5),@"face_long_nose":@(0.5),@"face_eye_space":@(0.5)
+    };
+    
+    
    NSMutableArray *array = [[NSMutableArray alloc] init];
    for (NSString *str in prams) {
-//       BOOL isStyle101 = NO;
-//       if ([str isEqualToString:@"intensity_chin"] || [str isEqualToString:@"intensity_forehead"] || [str isEqualToString:@"intensity_mouth"] || [str isEqualToString:@"intensity_eye_space"] || [str isEqualToString:@"intensity_eye_rotate"] || [str isEqualToString:@"intensity_long_nose"] || [str isEqualToString:@"intensity_philtrum"]) {
-//           isStyle101 = YES;
-//       }
+    BOOL isStyle101 = NO;
+    if ([str isEqualToString:@"face_chin"] || [str isEqualToString:@"face_forehead"] || [str isEqualToString:@"face_mouth"] || [str isEqualToString:@"face_eye_space"] || [str isEqualToString:@"face_long_nose"] || [str isEqualToString:@"face_philtrum"]) {
+           isStyle101 = YES;
+    }
        FUBeautyParam *modle = [[FUBeautyParam alloc] init];
        modle.mParam = str;
        modle.mTitle = [titelDic valueForKey:str];
        modle.mValue = [[defaultValueDic valueForKey:str] floatValue];
        modle.defaultValue = modle.mValue;
-//       modle.iSStyle101 = isStyle101;
+       modle.iSStyle101 = isStyle101;
        modle.type = FUDataTypeBeautify;
        [array addObject:modle];
    }
