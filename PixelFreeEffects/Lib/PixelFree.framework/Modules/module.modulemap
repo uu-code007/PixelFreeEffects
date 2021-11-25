@@ -1,6 +1,0 @@
-framework module PixelFree {
-  umbrella header "PixelFree.h"
-
-  export *
-  module * { export * }
-}

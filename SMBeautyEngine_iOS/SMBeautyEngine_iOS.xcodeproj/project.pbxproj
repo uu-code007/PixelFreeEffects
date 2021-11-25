@@ -1,0 +1,629 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E39F6EC4274F30BE005DF8C9 /* PixelFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3BD45C127477B1E00CB44C9 /* PixelFree.framework */; platformFilter = ios; };
+		E3BD453827474A4E00CB44C9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD453727474A4E00CB44C9 /* AppDelegate.m */; };
+		E3BD453B27474A4E00CB44C9 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD453A27474A4E00CB44C9 /* SceneDelegate.m */; };
+		E3BD453E27474A4E00CB44C9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD453D27474A4E00CB44C9 /* ViewController.m */; };
+		E3BD454127474A4E00CB44C9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3BD453F27474A4E00CB44C9 /* Main.storyboard */; };
+		E3BD454327474A5300CB44C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3BD454227474A5300CB44C9 /* Assets.xcassets */; };
+		E3BD454627474A5300CB44C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3BD454427474A5300CB44C9 /* LaunchScreen.storyboard */; };
+		E3BD454927474A5300CB44C9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD454827474A5300CB44C9 /* main.m */; };
+		E3BD457B27474A9600CB44C9 /* face_detect.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E3BD455327474A9400CB44C9 /* face_detect.bundle */; };
+		E3BD457C27474A9600CB44C9 /* face_fiter.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E3BD455427474A9400CB44C9 /* face_fiter.bundle */; };
+		E3BD457E27474A9800CB44C9 /* PFAPIDemoBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3BD455927474A9600CB44C9 /* PFAPIDemoBar.xib */; };
+		E3BD457F27474A9800CB44C9 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3BD455B27474A9600CB44C9 /* Media.xcassets */; };
+		E3BD458027474A9800CB44C9 /* PFAPIDemoBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD455D27474A9600CB44C9 /* PFAPIDemoBar.m */; };
+		E3BD458127474A9800CB44C9 /* PFBeautyEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD455F27474A9600CB44C9 /* PFBeautyEditView.m */; };
+		E3BD458227474A9800CB44C9 /* PFBeautyParam.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD456127474A9600CB44C9 /* PFBeautyParam.m */; };
+		E3BD458327474A9800CB44C9 /* PFBeautyView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD456327474A9600CB44C9 /* PFBeautyView.m */; };
+		E3BD458427474A9800CB44C9 /* PFBottomColletionView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD456527474A9600CB44C9 /* PFBottomColletionView.m */; };
+		E3BD458527474A9800CB44C9 /* PFFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD456827474A9600CB44C9 /* PFFilterView.m */; };
+		E3BD458627474A9800CB44C9 /* PFSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD456A27474A9600CB44C9 /* PFSlider.m */; };
+		E3BD458727474A9800CB44C9 /* UIColor+PFAPIDemoBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD456C27474A9600CB44C9 /* UIColor+PFAPIDemoBar.m */; };
+		E3BD458827474A9800CB44C9 /* UIImage+demobar.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD456E27474A9600CB44C9 /* UIImage+demobar.m */; };
+		E3BD458927474A9800CB44C9 /* FUDemoBar.strings in Resources */ = {isa = PBXBuildFile; fileRef = E3BD456F27474A9600CB44C9 /* FUDemoBar.strings */; };
+		E3BD458A27474A9800CB44C9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E3BD457127474A9600CB44C9 /* Localizable.strings */; };
+		E3BD458B27474A9800CB44C9 /* FUDateHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD457527474A9600CB44C9 /* FUDateHandle.m */; };
+		E3BD458C27474A9800CB44C9 /* FUOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD457827474A9600CB44C9 /* FUOpenGLView.m */; };
+		E3BD458D27474A9800CB44C9 /* FUCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD457927474A9600CB44C9 /* FUCamera.m */; };
+		E3BD4590274752DC00CB44C9 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E3BD458F274752D700CB44C9 /* libc++.tbd */; };
+		E3BD4592274752E900CB44C9 /* CoreML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3BD4591274752E900CB44C9 /* CoreML.framework */; };
+		E3BD45C727477DD800CB44C9 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3BD45C627477DD800CB44C9 /* OpenGLES.framework */; };
+		E3BD45D327477F8E00CB44C9 /* PixelFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3BD45D227477F7700CB44C9 /* PixelFree.framework */; };
+		E3BD45D427477F8E00CB44C9 /* PixelFree.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E3BD45D227477F7700CB44C9 /* PixelFree.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E3BD45D127477F7700CB44C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E3BD45CD27477F7700CB44C9 /* PixelFree.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E3BD459D2747759200CB44C9;
+			remoteInfo = PixelFree;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E3BD45CC27477F2400CB44C9 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E3BD45D427477F8E00CB44C9 /* PixelFree.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		E3BD453327474A4E00CB44C9 /* SMBeautyEngine_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SMBeautyEngine_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3BD453627474A4E00CB44C9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E3BD453727474A4E00CB44C9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E3BD453927474A4E00CB44C9 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
+		E3BD453A27474A4E00CB44C9 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
+		E3BD453C27474A4E00CB44C9 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		E3BD453D27474A4E00CB44C9 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		E3BD454027474A4E00CB44C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E3BD454227474A5300CB44C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E3BD454527474A5300CB44C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E3BD454727474A5300CB44C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E3BD454827474A5300CB44C9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E3BD455327474A9400CB44C9 /* face_detect.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = face_detect.bundle; sourceTree = "<group>"; };
+		E3BD455427474A9400CB44C9 /* face_fiter.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = face_fiter.bundle; sourceTree = "<group>"; };
+		E3BD455527474A9400CB44C9 /* FUOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FUOpenGLView.h; sourceTree = "<group>"; };
+		E3BD455A27474A9600CB44C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PFAPIDemoBar.xib; sourceTree = "<group>"; };
+		E3BD455B27474A9600CB44C9 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		E3BD455C27474A9600CB44C9 /* PFAPIDemoBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFAPIDemoBar.h; sourceTree = "<group>"; };
+		E3BD455D27474A9600CB44C9 /* PFAPIDemoBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFAPIDemoBar.m; sourceTree = "<group>"; };
+		E3BD455E27474A9600CB44C9 /* PFBeautyEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFBeautyEditView.h; sourceTree = "<group>"; };
+		E3BD455F27474A9600CB44C9 /* PFBeautyEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFBeautyEditView.m; sourceTree = "<group>"; };
+		E3BD456027474A9600CB44C9 /* PFBeautyParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFBeautyParam.h; sourceTree = "<group>"; };
+		E3BD456127474A9600CB44C9 /* PFBeautyParam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFBeautyParam.m; sourceTree = "<group>"; };
+		E3BD456227474A9600CB44C9 /* PFBeautyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFBeautyView.h; sourceTree = "<group>"; };
+		E3BD456327474A9600CB44C9 /* PFBeautyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFBeautyView.m; sourceTree = "<group>"; };
+		E3BD456427474A9600CB44C9 /* PFBottomColletionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFBottomColletionView.h; sourceTree = "<group>"; };
+		E3BD456527474A9600CB44C9 /* PFBottomColletionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFBottomColletionView.m; sourceTree = "<group>"; };
+		E3BD456627474A9600CB44C9 /* PFDemoBarDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFDemoBarDefine.h; sourceTree = "<group>"; };
+		E3BD456727474A9600CB44C9 /* PFFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFFilterView.h; sourceTree = "<group>"; };
+		E3BD456827474A9600CB44C9 /* PFFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFFilterView.m; sourceTree = "<group>"; };
+		E3BD456927474A9600CB44C9 /* PFSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFSlider.h; sourceTree = "<group>"; };
+		E3BD456A27474A9600CB44C9 /* PFSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFSlider.m; sourceTree = "<group>"; };
+		E3BD456B27474A9600CB44C9 /* UIColor+PFAPIDemoBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+PFAPIDemoBar.h"; sourceTree = "<group>"; };
+		E3BD456C27474A9600CB44C9 /* UIColor+PFAPIDemoBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+PFAPIDemoBar.m"; sourceTree = "<group>"; };
+		E3BD456D27474A9600CB44C9 /* UIImage+demobar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+demobar.h"; sourceTree = "<group>"; };
+		E3BD456E27474A9600CB44C9 /* UIImage+demobar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+demobar.m"; sourceTree = "<group>"; };
+		E3BD457027474A9600CB44C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FUDemoBar.strings; sourceTree = "<group>"; };
+		E3BD457227474A9600CB44C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E3BD457427474A9600CB44C9 /* FUDateHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FUDateHandle.h; sourceTree = "<group>"; };
+		E3BD457527474A9600CB44C9 /* FUDateHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FUDateHandle.m; sourceTree = "<group>"; };
+		E3BD457627474A9600CB44C9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/FUDemoBar.strings"; sourceTree = "<group>"; };
+		E3BD457727474A9600CB44C9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		E3BD457827474A9600CB44C9 /* FUOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FUOpenGLView.m; sourceTree = "<group>"; };
+		E3BD457927474A9600CB44C9 /* FUCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FUCamera.m; sourceTree = "<group>"; };
+		E3BD457A27474A9600CB44C9 /* FUCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FUCamera.h; sourceTree = "<group>"; };
+		E3BD458F274752D700CB44C9 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		E3BD4591274752E900CB44C9 /* CoreML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreML.framework; path = System/Library/Frameworks/CoreML.framework; sourceTree = SDKROOT; };
+		E3BD45C127477B1E00CB44C9 /* PixelFree.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PixelFree.framework; sourceTree = "<group>"; };
+		E3BD45C627477DD800CB44C9 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		E3BD45CD27477F7700CB44C9 /* PixelFree.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PixelFree.xcodeproj; path = ../../../SMBeautyEngine/SMBeautyEngine_iOS/PixelFree/PixelFree.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E3BD453027474A4E00CB44C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3BD4590274752DC00CB44C9 /* libc++.tbd in Frameworks */,
+				E3BD4592274752E900CB44C9 /* CoreML.framework in Frameworks */,
+				E3BD45C727477DD800CB44C9 /* OpenGLES.framework in Frameworks */,
+				E39F6EC4274F30BE005DF8C9 /* PixelFree.framework in Frameworks */,
+				E3BD45D327477F8E00CB44C9 /* PixelFree.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E3BD452A27474A4E00CB44C9 = {
+			isa = PBXGroup;
+			children = (
+				E3BD45CD27477F7700CB44C9 /* PixelFree.xcodeproj */,
+				E3BD453527474A4E00CB44C9 /* SMBeautyEngine_iOS */,
+				E3BD453427474A4E00CB44C9 /* Products */,
+				E3BD458E274752D600CB44C9 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		E3BD453427474A4E00CB44C9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E3BD453327474A4E00CB44C9 /* SMBeautyEngine_iOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E3BD453527474A4E00CB44C9 /* SMBeautyEngine_iOS */ = {
+			isa = PBXGroup;
+			children = (
+				E3BD45C127477B1E00CB44C9 /* PixelFree.framework */,
+				E3BD457A27474A9600CB44C9 /* FUCamera.h */,
+				E3BD457927474A9600CB44C9 /* FUCamera.m */,
+				E3BD455527474A9400CB44C9 /* FUOpenGLView.h */,
+				E3BD457827474A9600CB44C9 /* FUOpenGLView.m */,
+				E3BD455227474A9400CB44C9 /* res */,
+				E3BD455727474A9600CB44C9 /* View */,
+				E3BD453627474A4E00CB44C9 /* AppDelegate.h */,
+				E3BD453727474A4E00CB44C9 /* AppDelegate.m */,
+				E3BD453927474A4E00CB44C9 /* SceneDelegate.h */,
+				E3BD453A27474A4E00CB44C9 /* SceneDelegate.m */,
+				E3BD453C27474A4E00CB44C9 /* ViewController.h */,
+				E3BD453D27474A4E00CB44C9 /* ViewController.m */,
+				E3BD453F27474A4E00CB44C9 /* Main.storyboard */,
+				E3BD454227474A5300CB44C9 /* Assets.xcassets */,
+				E3BD454427474A5300CB44C9 /* LaunchScreen.storyboard */,
+				E3BD454727474A5300CB44C9 /* Info.plist */,
+				E3BD454827474A5300CB44C9 /* main.m */,
+			);
+			path = SMBeautyEngine_iOS;
+			sourceTree = "<group>";
+		};
+		E3BD455227474A9400CB44C9 /* res */ = {
+			isa = PBXGroup;
+			children = (
+				E3BD455327474A9400CB44C9 /* face_detect.bundle */,
+				E3BD455427474A9400CB44C9 /* face_fiter.bundle */,
+			);
+			path = res;
+			sourceTree = "<group>";
+		};
+		E3BD455727474A9600CB44C9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E3BD455827474A9600CB44C9 /* PFAPIDemoBar */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E3BD455827474A9600CB44C9 /* PFAPIDemoBar */ = {
+			isa = PBXGroup;
+			children = (
+				E3BD455927474A9600CB44C9 /* PFAPIDemoBar.xib */,
+				E3BD455B27474A9600CB44C9 /* Media.xcassets */,
+				E3BD455C27474A9600CB44C9 /* PFAPIDemoBar.h */,
+				E3BD455D27474A9600CB44C9 /* PFAPIDemoBar.m */,
+				E3BD455E27474A9600CB44C9 /* PFBeautyEditView.h */,
+				E3BD455F27474A9600CB44C9 /* PFBeautyEditView.m */,
+				E3BD456027474A9600CB44C9 /* PFBeautyParam.h */,
+				E3BD456127474A9600CB44C9 /* PFBeautyParam.m */,
+				E3BD456227474A9600CB44C9 /* PFBeautyView.h */,
+				E3BD456327474A9600CB44C9 /* PFBeautyView.m */,
+				E3BD456427474A9600CB44C9 /* PFBottomColletionView.h */,
+				E3BD456527474A9600CB44C9 /* PFBottomColletionView.m */,
+				E3BD456627474A9600CB44C9 /* PFDemoBarDefine.h */,
+				E3BD456727474A9600CB44C9 /* PFFilterView.h */,
+				E3BD456827474A9600CB44C9 /* PFFilterView.m */,
+				E3BD456927474A9600CB44C9 /* PFSlider.h */,
+				E3BD456A27474A9600CB44C9 /* PFSlider.m */,
+				E3BD456B27474A9600CB44C9 /* UIColor+PFAPIDemoBar.h */,
+				E3BD456C27474A9600CB44C9 /* UIColor+PFAPIDemoBar.m */,
+				E3BD456D27474A9600CB44C9 /* UIImage+demobar.h */,
+				E3BD456E27474A9600CB44C9 /* UIImage+demobar.m */,
+				E3BD456F27474A9600CB44C9 /* FUDemoBar.strings */,
+				E3BD457127474A9600CB44C9 /* Localizable.strings */,
+				E3BD457327474A9600CB44C9 /* modle */,
+			);
+			path = PFAPIDemoBar;
+			sourceTree = "<group>";
+		};
+		E3BD457327474A9600CB44C9 /* modle */ = {
+			isa = PBXGroup;
+			children = (
+				E3BD457427474A9600CB44C9 /* FUDateHandle.h */,
+				E3BD457527474A9600CB44C9 /* FUDateHandle.m */,
+			);
+			path = modle;
+			sourceTree = "<group>";
+		};
+		E3BD458E274752D600CB44C9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E3BD45C627477DD800CB44C9 /* OpenGLES.framework */,
+				E3BD4591274752E900CB44C9 /* CoreML.framework */,
+				E3BD458F274752D700CB44C9 /* libc++.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E3BD45CE27477F7700CB44C9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E3BD45D227477F7700CB44C9 /* PixelFree.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E3BD453227474A4E00CB44C9 /* SMBeautyEngine_iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E3BD454C27474A5300CB44C9 /* Build configuration list for PBXNativeTarget "SMBeautyEngine_iOS" */;
+			buildPhases = (
+				E3BD45CC27477F2400CB44C9 /* Embed Frameworks */,
+				E3BD452F27474A4E00CB44C9 /* Sources */,
+				E3BD453027474A4E00CB44C9 /* Frameworks */,
+				E3BD453127474A4E00CB44C9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SMBeautyEngine_iOS;
+			productName = SMBeautyEngine_iOS;
+			productReference = E3BD453327474A4E00CB44C9 /* SMBeautyEngine_iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E3BD452B27474A4E00CB44C9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1310;
+				TargetAttributes = {
+					E3BD453227474A4E00CB44C9 = {
+						CreatedOnToolsVersion = 13.1;
+					};
+				};
+			};
+			buildConfigurationList = E3BD452E27474A4E00CB44C9 /* Build configuration list for PBXProject "SMBeautyEngine_iOS" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				"zh-Hans",
+			);
+			mainGroup = E3BD452A27474A4E00CB44C9;
+			productRefGroup = E3BD453427474A4E00CB44C9 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = E3BD45CE27477F7700CB44C9 /* Products */;
+					ProjectRef = E3BD45CD27477F7700CB44C9 /* PixelFree.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				E3BD453227474A4E00CB44C9 /* SMBeautyEngine_iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		E3BD45D227477F7700CB44C9 /* PixelFree.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = PixelFree.framework;
+			remoteRef = E3BD45D127477F7700CB44C9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E3BD453127474A4E00CB44C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3BD454627474A5300CB44C9 /* LaunchScreen.storyboard in Resources */,
+				E3BD457B27474A9600CB44C9 /* face_detect.bundle in Resources */,
+				E3BD457F27474A9800CB44C9 /* Media.xcassets in Resources */,
+				E3BD454327474A5300CB44C9 /* Assets.xcassets in Resources */,
+				E3BD458A27474A9800CB44C9 /* Localizable.strings in Resources */,
+				E3BD457E27474A9800CB44C9 /* PFAPIDemoBar.xib in Resources */,
+				E3BD457C27474A9600CB44C9 /* face_fiter.bundle in Resources */,
+				E3BD458927474A9800CB44C9 /* FUDemoBar.strings in Resources */,
+				E3BD454127474A4E00CB44C9 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E3BD452F27474A4E00CB44C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3BD453E27474A4E00CB44C9 /* ViewController.m in Sources */,
+				E3BD458227474A9800CB44C9 /* PFBeautyParam.m in Sources */,
+				E3BD453827474A4E00CB44C9 /* AppDelegate.m in Sources */,
+				E3BD458627474A9800CB44C9 /* PFSlider.m in Sources */,
+				E3BD458C27474A9800CB44C9 /* FUOpenGLView.m in Sources */,
+				E3BD458B27474A9800CB44C9 /* FUDateHandle.m in Sources */,
+				E3BD458427474A9800CB44C9 /* PFBottomColletionView.m in Sources */,
+				E3BD458127474A9800CB44C9 /* PFBeautyEditView.m in Sources */,
+				E3BD458327474A9800CB44C9 /* PFBeautyView.m in Sources */,
+				E3BD458D27474A9800CB44C9 /* FUCamera.m in Sources */,
+				E3BD458527474A9800CB44C9 /* PFFilterView.m in Sources */,
+				E3BD458027474A9800CB44C9 /* PFAPIDemoBar.m in Sources */,
+				E3BD454927474A5300CB44C9 /* main.m in Sources */,
+				E3BD458827474A9800CB44C9 /* UIImage+demobar.m in Sources */,
+				E3BD453B27474A4E00CB44C9 /* SceneDelegate.m in Sources */,
+				E3BD458727474A9800CB44C9 /* UIColor+PFAPIDemoBar.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E3BD453F27474A4E00CB44C9 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E3BD454027474A4E00CB44C9 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		E3BD454427474A5300CB44C9 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E3BD454527474A5300CB44C9 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		E3BD455927474A9600CB44C9 /* PFAPIDemoBar.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E3BD455A27474A9600CB44C9 /* Base */,
+			);
+			name = PFAPIDemoBar.xib;
+			sourceTree = "<group>";
+		};
+		E3BD456F27474A9600CB44C9 /* FUDemoBar.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E3BD457027474A9600CB44C9 /* en */,
+				E3BD457627474A9600CB44C9 /* zh-Hans */,
+			);
+			name = FUDemoBar.strings;
+			sourceTree = "<group>";
+		};
+		E3BD457127474A9600CB44C9 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E3BD457227474A9600CB44C9 /* en */,
+				E3BD457727474A9600CB44C9 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E3BD454A27474A5300CB44C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		E3BD454B27474A5300CB44C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E3BD454D27474A5300CB44C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = W2TP34G2MM;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SMBeautyEngine_iOS",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SMBeautyEngine_iOS/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "app 想要访问相机";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "app 想要访问mic";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SMBeautyEngine_iOS",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = "mumu.SMBeautyEngine-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E3BD454E27474A5300CB44C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = W2TP34G2MM;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SMBeautyEngine_iOS",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SMBeautyEngine_iOS/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "app 想要访问相机";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "app 想要访问mic";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SMBeautyEngine_iOS",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = "mumu.SMBeautyEngine-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E3BD452E27474A4E00CB44C9 /* Build configuration list for PBXProject "SMBeautyEngine_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E3BD454A27474A5300CB44C9 /* Debug */,
+				E3BD454B27474A5300CB44C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E3BD454C27474A5300CB44C9 /* Build configuration list for PBXNativeTarget "SMBeautyEngine_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E3BD454D27474A5300CB44C9 /* Debug */,
+				E3BD454E27474A5300CB44C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E3BD452B27474A4E00CB44C9 /* Project object */;
+}
