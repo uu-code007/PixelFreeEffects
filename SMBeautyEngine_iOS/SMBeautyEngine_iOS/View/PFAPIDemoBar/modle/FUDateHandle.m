@@ -13,7 +13,15 @@
 
 
 +(NSArray<PFBeautyParam *>*)setupFilterData{
-    NSArray *beautyFiltersDataSource = @[@"origin",@"filter1",@"filter3",@"filter9",@"filter18",@"filter29",@"filter40",@"filter45"];
+    NSArray *beautyFiltersDataSource = @[@"origin",@"ziran1",@"ziran2",@"ziran3",@"ziran4",@"ziran5",
+                                         @"huisediao1",@"huisediao2",@"huisediao3",@"huisediao4",@"huisediao5",
+                                         @"liangbai1",@"liangbai2",@"liangbai3",@"liangbai4",@"liangbai5",
+                                         @"fennen1",@"fennen2",@"fennen3",@"fennen5",
+                                         @"lengsediao1",@"lengsediao2",@"lengsediao3",@"lengsediao4",@"lengsediao5",
+                                         @"nuansediao1",@"nuansediao2",
+                                         @"gexing1",@"gexing2",@"gexing3",@"gexing4",@"gexing5",
+                                         @"xiaoqingxin1",@"xiaoqingxin2",@"xiaoqingxin3",@"xiaoqingxin4",@"xiaoqingxin4",
+                                         @"heibai1",@"heibai2",@"heibai3",@"heibai4",@"heibai5"];
     
     NSDictionary *filtersCHName = @{@"makeup_noitem":@"原图",@"filter_lutup_ol":@"时尚",@"filter_lutup_pink":@"粉嫩"};
 
@@ -31,7 +39,7 @@
 }
 
 +(NSArray<PFBeautyParam *>*)setupSkinData{
-    NSArray *prams = @[@"writen",@"newWhitenStrength",@"runddy",@"blur",@"sharpen",@"qualityStrength"];//
+    NSArray *prams = @[@"newWhitenStrength",@"runddy",@"blur",@"sharpen",@"qualityStrength"];//
     NSDictionary *titelDic = @{@"writen":@"美白",@"runddy":@"红润",@"blur":@"磨皮",@"sharpen":@"锐化",@"newWhitenStrength":@"新美白",@"qualityStrength":@"增强画质"};
     NSDictionary *defaultValueDic = @{@"runddy":@(0.6),@"writen":@(0.6),@"blur":@(0.7),@"sharpen":@(0.2),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.2)};
     

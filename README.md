@@ -2,9 +2,9 @@
 
 #### 项目介绍
 
-**pixelFree** 是基于个人几年对图形学习，总结开发的SDK, 主要用于直播，短时视频领域.....
+**pixelFree** 是基于个人几年对图形学习，总结开发的SDK, 主要用于直播，短视频领域.....
 
-主要功能包含：美白，红润，磨皮，锐化，大眼，瘦脸，动态贴纸，3D贴纸…….
+主要功能包含：美白，红润，磨皮，锐化，大眼，瘦脸…….
 
 集成接入参考  *pixelFreeEffects* 演示**DEMO**
 
@@ -18,7 +18,46 @@
 
 ![aaa](./res/comp_filter.png)
 
+#### 接入使用
 
+1. 初始化
+
+   ```
+   // 素材路径
+   NSString *face_FiltePath = [[NSBundle mainBundle] pathForResource:@"face_fiter.bundle" ofType:nil];
+   NSString *face_DetectPath = [[NSBundle mainBundle] pathForResource:@"face_detect.bundle" ofType:nil];
+       
+   // 初始化实例
+    _mPixelFree = [[SMPixelFree alloc] initWithProcessContext:nil srcFilterPath:face_FiltePath srcDetectPath:face_DetectPath];
+   ```
+
+2. 美颜参数设置
+
+    ```
+   // 大眼
+   [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFace_EyeStrength value:&value]; 
+    ```
+
+3. 滤镜设置
+
+   ```
+   // 滤镜类型，类型字段查看，滤镜表格
+   const char *aaa = [param.mParam UTF8String];
+   [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterName value:(void *)aaa];
+   // 滤镜程度
+   [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterStrength value:&value];
+   ```
+
+4. 图像渲染处理，内部会内存回写
+
+   ```
+   // pixbuffer 视频数据
+   [_mPixelFree processWithBuffer:pixbuffer];
+   ```
+
+   
+
+   
 
 #### 更新日志
 
@@ -26,6 +65,7 @@
 
 1. c++ 重构sdk
 2. 提供 SO 库
+3. 移除动态贴纸，3D贴纸功能
 
 **2020-12-31 日更新** v1.1.2
 

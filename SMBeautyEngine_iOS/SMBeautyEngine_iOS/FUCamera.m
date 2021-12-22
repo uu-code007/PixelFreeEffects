@@ -90,7 +90,6 @@ typedef void(^FUCameraRecordVidepCompleted)(NSString *videoPath);
     if ([_captureSession canAddOutput:self.audioOutput]) {
         [_captureSession addOutput:self.audioOutput];
     }
-    
 }
 
 - (void)removeAudio {

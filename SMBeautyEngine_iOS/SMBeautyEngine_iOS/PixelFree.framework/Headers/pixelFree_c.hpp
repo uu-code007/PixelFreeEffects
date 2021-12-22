@@ -73,6 +73,7 @@ typedef struct {
 
 /* 美颜类型 */
 typedef enum PFBeautyFiterType{
+    //大眼
     PFBeautyFiterTypeFace_EyeStrength = 0,
     //瘦脸
     PFBeautyFiterTypeFace_thinning,
@@ -109,7 +110,6 @@ typedef enum PFBeautyFiterType{
     PFBeautyFiterTypeFaceM_newWhitenStrength,
     //画质增强
     PFBeautyFiterTypeFaceH_qualityStrength,
-    
     PFBeautyFiterName,
     PFBeautyFiterStrength
     
