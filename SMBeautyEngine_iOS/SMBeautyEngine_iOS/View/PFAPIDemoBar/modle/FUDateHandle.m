@@ -30,7 +30,7 @@
         PFBeautyParam *modle = [[PFBeautyParam alloc] init];
         modle.mParam = str;
         modle.mTitle = str;
-        modle.mValue = 1.0;
+        modle.mValue = 0.5;
         modle.type = FUDataTypeFilter;
         [array addObject:modle];
     }
