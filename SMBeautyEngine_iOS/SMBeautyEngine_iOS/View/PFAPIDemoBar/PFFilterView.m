@@ -2,10 +2,9 @@
 //  PFFilterView.m
 //  PFAPIDemoBar
 //
-//  Created by L on 2018/6/27.
-//  Copyright © 2018年 L. All rights reserved.
 //
-
+//  Created by mumu on 2021/9/6.
+//
 #import "PFFilterView.h"
 #import "UIColor+PFAPIDemoBar.h"
 #import "UIImage+demobar.h"
@@ -60,7 +59,7 @@
     
     cell.titleLabel.text = NSLocalizedString(model.mTitle,nil);
     cell.titleLabel.textColor = [UIColor whiteColor];
-    cell.imageView.image = [UIImage imageWithName:[model.mParam stringByAppendingString:@"_icon"]];
+    cell.imageView.image = [UIImage imageWithName:model.mTitle];
     
     cell.imageView.layer.borderWidth = 0.0 ;
     cell.imageView.layer.borderColor = [UIColor clearColor].CGColor;

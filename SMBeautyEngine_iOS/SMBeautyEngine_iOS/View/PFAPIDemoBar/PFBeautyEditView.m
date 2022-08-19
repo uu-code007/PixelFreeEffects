@@ -1,9 +1,9 @@
 //
 //  PFBeautyEditView.m
-//  FULiveDemo
+//  SMEngineDemo
 //
-//  Created by 孙慕 on 2019/11/6.
-//  Copyright © 2019 FaceUnity. All rights reserved.
+//  Created by mumu on 2019/11/6.
+//  Copyright © 2019 mmface. All rights reserved.
 //
 
 #import "PFBeautyEditView.h"

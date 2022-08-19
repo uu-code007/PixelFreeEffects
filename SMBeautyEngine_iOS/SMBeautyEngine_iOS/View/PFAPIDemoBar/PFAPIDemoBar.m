@@ -1,9 +1,7 @@
 //
-//  FUDemoBar.m
-//  PFAPIDemoBar
+//  PFDemoBar.m
 //
-//  Created by L on 2018/6/26.
-//  Copyright © 2018年 L. All rights reserved.
+//  Created by mumu on 2021/9/6.
 //
 
 #import "PFAPIDemoBar.h"
@@ -11,7 +9,7 @@
 #import "PFSlider.h"
 #import "PFBeautyView.h"
 #import "PFBeautyParam.h"
-#import "FUDateHandle.h"
+#import "PFDateHandle.h"
 
 
 @interface PFAPIDemoBar ()<PFFilterViewDelegate, PFBeautyViewDelegate>
@@ -113,11 +111,11 @@
 }
 
 -(void)setupDate{
-    _filtersParams = [FUDateHandle setupFilterData];
-    _shapeParams  = [FUDateHandle setupShapData];
-     _skinParams = [FUDateHandle setupSkinData];
-     _stickerParams = [FUDateHandle setupSticker];
-     _makeupParams = [FUDateHandle setupMakeupData];
+    _filtersParams = [PFDateHandle setupFilterData];
+    _shapeParams  = [PFDateHandle setupShapData];
+     _skinParams = [PFDateHandle setupSkinData];
+     _stickerParams = [PFDateHandle setupSticker];
+     _makeupParams = [PFDateHandle setupMakeupData];
 }
 
 -(void)layoutSubviews{
@@ -369,6 +367,10 @@
     if (_mDelegate && [_mDelegate respondsToSelector:@selector(filterValueChange:)]) {
         [_mDelegate filterValueChange:_seletedParam];
     }
+//    if(fabsf(sender.value) < 0.01){
+        [_shapeView reloadData];
+        [_skinView reloadData];
+//    }
 }
 
 - (IBAction)isOpenFURender:(UISwitch *)sender {
