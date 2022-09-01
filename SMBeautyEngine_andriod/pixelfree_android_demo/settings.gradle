@@ -1,0 +1,21 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "pixelfree_android"
+include ':app'
+include ':hapiAVCapture'
+include ':baseAVParam'
+include ':hapiAVRender'
+include ':lib_pixelFree'
+//include ':nativelib'
