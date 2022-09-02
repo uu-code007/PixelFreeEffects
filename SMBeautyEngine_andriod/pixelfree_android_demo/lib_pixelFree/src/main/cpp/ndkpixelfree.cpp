@@ -17,8 +17,12 @@ Java_com_byteflow_pixelfree_PixelFree_native_1create(JNIEnv *env, jobject thiz) 
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_byteflow_pixelfree_PixelFree_native_1release(JNIEnv *env, jobject thiz, jlong handler) {
+    __android_log_print(ANDROID_LOG_INFO, "mjl", "native_1release-----");
     auto *px = reinterpret_cast<PFPixelFree *>(handler);
+    __android_log_print(ANDROID_LOG_INFO, "mjl", "native_3release-----");
     PF_DeletePixelFree(px);
+    __android_log_print(ANDROID_LOG_INFO, "mjl", "native_2release-----");
+
 }
 #define PFLOG(fmt, ...) __android_log_print(ANDROID_LOG_INFO, QNVTLOG_TAG, fmt, ##__VA_ARGS__);
 extern "C"

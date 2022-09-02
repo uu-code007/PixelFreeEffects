@@ -1,10 +1,8 @@
-package com.hapi.pixelfree_android
+package com.byteflow.pixelfree
 
 import android.opengl.*
 import android.util.Log
-import androidx.core.app.NavUtils
 import java.nio.ByteBuffer
-import javax.microedition.khronos.egl.EGLConfig
 
 
 object OpenGLTools {
@@ -13,9 +11,7 @@ object OpenGLTools {
     var sur: EGLSurface? = null
     var textures: IntArray? = null
     fun createTexture(width: Int, height: Int, buffer: ByteBuffer): Int {
-
-        mEGLCore
-            .makeCurrent(sur!!);
+        switchContext()
         Log.d("mjl", "eglMakeCurrent")
         if (textures == null) {
             // 新建纹理ID
@@ -65,6 +61,11 @@ object OpenGLTools {
         return textures!![0]
     }
 
+    fun switchContext() {
+        mEGLCore
+            .makeCurrent(sur!!);
+    }
+
     fun load() {
         val context = EGL14.eglGetCurrentContext();
         mEGLCore.init(context, EGL_RECORDABLE_ANDROID)
@@ -72,8 +73,10 @@ object OpenGLTools {
     }
 
     fun release() {
+        textures?.let {
+            GLES30.glDeleteTextures(1, textures,0)
+        }
         textures = null
     }
-
 
 }

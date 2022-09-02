@@ -32,14 +32,8 @@ abstract class IVideoTrack internal constructor() : Track<VideoFrame> {
     var playerView: VideoRender? = null
     override var frameCall: FrameCall<VideoFrame>? = null
     val innerFrameCalls = LinkedList<FrameCall<VideoFrame>>()
-
     private var lastFrameTime = 0L
     internal fun innerPushFrame(frame: VideoFrame) {
-        val now = System.currentTimeMillis()
-        if(now-lastFrameTime<1000){
-            return
-        }
-        lastFrameTime = now
         var outFrame = frame
         frameCall?.let {
             it.onFrame(outFrame)
