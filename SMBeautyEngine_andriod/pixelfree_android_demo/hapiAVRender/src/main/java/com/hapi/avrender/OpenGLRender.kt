@@ -13,7 +13,12 @@ class OpenGLRender : GLSurfaceView.Renderer, VideoRender {
             System.loadLibrary("hapiplay")
         }
     }
-    var glCreateCall: (p1: EGLConfig)->Unit= {
+
+    var glCreateCall: (p1: EGLConfig) -> Unit = {
+
+    }
+
+    var glReleaseCall: () -> Unit = {
 
     }
 
@@ -33,6 +38,7 @@ class OpenGLRender : GLSurfaceView.Renderer, VideoRender {
     }
 
     fun release() {
+        glReleaseCall.invoke()
         native_release(renderHandler)
     }
 

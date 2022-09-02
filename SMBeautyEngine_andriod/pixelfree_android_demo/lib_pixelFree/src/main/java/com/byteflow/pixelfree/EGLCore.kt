@@ -1,16 +1,15 @@
-package com.hapi.pixelfree_android
+package com.byteflow.pixelfree
 
 import android.graphics.SurfaceTexture
 import android.opengl.*
 import android.util.Log
 import android.view.Surface
-import javax.microedition.khronos.egl.EGLDisplay
 
 const val FLAG_RECORDABLE = 0x01
 
 const val EGL_RECORDABLE_ANDROID = 0x3142
 
-class EGLCore {
+internal class EGLCore {
 
     private val TAG = "EGLCore"
 

@@ -29,23 +29,26 @@ class MainActivity : AppCompatActivity() {
                 //数据处理回调
                 override fun onProcessFrame(frame: VideoFrame): VideoFrame {
 
+                    if(!mPixelFree.isCreate()){
+                        OpenGLTools.switchContext()
+                        mPixelFree.create()
+                        val face_fiter = mPixelFree.readBundleFile(this@MainActivity, "face_fiter.bundle")
+                        mPixelFree.createBeautyItemFormBundle(
+                            face_fiter,
+                            face_fiter.size,
+                            PFSrcType.PFSrcTypeFilter
+                        )
+                    }else{
+                        mPixelFree.processWithBuffer(frame.toPFIamgeInput())
+                        val code =GLES30.glGetError()
+                        Log.d("mjl","GLES30.glGetError()" + code)
+                        val byteBuffer = ByteBuffer.wrap(ByteArray(frame.data.size))
+                        GLES30.glReadPixels(0, 0, frame.width, frame.height,
+                            GLES30.GL_RGBA, GLES30.GL_UNSIGNED_BYTE, byteBuffer);
+                        val stitchBmp = Bitmap.createBitmap(frame.width, frame.height, Bitmap.Config.ARGB_8888)
+                        stitchBmp.copyPixelsFromBuffer(byteBuffer)
+                    }
 
-                    mPixelFree.processWithBuffer(frame.toPFIamgeInput())
-                    val code =GLES30.glGetError()
-                    Log.d("mjl","GLES30.glGetError()" + code)
-                    val byteBuffer = ByteBuffer.wrap(ByteArray(frame.data.size))
-                    GLES30.glReadPixels(0, 0, frame.width, frame.height,
-                        GLES30.GL_RGBA, GLES30.GL_UNSIGNED_BYTE, byteBuffer);
-
-                    val stitchBmp = Bitmap.createBitmap(frame.width, frame.height, Bitmap.Config.ARGB_8888)
-
-                    stitchBmp.copyPixelsFromBuffer(byteBuffer)
-//                    OpenGLTools.createTexture(
-//                        frame.width,
-//                        frame.height,
-//                        ByteBuffer.wrap(frame.data, 0, frame.data.size)
-//                    )
-//                    frame.textureID = OpenGLTools.textures!![0]
                     return super.onProcessFrame(frame)
                 }
             }
@@ -72,13 +75,6 @@ class MainActivity : AppCompatActivity() {
             stride_CbCr
             format = PFDetectFormat.PFFORMAT_IMAGE_RGBA
             rotationMode = PFRotationMode.PFRotationMode0
-//                when (vf.rotationDegrees) {
-//                0 -> PFRotationMode.PFRotationMode0
-//                90 -> PFRotationMode.PFRotationMode90
-//                180 -> PFRotationMode.PFRotationMode180
-//                270 -> PFRotationMode.PFRotationMode270
-//                else -> PFRotationMode.PFRotationMode0
-           // }
         }
     }
 
@@ -88,19 +84,6 @@ class MainActivity : AppCompatActivity() {
         val hapiCapturePreView = findViewById<HapiCapturePreView>(R.id.preview)
         //如果需要预览视频轨道
         cameTrack.playerView = hapiCapturePreView
-        mPixelFree.create()
-//        val face_detect = mPixelFree.readBundleFile(this, "face_detect.bundle")
-//        mPixelFree.createBeautyItemFormBundle(
-//            face_detect,
-//            face_detect.size,
-//            PFSrcType.PFSrcTypeDetect
-//        )
-        val face_fiter = mPixelFree.readBundleFile(this, "face_fiter.bundle")
-        mPixelFree.createBeautyItemFormBundle(
-            face_fiter,
-            face_fiter.size,
-            PFSrcType.PFSrcTypeFilter
-        )
 
         hapiCapturePreView.mHapiGLSurfacePreview.mOpenGLRender.glCreateCall = {
             OpenGLTools.load()
@@ -109,20 +92,20 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.btSouLian).setOnClickListener {
             mPixelFree.pixelFreeSetFiterParam(
-               "heibai1",
+               "heibai",
                 1f
             )
         }
         findViewById<Button>(R.id.btWhite).setOnClickListener {
             mPixelFree.pixelFreeSetBeautyFiterParam(
-                PFBeautyFiterType.PFBeautyFiterTypeFaceWhitenStrength,
-                0.5f
+                PFBeautyFiterType.PFBeautyFiterTypeFaceBlurStrength,
+                1f
             )
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mPixelFree.release()
+        OpenGLTools.release()
     }
 }

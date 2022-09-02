@@ -25,15 +25,23 @@ class PixelFree {
     }
 
     private var nativeHandler: Long = -1
+    fun isCreate(): Boolean {
+        return nativeHandler != -1L
+    }
+
     fun create() {
         nativeHandler = native_create()
     }
 
     fun release() {
         native_release(nativeHandler)
+        nativeHandler=-1
     }
 
     fun processWithBuffer(iamgeInput: PFIamgeInput) {
+        if(nativeHandler==-1L){
+            return
+        }
         native_processWithBuffer(
             nativeHandler,
             iamgeInput.textureID,
@@ -51,10 +59,16 @@ class PixelFree {
     }
 
     fun pixelFreeSetBeautyFiterParam(type: PFBeautyFiterType, value: Float) {
+        if(nativeHandler==-1L){
+            return
+        }
         native_pixelFreeSetBeautyFiterParam(nativeHandler, type.intType, value)
     }
 
     fun createBeautyItemFormBundle(data: ByteArray, size: Int, type: PFSrcType) {
+        if(nativeHandler==-1L){
+            return
+        }
         native_createBeautyItemFormBundle(nativeHandler, data, size, type.intType)
     }
 
@@ -65,6 +79,9 @@ class PixelFree {
      * @param value
      */
     fun pixelFreeSetFiterParam(filterName: String, value: Float) {
+        if(nativeHandler==-1L){
+            return
+        }
         native_pixelFreeSetFiterParam(nativeHandler, filterName, value)
     }
 
