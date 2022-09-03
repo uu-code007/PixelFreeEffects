@@ -16,7 +16,7 @@ class HapiGLSurfacePreview : GLSurfaceView, VideoRender {
     
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        setEGLContextClientVersion(3);
+        setEGLContextClientVersion(2);
         setRenderer(mOpenGLRender)
         renderMode = GLSurfaceView.RENDERMODE_WHEN_DIRTY;
 

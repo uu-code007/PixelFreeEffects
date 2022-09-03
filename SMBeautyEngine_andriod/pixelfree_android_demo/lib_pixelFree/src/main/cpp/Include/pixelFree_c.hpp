@@ -2,12 +2,13 @@
 //  pixelFree_c.hpp
 //  PixelFree
 //
-//  Created by 孙慕 on 2021/9/22.
+//  Created by mumu on 2021/9/22.
 //
 
 #ifndef pixelFree_c_hpp
 #define pixelFree_c_hpp
 
+#include <stdio.h>
 #if defined(_WIN32)
 #ifdef PF_BUILD_SHARED_LIB
 #define PF_CAPI_EXPORT __declspec(dllexport)
@@ -46,23 +47,28 @@ typedef enum PFRotationMode{
 typedef enum PFSrcType{
     PFSrcTypeFilter = 0,
     PFSrcTypeDetect = 1,
+    PFSrcTypeAuthFile = 2,
 } PFSrcType;
 
+typedef struct {
+    const char* modelPath;
+    const char* runCachePath;
+} PFDetectPath;
 
 typedef struct {
 
   int textureID;
   int wigth;
   int height;
-    void* p_BGRA;
-  void* p_Y;
-  void* p_CbCr;
-    int stride_BGRA;
-    int stride_Y;
-    int stride_CbCr;
+  void* p_data0;// Y or rgba
+  void* p_data1;
+  void* p_data2;
+  int stride_0;
+  int stride_1;
+  int stride_2;
 
     PFDetectFormat format;
-  PFRotationMode rotationMode;
+    PFRotationMode rotationMode;
 } PFIamgeInput;
 
 typedef struct {
@@ -95,7 +101,6 @@ typedef enum PFBeautyFiterType{
     PFBeautyFiterTypeFace_long_nose,
     //眼距
     PFBeautyFiterTypeFace_eye_space,
-
     //磨皮
     PFBeautyFiterTypeFaceBlurStrength,
     //美白
@@ -110,23 +115,24 @@ typedef enum PFBeautyFiterType{
     PFBeautyFiterTypeFaceH_qualityStrength,
     
     PFBeautyFiterName,
-    PFBeautyFiterStrength
+    PFBeautyFiterStrength,
+    PFAppBundleId //
     
 } PFBeautyFiterType;
 
 
 PF_CAPI_EXPORT extern const char* PF_Version();
 
-PF_CAPI_EXPORT extern void PF_VLogSetLevel(int level);
-
 
 typedef struct PFPixelFree PFPixelFree;
 
+PF_CAPI_EXPORT extern void PF_VLogSetLevel(PFPixelFree* pixelFree,int level,char *path);
+
 PF_CAPI_EXPORT extern PFPixelFree* PF_NewPixelFree();
 
-PF_CAPI_EXPORT extern void PF_DeletePixelFree(
-                                              PFPixelFree* pixelFree);
+PF_CAPI_EXPORT extern void PF_DeletePixelFree(PFPixelFree* pixelFree);
 
+//目前仅支持双输入。GPU 纹理由于渲染，cpu buffer 用检测
 PF_CAPI_EXPORT extern void PF_processWithBuffer(PFPixelFree* pixelFree,PFIamgeInput inputImage);
 
 PF_CAPI_EXPORT extern void PF_pixelFreeSetBeautyFiterParam(PFPixelFree* pixelFree, PFBeautyFiterType key,void *value);

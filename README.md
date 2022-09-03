@@ -36,7 +36,7 @@
     ```
    // 大眼
    [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFace_EyeStrength value:&value]; 
-    ```
+   ```
 
 3. 滤镜设置
 
@@ -60,6 +60,13 @@
    
 
 #### 更新日志
+
+
+
+**2022-09-3 日更新** v2.0.1
+
+1. add andriod JNI and Demo
+2. 调优美型算法
 
 **2021-11-20 日更新** v2.0.0
 

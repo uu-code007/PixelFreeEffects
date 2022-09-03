@@ -28,9 +28,9 @@ class MainActivity : AppCompatActivity() {
 
                 //数据处理回调
                 override fun onProcessFrame(frame: VideoFrame): VideoFrame {
-
+                    OpenGLTools.switchContext()
                     if(!mPixelFree.isCreate()){
-                        OpenGLTools.switchContext()
+//                        OpenGLTools.switchContext()
                         mPixelFree.create()
                         val face_fiter = mPixelFree.readBundleFile(this@MainActivity, "face_fiter.bundle")
                         mPixelFree.createBeautyItemFormBundle(
@@ -38,15 +38,32 @@ class MainActivity : AppCompatActivity() {
                             face_fiter.size,
                             PFSrcType.PFSrcTypeFilter
                         )
+
+                        val face_detect = mPixelFree.readBundleFile(this@MainActivity, "face_detect.bundle")
+                        mPixelFree.createBeautyItemFormBundle(
+                            face_detect,
+                            face_detect.size,
+                            PFSrcType.PFSrcTypeDetect
+                        )
+// 滤镜依赖gl 上下文创建素材，必须放在 gl 环境
+                        mPixelFree.pixelFreeSetFiterParam(
+                            "heibai1",
+                            1f
+                        )
+
+
                     }else{
-                        mPixelFree.processWithBuffer(frame.toPFIamgeInput())
-                        val code =GLES30.glGetError()
-                        Log.d("mjl","GLES30.glGetError()" + code)
-                        val byteBuffer = ByteBuffer.wrap(ByteArray(frame.data.size))
-                        GLES30.glReadPixels(0, 0, frame.width, frame.height,
-                            GLES30.GL_RGBA, GLES30.GL_UNSIGNED_BYTE, byteBuffer);
-                        val stitchBmp = Bitmap.createBitmap(frame.width, frame.height, Bitmap.Config.ARGB_8888)
-                        stitchBmp.copyPixelsFromBuffer(byteBuffer)
+                        val iamgeInput = frame.toPFIamgeInput();
+                        mPixelFree.processWithBuffer(iamgeInput)
+                        GLES30.glFinish()
+//                        frame.textureID = iamgeInput.textureID;
+//                        val code =GLES30.glGetError()
+//                        Log.d("mjl","GLES30.glGetError()" + code)
+//                        val byteBuffer = ByteBuffer.wrap(ByteArray(frame.data.size))
+//                        GLES30.glReadPixels(0, 0, frame.width, frame.height,
+//                            GLES30.GL_RGBA, GLES30.GL_UNSIGNED_BYTE, byteBuffer);
+//                        val stitchBmp = Bitmap.createBitmap(frame.width, frame.height, Bitmap.Config.ARGB_8888)
+//                        stitchBmp.copyPixelsFromBuffer(byteBuffer)
                     }
 
                     return super.onProcessFrame(frame)
@@ -57,24 +74,26 @@ class MainActivity : AppCompatActivity() {
 
     private fun VideoFrame.toPFIamgeInput(): PFIamgeInput {
         val vf = this
-        OpenGLTools.createTexture(
+        var texture:Int = OpenGLTools.createTexture(
             this.width,
             this.height,
             ByteBuffer.wrap(this.data, 0, this.data.size)
         )
-        vf.textureID = OpenGLTools.textures!![0]
+
+        
+        vf.textureID = texture
         return PFIamgeInput().apply {
-            textureID = OpenGLTools.textures!![0]
+            textureID = texture
             wigth = vf.width
             height = vf.height
-            p_BGRA = vf.data
-            p_Y
-            p_CbCr
-            stride_BGRA = vf.rowStride
-            stride_Y
-            stride_CbCr
+            p_data0 = vf.data
+            p_data1 = vf.data
+            p_data2 = vf.data
+            stride_0 = vf.rowStride
+            stride_1 = vf.rowStride
+            stride_2 = vf.rowStride
             format = PFDetectFormat.PFFORMAT_IMAGE_RGBA
-            rotationMode = PFRotationMode.PFRotationMode0
+            rotationMode = PFRotationMode.PFRotationMode90
         }
     }
 
@@ -91,16 +110,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.btSouLian).setOnClickListener {
-            mPixelFree.pixelFreeSetFiterParam(
-               "heibai",
+            mPixelFree.pixelFreeSetBeautyFiterParam(
+                PFBeautyFiterType.PFBeautyFiterTypeFace_thinning,
                 1f
             )
         }
         findViewById<Button>(R.id.btWhite).setOnClickListener {
-            mPixelFree.pixelFreeSetBeautyFiterParam(
-                PFBeautyFiterType.PFBeautyFiterTypeFaceBlurStrength,
-                1f
-            )
+
         }
     }
 
