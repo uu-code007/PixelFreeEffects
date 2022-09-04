@@ -1,8 +1,8 @@
 package com.liuyue.pixelfreedemo.camera;
 
 public enum CameraFacing {
-    BACK(0),
-    FRONT(1);
+    FRONT(0),
+    BACK(1);
     public int id;
 
     CameraFacing(int id) {

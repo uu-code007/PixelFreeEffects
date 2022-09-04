@@ -1,17 +1,22 @@
 package com.liuyue.pixelfreedemo.camera;
 
+import android.graphics.Bitmap;
 import android.graphics.SurfaceTexture;
-import android.opengl.GLES11Ext;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
+import android.os.Environment;
 import android.util.Log;
 
-import com.liuyue.pixelfreedemo.R;
+import com.liuyue.pixelfreedemo.gl.ExternalTextureConverter;
 import com.liuyue.pixelfreedemo.gl.GLUtils;
-import com.liuyue.pixelfreedemo.utils.AppUtils;
-import com.liuyue.pixelfreedemo.utils.ResourceUtils;
+import com.liuyue.pixelfreedemo.gl.PreviewRenderer;
+import com.liuyue.pixelfreedemo.gl.TextureProcessor;
 
-import java.nio.FloatBuffer;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -22,12 +27,15 @@ public class CameraRender implements GLSurfaceView.Renderer {
 
     private final GLSurfaceView mGLSurfaceView;
     private SurfaceTexture mSurfaceTexture;
+    private int mSurfaceTextureWidth;
+    private int mSurfaceTextureHeight;
+
+    private ExternalTextureConverter mTextureConverter;
+    private TextureProcessor mTextureProcessor;
+    private PreviewRenderer mPreviewRenderer;
 
     private int mOESTextureId;
-    private int mShaderProgram = -1;
-    private FloatBuffer mDataBuffer;
-    private int[] mFBOIds = new int[1];
-    private float[] transformMatrix = new float[16];
+    private final float[] transformMatrix = new float[16];
 
     private VideoFrameListener mVideoFrameListener;
 
@@ -35,6 +43,11 @@ public class CameraRender implements GLSurfaceView.Renderer {
         mGLSurfaceView = glSurfaceView;
         mGLSurfaceView.setEGLContextClientVersion(2);
         mGLSurfaceView.setRenderer(this);
+        mGLSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+
+        mTextureConverter = new ExternalTextureConverter();
+        mTextureProcessor = new TextureProcessor();
+        mPreviewRenderer = new PreviewRenderer();
     }
 
     public void setVideoFrameListener(VideoFrameListener videoFrameListener) {
@@ -45,60 +58,106 @@ public class CameraRender implements GLSurfaceView.Renderer {
         return mSurfaceTexture;
     }
 
+    public void rotate(float degree, float x, float y, float z) {
+        mTextureProcessor.rotate(degree, x, y, z);
+    }
+
+    public void mirror() {
+        mTextureProcessor.mirror();
+    }
+
+    public void scale(float scaleX, float scaleY) {
+        mTextureProcessor.scale(scaleX, scaleY);
+    }
+
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         mOESTextureId = GLUtils.createOESTextureObject();
-        mDataBuffer = GLUtils.createBuffer(GLUtils.VERTEX_DATE);
-        int vertexShader = GLUtils.loadShader(GLES20.GL_VERTEX_SHADER, ResourceUtils.loadStringFromResource(AppUtils.getApp(), R.raw.base_vertex_shader));
-        int fragmentShader = GLUtils.loadShader(GLES20.GL_FRAGMENT_SHADER, ResourceUtils.loadStringFromResource(AppUtils.getApp(), R.raw.base_fragment_shader));
-        mShaderProgram = GLUtils.linkProgram(vertexShader, fragmentShader);
-        GLES20.glGenFramebuffers(1, mFBOIds, 0);
-        GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, mFBOIds[0]);
 
         initSurfaceTexture();
         if (mVideoFrameListener != null) {
             mVideoFrameListener.onSurfaceCreated();
         }
-        Log.i(TAG, "onSurfaceCreated: mFBOId: " + mFBOIds[0]);
     }
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
-        GLES20.glViewport(0, 0, width, height);
+        mSurfaceTextureWidth = width;
+        mSurfaceTextureHeight = height;
+
+        mTextureConverter.setViewportSize(width, height);
+        mTextureProcessor.setViewportSize(width, height);
+        mPreviewRenderer.setViewportSize(width, height);
+
+        Log.e("飞", width + " " + height);
+
+        if (mVideoFrameListener != null) {
+            mVideoFrameListener.onSurfaceChanged(width, height);
+        }
     }
 
     @Override
     public void onDrawFrame(GL10 gl) {
+//        Log.e("飞", ": "+System.currentTimeMillis());
         if (mSurfaceTexture != null) {
             mSurfaceTexture.updateTexImage();
             mSurfaceTexture.getTransformMatrix(transformMatrix);
         }
+        int texId = mTextureConverter.draw(mOESTextureId);
 
-        GLES20.glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+        texId = mTextureProcessor.draw(texId);
 
-        int aPositionLocation = GLES20.glGetAttribLocation(mShaderProgram, GLUtils.POSITION_ATTRIBUTE);
-        int aTextureCoordLocation = GLES20.glGetAttribLocation(mShaderProgram, GLUtils.TEXTURE_COORD_ATTRIBUTE);
-        int uTextureMatrixLocation = GLES20.glGetUniformLocation(mShaderProgram, GLUtils.TEXTURE_MATRIX_UNIFORM);
-        int uTextureSamplerLocation = GLES20.glGetUniformLocation(mShaderProgram, GLUtils.TEXTURE_SAMPLER_UNIFORM);
-
-        GLES20.glActiveTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES);
-        GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, mOESTextureId);
-        GLES20.glUniform1i(uTextureSamplerLocation, 0);
-        GLES20.glUniformMatrix4fv(uTextureMatrixLocation, 1, false, transformMatrix, 0);
-
-        if (mDataBuffer != null) {
-            mDataBuffer.position(0);
-            GLES20.glEnableVertexAttribArray(aPositionLocation);
-            GLES20.glVertexAttribPointer(aPositionLocation, 2, GLES20.GL_FLOAT, false, 16, mDataBuffer);
-
-            mDataBuffer.position(2);
-            GLES20.glEnableVertexAttribArray(aTextureCoordLocation);
-            GLES20.glVertexAttribPointer(aTextureCoordLocation, 2, GLES20.GL_FLOAT, false, 16, mDataBuffer);
+        if (mVideoFrameListener != null) {
+            VideoFrame videoFrame = new VideoFrame(texId, mSurfaceTextureWidth, mSurfaceTextureHeight, mSurfaceTexture.getTimestamp());
+            mVideoFrameListener.onDrawFrame(videoFrame);
+            texId = videoFrame.getTextureId();
         }
 
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
-        GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
+        mPreviewRenderer.draw(texId);
     }
+
+    static int i = 0;
+
+    static void sendImage(int width, int height) {
+        i++;
+        if (i < 30 || i > 40) {
+            return;
+        }
+        ByteBuffer rgbaBuf = ByteBuffer.allocateDirect(width * height * 4);
+        rgbaBuf.position(0);
+        GLES20.glReadPixels(0, 0, width, height, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_BYTE,
+                rgbaBuf);
+        saveRgb2Bitmap(rgbaBuf, Environment.getExternalStorageDirectory().getAbsolutePath()
+                + "/gl_dump_" + i + ".png", width, height);
+    }
+
+    static void saveRgb2Bitmap(Buffer buf, String filename, int width, int height) {
+        BufferedOutputStream bos = null;
+        try {
+            bos = new BufferedOutputStream(new FileOutputStream(filename));
+            Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            bmp.copyPixelsFromBuffer(buf);
+            bmp.compress(Bitmap.CompressFormat.PNG, 90, bos);
+            bmp.recycle();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (bos != null) {
+                try {
+                    bos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void release(){
+        mTextureConverter.release();
+        mTextureProcessor.release();
+        mPreviewRenderer.release();
+    }
+
 
     private void initSurfaceTexture() {
         mSurfaceTexture = new SurfaceTexture(mOESTextureId);

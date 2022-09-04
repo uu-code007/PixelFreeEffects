@@ -12,6 +12,8 @@ import com.liuyue.pixelfreedemo.R;
 import com.liuyue.pixelfreedemo.camera.CameraFacing;
 import com.liuyue.pixelfreedemo.camera.CameraHelper;
 import com.liuyue.pixelfreedemo.camera.CameraSetting;
+import com.liuyue.pixelfreedemo.camera.VideoFrame;
+import com.liuyue.pixelfreedemo.camera.VideoFrameListener;
 import com.liuyue.pixelfreedemo.utils.PermissionUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,7 +25,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        PermissionUtils.request(this, Manifest.permission.CAMERA);
+
+        PermissionUtils.request(this, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        PermissionUtils.requestExternalStorageManager(this);
+
         initCamera();
     }
 
@@ -32,10 +37,33 @@ public class MainActivity extends AppCompatActivity {
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         CameraSetting cameraSetting = new CameraSetting();
-        cameraSetting.setCameraFacing(CameraFacing.FRONT);
+        cameraSetting.setCameraFacing(CameraFacing.BACK);
         mCameraHelper = new CameraHelper(MainActivity.this, cameraSetting);
+        mCameraHelper.setVideoFrameLisener(mVideoFrameListener);
         mCameraHelper.startPreview(mGLSurfaceView);
     }
+
+    private VideoFrameListener mVideoFrameListener = new VideoFrameListener() {
+        @Override
+        public void onSurfaceCreated() {
+
+        }
+
+        @Override
+        public void onSurfaceChanged(int width, int height) {
+
+        }
+
+        @Override
+        public void onDrawFrame(VideoFrame videoFrame) {
+
+        }
+
+        @Override
+        public void onSurfaceDestroy() {
+
+        }
+    };
 
     @Override
     protected void onDestroy() {
