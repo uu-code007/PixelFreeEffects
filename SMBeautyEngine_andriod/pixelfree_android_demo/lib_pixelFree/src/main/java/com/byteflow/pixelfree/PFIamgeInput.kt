@@ -91,12 +91,13 @@ class PFIamgeInput {
     var textureID = 0
     var wigth = 0
     var height = 0
-    var p_BGRA: ByteArray? = null
-    var p_Y: ByteArray? = null
-    var p_CbCr: ByteArray? = null
-    var stride_BGRA = 0
-    var stride_Y = 0
-    var stride_CbCr = 0
+    var p_data0: ByteArray? = null
+    var p_data1: ByteArray? = null
+    var p_data2: ByteArray? = null
+    var stride_0 = 0
+    var stride_1 = 0
+    var stride_2 = 0
     var format: PFDetectFormat? = null
     var rotationMode: PFRotationMode? = null
 }
+

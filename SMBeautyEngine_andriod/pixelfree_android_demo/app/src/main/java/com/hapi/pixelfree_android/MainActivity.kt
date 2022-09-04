@@ -1,9 +1,7 @@
 package com.hapi.pixelfree_android
 
-import android.graphics.Bitmap
 import android.opengl.*
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.byteflow.pixelfree.*
@@ -12,6 +10,7 @@ import com.hapi.avcapture.HapiTrackFactory
 import com.hapi.avparam.VideoFrame
 import com.hapi.avrender.HapiCapturePreView
 import java.nio.ByteBuffer
+import java.util.concurrent.CountDownLatch
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,84 +18,91 @@ class MainActivity : AppCompatActivity() {
         PixelFree()
     }
 
+    val hapiCapturePreView by lazy { findViewById<HapiCapturePreView>(R.id.preview) }
+    var countDownLatch: CountDownLatch = CountDownLatch(1)
     //摄像头轨道
     private val cameTrack by lazy {
         HapiTrackFactory.createCameraXTrack(this, this, 720, 1280).apply {
             frameCall = object : FrameCall<VideoFrame> {
                 //帧回调
-                override fun onFrame(frame: VideoFrame) {}
+                override fun onFrame(frame: VideoFrame) {
 
-                //数据处理回调
-                override fun onProcessFrame(frame: VideoFrame): VideoFrame {
-                    if(!mPixelFree.isCreate()){
-                        OpenGLTools.switchContext()
-                        mPixelFree.create()
-                        val face_fiter = mPixelFree.readBundleFile(this@MainActivity, "face_fiter.bundle")
-                        mPixelFree.createBeautyItemFormBundle(
-                            face_fiter,
-                            face_fiter.size,
-                            PFSrcType.PFSrcTypeFilter
+                    mPixelFree.glThread.runOnGLThread {
+
+                        val texture: Int = mPixelFree.glThread.getTexture(
+                            frame.width,
+                            frame.height,
+                            ByteBuffer.wrap(frame.data, 0, frame.data.size)
                         )
-                    }else{
-                        mPixelFree.processWithBuffer(frame.toPFIamgeInput())
+                        frame.textureID = texture
+                        val pxInput = PFIamgeInput().apply {
+                            textureID = texture
+                            wigth = frame.width
+                            height = frame.height
+                            p_data0 = frame.data
+                            p_data1 = frame.data
+                            p_data2 = frame.data
+                            stride_0 = frame.rowStride
+                            stride_1 = frame.rowStride
+                            stride_2 = frame.rowStride
+                            format = PFDetectFormat.PFFORMAT_IMAGE_RGBA
+                            rotationMode = PFRotationMode.PFRotationMode90
+                        }
+                        mPixelFree.processWithBuffer(pxInput)
+                        countDownLatch.countDown()
                     }
-                    return super.onProcessFrame(frame)
+                    countDownLatch.await()
+                    hapiCapturePreView.onFrame(frame)
                 }
             }
-        }
-    }
-
-    private fun VideoFrame.toPFIamgeInput(): PFIamgeInput {
-        val vf = this
-        OpenGLTools.createTexture(
-            this.width,
-            this.height,
-            ByteBuffer.wrap(this.data, 0, this.data.size)
-        )
-        vf.textureID = OpenGLTools.textures!![0]
-        return PFIamgeInput().apply {
-            textureID = OpenGLTools.textures!![0]
-            wigth = vf.width
-            height = vf.height
-            p_BGRA = vf.data
-            p_Y
-            p_CbCr
-            stride_BGRA = vf.rowStride
-            stride_Y
-            stride_CbCr
-            format = PFDetectFormat.PFFORMAT_IMAGE_RGBA
-            rotationMode = PFRotationMode.PFRotationMode0
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val hapiCapturePreView = findViewById<HapiCapturePreView>(R.id.preview)
-        //如果需要预览视频轨道
-        cameTrack.playerView = hapiCapturePreView
-
+        mPixelFree.glThread.start()
         hapiCapturePreView.mHapiGLSurfacePreview.mOpenGLRender.glCreateCall = {
-            OpenGLTools.load()
-            cameTrack.start()
+            mPixelFree.glThread.attachGLContext {
+                mPixelFree.create()
+                val face_fiter =
+                    mPixelFree.readBundleFile(this@MainActivity, "face_fiter.bundle")
+                mPixelFree.createBeautyItemFormBundle(
+                    face_fiter,
+                    face_fiter.size,
+                    PFSrcType.PFSrcTypeFilter
+                )
+                val face_detect =
+                    mPixelFree.readBundleFile(this@MainActivity, "face_detect.bundle")
+                mPixelFree.createBeautyItemFormBundle(
+                    face_detect,
+                    face_detect.size,
+                    PFSrcType.PFSrcTypeDetect
+                )
+                cameTrack.start()
+            }
         }
 
         findViewById<Button>(R.id.btSouLian).setOnClickListener {
-            mPixelFree.pixelFreeSetFiterParam(
-               "heibai",
+            mPixelFree.pixelFreeSetBeautyFiterParam(
+                PFBeautyFiterType.PFBeautyFiterTypeFace_thinning,
                 1f
             )
         }
         findViewById<Button>(R.id.btWhite).setOnClickListener {
-            mPixelFree.pixelFreeSetBeautyFiterParam(
-                PFBeautyFiterType.PFBeautyFiterTypeFaceBlurStrength,
-                1f
-            )
+            mPixelFree.glThread.runOnGLThread {
+                mPixelFree.pixelFreeSetFiterParam(
+                    "heibai1",
+                    1f
+                )
+            }
         }
     }
 
     override fun onDestroy() {
+        mPixelFree.glThread.runOnGLThread {
+            mPixelFree.release()
+        }
         super.onDestroy()
-        OpenGLTools.release()
     }
 }

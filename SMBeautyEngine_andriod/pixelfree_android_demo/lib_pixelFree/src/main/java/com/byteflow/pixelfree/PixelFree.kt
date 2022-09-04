@@ -1,6 +1,7 @@
 package com.byteflow.pixelfree
 
 import android.content.Context
+import android.opengl.GLES30
 import java.io.InputStream
 
 class PixelFree {
@@ -8,6 +9,14 @@ class PixelFree {
         init {
             System.loadLibrary("pixel")
         }
+    }
+    val glThread = GLThread()
+    private var nativeHandler: Long = -1
+    fun isCreate(): Boolean {
+        return nativeHandler != -1L
+    }
+    fun create() {
+        nativeHandler = native_create()
     }
 
     fun readBundleFile(context: Context, fileName: String): ByteArray {
@@ -24,18 +33,10 @@ class PixelFree {
         return buffer!!
     }
 
-    private var nativeHandler: Long = -1
-    fun isCreate(): Boolean {
-        return nativeHandler != -1L
-    }
-
-    fun create() {
-        nativeHandler = native_create()
-    }
-
     fun release() {
         native_release(nativeHandler)
         nativeHandler=-1
+        glThread.release()
     }
 
     fun processWithBuffer(iamgeInput: PFIamgeInput) {
@@ -47,15 +48,16 @@ class PixelFree {
             iamgeInput.textureID,
             iamgeInput.wigth,
             iamgeInput.height,
-            iamgeInput.p_BGRA ?: ByteArray(0),
-            iamgeInput.p_Y ?: ByteArray(0),
-            iamgeInput.p_CbCr ?: ByteArray(0),
-            iamgeInput.stride_BGRA,
-            iamgeInput.stride_Y,
-            iamgeInput.stride_CbCr,
+            iamgeInput.p_data0 ?: ByteArray(0),
+            iamgeInput.p_data1 ?: ByteArray(0),
+            iamgeInput.p_data2 ?: ByteArray(0),
+            iamgeInput.stride_0,
+            iamgeInput.stride_1,
+            iamgeInput.stride_2,
             iamgeInput.format!!.intFmt,
             iamgeInput.rotationMode!!.intModel
         )
+        GLES30.glFinish()
     }
 
     fun pixelFreeSetBeautyFiterParam(type: PFBeautyFiterType, value: Float) {
@@ -92,12 +94,12 @@ class PixelFree {
         textureID: Int,
         wigth: Int,
         height: Int,
-        p_BGRA: ByteArray? = null,
-        p_Y: ByteArray? = null,
-        p_CbCr: ByteArray? = null,
-        stride_BGRA: Int,
-        stride_Y: Int,
-        stride_CbCr: Int,
+        p_data0: ByteArray? = null,
+        p_data1: ByteArray? = null,
+        p_data2: ByteArray? = null,
+        stride_0: Int,
+        stride_1: Int,
+        stride_2: Int,
         format: Int,
         rotationMode: Int
     )
