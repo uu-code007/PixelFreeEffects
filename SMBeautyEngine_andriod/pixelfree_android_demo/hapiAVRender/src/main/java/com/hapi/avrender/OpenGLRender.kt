@@ -1,6 +1,7 @@
 package com.hapi.avrender
 
 import android.opengl.GLSurfaceView
+import android.util.Log
 import com.hapi.avparam.VideoFrame
 import com.hapi.avparam.VideoRender
 import javax.microedition.khronos.egl.EGLConfig
@@ -66,7 +67,7 @@ class OpenGLRender : GLSurfaceView.Renderer, VideoRender {
     private external fun native_SetTouchLoc(renderHandler: Long, touchX: Float, touchY: Float)
 
     override fun onFrame(frame: VideoFrame) {
-
+        Log.d("hapiplayer"," onFrame(frame: VideoFrame) ${frame.textureID}" )
         native_onFrame(
             renderHandler,
             frame.textureID,

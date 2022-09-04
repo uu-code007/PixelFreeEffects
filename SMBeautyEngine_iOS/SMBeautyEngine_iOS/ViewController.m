@@ -2,12 +2,12 @@
 //  ViewController.m
 //  faceLandmark
 //
-//  Created by 孙慕 on 2021/9/6.
+//  Created by mumu on 2021/9/6.
 //
 
 #import "ViewController.h"
-#import "FUCamera.h"
-#import "FUOpenGLView.h"
+#import "PFCamera.h"
+#import "PFOpenGLView.h"
 
 //face
 //#include <cmath>
@@ -15,20 +15,22 @@
 //#include <string>
 
 // filter
-#include <PixelFree/SMPixelFree.h>
+#import <PixelFree/SMPixelFree.h>
 
-#include <PixelFree/pixelFree_c.hpp>
+#import <PixelFree/pixelFree_c.hpp>
 #import "PFAPIDemoBar.h"
-#import "FUDateHandle.h"
+#import "PFDateHandle.h"
 
-@interface ViewController ()<FUCameraDelegate,PFAPIDemoBarDelegate>
 
-@property (nonatomic,strong) FUCamera *mCamera;
-@property (nonatomic,strong) FUOpenGLView *openGlView;
+@interface ViewController ()<PFCameraDelegate,PFAPIDemoBarDelegate>
+
+@property (nonatomic,strong) PFCamera *mCamera;
+@property (nonatomic,strong) PFOpenGLView *openGlView;
 
 @property (nonatomic,strong) SMPixelFree *mPixelFree;
 
 @property(nonatomic, strong) PFAPIDemoBar *beautyEditView;
+
 
 
 @end
@@ -131,9 +133,9 @@
     }
     
 
-    CFAbsoluteTime endTime = (CFAbsoluteTimeGetCurrent() - startTime);
-
-    NSLog(@"setparms 方法耗时: %f ms", endTime * 1000.0);
+//    CFAbsoluteTime endTime = (CFAbsoluteTimeGetCurrent() - startTime);
+//
+//    NSLog(@"setparms 方法耗时: %f ms", endTime * 1000.0);
 
 }
 
@@ -142,24 +144,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    printf("viewDidLoad-----\n");
     NSString *face_FiltePath = [[NSBundle mainBundle] pathForResource:@"face_fiter.bundle" ofType:nil];
     NSString *face_DetectPath = [[NSBundle mainBundle] pathForResource:@"face_detect.bundle" ofType:nil];
-
+    NSString *authFile = [[NSBundle mainBundle] pathForResource:@"auth.lic" ofType:nil];
+    
     CFAbsoluteTime startTime = CFAbsoluteTimeGetCurrent();
 
-    _mPixelFree = [[SMPixelFree alloc] initWithProcessContext:nil srcFilterPath:face_FiltePath srcDetectPath:face_DetectPath];
+    _mPixelFree = [[SMPixelFree alloc] initWithProcessContext:nil srcFilterPath:face_FiltePath srcDetectPath:face_DetectPath authFile:authFile];
 
     CFAbsoluteTime endTime = (CFAbsoluteTimeGetCurrent() - startTime);
 
-    NSLog(@"createBeautyItemFormBundle 方法耗时: %f ms", endTime * 1000.0);
+//    NSLog(@"createBeautyItemFormBundle 方法耗时: %f ms", endTime * 1000.0);
     
     // Do any additional setup after loading the view.
-    _mCamera = [[FUCamera alloc] init];
+    _mCamera = [[PFCamera alloc] init];
     [_mCamera startCapture];
-//    [_mCamera changeCameraInputDeviceisFront:NO];
+    [_mCamera changeCameraInputDeviceisFront:NO];
     _mCamera.delegate = self;
-    _openGlView = [[FUOpenGLView alloc] initWithFrame:CGRectZero context:_mPixelFree.glContext];
+    _openGlView = [[PFOpenGLView alloc] initWithFrame:CGRectZero context:_mPixelFree.glContext];
     _openGlView.frame = self.view.bounds;
     [self.view addSubview:_openGlView];
     [self.view addSubview:self.beautyEditView];
@@ -168,12 +170,12 @@
 }
 
 -(void)setDefaultParam{
-    NSArray<PFBeautyParam *>* defaultData = [FUDateHandle setupShapData];
+    NSArray<PFBeautyParam *>* defaultData = [PFDateHandle setupShapData];
     for (PFBeautyParam *param in defaultData) {
         [self filterValueChange:param];
     }
     
-    NSArray<PFBeautyParam *>* defaultSkinData = [FUDateHandle setupSkinData];
+    NSArray<PFBeautyParam *>* defaultSkinData = [PFDateHandle setupSkinData];
     for (PFBeautyParam *param in defaultSkinData) {
         [self filterValueChange:param];
     }
@@ -185,13 +187,8 @@
     CVPixelBufferLockBaseAddress(pixbuffer, 0);
     
     if(pixbuffer){
-        CFAbsoluteTime startTime = CFAbsoluteTimeGetCurrent();
-        
-        [_mPixelFree processWithBuffer:pixbuffer];
-
-        CFAbsoluteTime endTime = (CFAbsoluteTimeGetCurrent() - startTime);
-
-        NSLog(@"render 耗时: %f ms", endTime * 1000.0);
+        [_mPixelFree processWithBuffer:pixbuffer rotationMode:PFRotationMode0];
+//        NSLog(@"render 耗时: %f ms", endTime * 1000.0);
     }
     [_openGlView displayPixelBuffer:pixbuffer];
     CVPixelBufferUnlockBaseAddress(pixbuffer, 0);

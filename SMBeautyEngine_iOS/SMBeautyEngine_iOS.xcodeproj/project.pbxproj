@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E35C9B8327732B2C0038B554 /* PixelFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E35C9B8127732B010038B554 /* PixelFree.framework */; platformFilter = ios; };
-		E35C9B8427732B2C0038B554 /* PixelFree.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E35C9B8127732B010038B554 /* PixelFree.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E31B77E428869E7800EDE307 /* auth.lic in Resources */ = {isa = PBXBuildFile; fileRef = E31B77E328869E7800EDE307 /* auth.lic */; };
+		E37B718428AF8697006C4A7A /* PixelFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E37B718128AF8577006C4A7A /* PixelFree.framework */; platformFilter = ios; };
+		E37B718528AF8697006C4A7A /* PixelFree.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E37B718128AF8577006C4A7A /* PixelFree.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E3BD453827474A4E00CB44C9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD453727474A4E00CB44C9 /* AppDelegate.m */; };
 		E3BD453B27474A4E00CB44C9 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD453A27474A4E00CB44C9 /* SceneDelegate.m */; };
 		E3BD453E27474A4E00CB44C9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD453D27474A4E00CB44C9 /* ViewController.m */; };
@@ -29,23 +30,23 @@
 		E3BD458627474A9800CB44C9 /* PFSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD456A27474A9600CB44C9 /* PFSlider.m */; };
 		E3BD458727474A9800CB44C9 /* UIColor+PFAPIDemoBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD456C27474A9600CB44C9 /* UIColor+PFAPIDemoBar.m */; };
 		E3BD458827474A9800CB44C9 /* UIImage+demobar.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD456E27474A9600CB44C9 /* UIImage+demobar.m */; };
-		E3BD458927474A9800CB44C9 /* FUDemoBar.strings in Resources */ = {isa = PBXBuildFile; fileRef = E3BD456F27474A9600CB44C9 /* FUDemoBar.strings */; };
+		E3BD458927474A9800CB44C9 /* PFDemoBar.strings in Resources */ = {isa = PBXBuildFile; fileRef = E3BD456F27474A9600CB44C9 /* PFDemoBar.strings */; };
 		E3BD458A27474A9800CB44C9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E3BD457127474A9600CB44C9 /* Localizable.strings */; };
-		E3BD458B27474A9800CB44C9 /* FUDateHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD457527474A9600CB44C9 /* FUDateHandle.m */; };
-		E3BD458C27474A9800CB44C9 /* FUOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD457827474A9600CB44C9 /* FUOpenGLView.m */; };
-		E3BD458D27474A9800CB44C9 /* FUCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD457927474A9600CB44C9 /* FUCamera.m */; };
+		E3BD458B27474A9800CB44C9 /* PFDateHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD457527474A9600CB44C9 /* PFDateHandle.m */; };
+		E3BD458C27474A9800CB44C9 /* PFOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD457827474A9600CB44C9 /* PFOpenGLView.m */; };
+		E3BD458D27474A9800CB44C9 /* PFCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD457927474A9600CB44C9 /* PFCamera.m */; };
 		E3BD4590274752DC00CB44C9 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E3BD458F274752D700CB44C9 /* libc++.tbd */; };
 		E3BD4592274752E900CB44C9 /* CoreML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3BD4591274752E900CB44C9 /* CoreML.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		E32B81EF2771B4B700BB6667 /* Embed Frameworks */ = {
+		E37B718628AF8697006C4A7A /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E35C9B8427732B2C0038B554 /* PixelFree.framework in Embed Frameworks */,
+				E37B718528AF8697006C4A7A /* PixelFree.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -53,7 +54,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		E35C9B8127732B010038B554 /* PixelFree.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PixelFree.framework; sourceTree = "<group>"; };
+		E31B77E328869E7800EDE307 /* auth.lic */ = {isa = PBXFileReference; lastKnownFileType = file; path = auth.lic; sourceTree = "<group>"; };
+		E37B718128AF8577006C4A7A /* PixelFree.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PixelFree.framework; sourceTree = "<group>"; };
+		E39CFC932874189500D738FF /* DetectFace.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = DetectFace.a; path = ../PixelFreeCxx/DetectFace.a; sourceTree = "<group>"; };
 		E3BD453327474A4E00CB44C9 /* SMBeautyEngine_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SMBeautyEngine_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3BD453627474A4E00CB44C9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E3BD453727474A4E00CB44C9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -68,7 +71,7 @@
 		E3BD454827474A5300CB44C9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E3BD455327474A9400CB44C9 /* face_detect.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = face_detect.bundle; sourceTree = "<group>"; };
 		E3BD455427474A9400CB44C9 /* face_fiter.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = face_fiter.bundle; sourceTree = "<group>"; };
-		E3BD455527474A9400CB44C9 /* FUOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FUOpenGLView.h; sourceTree = "<group>"; };
+		E3BD455527474A9400CB44C9 /* PFOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFOpenGLView.h; sourceTree = "<group>"; };
 		E3BD455A27474A9600CB44C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PFAPIDemoBar.xib; sourceTree = "<group>"; };
 		E3BD455B27474A9600CB44C9 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		E3BD455C27474A9600CB44C9 /* PFAPIDemoBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFAPIDemoBar.h; sourceTree = "<group>"; };
@@ -90,15 +93,15 @@
 		E3BD456C27474A9600CB44C9 /* UIColor+PFAPIDemoBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+PFAPIDemoBar.m"; sourceTree = "<group>"; };
 		E3BD456D27474A9600CB44C9 /* UIImage+demobar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+demobar.h"; sourceTree = "<group>"; };
 		E3BD456E27474A9600CB44C9 /* UIImage+demobar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+demobar.m"; sourceTree = "<group>"; };
-		E3BD457027474A9600CB44C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FUDemoBar.strings; sourceTree = "<group>"; };
+		E3BD457027474A9600CB44C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PFDemoBar.strings; sourceTree = "<group>"; };
 		E3BD457227474A9600CB44C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E3BD457427474A9600CB44C9 /* FUDateHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FUDateHandle.h; sourceTree = "<group>"; };
-		E3BD457527474A9600CB44C9 /* FUDateHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FUDateHandle.m; sourceTree = "<group>"; };
-		E3BD457627474A9600CB44C9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/FUDemoBar.strings"; sourceTree = "<group>"; };
+		E3BD457427474A9600CB44C9 /* PFDateHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFDateHandle.h; sourceTree = "<group>"; };
+		E3BD457527474A9600CB44C9 /* PFDateHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFDateHandle.m; sourceTree = "<group>"; };
+		E3BD457627474A9600CB44C9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/PFDemoBar.strings"; sourceTree = "<group>"; };
 		E3BD457727474A9600CB44C9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		E3BD457827474A9600CB44C9 /* FUOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FUOpenGLView.m; sourceTree = "<group>"; };
-		E3BD457927474A9600CB44C9 /* FUCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FUCamera.m; sourceTree = "<group>"; };
-		E3BD457A27474A9600CB44C9 /* FUCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FUCamera.h; sourceTree = "<group>"; };
+		E3BD457827474A9600CB44C9 /* PFOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFOpenGLView.m; sourceTree = "<group>"; };
+		E3BD457927474A9600CB44C9 /* PFCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFCamera.m; sourceTree = "<group>"; };
+		E3BD457A27474A9600CB44C9 /* PFCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFCamera.h; sourceTree = "<group>"; };
 		E3BD458F274752D700CB44C9 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		E3BD4591274752E900CB44C9 /* CoreML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreML.framework; path = System/Library/Frameworks/CoreML.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -109,7 +112,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E3BD4590274752DC00CB44C9 /* libc++.tbd in Frameworks */,
-				E35C9B8327732B2C0038B554 /* PixelFree.framework in Frameworks */,
+				E37B718428AF8697006C4A7A /* PixelFree.framework in Frameworks */,
 				E3BD4592274752E900CB44C9 /* CoreML.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -120,6 +123,7 @@
 		E3BD452A27474A4E00CB44C9 = {
 			isa = PBXGroup;
 			children = (
+				E37B718128AF8577006C4A7A /* PixelFree.framework */,
 				E3BD453527474A4E00CB44C9 /* SMBeautyEngine_iOS */,
 				E3BD453427474A4E00CB44C9 /* Products */,
 				E3BD458E274752D600CB44C9 /* Frameworks */,
@@ -137,11 +141,10 @@
 		E3BD453527474A4E00CB44C9 /* SMBeautyEngine_iOS */ = {
 			isa = PBXGroup;
 			children = (
-				E35C9B8127732B010038B554 /* PixelFree.framework */,
-				E3BD457A27474A9600CB44C9 /* FUCamera.h */,
-				E3BD457927474A9600CB44C9 /* FUCamera.m */,
-				E3BD455527474A9400CB44C9 /* FUOpenGLView.h */,
-				E3BD457827474A9600CB44C9 /* FUOpenGLView.m */,
+				E3BD457A27474A9600CB44C9 /* PFCamera.h */,
+				E3BD457927474A9600CB44C9 /* PFCamera.m */,
+				E3BD455527474A9400CB44C9 /* PFOpenGLView.h */,
+				E3BD457827474A9600CB44C9 /* PFOpenGLView.m */,
 				E3BD455227474A9400CB44C9 /* res */,
 				E3BD455727474A9600CB44C9 /* View */,
 				E3BD453627474A4E00CB44C9 /* AppDelegate.h */,
@@ -163,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				E3BD455327474A9400CB44C9 /* face_detect.bundle */,
+				E31B77E328869E7800EDE307 /* auth.lic */,
 				E3BD455427474A9400CB44C9 /* face_fiter.bundle */,
 			);
 			path = res;
@@ -200,7 +204,7 @@
 				E3BD456C27474A9600CB44C9 /* UIColor+PFAPIDemoBar.m */,
 				E3BD456D27474A9600CB44C9 /* UIImage+demobar.h */,
 				E3BD456E27474A9600CB44C9 /* UIImage+demobar.m */,
-				E3BD456F27474A9600CB44C9 /* FUDemoBar.strings */,
+				E3BD456F27474A9600CB44C9 /* PFDemoBar.strings */,
 				E3BD457127474A9600CB44C9 /* Localizable.strings */,
 				E3BD457327474A9600CB44C9 /* modle */,
 			);
@@ -210,8 +214,8 @@
 		E3BD457327474A9600CB44C9 /* modle */ = {
 			isa = PBXGroup;
 			children = (
-				E3BD457427474A9600CB44C9 /* FUDateHandle.h */,
-				E3BD457527474A9600CB44C9 /* FUDateHandle.m */,
+				E3BD457427474A9600CB44C9 /* PFDateHandle.h */,
+				E3BD457527474A9600CB44C9 /* PFDateHandle.m */,
 			);
 			path = modle;
 			sourceTree = "<group>";
@@ -219,6 +223,7 @@
 		E3BD458E274752D600CB44C9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E39CFC932874189500D738FF /* DetectFace.a */,
 				E3BD4591274752E900CB44C9 /* CoreML.framework */,
 				E3BD458F274752D700CB44C9 /* libc++.tbd */,
 			);
@@ -235,7 +240,7 @@
 				E3BD452F27474A4E00CB44C9 /* Sources */,
 				E3BD453027474A4E00CB44C9 /* Frameworks */,
 				E3BD453127474A4E00CB44C9 /* Resources */,
-				E32B81EF2771B4B700BB6667 /* Embed Frameworks */,
+				E37B718628AF8697006C4A7A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -290,8 +295,9 @@
 				E3BD454327474A5300CB44C9 /* Assets.xcassets in Resources */,
 				E3BD458A27474A9800CB44C9 /* Localizable.strings in Resources */,
 				E3BD457E27474A9800CB44C9 /* PFAPIDemoBar.xib in Resources */,
+				E31B77E428869E7800EDE307 /* auth.lic in Resources */,
 				E3BD457C27474A9600CB44C9 /* face_fiter.bundle in Resources */,
-				E3BD458927474A9800CB44C9 /* FUDemoBar.strings in Resources */,
+				E3BD458927474A9800CB44C9 /* PFDemoBar.strings in Resources */,
 				E3BD454127474A4E00CB44C9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -307,12 +313,12 @@
 				E3BD458227474A9800CB44C9 /* PFBeautyParam.m in Sources */,
 				E3BD453827474A4E00CB44C9 /* AppDelegate.m in Sources */,
 				E3BD458627474A9800CB44C9 /* PFSlider.m in Sources */,
-				E3BD458C27474A9800CB44C9 /* FUOpenGLView.m in Sources */,
-				E3BD458B27474A9800CB44C9 /* FUDateHandle.m in Sources */,
+				E3BD458C27474A9800CB44C9 /* PFOpenGLView.m in Sources */,
+				E3BD458B27474A9800CB44C9 /* PFDateHandle.m in Sources */,
 				E3BD458427474A9800CB44C9 /* PFBottomColletionView.m in Sources */,
 				E3BD458127474A9800CB44C9 /* PFBeautyEditView.m in Sources */,
 				E3BD458327474A9800CB44C9 /* PFBeautyView.m in Sources */,
-				E3BD458D27474A9800CB44C9 /* FUCamera.m in Sources */,
+				E3BD458D27474A9800CB44C9 /* PFCamera.m in Sources */,
 				E3BD458527474A9800CB44C9 /* PFFilterView.m in Sources */,
 				E3BD458027474A9800CB44C9 /* PFAPIDemoBar.m in Sources */,
 				E3BD454927474A5300CB44C9 /* main.m in Sources */,
@@ -349,13 +355,13 @@
 			name = PFAPIDemoBar.xib;
 			sourceTree = "<group>";
 		};
-		E3BD456F27474A9600CB44C9 /* FUDemoBar.strings */ = {
+		E3BD456F27474A9600CB44C9 /* PFDemoBar.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				E3BD457027474A9600CB44C9 /* en */,
 				E3BD457627474A9600CB44C9 /* zh-Hans */,
 			);
-			name = FUDemoBar.strings;
+			name = PFDemoBar.strings;
 			sourceTree = "<group>";
 		};
 		E3BD457127474A9600CB44C9 /* Localizable.strings */ = {
@@ -374,6 +380,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -433,6 +440,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -490,11 +498,18 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = W2TP34G2MM;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/SMBeautyEngine_iOS",
+					"$(PROJECT_DIR)",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../PixelFreeCxx/Include\"",
+					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Include\"",
+					"\"$(SRCROOT)/../PixelFreeCxx/DetectFace/c\"",
+				);
 				INFOPLIST_FILE = SMBeautyEngine_iOS/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "app 想要访问相机";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "app 想要访问mic";
@@ -508,13 +523,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/SMBeautyEngine_iOS",
-				);
-				MARKETING_VERSION = 1.0;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MARKETING_VERSION = 2.0.1;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "mumu.SMBeautyEngine-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -528,11 +543,18 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = W2TP34G2MM;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/SMBeautyEngine_iOS",
+					"$(PROJECT_DIR)",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../PixelFreeCxx/Include\"",
+					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Include\"",
+					"\"$(SRCROOT)/../PixelFreeCxx/DetectFace/c\"",
+				);
 				INFOPLIST_FILE = SMBeautyEngine_iOS/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "app 想要访问相机";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "app 想要访问mic";
@@ -546,13 +568,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/SMBeautyEngine_iOS",
-				);
-				MARKETING_VERSION = 1.0;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MARKETING_VERSION = 2.0.1;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "mumu.SMBeautyEngine-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

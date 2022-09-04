@@ -2,10 +2,9 @@
 //  PFBeautyView.h
 //  PFAPIDemoBar
 //
-//  Created by L on 2018/6/27.
-//  Copyright © 2018年 L. All rights reserved.
+//  Created by mumu on 2019/11/6.
+//  Copyright © 2019 mmface. All rights reserved.
 //
-
 #import <UIKit/UIKit.h>
 #import "PFDemoBarDefine.h"
 #import "PFBeautyParam.h"

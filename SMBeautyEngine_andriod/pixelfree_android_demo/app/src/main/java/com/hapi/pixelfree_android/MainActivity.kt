@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     val hapiCapturePreView by lazy { findViewById<HapiCapturePreView>(R.id.preview) }
     var countDownLatch: CountDownLatch = CountDownLatch(1)
+
     //摄像头轨道
     private val cameTrack by lazy {
         HapiTrackFactory.createCameraXTrack(this, this, 720, 1280).apply {
@@ -28,7 +29,6 @@ class MainActivity : AppCompatActivity() {
                 override fun onFrame(frame: VideoFrame) {
 
                     mPixelFree.glThread.runOnGLThread {
-
                         val texture: Int = mPixelFree.glThread.getTexture(
                             frame.width,
                             frame.height,
@@ -49,10 +49,13 @@ class MainActivity : AppCompatActivity() {
                             rotationMode = PFRotationMode.PFRotationMode90
                         }
                         mPixelFree.processWithBuffer(pxInput)
-                        countDownLatch.countDown()
+//                        hapiCapturePreView.post {
+                        hapiCapturePreView.onFrame(frame)
+//                        }
+                        //  countDownLatch.countDown()
                     }
-                    countDownLatch.await()
-                    hapiCapturePreView.onFrame(frame)
+//                    countDownLatch.await()
+//                    hapiCapturePreView. onFrame(frame)
                 }
             }
         }

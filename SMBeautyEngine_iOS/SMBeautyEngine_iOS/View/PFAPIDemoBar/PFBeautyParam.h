@@ -1,9 +1,9 @@
 //
 //  PFBeautyParam.h
-//  FULiveDemo
+//  SMEngineDemo
 //
-//  Created by 孙慕 on 2020/1/7.
-//  Copyright © 2020 FaceUnity. All rights reserved.
+//  Created by mumu on 2020/1/7.
+//  Copyright © 2020 mmface. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

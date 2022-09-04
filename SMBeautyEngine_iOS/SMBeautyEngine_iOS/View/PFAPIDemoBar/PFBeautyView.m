@@ -1,9 +1,9 @@
 //
 //  PFBeautyView.m
 //  PFAPIDemoBar
-//
-//  Created by L on 2018/6/27.
-//  Copyright © 2018年 L. All rights reserved.
+
+//  Created by mumu on 2019/11/6.
+//  Copyright © 2019 mmface. All rights reserved.
 //
 
 #import "PFBeautyView.h"
@@ -39,7 +39,7 @@
     
     if (indexPath.row < self.dataArray.count){
         PFBeautyParam *modle = self.dataArray[indexPath.row] ;
-        NSString *imageName ;
+        NSString *imageName  = modle.mTitle;
         
             BOOL opened = YES;
         
@@ -53,12 +53,12 @@
             BOOL selected = _selectedIndex == indexPath.row ;
             
             if (selected) {
-                imageName = opened ? [@"filter" stringByAppendingString:@"-3.png"] : [@"filter" stringByAppendingString:@"-2.png"] ;
+                imageName = opened ? [modle.mTitle stringByAppendingString:@"-3.png"] : [modle.mTitle stringByAppendingString:@"-2.png"] ;
             }else {
-                imageName = opened ? [@"filter" stringByAppendingString:@"-1.png"] : [@"filter" stringByAppendingString:@"-0.png"] ;
+                imageName = opened ? [modle.mTitle stringByAppendingString:@"-1.png"] : [modle.mTitle stringByAppendingString:@"-0.png"] ;
             }
 
-        cell.imageView.image = [UIImage imageWithName:@"face"];
+        cell.imageView.image = [UIImage imageWithName:imageName];
         cell.titleLabel.text = NSLocalizedString(modle.mTitle,nil);
         cell.titleLabel.textColor = _selectedIndex == indexPath.row ? [UIColor colorWithHexColorString:@"5EC7FE"] : [UIColor whiteColor];
     }

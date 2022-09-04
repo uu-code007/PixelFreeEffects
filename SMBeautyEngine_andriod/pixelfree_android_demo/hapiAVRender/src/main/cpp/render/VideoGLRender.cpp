@@ -99,7 +99,7 @@ VideoGLRender::VideoGLRender() {
 
 
 void VideoGLRender::RenderVideoFrame(NativeImage *image) {
-
+    LOGCATE("VideoGLRender::RenderVideoFrame ->textureID! %d", image->textureID);
     int width = image->width;
     int height = image->height;
     int pixel_stride = image->pixelStride;
@@ -177,6 +177,7 @@ void VideoGLRender::RenderVideoFrame(NativeImage *image) {
     m_RenderImage->width = width;
     m_RenderImage->height = height;
     m_RenderImage->format = format;
+    LOGCATE("VideoGLRender::RenderVideoFrame ->textureID! %d", m_RenderImage->textureID);
 }
 
 void VideoGLRender::UnInit() {
@@ -335,16 +336,18 @@ void VideoGLRender::OnSurfaceChanged(int w, int h) {
 void VideoGLRender::OnDrawFrame() {
     glClear(GL_COLOR_BUFFER_BIT);
 
+    bool isRend = m_RenderImage==nullptr;
+
+    LOGCATE("VideoGLRender::OnDrawFrame ->textureID!=-1000 %d]", isRend);
     if (m_RenderImage == nullptr) {
         return;
     }
-    if (m_ProgramObj == GL_NONE || m_RenderImage->ppPlane[0] == nullptr) return;
-
+    LOGCATE("VideoGLRender::OnDrawFrame ->textureID!=-1000 %d]", m_RenderImage->textureID);
+   // if (m_ProgramObj == GL_NONE || m_RenderImage->ppPlane[0] == nullptr) return;
     m_FrameIndex++;
-
     if (m_RenderImage->textureID > 0) {
         m_TextureIds[0] = m_RenderImage->textureID;
-        LOGCATE("VideoGLRender::m_RenderImage->textureID!=-1000 %d]", m_RenderImage->textureID);
+        LOGCATE("VideoGLRender::OnDrawFrame ->textureID!=-1000 %d]", m_RenderImage->textureID);
     } else {
         switch (m_RenderImage->format) {
             case IMAGE_FORMAT_RGBA:

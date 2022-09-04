@@ -23,6 +23,7 @@ Java_com_hapi_avrender_OpenGLRender_native_1onFrame(JNIEnv *env, jobject thiz,
                                                     jint pixel_stride,
                                                     jint row_padding) {
     auto *videoGlRender = reinterpret_cast<VideoGLRender *>(render_handler);
+
     jbyte *c_array = env->GetByteArrayElements(data, 0);
     int len_arr = env->GetArrayLength(data);
     NativeImage videoFrame;

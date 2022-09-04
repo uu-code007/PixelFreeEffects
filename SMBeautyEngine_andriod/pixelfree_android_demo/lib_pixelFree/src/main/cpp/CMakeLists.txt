@@ -12,7 +12,7 @@ set(jnilibs ${CMAKE_SOURCE_DIR}/../jniLibs)
 set(libname pixel)
 
 include_directories(
-        include
+        Include
 )
 
 link_directories(

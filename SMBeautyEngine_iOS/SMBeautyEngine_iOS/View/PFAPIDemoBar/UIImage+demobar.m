@@ -2,8 +2,8 @@
 //  UIImage+demobar.m
 //  PFAPIDemoBar
 //
-//  Created by 刘洋 on 2017/2/16.
-//  Copyright © 2017年 刘洋. All rights reserved.
+//
+//  Created by mumu on 2021/9/6.
 //
 
 #import "UIImage+demobar.h"
