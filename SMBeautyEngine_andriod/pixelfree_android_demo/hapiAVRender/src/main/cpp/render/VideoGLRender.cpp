@@ -117,56 +117,62 @@ void VideoGLRender::RenderVideoFrame(NativeImage *image) {
             m_RenderImage = nullptr;
         }
     }
-    switch (format) {
-        case IMAGE_FORMAT_I420:
-            if (m_RenderImage == nullptr) {
-                m_RenderImage = new NativeImage();
-                m_RenderImage->pLineSize[0] = dataLen;
-                m_RenderImage->ppPlane[0] = static_cast<uint8_t *>(malloc(dataLen));
-            }
-            memcpy(m_RenderImage->ppPlane[0], image->ppPlane[0], dataLen);
-            m_RenderImage->ppPlane[1] = m_RenderImage->ppPlane[0] + width * height;
-            m_RenderImage->ppPlane[2] = m_RenderImage->ppPlane[1] + width * height / 4;
-            break;
-        case IMAGE_FORMAT_NV12:
-        case IMAGE_FORMAT_NV21:
-            if (m_RenderImage == nullptr) {
-                m_RenderImage = new NativeImage();
-                m_RenderImage->pLineSize[0] = dataLen;
-                m_RenderImage->ppPlane[0] = static_cast<uint8_t *>(malloc(dataLen));
-            }
-            memcpy(m_RenderImage->ppPlane[0], image->ppPlane[0], dataLen);
-            m_RenderImage->ppPlane[1] = m_RenderImage->ppPlane[0] + width * height;
-            break;
-        default:
-            //rgba
-            int lenNew = width * height * pixel_stride;
-            if (m_RenderImage == nullptr) {
-                m_RenderImage = new NativeImage();
-                m_RenderImage->pLineSize[0] = lenNew;
-                m_RenderImage->ppPlane[0] = static_cast<uint8_t *>(malloc(lenNew));
-            }
 
-            if (m_RenderImage->pLineSize[0] != lenNew) {
-                m_RenderImage->pLineSize[0] = lenNew;
-                free(m_RenderImage->ppPlane[0]);
-                m_RenderImage->ppPlane[0] = static_cast<uint8_t *>(malloc(lenNew));
-            }
-            if (row_padding > 0) {
-                int row = height;
-                int line = width * pixel_stride;
-                for (int i = 0; i < row; i++) {
-                    int start = line * i;
-                    int start2 = (width * pixel_stride + row_padding) * i;
-                    memcpy(m_RenderImage->ppPlane[0] + start, image->ppPlane[0] + start2, line);
+    if (image->textureID <= 0) {
+        switch (format) {
+            case IMAGE_FORMAT_I420:
+                if (m_RenderImage == nullptr) {
+                    m_RenderImage = new NativeImage();
+                    m_RenderImage->pLineSize[0] = dataLen;
+                    m_RenderImage->ppPlane[0] = static_cast<uint8_t *>(malloc(dataLen));
                 }
-            } else {
                 memcpy(m_RenderImage->ppPlane[0], image->ppPlane[0], dataLen);
-            }
-            break;
-    }
+                m_RenderImage->ppPlane[1] = m_RenderImage->ppPlane[0] + width * height;
+                m_RenderImage->ppPlane[2] = m_RenderImage->ppPlane[1] + width * height / 4;
+                break;
+            case IMAGE_FORMAT_NV12:
+            case IMAGE_FORMAT_NV21:
+                if (m_RenderImage == nullptr) {
+                    m_RenderImage = new NativeImage();
+                    m_RenderImage->pLineSize[0] = dataLen;
+                    m_RenderImage->ppPlane[0] = static_cast<uint8_t *>(malloc(dataLen));
+                }
+                memcpy(m_RenderImage->ppPlane[0], image->ppPlane[0], dataLen);
+                m_RenderImage->ppPlane[1] = m_RenderImage->ppPlane[0] + width * height;
+                break;
+            default:
+                //rgba
+                int lenNew = width * height * pixel_stride;
+                if (m_RenderImage == nullptr) {
+                    m_RenderImage = new NativeImage();
+                    m_RenderImage->pLineSize[0] = lenNew;
+                    m_RenderImage->ppPlane[0] = static_cast<uint8_t *>(malloc(lenNew));
+                }
 
-    m_RenderImage->textureID = image->textureID;
+                if (m_RenderImage->pLineSize[0] != lenNew) {
+                    m_RenderImage->pLineSize[0] = lenNew;
+                    free(m_RenderImage->ppPlane[0]);
+                    m_RenderImage->ppPlane[0] = static_cast<uint8_t *>(malloc(lenNew));
+                }
+                if (row_padding > 0) {
+                    int row = height;
+                    int line = width * pixel_stride;
+                    for (int i = 0; i < row; i++) {
+                        int start = line * i;
+                        int start2 = (width * pixel_stride + row_padding) * i;
+                        memcpy(m_RenderImage->ppPlane[0] + start, image->ppPlane[0] + start2, line);
+                    }
+                } else {
+                    memcpy(m_RenderImage->ppPlane[0], image->ppPlane[0], dataLen);
+                }
+                break;
+        }
+    } else {
+        if (m_RenderImage == nullptr) {
+            m_RenderImage = new NativeImage();
+        }
+        m_RenderImage->textureID = image->textureID;
+    }
     m_RenderImage->rotationDegrees = rotation_degrees;
     m_RenderImage->width = width;
     m_RenderImage->height = height;
@@ -274,7 +280,7 @@ void VideoGLRender::OnSurfaceCreated() {
 
     glGenTextures(TEXTURE_NUM, m_TextureIds);
     for (int i = 0; i < TEXTURE_NUM; ++i) {
-        LOGCATE("VideoGLRender::glGenTextures %d",m_TextureIds[i]);
+        LOGCATE("VideoGLRender::glGenTextures %d", m_TextureIds[i]);
         glActiveTexture(GL_TEXTURE0 + i);
         glBindTexture(GL_TEXTURE_2D, m_TextureIds[i]);
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -336,15 +342,16 @@ void VideoGLRender::OnDrawFrame() {
 
     m_FrameIndex++;
 
-    if(m_RenderImage->textureID!=-1000){
-        m_TextureIds[0]=m_RenderImage->textureID;
-        LOGCATE("VideoGLRender::m_RenderImage->textureID!=-1000 %d]",m_RenderImage->textureID);
-    } else{
+    if (m_RenderImage->textureID > 0) {
+        m_TextureIds[0] = m_RenderImage->textureID;
+        LOGCATE("VideoGLRender::m_RenderImage->textureID!=-1000 %d]", m_RenderImage->textureID);
+    } else {
         switch (m_RenderImage->format) {
             case IMAGE_FORMAT_RGBA:
                 glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, m_TextureIds[0]);
-                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_RenderImage->width, m_RenderImage->height, 0,
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_RenderImage->width, m_RenderImage->height,
+                             0,
                              GL_RGBA,
                              GL_UNSIGNED_BYTE, m_RenderImage->ppPlane[0]);
                 glBindTexture(GL_TEXTURE_2D, GL_NONE);
@@ -395,18 +402,13 @@ void VideoGLRender::OnDrawFrame() {
             default:
                 break;
         }
-
     }
-
     // Use the program object
     glUseProgram(m_ProgramObj);
-
     glBindVertexArray(m_VaoId);
-
     glm::mat4 Model = glm::mat4(1.0f);
     auto radiansZ = -static_cast<float>(MATH_PI / 180.0f * m_RenderImage->rotationDegrees);
     Model = glm::rotate(Model, radiansZ, glm::vec3(0.0f, 0.0f, 1.0f));
-
     GLUtils::setMat4(m_ProgramObj, "u_MVPMatrix", m_MVPMatrix * Model);
 
     for (int i = 0; i < TEXTURE_NUM; ++i) {
@@ -416,9 +418,6 @@ void VideoGLRender::OnDrawFrame() {
         sprintf(samplerName, "s_texture%d", i);
         GLUtils::setInt(m_ProgramObj, samplerName, i);
     }
-
-    //float time = static_cast<float>(fmod(m_FrameIndex, 60) / 50);
-    //GLUtils::setFloat(m_ProgramObj, "u_Time", time);
 
     float offset = (sin(m_FrameIndex * MATH_PI / 40) + 1.0) / 2.0f;
     GLUtils::setFloat(m_ProgramObj, "u_Offset", offset);

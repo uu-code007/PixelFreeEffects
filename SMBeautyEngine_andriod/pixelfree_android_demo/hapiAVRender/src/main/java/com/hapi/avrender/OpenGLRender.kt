@@ -15,11 +15,6 @@ class OpenGLRender : GLSurfaceView.Renderer, VideoRender {
     }
 
     var glCreateCall: (p1: EGLConfig) -> Unit = {
-
-    }
-
-    var glReleaseCall: () -> Unit = {
-
     }
 
     override fun onSurfaceCreated(p0: GL10?, p1: EGLConfig?) {
@@ -38,7 +33,6 @@ class OpenGLRender : GLSurfaceView.Renderer, VideoRender {
     }
 
     fun release() {
-        glReleaseCall.invoke()
         native_release(renderHandler)
     }
 
@@ -79,7 +73,11 @@ class OpenGLRender : GLSurfaceView.Renderer, VideoRender {
             frame.width,
             frame.height,
             frame.format.fmt,
-            frame.data,
+            if (frame.textureID <= 0) {
+                frame.data
+            } else {
+                ByteArray(0)
+            },
             frame.rotationDegrees,
             frame.pixelStride,
             frame.rowPadding

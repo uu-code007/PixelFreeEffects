@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
 
                 //数据处理回调
                 override fun onProcessFrame(frame: VideoFrame): VideoFrame {
-
                     if(!mPixelFree.isCreate()){
                         OpenGLTools.switchContext()
                         mPixelFree.create()
@@ -40,15 +39,7 @@ class MainActivity : AppCompatActivity() {
                         )
                     }else{
                         mPixelFree.processWithBuffer(frame.toPFIamgeInput())
-                        val code =GLES30.glGetError()
-                        Log.d("mjl","GLES30.glGetError()" + code)
-                        val byteBuffer = ByteBuffer.wrap(ByteArray(frame.data.size))
-                        GLES30.glReadPixels(0, 0, frame.width, frame.height,
-                            GLES30.GL_RGBA, GLES30.GL_UNSIGNED_BYTE, byteBuffer);
-                        val stitchBmp = Bitmap.createBitmap(frame.width, frame.height, Bitmap.Config.ARGB_8888)
-                        stitchBmp.copyPixelsFromBuffer(byteBuffer)
                     }
-
                     return super.onProcessFrame(frame)
                 }
             }
