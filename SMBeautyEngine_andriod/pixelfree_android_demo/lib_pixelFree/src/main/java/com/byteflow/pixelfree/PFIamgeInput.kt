@@ -30,6 +30,7 @@ enum class PFSrcType(val intType: Int) {
 
 /* 美颜类型 */
 enum class PFBeautyFiterType(val intType: Int) {
+    //大眼
     PFBeautyFiterTypeFace_EyeStrength(0),
 
     //瘦脸
@@ -65,11 +66,11 @@ enum class PFBeautyFiterType(val intType: Int) {
     //眼距
     PFBeautyFiterTypeFace_eye_space(11),
 
-    //磨皮
-    PFBeautyFiterTypeFaceBlurStrength(12),
 
     //美白
     PFBeautyFiterTypeFaceWhitenStrength(13),
+    //磨皮
+    PFBeautyFiterTypeFaceBlurStrength(12),
 
     //红润
     PFBeautyFiterTypeFaceRuddyStrength(14),
@@ -84,7 +85,7 @@ enum class PFBeautyFiterType(val intType: Int) {
     PFBeautyFiterTypeFaceH_qualityStrength(17),
 
     PFBeautyFiterName(18),
-    PFBeautyFiterStrength(19)
+
 }
 
 class PFIamgeInput {

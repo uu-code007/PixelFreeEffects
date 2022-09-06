@@ -5,6 +5,13 @@
       <map>
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_start.xml" value="0.1734375" />
+        <entry key="lib_pixelFree_uikit/src/main/res/drawable/color_pixe_item_name.xml" value="0.1935" />
+        <entry key="lib_pixelFree_uikit/src/main/res/drawable/color_pixe_op.xml" value="0.174" />
+        <entry key="lib_pixelFree_uikit/src/main/res/drawable/seekbar_thumb.xml" value="0.185" />
+        <entry key="lib_pixelFree_uikit/src/main/res/layout/dialog_pixe.xml" value="0.2942708333333333" />
+        <entry key="lib_pixelFree_uikit/src/main/res/layout/item_beauty.xml" value="0.24739583333333334" />
+        <entry key="lib_pixelFree_uikit/src/main/res/layout/view_indicator_seekbar.xml" value="0.2942708333333333" />
+        <entry key="lib_pixelFree_uikit/src/main/res/layout/view_pixe.xml" value="0.29322916666666665" />
       </map>
     </option>
   </component>

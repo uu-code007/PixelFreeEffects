@@ -34,9 +34,11 @@ class PixelFree {
     }
 
     fun release() {
-        native_release(nativeHandler)
-        nativeHandler=-1
-        glThread.release()
+        glThread.runOnGLThread {
+            native_release(nativeHandler)
+            nativeHandler=-1
+            glThread.release()
+        }
     }
 
     fun processWithBuffer(iamgeInput: PFIamgeInput) {
@@ -84,7 +86,9 @@ class PixelFree {
         if(nativeHandler==-1L){
             return
         }
-        native_pixelFreeSetFiterParam(nativeHandler, filterName, value)
+        glThread.runOnGLThread {
+            native_pixelFreeSetFiterParam(nativeHandler, filterName, value)
+        }
     }
 
     private external fun native_create(): Long

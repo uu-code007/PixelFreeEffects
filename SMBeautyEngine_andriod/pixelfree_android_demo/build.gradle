@@ -1,19 +1,194 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = '1.6.0'
     repositories {
+        maven { url 'https://jitpack.io' }
+        google()
         mavenCentral()
     }
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.android.tools.build:gradle:7.1.2'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10'
+        classpath 'com.github.kezong:fat-aar:1.3.8'
     }
 }
-plugins {
-    id 'com.android.application' version '7.2.1' apply false
-    id 'com.android.library' version '7.2.1' apply false
-    id 'org.jetbrains.kotlin.android' version '1.6.10' apply false
+
+allprojects {
+    /**
+     * 这行代码就是配置依赖版本插件
+     */
+    apply plugin: HapiDependPlugin
+    repositories {
+        maven { url 'https://jitpack.io' }
+        google()
+        jcenter()
+        mavenCentral()
+    }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+/**
+ * 如果拷贝模块依赖报错找不到depend.xxxx
+ * 替换成具体的版本或拷贝依赖版本配置
+ */
+public class HapiDependPlugin implements Plugin<Project> {
+    void apply(Project project) {
+        project.extensions.create("depend", DependsComp)
+    }
+}
+
+/**
+ * 依赖版本统一配置
+ */
+public class DependsComp {
+
+    int compileSdkVersion = 31
+    String buildToolsVersion = "30.0.3"
+
+    int minSdkVersion = 21
+    int targetSdkVersion = 31
+    String androidxVersion = "1.2.0"
+    String designVersion = "1.0.0"
+
+    def lifecycle_version = "2.3.0"
+
+    boolean latest = true
+
+    def appcompat() {
+        return appcompat(androidxVersion)
+    }
+
+    def appcompat(String version) {
+        return "androidx.appcompat:appcompat:${version}"
+    }
+
+    def corektx() {
+        return corektx('1.3.2')
+    }
+
+    def corektx(String version) {
+        return "androidx.core:core-ktx:${version}"
+    }
+
+    def cardview() {
+        return cardview(designVersion)
+    }
+
+    def cardview(String version) {
+        return "androidx.cardview:cardview:${version}"
+    }
+
+    def recyclerview() {
+        return recyclerview("1.1.0")
+    }
+
+    def recyclerview(String version) {
+        return "androidx.recyclerview:recyclerview:${version}"
+    }
+
+    def constraintLayout() {
+        return constraintLayout("2.0.4")
+    }
+
+    def constraintLayout(String version) {
+        return "androidx.constraintlayout:constraintlayout:${version}"
+    }
+
+    def fragment() {
+        fragment("1.2.5")
+    }
+
+    def fragment(String version) {
+        return "androidx.fragment:fragment:${version}"
+    }
+
+    def viewpager() {
+        viewpager(designVersion)
+    }
+
+    def viewpager(String version) {
+        return "androidx.viewpager:viewpager:${version}"
+    }
+
+    def annotations() {
+        annotations(androidxVersion)
+    }
+
+    def annotations(String version) {
+        return "androidx.annotation:annotation:${version}"
+    }
+
+    def coroutines() {
+        return coroutines('1.3.9')
+    }
+
+    def coroutines(String version) {
+        return "org.jetbrains.kotlinx:kotlinx-coroutines-android:${version}"
+    }
+
+    //jitpack
+    def lifecycle() {
+        return lifecycle("2.2.0")
+    }
+
+    def lifecycle(String version) {
+        return "androidx.lifecycle:lifecycle-extensions:${version}"
+    }
+
+    def runtime_ktx() {
+        return "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    }
+
+    def lifecycleCompiler() {
+        return "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    }
+
+    def activityKtx() {
+        return "androidx.activity:activity-ktx:1.1.0"
+    }
+
+    def fragmentKtx() {
+        return "androidx.fragment:fragment-ktx:1.2.5"
+    }
+
+    def swiperefreshlayout() {
+        swiperefreshlayout(designVersion)
+    }
+
+    def swiperefreshlayout(String version) {
+        return "androidx.swiperefreshlayout:swiperefreshlayout:${version}"
+    }
+
+    def glide() {
+        return glide("4.11.0")
+    }
+
+    def glide(String version) {
+        return "com.github.bumptech.glide:glide:${version}"
+    }
+
+    def baseRecyclerViewAdapterHelper() {
+        return baseRecyclerViewAdapterHelper("3.0.8")
+    }
+
+    def baseRecyclerViewAdapterHelper(String version) {
+        return "com.github.CymChad:BaseRecyclerViewAdapterHelper:${version}"
+    }
+
+    def okhttp3(){
+        return okhttp3("4.2.2")
+    }
+
+    def fastjson(){
+        return 'com.alibaba:fastjson:1.1.72.android'
+    }
+    def okLoggingInterceptor(){
+        'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    }
+    def okhttp3(String version) {
+        return "com.squareup.okhttp3:okhttp:${version}"
+    }
+
 }

@@ -15,11 +15,11 @@ internal object OpenGLTools {
         Log.d("mjl", "eglMakeCurrent")
         if (textures == null) {
             // 新建纹理ID
-            textures = IntArray(1)
-            GLES30.glGenTextures(1, textures, 0)
+            textures = IntArray(2)
+            GLES30.glGenTextures(2, textures, 0)
 
         }
-        val index: Int = 0//numIdex % 3;
+        val index: Int = numIdex % 2;
         numIdex++;
         // 绑定纹理ID
         GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, textures!![index])
@@ -74,7 +74,7 @@ internal object OpenGLTools {
 
     fun release() {
         textures?.let {
-            GLES30.glDeleteTextures(1, textures, 0)
+            GLES30.glDeleteTextures(2, textures, 0)
         }
         textures = null
     }

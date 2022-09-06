@@ -9,6 +9,7 @@ class GLThread {
     var mHandlerThread: HandlerThread = HandlerThread("handlerThread")
     private val mWorkHandler by lazy { Handler(mHandlerThread.looper) }
     fun attachGLContext(callback: Runnable) {
+        mHandlerThread.start()
         OpenGLTools.load()
         mWorkHandler.post(Runnable {
             OpenGLTools.bind()
@@ -23,10 +24,6 @@ class GLThread {
 
     fun getTexture(width: Int, height: Int, buffer: ByteBuffer): Int {
         return OpenGLTools.createTexture(width, height, buffer)
-    }
-
-    fun start() {
-        mHandlerThread.start()
     }
 
     fun runOnGLThread(runnable: Runnable) {
