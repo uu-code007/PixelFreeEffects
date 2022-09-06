@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/isb_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="37.5dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="0"
+        android:textSize="11sp" />
+
+    <SeekBar
+        android:id="@+id/isb_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="39.4dp"
+        android:layout_marginRight="38.7dp"
+        android:maxHeight="2dp"
+        android:minHeight="2dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:progressDrawable="@drawable/bg_seekbar_progressbar"
+        android:thumb="@drawable/seekbar_thumb" />
+
+</LinearLayout>

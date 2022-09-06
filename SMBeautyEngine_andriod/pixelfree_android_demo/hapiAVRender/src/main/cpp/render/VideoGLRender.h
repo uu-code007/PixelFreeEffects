@@ -48,7 +48,7 @@ private:
     GLuint m_TextureIds[TEXTURE_NUM]{};
     GLuint m_VaoId{};
     GLuint m_VboIds[3]{};
-    NativeImage *m_RenderImage = nullptr;
+    volatile NativeImage *m_RenderImage = nullptr;
     glm::mat4 m_MVPMatrix;
 
     int m_FrameIndex{};

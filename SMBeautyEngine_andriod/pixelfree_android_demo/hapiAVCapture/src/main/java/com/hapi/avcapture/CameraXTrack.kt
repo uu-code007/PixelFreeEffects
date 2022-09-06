@@ -55,6 +55,7 @@ class CameraXTrack internal constructor(
         cameraProviderFuture.addListener(Runnable {
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
             val cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
+
             try {
                 cameraProvider.unbindAll()
                 cameraProvider.bindToLifecycle(

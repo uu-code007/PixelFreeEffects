@@ -13,21 +13,13 @@
         android:layout_gravity="center" />
 
     <Button
-        android:id="@+id/btSouLian"
+        android:id="@+id/showBeauty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="瘦脸"
+        android:text="美颜"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/btWhite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="美白"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btSouLian" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

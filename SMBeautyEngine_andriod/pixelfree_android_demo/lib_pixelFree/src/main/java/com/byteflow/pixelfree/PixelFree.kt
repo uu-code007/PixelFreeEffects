@@ -1,6 +1,7 @@
 package com.byteflow.pixelfree
 
 import android.content.Context
+import android.opengl.GLES30
 import java.io.InputStream
 
 class PixelFree {
@@ -8,6 +9,14 @@ class PixelFree {
         init {
             System.loadLibrary("pixel")
         }
+    }
+    val glThread = GLThread()
+    private var nativeHandler: Long = -1
+    fun isCreate(): Boolean {
+        return nativeHandler != -1L
+    }
+    fun create() {
+        nativeHandler = native_create()
     }
 
     fun readBundleFile(context: Context, fileName: String): ByteArray {
@@ -24,18 +33,12 @@ class PixelFree {
         return buffer!!
     }
 
-    private var nativeHandler: Long = -1
-    fun isCreate(): Boolean {
-        return nativeHandler != -1L
-    }
-
-    fun create() {
-        nativeHandler = native_create()
-    }
-
     fun release() {
-        native_release(nativeHandler)
-        nativeHandler=-1
+        glThread.runOnGLThread {
+            native_release(nativeHandler)
+            nativeHandler=-1
+            glThread.release()
+        }
     }
 
     fun processWithBuffer(iamgeInput: PFIamgeInput) {
@@ -56,6 +59,7 @@ class PixelFree {
             iamgeInput.format!!.intFmt,
             iamgeInput.rotationMode!!.intModel
         )
+        GLES30.glFinish()
     }
 
     fun pixelFreeSetBeautyFiterParam(type: PFBeautyFiterType, value: Float) {
@@ -82,7 +86,9 @@ class PixelFree {
         if(nativeHandler==-1L){
             return
         }
-        native_pixelFreeSetFiterParam(nativeHandler, filterName, value)
+        glThread.runOnGLThread {
+            native_pixelFreeSetFiterParam(nativeHandler, filterName, value)
+        }
     }
 
     private external fun native_create(): Long

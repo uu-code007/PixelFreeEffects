@@ -1,25 +1,25 @@
-package com.byteflow.pixelfree
+package com.byteflow.pixelfree.gl
 
 import android.opengl.*
 import android.util.Log
 import java.nio.ByteBuffer
 
 
-object OpenGLTools {
-    private var numIdex:Int = 0;
+internal object OpenGLTools {
+    private var numIdex: Int = 0;
     private val mEGLCore = EGLCore()
     var sur: EGLSurface? = null
     var textures: IntArray? = null
+    var context:EGLContext?=null
     fun createTexture(width: Int, height: Int, buffer: ByteBuffer): Int {
-        switchContext()
         Log.d("mjl", "eglMakeCurrent")
         if (textures == null) {
             // 新建纹理ID
-            textures = IntArray(3)
-            GLES30.glGenTextures(3, textures, 0)
+            textures = IntArray(2)
+            GLES30.glGenTextures(2, textures, 0)
 
         }
-        val index:Int = numIdex%3;
+        val index: Int = numIdex % 2;
         numIdex++;
         // 绑定纹理ID
         GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, textures!![index])
@@ -52,24 +52,29 @@ object OpenGLTools {
         // 解绑纹理ID
         GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, 0)
 
-        Log.d("aaa", "toPFIamgeInput: texture --"+index+"textrue"+textures!![index]);
+        Log.d("aaa", "toPFIamgeInput: texture --" + index + "textrue" + textures!![index]);
         return textures!![index];
     }
 
     fun switchContext() {
-        mEGLCore
-            .makeCurrent(sur!!);
+        mEGLCore.makeCurrent(sur!!);
     }
 
     fun load() {
-        val context = EGL14.eglGetCurrentContext();
-        mEGLCore.init(context, EGL_RECORDABLE_ANDROID)
+        context = EGL14.eglGetCurrentContext();
+    }
+
+    fun bind() {
+        mEGLCore.init(context!!, EGL_RECORDABLE_ANDROID)
         sur = mEGLCore.createOffscreenSurface(100, 100)
+    }
+    fun isBind():Boolean{
+        return sur==null
     }
 
     fun release() {
         textures?.let {
-            GLES30.glDeleteTextures(1, textures,0)
+            GLES30.glDeleteTextures(2, textures, 0)
         }
         textures = null
     }

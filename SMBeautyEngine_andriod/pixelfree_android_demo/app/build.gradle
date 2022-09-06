@@ -36,7 +36,7 @@ dependencies {
     implementation project(':hapiAVCapture')
     implementation project(':hapiAVRender')
     implementation project(':lib_pixelFree')
-//    implementation project(':nativelib')
+    implementation project(':lib_pixelFree_uikit')
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.0'

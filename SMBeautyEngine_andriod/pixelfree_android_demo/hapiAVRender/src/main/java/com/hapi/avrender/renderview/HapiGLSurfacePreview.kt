@@ -13,7 +13,7 @@ class HapiGLSurfacePreview : GLSurfaceView, VideoRender {
 
     val mOpenGLRender by lazy { OpenGLRender() }
     var mVideoSizeAdapter = CaptureVideoSizeAdapter()
-    
+
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         setEGLContextClientVersion(2);
@@ -25,9 +25,11 @@ class HapiGLSurfacePreview : GLSurfaceView, VideoRender {
     override fun onFrame(frame: VideoFrame) {
         mOpenGLRender.onFrame(frame)
         if (mVideoSizeAdapter.adaptVideoSize(frame)) {
-            post { requestLayout() }
+            post {
+                requestLayout()
+            }
         }
-        requestRender();
+        requestRender()
     }
 
     override fun onDetachedFromWindow() {
@@ -37,7 +39,10 @@ class HapiGLSurfacePreview : GLSurfaceView, VideoRender {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         mVideoSizeAdapter.onMeasure(widthMeasureSpec, heightMeasureSpec).let {
-            super.onMeasure(MeasureSpec.makeMeasureSpec(it.w,MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(it.h,MeasureSpec.EXACTLY))
+            super.onMeasure(
+                MeasureSpec.makeMeasureSpec(it.w, MeasureSpec.EXACTLY),
+                MeasureSpec.makeMeasureSpec(it.h, MeasureSpec.EXACTLY)
+            )
         }
     }
 }

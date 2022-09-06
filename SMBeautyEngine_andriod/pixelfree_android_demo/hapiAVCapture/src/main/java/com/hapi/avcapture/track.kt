@@ -48,7 +48,6 @@ abstract class IVideoTrack internal constructor() : Track<VideoFrame> {
 
 abstract class IAudioTrack internal constructor() : Track<AudioFrame> {
 
-
     override var frameCall: FrameCall<AudioFrame>? = null
 
     var mAudioRender: AudioRender? = null
