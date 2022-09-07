@@ -9,8 +9,8 @@ import android.widget.SeekBar
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.byteflow.pixelfree.PFBeautyFiterType
-import com.byteflow.pixelfree.PixelFree
+import com.hapi.pixelfree.PFBeautyFiterType
+import com.hapi.pixelfree.PixelFree
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 

@@ -1,4 +1,4 @@
-package com.byteflow.pixelfree.gl
+package com.hapi.pixelfree.gl
 
 import android.graphics.SurfaceTexture
 import android.opengl.*

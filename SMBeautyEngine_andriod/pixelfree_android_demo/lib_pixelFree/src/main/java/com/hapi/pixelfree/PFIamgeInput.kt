@@ -1,4 +1,4 @@
-package com.byteflow.pixelfree
+package com.hapi.pixelfree
 
 
 enum class PFDetectFormat(val intFmt: Int) {
