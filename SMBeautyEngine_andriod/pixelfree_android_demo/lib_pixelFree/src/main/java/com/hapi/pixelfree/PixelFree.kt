@@ -1,8 +1,9 @@
-package com.byteflow.pixelfree
+package com.hapi.pixelfree
 
 import android.content.Context
 import android.opengl.GLES30
 import java.io.InputStream
+import java.nio.ByteBuffer
 
 class PixelFree {
     companion object {
@@ -10,13 +11,18 @@ class PixelFree {
             System.loadLibrary("pixel")
         }
     }
-    val glThread = GLThread()
+
+    private val glThread = GLThread()
     private var nativeHandler: Long = -1
     fun isCreate(): Boolean {
         return nativeHandler != -1L
     }
+
     fun create() {
-        nativeHandler = native_create()
+        glThread.attachGLContext()
+        glThread.runOnGLThread(true) {
+            nativeHandler = native_create()
+        }
     }
 
     fun readBundleFile(context: Context, fileName: String): ByteArray {
@@ -36,44 +42,65 @@ class PixelFree {
     fun release() {
         glThread.runOnGLThread {
             native_release(nativeHandler)
-            nativeHandler=-1
+            nativeHandler = -1
             glThread.release()
         }
     }
 
     fun processWithBuffer(iamgeInput: PFIamgeInput) {
-        if(nativeHandler==-1L){
+        if (nativeHandler == -1L) {
             return
         }
-        native_processWithBuffer(
-            nativeHandler,
-            iamgeInput.textureID,
-            iamgeInput.wigth,
-            iamgeInput.height,
-            iamgeInput.p_data0 ?: ByteArray(0),
-            iamgeInput.p_data1 ?: ByteArray(0),
-            iamgeInput.p_data2 ?: ByteArray(0),
-            iamgeInput.stride_0,
-            iamgeInput.stride_1,
-            iamgeInput.stride_2,
-            iamgeInput.format!!.intFmt,
-            iamgeInput.rotationMode!!.intModel
-        )
-        GLES30.glFinish()
+        glThread.runOnGLThread(true) {
+            if (iamgeInput.textureID <= 0 &&
+                (iamgeInput.format == PFDetectFormat.PFFORMAT_IMAGE_RGBA || iamgeInput.format == PFDetectFormat.PFFORMAT_IMAGE_RGB)
+            ) {
+                val format = when (iamgeInput.format) {
+                    PFDetectFormat.PFFORMAT_IMAGE_RGBA -> GLES30.GL_RGBA
+                    PFDetectFormat.PFFORMAT_IMAGE_RGB -> GLES30.GL_RGB
+                    else -> GLES30.GL_RGBA
+                }
+                iamgeInput.textureID = glThread.getTexture(
+                    format,
+                    iamgeInput.wigth,
+                    iamgeInput.height,
+                    ByteBuffer.wrap(iamgeInput.p_data0!!, 0, iamgeInput.p_data0?.size ?: 0)
+                )
+            }
+            native_processWithBuffer(
+                nativeHandler,
+                iamgeInput.textureID,
+                iamgeInput.wigth,
+                iamgeInput.height,
+                iamgeInput.p_data0 ?: ByteArray(0),
+                iamgeInput.p_data1 ?: ByteArray(0),
+                iamgeInput.p_data2 ?: ByteArray(0),
+                iamgeInput.stride_0,
+                iamgeInput.stride_1,
+                iamgeInput.stride_2,
+                iamgeInput.format!!.intFmt,
+                iamgeInput.rotationMode!!.intModel
+            )
+            GLES30.glFinish()
+        }
     }
 
     fun pixelFreeSetBeautyFiterParam(type: PFBeautyFiterType, value: Float) {
-        if(nativeHandler==-1L){
+        if (nativeHandler == -1L) {
             return
         }
-        native_pixelFreeSetBeautyFiterParam(nativeHandler, type.intType, value)
+        glThread.runOnGLThread {
+            native_pixelFreeSetBeautyFiterParam(nativeHandler, type.intType, value)
+        }
     }
 
     fun createBeautyItemFormBundle(data: ByteArray, size: Int, type: PFSrcType) {
-        if(nativeHandler==-1L){
+        if (nativeHandler == -1L) {
             return
         }
-        native_createBeautyItemFormBundle(nativeHandler, data, size, type.intType)
+        glThread.runOnGLThread {
+            native_createBeautyItemFormBundle(nativeHandler, data, size, type.intType)
+        }
     }
 
     /**
@@ -83,7 +110,7 @@ class PixelFree {
      * @param value
      */
     fun pixelFreeSetFiterParam(filterName: String, value: Float) {
-        if(nativeHandler==-1L){
+        if (nativeHandler == -1L) {
             return
         }
         glThread.runOnGLThread {

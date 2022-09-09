@@ -1,6 +1,6 @@
 package com.hapi.pixelfreeuikit;
 
-import com.byteflow.pixelfree.PFBeautyFiterType;
+import com.hapi.pixelfree.PFBeautyFiterType;
 
 public class BeautyItem {
     public PFBeautyFiterType type;

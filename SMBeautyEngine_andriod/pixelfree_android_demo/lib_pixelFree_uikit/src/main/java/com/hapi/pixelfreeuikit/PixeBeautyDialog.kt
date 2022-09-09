@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioGroup
-import com.byteflow.pixelfree.PFBeautyFiterType
-import com.byteflow.pixelfree.PixelFree
+import com.hapi.pixelfree.PFBeautyFiterType
+import com.hapi.pixelfree.PixelFree
 
 class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
 

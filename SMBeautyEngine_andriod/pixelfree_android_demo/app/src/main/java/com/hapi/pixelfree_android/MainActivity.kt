@@ -1,10 +1,9 @@
 package com.hapi.pixelfree_android
 
-import android.opengl.*
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.byteflow.pixelfree.*
+import com.hapi.pixelfree.*
 import com.hapi.avcapture.FrameCall
 import com.hapi.avcapture.HapiTrackFactory
 import com.hapi.avparam.VideoFrame
@@ -33,31 +32,20 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onProcessFrame(frame: VideoFrame): VideoFrame {
                     if (mPixelFree.isCreate()) {
-                        val countDownLatch = CountDownLatch(1)
-                        mPixelFree.glThread.runOnGLThread {
-                            val texture: Int = mPixelFree.glThread.getTexture(
-                                frame.width,
-                                frame.height,
-                                ByteBuffer.wrap(frame.data, 0, frame.data.size)
-                            )
-                            frame.textureID = texture
-                            val pxInput = PFIamgeInput().apply {
-                                textureID = texture
-                                wigth = frame.width
-                                height = frame.height
-                                p_data0 = frame.data
-                                p_data1 = frame.data
-                                p_data2 = frame.data
-                                stride_0 = frame.rowStride
-                                stride_1 = frame.rowStride
-                                stride_2 = frame.rowStride
-                                format = PFDetectFormat.PFFORMAT_IMAGE_RGBA
-                                rotationMode = PFRotationMode.PFRotationMode90
-                            }
-                            mPixelFree.processWithBuffer(pxInput)
-                            countDownLatch.countDown()
+                        val pxInput = PFIamgeInput().apply {
+                            wigth = frame.width
+                            height = frame.height
+                            p_data0 = frame.data
+                            p_data1 = frame.data
+                            p_data2 = frame.data
+                            stride_0 = frame.rowStride
+                            stride_1 = frame.rowStride
+                            stride_2 = frame.rowStride
+                            format = PFDetectFormat.PFFORMAT_IMAGE_RGBA
+                            rotationMode = PFRotationMode.PFRotationMode90
                         }
-                        countDownLatch.await()
+                        mPixelFree.processWithBuffer(pxInput)
+                        frame.textureID = pxInput.textureID
                     }
                     return super.onProcessFrame(frame)
                 }
@@ -72,25 +60,22 @@ class MainActivity : AppCompatActivity() {
         cameTrack.start()
 
         hapiCapturePreView.mHapiGLSurfacePreview.mOpenGLRender.glCreateCall = {
-            //在当前项目gl环境创建后
-            mPixelFree.glThread.attachGLContext {
-                //在绑定上下文后初始化
-                mPixelFree.create()
-                val face_fiter =
-                    mPixelFree.readBundleFile(this@MainActivity, "face_fiter.bundle")
-                mPixelFree.createBeautyItemFormBundle(
-                    face_fiter,
-                    face_fiter.size,
-                    PFSrcType.PFSrcTypeFilter
-                )
-                val face_detect =
-                    mPixelFree.readBundleFile(this@MainActivity, "face_detect.bundle")
-                mPixelFree.createBeautyItemFormBundle(
-                    face_detect,
-                    face_detect.size,
-                    PFSrcType.PFSrcTypeDetect
-                )
-            }
+            //在绑定上下文后初始化
+            mPixelFree.create()
+            val face_fiter =
+                mPixelFree.readBundleFile(this@MainActivity, "face_fiter.bundle")
+            mPixelFree.createBeautyItemFormBundle(
+                face_fiter,
+                face_fiter.size,
+                PFSrcType.PFSrcTypeFilter
+            )
+            val face_detect =
+                mPixelFree.readBundleFile(this@MainActivity, "face_detect.bundle")
+            mPixelFree.createBeautyItemFormBundle(
+                face_detect,
+                face_detect.size,
+                PFSrcType.PFSrcTypeDetect
+            )
         }
         findViewById<Button>(R.id.showBeauty).setOnClickListener {
             mPixeBeautyDialog.show(supportFragmentManager, "")

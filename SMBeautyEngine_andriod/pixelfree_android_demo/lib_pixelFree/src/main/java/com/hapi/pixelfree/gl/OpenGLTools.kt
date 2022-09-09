@@ -1,4 +1,4 @@
-package com.byteflow.pixelfree.gl
+package com.hapi.pixelfree.gl
 
 import android.opengl.*
 import android.util.Log
@@ -11,7 +11,7 @@ internal object OpenGLTools {
     var sur: EGLSurface? = null
     var textures: IntArray? = null
     var context:EGLContext?=null
-    fun createTexture(width: Int, height: Int, buffer: ByteBuffer): Int {
+    fun createTexture(format:Int,width: Int, height: Int, buffer: ByteBuffer): Int {
         Log.d("mjl", "eglMakeCurrent")
         if (textures == null) {
             // 新建纹理ID
@@ -25,7 +25,7 @@ internal object OpenGLTools {
         GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, textures!![index])
         // 根据颜色参数，宽高等信息，为上面的纹理ID，生成一个2D纹理
         GLES30.glTexImage2D(
-            GLES30.GL_TEXTURE_2D, 0, GLES30.GL_RGBA, width, height,
+            GLES30.GL_TEXTURE_2D, 0, format, width, height,
             0, GLES30.GL_RGBA, GLES30.GL_UNSIGNED_BYTE, buffer
         )
         // 设置纹理边缘参数

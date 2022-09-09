@@ -9,14 +9,14 @@ extern "C"
 
 extern "C"
 JNIEXPORT jlong JNICALL
-Java_com_byteflow_pixelfree_PixelFree_native_1create(JNIEnv *env, jobject thiz) {
+Java_com_hapi_pixelfree_PixelFree_native_1create(JNIEnv *env, jobject thiz) {
     PFPixelFree *px;
     px = PF_NewPixelFree();
     return reinterpret_cast<jlong>(px);
 }
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_byteflow_pixelfree_PixelFree_native_1release(JNIEnv *env, jobject thiz, jlong handler) {
+Java_com_hapi_pixelfree_PixelFree_native_1release(JNIEnv *env, jobject thiz, jlong handler) {
     __android_log_print(ANDROID_LOG_INFO, "mjl", "native_1release-----");
     auto *px = reinterpret_cast<PFPixelFree *>(handler);
     __android_log_print(ANDROID_LOG_INFO, "mjl", "native_3release-----");
@@ -27,7 +27,7 @@ Java_com_byteflow_pixelfree_PixelFree_native_1release(JNIEnv *env, jobject thiz,
 #define PFLOG(fmt, ...) __android_log_print(ANDROID_LOG_INFO, QNVTLOG_TAG, fmt, ##__VA_ARGS__);
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_byteflow_pixelfree_PixelFree_native_1processWithBuffer(JNIEnv *env, jobject thiz,
+Java_com_hapi_pixelfree_PixelFree_native_1processWithBuffer(JNIEnv *env, jobject thiz,
                                                                 jlong handler, jint texture_id,
                                                                 jint wigth, jint height,
                                                                 jbyteArray p__data0, jbyteArray p__data1,
@@ -71,7 +71,7 @@ Java_com_byteflow_pixelfree_PixelFree_native_1processWithBuffer(JNIEnv *env, job
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_byteflow_pixelfree_PixelFree_native_1pixelFreeSetBeautyFiterParam(JNIEnv *env,
+Java_com_hapi_pixelfree_PixelFree_native_1pixelFreeSetBeautyFiterParam(JNIEnv *env,
                                                                            jobject thiz,
                                                                            jlong handler, jint type,
                                                                            jfloat value) {
@@ -83,7 +83,7 @@ Java_com_byteflow_pixelfree_PixelFree_native_1pixelFreeSetBeautyFiterParam(JNIEn
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_byteflow_pixelfree_PixelFree_native_1createBeautyItemFormBundle(JNIEnv *env, jobject thiz,
+Java_com_hapi_pixelfree_PixelFree_native_1createBeautyItemFormBundle(JNIEnv *env, jobject thiz,
                                                                          jlong handler,
                                                                          jbyteArray data, jint size,
                                                                          jint type) {
@@ -95,7 +95,7 @@ Java_com_byteflow_pixelfree_PixelFree_native_1createBeautyItemFormBundle(JNIEnv 
 }
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_byteflow_pixelfree_PixelFree_native_1pixelFreeSetFiterParam(JNIEnv *env, jobject thiz,
+Java_com_hapi_pixelfree_PixelFree_native_1pixelFreeSetFiterParam(JNIEnv *env, jobject thiz,
                                                                      jlong handler,
                                                                      jstring filter_name,
                                                                      jfloat value) {
