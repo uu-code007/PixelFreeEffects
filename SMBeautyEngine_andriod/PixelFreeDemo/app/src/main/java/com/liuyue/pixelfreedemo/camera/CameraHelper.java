@@ -22,7 +22,6 @@ import android.view.Surface;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
-import androidx.camera.core.CameraX;
 import androidx.core.app.ActivityCompat;
 
 import java.util.ArrayList;
@@ -30,7 +29,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 public class CameraHelper {
     private static final String TAG = "CameraHelper";

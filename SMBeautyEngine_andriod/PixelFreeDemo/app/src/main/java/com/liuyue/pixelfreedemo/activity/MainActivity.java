@@ -14,12 +14,15 @@ import com.liuyue.pixelfreedemo.camera.CameraHelper;
 import com.liuyue.pixelfreedemo.camera.CameraSetting;
 import com.liuyue.pixelfreedemo.camera.VideoFrame;
 import com.liuyue.pixelfreedemo.camera.VideoFrameListener;
+import com.liuyue.pixelfreedemo.core.EffectProcessor;
 import com.liuyue.pixelfreedemo.utils.PermissionUtils;
 
 public class MainActivity extends AppCompatActivity {
 
     private GLSurfaceView mGLSurfaceView;
     private CameraHelper mCameraHelper;
+
+    private EffectProcessor mEffectProcessor;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         PermissionUtils.requestExternalStorageManager(this);
 
         initCamera();
+        mEffectProcessor = new EffectProcessor();
     }
 
     private void initCamera() {
