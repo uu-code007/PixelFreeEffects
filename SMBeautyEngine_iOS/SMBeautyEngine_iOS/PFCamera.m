@@ -56,7 +56,7 @@ typedef void(^PFCameraRecordVidepCompleted)(NSString *videoPath);
 {
     if (self = [super init]) {
         self.cameraPosition = AVCaptureDevicePositionFront;
-        self.captureFormat = kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange;
+        self.captureFormat = kCVPixelFormatType_32BGRA;// kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange;//
         videoHDREnabled = YES;
     }
     return self;

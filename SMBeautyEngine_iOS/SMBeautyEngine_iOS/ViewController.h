@@ -6,8 +6,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <PixelFree/SMPixelFree.h>
 
 @interface ViewController : UIViewController
+
+@property (nonatomic,strong) SMPixelFree *mPixelFree;
 
 
 @end

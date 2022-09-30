@@ -23,33 +23,61 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E290D68A-42ED-41C8-829B-621948C8BD15"
+            uuid = "1A6AA88A-B257-4DEF-A7E8-E4FC6B01145B"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../PixelFreeCxx/PixelFree/GL/fiter/PFBeautyShapFilter.hpp"
+            filePath = "../PixelFreeCxx/PixelFree/Common/PFFaceWarp.cc"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
-            landmarkName = "onDraw(SamplerY_texId, SamplerU_texId, SamplerV_texId, positionCords, textureCords)"
+            startingLineNumber = "712"
+            endingLineNumber = "712"
+            landmarkName = "PFFaceWarp::ProcessFaceWarp(grid, segN, landmarks)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7D58DC5A-4E6E-499C-BF8A-0305AB22142B"
+            uuid = "7F417EF1-9001-4685-AEC5-B37718D89722"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../PixelFreeCxx/PixelFree/Common/beautyFilterContext.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
             landmarkName = "beautyFilterContext:: ~beautyFilterContext()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A7E6666C-7A37-4C8B-84E7-0F66A6C882BC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../PixelFreeCxx/PixelFree/Include/SMPixelFree.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "382"
+            endingLineNumber = "382"
+            landmarkName = "-dealloc"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
+         <BreakpointContent
+            uuid = "D4EC6E6A-CE9F-4265-AC6C-59E05901A306"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            breakpointStackSelectionBehavior = "1"
+            scope = "1"
+            stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
