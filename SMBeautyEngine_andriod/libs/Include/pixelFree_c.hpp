@@ -67,8 +67,8 @@ typedef struct {
   int stride_1;
   int stride_2;
     
-  int format;
-  int rotationMode;
+  PFDetectFormat format;
+  PFRotationMode rotationMode;
 } PFIamgeInput;
 
 typedef struct {
@@ -98,7 +98,7 @@ typedef enum PFBeautyFiterType{
     //人中
     PFBeautyFiterTypeFace_philtrum,
     //长鼻
-    PFBeautyFiterTypeFace_long_nose,
+    PFBeautyFiterTypeFace_long_nose = 10,
     //眼距
     PFBeautyFiterTypeFace_eye_space,
     //磨皮
