@@ -62,6 +62,8 @@ class MainActivity : AppCompatActivity() {
         hapiCapturePreView.mHapiGLSurfacePreview.mOpenGLRender.glCreateCall = {
             //在绑定上下文后初始化
             mPixelFree.create()
+            val authData = mPixelFree.readBundleFile(this@MainActivity, "pixelfreeAuth.lic")
+            mPixelFree.auth(this.applicationContext, authData, authData.size)
             val face_fiter =
                 mPixelFree.readBundleFile(this@MainActivity, "face_fiter.bundle")
             mPixelFree.createBeautyItemFormBundle(
@@ -71,6 +73,7 @@ class MainActivity : AppCompatActivity() {
             )
             val face_detect =
                 mPixelFree.readBundleFile(this@MainActivity, "face_detect.bundle")
+
             mPixelFree.createBeautyItemFormBundle(
                 face_detect,
                 face_detect.size,

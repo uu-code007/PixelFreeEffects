@@ -77,6 +77,7 @@ internal object OpenGLTools {
             GLES30.glDeleteTextures(2, textures, 0)
         }
         textures = null
+        mEGLCore.release()
     }
 
 }
