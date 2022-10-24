@@ -25,6 +25,13 @@ class PixelFree {
         }
     }
 
+    fun auth(context: Context, data: ByteArray, size: Int) {
+        if (nativeHandler == -1L) {
+            return
+        }
+        native_auth(nativeHandler, context, data, size)
+    }
+
     fun readBundleFile(context: Context, fileName: String): ByteArray {
         var buffer: ByteArray? = null
         try {
@@ -45,6 +52,7 @@ class PixelFree {
             nativeHandler = -1
             glThread.release()
         }
+
     }
 
     fun processWithBuffer(iamgeInput: PFIamgeInput) {
@@ -119,6 +127,7 @@ class PixelFree {
     }
 
     private external fun native_create(): Long
+    private external fun native_auth(handler: Long, context: Context, data: ByteArray, size: Int)
     private external fun native_release(handler: Long)
     private external fun native_processWithBuffer(
         handler: Long,
