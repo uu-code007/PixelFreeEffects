@@ -1,7 +1,6 @@
 
 include ':app'
-include ':hapiAVCapture'
-include ':baseAVParam'
+
 include ':hapiAVRender'
 include ':lib_pixelFree'
 //include ':nativelib'

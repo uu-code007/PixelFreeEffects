@@ -90,8 +90,11 @@ Java_com_hapi_pixelfree_PixelFree_native_1createBeautyItemFormBundle(JNIEnv *env
     auto *px = reinterpret_cast<PFPixelFree *>(handler);
     jbyte *c_array = env->GetByteArrayElements(data, 0);
     int len_arr = env->GetArrayLength(data);
+
     PF_createBeautyItemFormBundle(px, reinterpret_cast<uint8_t *>(c_array), size,
                                   static_cast<PFSrcType>(type));
+
+    env->ReleaseByteArrayElements(data, c_array, 0);
 }
 extern "C"
 JNIEXPORT void JNICALL
@@ -106,4 +109,26 @@ Java_com_hapi_pixelfree_PixelFree_native_1pixelFreeSetFiterParam(JNIEnv *env, jo
     PF_pixelFreeSetBeautyFiterParam(px, PFBeautyFiterName, (void *)str);
     PF_pixelFreeSetBeautyFiterParam(px, PFBeautyFiterStrength, &value);
     env->ReleaseStringUTFChars( filter_name, str);
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_hapi_pixelfree_PixelFree_native_1auth(JNIEnv *env, jobject thiz, jlong handler,
+                                               jobject context, jbyteArray data, jint size) {
+
+    auto *px = reinterpret_cast<PFPixelFree *>(handler);
+    jbyte *c_array = env->GetByteArrayElements(data, 0);
+    jclass activity = env->GetObjectClass(context);
+    __android_log_print(ANDROID_LOG_INFO, "mjl", "activity-----");
+    jmethodID methodId_pack = env->GetMethodID(activity, "getPackageName", "()Ljava/lang/String;");
+    __android_log_print(ANDROID_LOG_INFO, "mjl", "methodId_pack-----");
+
+    const char* str;
+    jboolean isCopy;
+    jstring name_str = static_cast<jstring >( env->CallObjectMethod(context, methodId_pack));
+    str = env->GetStringUTFChars(name_str, &isCopy);
+    __android_log_print(ANDROID_LOG_INFO, "mjl", "name_str----- %s",str);
+    PF_pixelFreeSetBeautyFiterParam(px, PFAppBundleId, (void *)str);
+    PF_createBeautyItemFormBundle(px, reinterpret_cast<uint8_t *>(c_array), size,
+                                  PFSrcTypeAuthFile);
+    env->ReleaseByteArrayElements(data, c_array, 0);
 }
