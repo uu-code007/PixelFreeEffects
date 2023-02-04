@@ -110,6 +110,15 @@
 
     }
 
+    if(param.type == FUDataTypeMakeup){
+
+    }
+
+
+//    CFAbsoluteTime endTime = (CFAbsoluteTimeGetCurrent() - startTime);
+//
+//    NSLog(@"setparms 方法耗时: %f ms", endTime * 1000.0);
+
 }
 
 
@@ -120,6 +129,8 @@
     [self initPixelFree];
     
     [self setDefaultParam];
+
+    
 }
 
 -(void)initPixelFree{
@@ -130,6 +141,8 @@
     CFAbsoluteTime startTime = CFAbsoluteTimeGetCurrent();
 
     self.mPixelFree = [[SMPixelFree alloc] initWithProcessContext:nil srcFilterPath:face_FiltePath srcDetectPath:face_DetectPath authFile:authFile];
+    
+    NSLog(@"mPixelFree retain  count = %ld\n",CFGetRetainCount((__bridge  CFTypeRef)(self.mPixelFree)));
 
     CFAbsoluteTime endTime = (CFAbsoluteTimeGetCurrent() - startTime);
 

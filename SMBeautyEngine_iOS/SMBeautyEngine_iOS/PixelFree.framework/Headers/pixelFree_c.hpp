@@ -76,6 +76,12 @@ typedef struct {
   char *imagePath;
 } PFFiter;
 
+typedef struct {
+    bool isOpenLvmu;//false
+    bool isVideo;//false
+    const char *bgSrcPath;
+} PFFiterLvmuSetting;
+
 /* 美颜类型 */
 typedef enum PFBeautyFiterType{
     PFBeautyFiterTypeFace_EyeStrength = 0,
@@ -98,7 +104,7 @@ typedef enum PFBeautyFiterType{
     //人中
     PFBeautyFiterTypeFace_philtrum,
     //长鼻
-    PFBeautyFiterTypeFace_long_nose,
+    PFBeautyFiterTypeFace_long_nose = 10,
     //眼距
     PFBeautyFiterTypeFace_eye_space,
     //磨皮
@@ -113,10 +119,12 @@ typedef enum PFBeautyFiterType{
     PFBeautyFiterTypeFaceM_newWhitenStrength,
     //画质增强
     PFBeautyFiterTypeFaceH_qualityStrength,
-    
+
     PFBeautyFiterName,
     PFBeautyFiterStrength,
-    PFAppBundleId //
+    PFAppBundleId, //
+    
+    PFBeautyFiterLvmu,
     
 } PFBeautyFiterType;
 

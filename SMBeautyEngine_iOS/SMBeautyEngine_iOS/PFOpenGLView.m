@@ -442,7 +442,7 @@ enum
     
     CVPixelBufferRetain(pixelBuffer);
     CVPixelBufferLockBaseAddress(pixelBuffer, 0);
-//    dispatch_async(_contextQueue, ^{  //dispatch_sync  iphone8p 可能死锁
+    dispatch_async(_contextQueue, ^{  //dispatch_sync  iphone8p 可能死锁
         self->frameWidth = (int)CVPixelBufferGetWidth(pixelBuffer);
         self->frameHeight = (int)CVPixelBufferGetHeight(pixelBuffer);
         
@@ -467,7 +467,7 @@ enum
         
         CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
         CVPixelBufferRelease(pixelBuffer);
-//    });
+    });
 }
 
 - (void)displayImageData:(void *)imageData withSize:(CGSize)size{

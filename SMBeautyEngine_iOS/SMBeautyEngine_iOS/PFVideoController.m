@@ -25,6 +25,10 @@
     _openGlView = [[PFOpenGLView alloc] initWithFrame:CGRectZero context:self.mPixelFree.glContext];
     _openGlView.frame = self.view.bounds;
     [self.view insertSubview:self.openGlView atIndex:0];
+    
+    UIBarButtonItem *btnItem = [[UIBarButtonItem alloc] initWithTitle:@"绿幕分割开关" style:UIBarButtonItemStyleBordered target:self action:@selector(aclick:)];
+     
+    self.navigationItem.rightBarButtonItem = btnItem;
 }
 
 -(void)didOutputVideoSampleBuffer:(CMSampleBufferRef)sampleBuffer{
@@ -33,10 +37,21 @@
     
     if(pixbuffer){
         [self.mPixelFree processWithBuffer:pixbuffer rotationMode:PFRotationMode0];
-//        NSLog(@"render 耗时: %f ms", endTime * 1000.0);
     }
     [_openGlView displayPixelBuffer:pixbuffer];
     CVPixelBufferUnlockBaseAddress(pixbuffer, 0);
 }
+
+-(void)aclick:(UIButton *)btn{
+    btn.selected = !btn.selected;
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"image.jpeg" ofType:nil];
+    PFFiterLvmuSetting setting;
+    setting.bgSrcPath = [path UTF8String];
+    setting.isOpenLvmu = btn.selected;
+    
+    [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterLvmu value:(void *)&setting];
+}
+
+
 
 @end

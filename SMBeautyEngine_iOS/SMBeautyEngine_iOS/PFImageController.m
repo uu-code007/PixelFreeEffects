@@ -25,7 +25,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     _imageView = [[UIImageView alloc] init];
-    _image = [UIImage imageNamed:@"IMG_2403"];
+//    _image = [UIImage imageNamed:@"IMG_2403"];
+    _image = [UIImage imageNamed:@"image_00"];
     _imageView.image = _image;
     _imageView.frame = self.view.bounds;
     _imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -51,6 +52,10 @@
         });
     }
     
+}
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    _image = [UIImage imageNamed:@"IMG_2424.PNG"];
 }
 
 

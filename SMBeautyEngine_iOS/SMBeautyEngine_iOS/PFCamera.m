@@ -56,7 +56,7 @@ typedef void(^PFCameraRecordVidepCompleted)(NSString *videoPath);
 {
     if (self = [super init]) {
         self.cameraPosition = AVCaptureDevicePositionFront;
-        self.captureFormat = kCVPixelFormatType_32BGRA;// kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange;//
+        self.captureFormat = kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange;//kCVPixelFormatType_32BGRA;//
         videoHDREnabled = YES;
     }
     return self;
@@ -68,9 +68,12 @@ typedef void(^PFCameraRecordVidepCompleted)(NSString *videoPath);
     if (![self.captureSession isRunning] && !hasStarted) {
         hasStarted = YES;
 //        [self addAudio];
-        [self.captureSession startRunning];
-        /* 设置曝光中点 */
-        [self focusWithMode:AVCaptureFocusModeContinuousAutoFocus exposeWithMode:AVCaptureExposureModeContinuousAutoExposure atDevicePoint:CGPointMake(0.5, 0.5) monitorSubjectAreaChange:YES];
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            [self.captureSession startRunning];
+            /* 设置曝光中点 */
+            [self focusWithMode:AVCaptureFocusModeContinuousAutoFocus exposeWithMode:AVCaptureExposureModeContinuousAutoExposure atDevicePoint:CGPointMake(0.5, 0.5) monitorSubjectAreaChange:YES];
+        });
+
     }
 }
 
