@@ -7,11 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E32C9FDA28E67BB200FB225E /* PixelFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E32C9FD828E67B7600FB225E /* PixelFree.framework */; platformFilter = ios; };
-		E32C9FDB28E67BB200FB225E /* PixelFree.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E32C9FD828E67B7600FB225E /* PixelFree.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		E32C9FE228E69B4000FB225E /* pixelfreeAuth.lic in Resources */ = {isa = PBXBuildFile; fileRef = E32C9FE128E69B4000FB225E /* pixelfreeAuth.lic */; };
+		E31A9AC02903913400AF311C /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E31A9ABD2903913400AF311C /* CoreImage.framework */; };
+		E32C9FE028E69A3300FB225E /* pixelfreeAuth.lic in Resources */ = {isa = PBXBuildFile; fileRef = E32C9FDF28E69A3300FB225E /* pixelfreeAuth.lic */; };
 		E335682728E5883C00551FB3 /* PFImageController.m in Sources */ = {isa = PBXBuildFile; fileRef = E335682628E5883C00551FB3 /* PFImageController.m */; };
 		E335683028E5897600551FB3 /* PFVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = E335682F28E5897600551FB3 /* PFVideoController.m */; };
+		E3794064298E99B500E11A90 /* PixelFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3794062298E995300E11A90 /* PixelFree.framework */; };
+		E3794065298E99B500E11A90 /* PixelFree.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E3794062298E995300E11A90 /* PixelFree.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E3B90820298E527300B96ADF /* bg.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = E3B9081D298E527300B96ADF /* bg.jpeg */; };
+		E3B90822298E6E1A00B96ADF /* image.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = E3B90821298E6E1A00B96ADF /* image.jpeg */; };
+		E3BBBA04295C274A00306BD9 /* PFMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BBBA03295C274A00306BD9 /* PFMainViewController.m */; };
 		E3BD453827474A4E00CB44C9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD453727474A4E00CB44C9 /* AppDelegate.m */; };
 		E3BD453B27474A4E00CB44C9 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD453A27474A4E00CB44C9 /* SceneDelegate.m */; };
 		E3BD453E27474A4E00CB44C9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD453D27474A4E00CB44C9 /* ViewController.m */; };
@@ -42,13 +46,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		E32C9FDC28E67BB200FB225E /* Embed Frameworks */ = {
+		E3794066298E99B600E11A90 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E32C9FDB28E67BB200FB225E /* PixelFree.framework in Embed Frameworks */,
+				E3794065298E99B500E11A90 /* PixelFree.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -56,13 +60,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		E32C9FD828E67B7600FB225E /* PixelFree.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PixelFree.framework; sourceTree = "<group>"; };
-		E32C9FE128E69B4000FB225E /* pixelfreeAuth.lic */ = {isa = PBXFileReference; lastKnownFileType = file; path = pixelfreeAuth.lic; sourceTree = "<group>"; };
+		E31A9ABD2903913400AF311C /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		E32C9FDF28E69A3300FB225E /* pixelfreeAuth.lic */ = {isa = PBXFileReference; lastKnownFileType = file; path = pixelfreeAuth.lic; sourceTree = "<group>"; };
 		E335682528E5883C00551FB3 /* PFImageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFImageController.h; sourceTree = "<group>"; };
 		E335682628E5883C00551FB3 /* PFImageController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PFImageController.m; sourceTree = "<group>"; };
 		E335682E28E5897600551FB3 /* PFVideoController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFVideoController.h; sourceTree = "<group>"; };
 		E335682F28E5897600551FB3 /* PFVideoController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PFVideoController.m; sourceTree = "<group>"; };
+		E3794062298E995300E11A90 /* PixelFree.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PixelFree.framework; sourceTree = "<group>"; };
 		E39CFC932874189500D738FF /* DetectFace.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = DetectFace.a; path = ../PixelFreeCxx/DetectFace.a; sourceTree = "<group>"; };
+		E3B9081D298E527300B96ADF /* bg.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpeg; sourceTree = "<group>"; };
+		E3B90821298E6E1A00B96ADF /* image.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image.jpeg; sourceTree = "<group>"; };
+		E3BBBA02295C274A00306BD9 /* PFMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFMainViewController.h; sourceTree = "<group>"; };
+		E3BBBA03295C274A00306BD9 /* PFMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PFMainViewController.m; sourceTree = "<group>"; };
 		E3BD453327474A4E00CB44C9 /* SMBeautyEngine_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SMBeautyEngine_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3BD453627474A4E00CB44C9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E3BD453727474A4E00CB44C9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -117,9 +126,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E31A9AC02903913400AF311C /* CoreImage.framework in Frameworks */,
 				E3BD4590274752DC00CB44C9 /* libc++.tbd in Frameworks */,
-				E32C9FDA28E67BB200FB225E /* PixelFree.framework in Frameworks */,
 				E3BD4592274752E900CB44C9 /* CoreML.framework in Frameworks */,
+				E3794064298E99B500E11A90 /* PixelFree.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,7 +156,7 @@
 		E3BD453527474A4E00CB44C9 /* SMBeautyEngine_iOS */ = {
 			isa = PBXGroup;
 			children = (
-				E32C9FD828E67B7600FB225E /* PixelFree.framework */,
+				E3794062298E995300E11A90 /* PixelFree.framework */,
 				E3BD457A27474A9600CB44C9 /* PFCamera.h */,
 				E3BD457927474A9600CB44C9 /* PFCamera.m */,
 				E3BD455527474A9400CB44C9 /* PFOpenGLView.h */,
@@ -157,6 +167,8 @@
 				E3BD453727474A4E00CB44C9 /* AppDelegate.m */,
 				E3BD453927474A4E00CB44C9 /* SceneDelegate.h */,
 				E3BD453A27474A4E00CB44C9 /* SceneDelegate.m */,
+				E3BBBA02295C274A00306BD9 /* PFMainViewController.h */,
+				E3BBBA03295C274A00306BD9 /* PFMainViewController.m */,
 				E3BD453C27474A4E00CB44C9 /* ViewController.h */,
 				E3BD453D27474A4E00CB44C9 /* ViewController.m */,
 				E335682E28E5897600551FB3 /* PFVideoController.h */,
@@ -175,7 +187,9 @@
 		E3BD455227474A9400CB44C9 /* res */ = {
 			isa = PBXGroup;
 			children = (
-				E32C9FE128E69B4000FB225E /* pixelfreeAuth.lic */,
+				E3B90821298E6E1A00B96ADF /* image.jpeg */,
+				E3B9081D298E527300B96ADF /* bg.jpeg */,
+				E32C9FDF28E69A3300FB225E /* pixelfreeAuth.lic */,
 				E3BD455327474A9400CB44C9 /* face_detect.bundle */,
 				E3BD455427474A9400CB44C9 /* face_fiter.bundle */,
 			);
@@ -233,6 +247,7 @@
 		E3BD458E274752D600CB44C9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E31A9ABD2903913400AF311C /* CoreImage.framework */,
 				E39CFC932874189500D738FF /* DetectFace.a */,
 				E3BD4591274752E900CB44C9 /* CoreML.framework */,
 				E3BD458F274752D700CB44C9 /* libc++.tbd */,
@@ -250,7 +265,7 @@
 				E3BD452F27474A4E00CB44C9 /* Sources */,
 				E3BD453027474A4E00CB44C9 /* Frameworks */,
 				E3BD453127474A4E00CB44C9 /* Resources */,
-				E32C9FDC28E67BB200FB225E /* Embed Frameworks */,
+				E3794066298E99B600E11A90 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -302,13 +317,15 @@
 				E3BD454627474A5300CB44C9 /* LaunchScreen.storyboard in Resources */,
 				E3BD457B27474A9600CB44C9 /* face_detect.bundle in Resources */,
 				E3BD457F27474A9800CB44C9 /* Media.xcassets in Resources */,
-				E32C9FE228E69B4000FB225E /* pixelfreeAuth.lic in Resources */,
+				E32C9FE028E69A3300FB225E /* pixelfreeAuth.lic in Resources */,
+				E3B90820298E527300B96ADF /* bg.jpeg in Resources */,
 				E3BD454327474A5300CB44C9 /* Assets.xcassets in Resources */,
 				E3BD458A27474A9800CB44C9 /* Localizable.strings in Resources */,
 				E3BD457E27474A9800CB44C9 /* PFAPIDemoBar.xib in Resources */,
 				E3BD457C27474A9600CB44C9 /* face_fiter.bundle in Resources */,
 				E3BD458927474A9800CB44C9 /* PFDemoBar.strings in Resources */,
 				E3BD454127474A4E00CB44C9 /* Main.storyboard in Resources */,
+				E3B90822298E6E1A00B96ADF /* image.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +344,7 @@
 				E3BD458C27474A9800CB44C9 /* PFOpenGLView.m in Sources */,
 				E3BD458B27474A9800CB44C9 /* PFDateHandle.m in Sources */,
 				E3BD458427474A9800CB44C9 /* PFBottomColletionView.m in Sources */,
+				E3BBBA04295C274A00306BD9 /* PFMainViewController.m in Sources */,
 				E3BD458127474A9800CB44C9 /* PFBeautyEditView.m in Sources */,
 				E3BD458327474A9800CB44C9 /* PFBeautyView.m in Sources */,
 				E3BD458D27474A9800CB44C9 /* PFCamera.m in Sources */,
@@ -535,12 +553,11 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.2.3;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mumu.SMBeautyEngine;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -580,12 +597,11 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.2.3;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mumu.SMBeautyEngine;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
