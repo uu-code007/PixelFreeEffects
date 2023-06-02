@@ -20,7 +20,21 @@
 
 演示2 绿幕背景替换
 
-![aaa](./res/lvmuCom.png)     
+![aaa](./res/lvmuCom.png)    
+
+#### iOS 接入方式
+
+1.  手动接入
+
+    Demo 工程中有接入 PixelFree.framework，参考 demo 接入
+
+2. pod 导入
+
+   ```objective-c
+     pod 'PixelFree'
+   ```
+
+   
 
 #### 接入使用
 
