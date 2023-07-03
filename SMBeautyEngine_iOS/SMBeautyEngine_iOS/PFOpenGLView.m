@@ -183,7 +183,7 @@ enum
             }
         }
         self.origintation = PFOpenGLViewOrientationPortrait ;
-        self.contentMode = PFOpenGLViewContentModeScaleAspectFill;
+        self.contentMode = PFOpenGLViewContentModeScaleAspectFit;
     }
         
     return self;
@@ -218,7 +218,7 @@ enum
             }
         }
         self.origintation = PFOpenGLViewOrientationPortrait ;
-        self.contentMode = PFOpenGLViewContentModeScaleAspectFill;
+        self.contentMode = PFOpenGLViewContentModeScaleAspectFit;
     }
     return self;
 }

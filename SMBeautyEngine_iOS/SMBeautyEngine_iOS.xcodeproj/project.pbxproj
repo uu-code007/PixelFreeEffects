@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C995D5972A3A00C20086C531 /* Stickers in Resources */ = {isa = PBXBuildFile; fileRef = C995D5942A3A00C10086C531 /* Stickers */; };
+		C9A475852A527F43001F86E8 /* PixelFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9A475832A527F0A001F86E8 /* PixelFree.framework */; };
+		C9A475862A527F43001F86E8 /* PixelFree.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C9A475832A527F0A001F86E8 /* PixelFree.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E31A9AC02903913400AF311C /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E31A9ABD2903913400AF311C /* CoreImage.framework */; };
 		E32C9FE028E69A3300FB225E /* pixelfreeAuth.lic in Resources */ = {isa = PBXBuildFile; fileRef = E32C9FDF28E69A3300FB225E /* pixelfreeAuth.lic */; };
 		E335682728E5883C00551FB3 /* PFImageController.m in Sources */ = {isa = PBXBuildFile; fileRef = E335682628E5883C00551FB3 /* PFImageController.m */; };
 		E335683028E5897600551FB3 /* PFVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = E335682F28E5897600551FB3 /* PFVideoController.m */; };
-		E3794064298E99B500E11A90 /* PixelFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3794062298E995300E11A90 /* PixelFree.framework */; };
-		E3794065298E99B500E11A90 /* PixelFree.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E3794062298E995300E11A90 /* PixelFree.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E3B90820298E527300B96ADF /* bg.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = E3B9081D298E527300B96ADF /* bg.jpeg */; };
 		E3B90822298E6E1A00B96ADF /* image.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = E3B90821298E6E1A00B96ADF /* image.jpeg */; };
 		E3BBBA04295C274A00306BD9 /* PFMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BBBA03295C274A00306BD9 /* PFMainViewController.m */; };
@@ -46,13 +47,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		E3794066298E99B600E11A90 /* Embed Frameworks */ = {
+		C9A475872A527F43001F86E8 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E3794065298E99B500E11A90 /* PixelFree.framework in Embed Frameworks */,
+				C9A475862A527F43001F86E8 /* PixelFree.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -60,13 +61,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C995D5942A3A00C10086C531 /* Stickers */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Stickers; sourceTree = "<group>"; };
+		C9A475832A527F0A001F86E8 /* PixelFree.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PixelFree.framework; sourceTree = "<group>"; };
 		E31A9ABD2903913400AF311C /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		E32C9FDF28E69A3300FB225E /* pixelfreeAuth.lic */ = {isa = PBXFileReference; lastKnownFileType = file; path = pixelfreeAuth.lic; sourceTree = "<group>"; };
 		E335682528E5883C00551FB3 /* PFImageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFImageController.h; sourceTree = "<group>"; };
 		E335682628E5883C00551FB3 /* PFImageController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PFImageController.m; sourceTree = "<group>"; };
 		E335682E28E5897600551FB3 /* PFVideoController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFVideoController.h; sourceTree = "<group>"; };
 		E335682F28E5897600551FB3 /* PFVideoController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PFVideoController.m; sourceTree = "<group>"; };
-		E3794062298E995300E11A90 /* PixelFree.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PixelFree.framework; sourceTree = "<group>"; };
 		E39CFC932874189500D738FF /* DetectFace.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = DetectFace.a; path = ../PixelFreeCxx/DetectFace.a; sourceTree = "<group>"; };
 		E3B9081D298E527300B96ADF /* bg.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpeg; sourceTree = "<group>"; };
 		E3B90821298E6E1A00B96ADF /* image.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image.jpeg; sourceTree = "<group>"; };
@@ -129,7 +131,7 @@
 				E31A9AC02903913400AF311C /* CoreImage.framework in Frameworks */,
 				E3BD4590274752DC00CB44C9 /* libc++.tbd in Frameworks */,
 				E3BD4592274752E900CB44C9 /* CoreML.framework in Frameworks */,
-				E3794064298E99B500E11A90 /* PixelFree.framework in Frameworks */,
+				C9A475852A527F43001F86E8 /* PixelFree.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,6 +141,7 @@
 		E3BD452A27474A4E00CB44C9 = {
 			isa = PBXGroup;
 			children = (
+				C9A475832A527F0A001F86E8 /* PixelFree.framework */,
 				E3BD453527474A4E00CB44C9 /* SMBeautyEngine_iOS */,
 				E3BD453427474A4E00CB44C9 /* Products */,
 				E3BD458E274752D600CB44C9 /* Frameworks */,
@@ -156,7 +159,6 @@
 		E3BD453527474A4E00CB44C9 /* SMBeautyEngine_iOS */ = {
 			isa = PBXGroup;
 			children = (
-				E3794062298E995300E11A90 /* PixelFree.framework */,
 				E3BD457A27474A9600CB44C9 /* PFCamera.h */,
 				E3BD457927474A9600CB44C9 /* PFCamera.m */,
 				E3BD455527474A9400CB44C9 /* PFOpenGLView.h */,
@@ -192,6 +194,7 @@
 				E32C9FDF28E69A3300FB225E /* pixelfreeAuth.lic */,
 				E3BD455327474A9400CB44C9 /* face_detect.bundle */,
 				E3BD455427474A9400CB44C9 /* face_fiter.bundle */,
+				C995D5942A3A00C10086C531 /* Stickers */,
 			);
 			path = res;
 			sourceTree = "<group>";
@@ -265,7 +268,7 @@
 				E3BD452F27474A4E00CB44C9 /* Sources */,
 				E3BD453027474A4E00CB44C9 /* Frameworks */,
 				E3BD453127474A4E00CB44C9 /* Resources */,
-				E3794066298E99B600E11A90 /* Embed Frameworks */,
+				C9A475872A527F43001F86E8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -316,6 +319,7 @@
 			files = (
 				E3BD454627474A5300CB44C9 /* LaunchScreen.storyboard in Resources */,
 				E3BD457B27474A9600CB44C9 /* face_detect.bundle in Resources */,
+				C995D5972A3A00C20086C531 /* Stickers in Resources */,
 				E3BD457F27474A9800CB44C9 /* Media.xcassets in Resources */,
 				E32C9FE028E69A3300FB225E /* pixelfreeAuth.lic in Resources */,
 				E3B90820298E527300B96ADF /* bg.jpeg in Resources */,
@@ -527,11 +531,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = W2TP34G2MM;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/SMBeautyEngine_iOS",
+					"$(PROJECT_DIR)",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -575,7 +580,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/SMBeautyEngine_iOS",
+					"$(PROJECT_DIR)",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (

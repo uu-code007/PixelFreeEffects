@@ -1,0 +1,23 @@
+{
+  "name" : "ballCap",
+  "icon" : "ballCap.png",
+  "type" : 1,
+  "nodes" : [
+    {
+      "type" : "3dAnim",
+      "dirname" : "10131_BaseballCap_v2_L3.obj",
+      "facePos" : 46,
+      "startIndex" : 1,
+      "endIndex" : 31,
+      "offsetX" : 0.0,
+      "offsetY" : 2,
+      "rotationX" : 0.5,
+      "rotationY" : 0,
+      "rotationZ" : 0,
+      "scale" : 1.15,
+      "width" : 18.9,
+      "height" : 29.4,
+      "maxcount" : 5
+      }
+    ]
+}

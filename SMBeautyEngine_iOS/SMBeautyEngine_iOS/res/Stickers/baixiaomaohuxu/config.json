@@ -1,0 +1,39 @@
+{
+  "name" : "猫",
+  "icon" : "baixiaomaohuxu_icon.png",
+  "nodes" : [{
+      "type" : "2dAnim",
+      "dirname" : "F_CatMustache",
+      "facePos" : 64,
+      "startIndex" : 73,
+      "endIndex" : 74,
+      "offsetX" : 0,
+      "offsetY" : 0,
+      "ratio" : 1,
+      "number" : 72,
+      "width" : 200,
+      "height" : 100,
+      "duration" : 100,
+      "isloop" : 1,
+      "maxcount" : 5,
+      "scale" :1
+      },
+    {
+        "type" : "2dAnim",
+        "dirname" : "F_MouceHeart",
+        "facePos" : 42,
+        "startIndex" : 33,
+        "endIndex" : 29,
+        "offsetX" : -3.2,
+        "offsetY" : -0.3,
+        "ratio" : 1,
+        "number" : 72,
+        "width" : 200,
+        "height" : 150,
+        "duration" : 100,
+        "isloop" : 1,
+        "maxcount" : 5,
+        "scale" :1
+    }
+    ]
+}

@@ -26,9 +26,20 @@
     _openGlView.frame = self.view.bounds;
     [self.view insertSubview:self.openGlView atIndex:0];
     
-    UIBarButtonItem *btnItem = [[UIBarButtonItem alloc] initWithTitle:@"绿幕分割开关" style:UIBarButtonItemStyleBordered target:self action:@selector(aclick:)];
-     
-    self.navigationItem.rightBarButtonItem = btnItem;
+    UIButton *lvBtn = [[UIButton alloc] initWithFrame:CGRectMake(20, 100, 140, 44)];
+    [lvBtn addTarget:self action:@selector(aclick:) forControlEvents:UIControlEventTouchUpInside];
+    [lvBtn setTitle:@"绿幕分割开" forState:UIControlStateNormal];
+    [lvBtn setTitle:@"绿幕分割关" forState:UIControlStateSelected];
+    [lvBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [self.view addSubview:lvBtn];
+    
+    UIButton *stickerBtn = [[UIButton alloc] initWithFrame:CGRectMake(20, 150, 140, 44)];
+    [stickerBtn addTarget:self action:@selector(stickerBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [stickerBtn setTitle:@"添加贴纸" forState:UIControlStateNormal];
+    [stickerBtn setTitle:@"移除贴纸" forState:UIControlStateSelected];
+    [stickerBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [self.view addSubview:stickerBtn];
+    
 }
 
 -(void)didOutputVideoSampleBuffer:(CMSampleBufferRef)sampleBuffer{
@@ -51,6 +62,20 @@
     
     [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterLvmu value:(void *)&setting];
 }
+
+-(void)stickerBtnClick:(UIButton *)btn{
+    btn.selected = !btn.selected;
+    if(btn.selected){
+        NSString *path =  [[NSBundle mainBundle] pathForResource:@"Stickers" ofType:nil];
+        NSString *currentFolder = [path stringByAppendingPathComponent:@"baixiaomaohuxu"];
+        const char *aaa = [currentFolder UTF8String];
+         [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)aaa];
+    } else{
+        [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:NULL];
+    }
+
+}
+
 
 
 
