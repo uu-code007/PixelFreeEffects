@@ -127,7 +127,7 @@ Java_com_hapi_pixelfree_PixelFree_native_1auth(JNIEnv *env, jobject thiz, jlong 
     jstring name_str = static_cast<jstring >( env->CallObjectMethod(context, methodId_pack));
     str = env->GetStringUTFChars(name_str, &isCopy);
     __android_log_print(ANDROID_LOG_INFO, "mjl", "name_str----- %s",str);
-    PF_pixelFreeSetBeautyFiterParam(px, PFAppBundleId, (void *)str);
+    PF_pixelFreeSetBeautyFiterParam(px, 0x2000, (void *)str);
     PF_createBeautyItemFormBundle(px, reinterpret_cast<uint8_t *>(c_array), size,
                                   PFSrcTypeAuthFile);
     env->ReleaseByteArrayElements(data, c_array, 0);

@@ -76,6 +76,12 @@ typedef struct {
   char *imagePath;
 } PFFiter;
 
+typedef struct {
+    bool isOpenLvmu;//false
+    bool isVideo;//false
+    const char *bgSrcPath;
+} PFFiterLvmuSetting;
+
 /* 美颜类型 */
 typedef enum PFBeautyFiterType{
     PFBeautyFiterTypeFace_EyeStrength = 0,
@@ -113,10 +119,13 @@ typedef enum PFBeautyFiterType{
     PFBeautyFiterTypeFaceM_newWhitenStrength,
     //画质增强
     PFBeautyFiterTypeFaceH_qualityStrength,
-    
+
     PFBeautyFiterName,
     PFBeautyFiterStrength,
-    PFAppBundleId //
+    
+    PFBeautyFiterLvmu,
+    
+    PFBeautyFiterSticker2DFilter,
     
 } PFBeautyFiterType;
 
@@ -135,7 +144,7 @@ PF_CAPI_EXPORT extern void PF_DeletePixelFree(PFPixelFree* pixelFree);
 //目前仅支持双输入。GPU 纹理由于渲染，cpu buffer 用检测
 PF_CAPI_EXPORT extern void PF_processWithBuffer(PFPixelFree* pixelFree,PFIamgeInput inputImage);
 
-PF_CAPI_EXPORT extern void PF_pixelFreeSetBeautyFiterParam(PFPixelFree* pixelFree, PFBeautyFiterType key,void *value);
+PF_CAPI_EXPORT extern void PF_pixelFreeSetBeautyFiterParam(PFPixelFree* pixelFree, int key,void *value);
 PF_CAPI_EXPORT extern void PF_createBeautyItemFormBundle(PFPixelFree* pixelFree, void *data,int size,PFSrcType type);
 #ifdef __cplusplus
 }
