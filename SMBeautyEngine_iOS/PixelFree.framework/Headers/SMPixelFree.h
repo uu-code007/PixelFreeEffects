@@ -12,7 +12,6 @@
 #import <OpenGLES/ES2/glext.h>
 #import "pixelFree_c.hpp"
 //#import "SMFilterModel.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 __attribute__((visibility("default"))) @interface SMPixelFree : NSObject
@@ -63,7 +62,6 @@ __attribute__((visibility("default"))) @interface SMPixelFree : NSObject
 
 // 加载美颜bundle
 - (void)createBeautyItemFormBundle:(void*)data size:(int)sz;
-
 
 @end
 

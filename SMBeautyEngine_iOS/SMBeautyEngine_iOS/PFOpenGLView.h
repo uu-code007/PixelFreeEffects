@@ -47,4 +47,6 @@ typedef NS_ENUM(NSInteger, PFOpenGLViewContentMode) {
 /* 同步渲染 */
 - (void)displaySyncPixelBuffer:(CVPixelBufferRef)pixelBuffer;
 
+- (void)displaySyncTexture:(int)texture withSize:(CGSize)size;
+
 @end

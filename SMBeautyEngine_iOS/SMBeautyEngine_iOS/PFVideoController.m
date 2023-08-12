@@ -45,7 +45,7 @@
 -(void)didOutputVideoSampleBuffer:(CMSampleBufferRef)sampleBuffer{
     CVPixelBufferRef pixbuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
     CVPixelBufferLockBaseAddress(pixbuffer, 0);
-    
+
     if(pixbuffer){
         [self.mPixelFree processWithBuffer:pixbuffer rotationMode:PFRotationMode0];
     }

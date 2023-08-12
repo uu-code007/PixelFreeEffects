@@ -529,6 +529,56 @@ enum
     [self presentFramebuffer];
 }
 
+- (void)displaySyncTexture:(int)texture withSize:(CGSize)size{
+    frameWidth = (int)size.width;
+    frameHeight = (int)size.height;
+    
+    if ([EAGLContext currentContext] != self.glContext) {
+        if (![EAGLContext setCurrentContext:self.glContext]) {
+            NSLog(@"fail to setCurrentContext");
+        }
+    }
+    [self setDisplayFramebuffer];
+    if (!rgbaProgram) {
+        [self loadShadersRGBA];
+    }
+    
+    glBindTexture(GL_TEXTURE_2D, texture);
+    
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    
+    glUseProgram(rgbaProgram);
+    
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glUniform1i(displayInputTextureUniform, 1);
+    
+    [self updateVertices];
+    
+    // 更新顶点数据
+    glVertexAttribPointer(furgbaPositionAttribute, 2, GL_FLOAT, 0, 0, vertices);
+    glEnableVertexAttribArray(furgbaPositionAttribute);
+    
+    GLfloat quadTextureData[] =  {
+        0.0f, 1.0f,
+        1.0f, 1.0f,
+        0.0f,  0.0f,
+        1.0f,  0.0f,
+    };
+    
+    glVertexAttribPointer(furgbaTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, quadTextureData);
+    glEnableVertexAttribArray(furgbaTextureCoordinateAttribute);
+    
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    
+    [self presentFramebuffer];
+}
+
+
+
 - (void)displayImageData:(void *)imageData withSize:(CGSize)size Center:(CGPoint)center Landmarks:(float *)landmarks count:(int)count {
     
     frameWidth = (int)size.width;
