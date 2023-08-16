@@ -41,7 +41,6 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
-      enableGPUFrameCaptureMode = "2"
       enableGPUShaderValidationMode = "2"
       showGraphicsOverview = "Yes"
       logGraphicsOverview = "Yes"
