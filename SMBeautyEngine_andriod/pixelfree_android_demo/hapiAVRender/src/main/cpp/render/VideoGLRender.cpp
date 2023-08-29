@@ -99,7 +99,6 @@ VideoGLRender::VideoGLRender() {
 
 
 void VideoGLRender::RenderVideoFrame(NativeImage *image) {
-    LOGCATE("VideoGLRender::RenderVideoFrame ->textureID! %d", image->textureID);
     int width = image->width;
     int height = image->height;
     int pixel_stride = image->pixelStride;
@@ -177,7 +176,6 @@ void VideoGLRender::RenderVideoFrame(NativeImage *image) {
     m_RenderImage->width = width;
     m_RenderImage->height = height;
     m_RenderImage->format = format;
-    LOGCATE("VideoGLRender::RenderVideoFrame ->textureID! %d", m_RenderImage->textureID);
 }
 
 void VideoGLRender::UnInit() {
@@ -209,7 +207,7 @@ void VideoGLRender::UpdateMVPMatrix(int angleX, int angleY, float scaleX, float 
     glm::mat4 Model = glm::mat4(1.0f);
     Model = glm::scale(Model, glm::vec3(scaleX, scaleY, 1.0f));
     Model = glm::rotate(Model, radiansX, glm::vec3(1.0f, 0.0f, 0.0f));
-    Model = glm::rotate(Model, radiansY, glm::vec3(0.0f, 1.0f, 0.0f));
+    Model = glm::rotate(Model, radiansY + static_cast<float>(MATH_PI), glm::vec3(0.0f, 1.0f, 0.0f));
     Model = glm::translate(Model, glm::vec3(0.0f, 0.0f, 0.0f));
     m_MVPMatrix = Projection * View * Model;
 }

@@ -66,6 +66,15 @@ class BeautyView : FrameLayout {
 
     fun setList(list: MutableList<BeautyItem>) {
         mBeautyItemAdapter.setList(list)
+        list.forEach() {
+            if (it.type == PFBeautyFiterType.PFBeautyFiterName) {
+//                pixelFreeGetter.invoke()
+//                    .pixelFreeSetFiterParam(it.name, it.progress)
+            } else {
+                pixelFreeGetter.invoke()
+                    .pixelFreeSetBeautyFiterParam(it.type, it.progress)
+            }
+        }
     }
 
     class BeautyItemAdapter : BaseQuickAdapter<BeautyItem, BaseViewHolder>(

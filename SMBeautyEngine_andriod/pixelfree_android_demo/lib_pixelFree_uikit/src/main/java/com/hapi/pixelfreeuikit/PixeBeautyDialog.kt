@@ -16,15 +16,16 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
             setList(ArrayList<BeautyItem>().apply {
                 add(
                     BeautyItem(
-                        PFBeautyFiterType.PFBeautyFiterTypeFaceM_newWhitenStrength,
-
-                        "新美白",
+                        PFBeautyFiterType.PFBeautyFiterTypeFaceWhitenStrength,
+                        0.2f,
+                        "美白",
                         R.mipmap.meibai
                     )
                 )
                 add(
                     BeautyItem(
                         PFBeautyFiterType.PFBeautyFiterTypeFaceRuddyStrength,
+                        0.6f,
                         "红润",
                         R.mipmap.hongrun
                     )
@@ -32,6 +33,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                 add(
                     BeautyItem(
                         PFBeautyFiterType.PFBeautyFiterTypeFaceBlurStrength,
+                        0.7f,
                         "磨皮",
                         R.mipmap.mopi
                     )
@@ -39,6 +41,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                 add(
                     BeautyItem(
                         PFBeautyFiterType.PFBeautyFiterTypeFaceSharpenStrength,
+                        0.2f,
                         "锐化",
                         R.mipmap.ruihua
                     )
@@ -46,6 +49,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                 add(
                     BeautyItem(
                         PFBeautyFiterType.PFBeautyFiterTypeFaceH_qualityStrength,
+                        0.2f,
                         "增强画质",
                         R.mipmap.huazhizengqiang
                     )
@@ -57,6 +61,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                 add(
                     BeautyItem(
                         PFBeautyFiterType.PFBeautyFiterTypeFace_EyeStrength,
+                        0.2f,
                         "大眼",
                         R.mipmap.dayan
                     )
@@ -64,6 +69,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                 add(
                     BeautyItem(
                         PFBeautyFiterType.PFBeautyFiterTypeFace_thinning,
+                        0.2f,
                         "瘦脸",
                         R.mipmap.shoulian
                     )
@@ -71,6 +77,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                 add(
                     BeautyItem(
                         PFBeautyFiterType.PFBeautyFiterTypeFace_narrow,
+                        0.2f,
                         "窄脸",
                         R.mipmap.edanlian
                     )
@@ -78,6 +85,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                 add(
                     BeautyItem(
                         PFBeautyFiterType.PFBeautyFiterTypeFace_chin,
+                        0.5f,
                         "下巴",
                         R.mipmap.xiaba
                     )
@@ -85,6 +93,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                 add(
                     BeautyItem(
                         PFBeautyFiterType.PFBeautyFiterTypeFace_V,
+                        0.2f,
                         "v脸",
                         R.mipmap.vlian
                     )
@@ -92,6 +101,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                 add(
                     BeautyItem(
                         PFBeautyFiterType.PFBeautyFiterTypeFace_small,
+                        0.2f,
                         "小脸",
                         R.mipmap.xianlian
                     )
@@ -99,6 +109,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                 add(
                     BeautyItem(
                         PFBeautyFiterType.PFBeautyFiterTypeFace_nose,
+                        0.2f,
                         "鼻子",
                         R.mipmap.bizhi
                     )
@@ -106,6 +117,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                 add(
                     BeautyItem(
                         PFBeautyFiterType.PFBeautyFiterTypeFace_forehead,
+                        0.5f,
                         "额头",
                         R.mipmap.etou
                     )
@@ -113,6 +125,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                 add(
                     BeautyItem(
                         PFBeautyFiterType.PFBeautyFiterTypeFace_mouth,
+                        0.5f,
                         "嘴巴",
                         R.mipmap.zuiba
                     )
@@ -120,6 +133,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                 add(
                     BeautyItem(
                         PFBeautyFiterType.PFBeautyFiterTypeFace_philtrum,
+                        0.5f,
                         "人中",
                         R.mipmap.renzhong
                     )
@@ -127,6 +141,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                 add(
                     BeautyItem(
                         PFBeautyFiterType.PFBeautyFiterTypeFace_long_nose,
+                        0.5f,
                         "长鼻",
                         R.mipmap.changbi
                     )
@@ -134,15 +149,9 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                 add(
                     BeautyItem(
                         PFBeautyFiterType.PFBeautyFiterTypeFace_eye_space,
+                        0.5f,
                         "眼距",
                         R.mipmap.yanju
-                    )
-                )
-                add(
-                    BeautyItem(
-                        PFBeautyFiterType.PFBeautyFiterTypeFaceWhitenStrength,
-                        "美白",
-                        R.mipmap.meibai
                     )
                 )
             })
