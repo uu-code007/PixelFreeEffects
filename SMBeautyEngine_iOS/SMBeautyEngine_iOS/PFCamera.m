@@ -345,7 +345,7 @@ typedef void(^PFCameraRecordVidepCompleted)(NSString *videoPath);
 //音频采集队列
 - (dispatch_queue_t)audioCaptureQueue {
     if (_audioCaptureQueue == nil) {
-        _audioCaptureQueue = dispatch_queue_create("com.mmface.audioCaptureQueue", NULL);
+        _audioCaptureQueue = dispatch_queue_create("com.pfdetect.audioCaptureQueue", NULL);
     }
     return _audioCaptureQueue;
 }

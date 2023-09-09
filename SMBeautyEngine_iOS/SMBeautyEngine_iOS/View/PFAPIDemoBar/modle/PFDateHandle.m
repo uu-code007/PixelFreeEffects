@@ -3,7 +3,7 @@
 //  SMEngineDemo
 //
 //  Created by mumu on 2020/6/20.
-//  Copyright © 2020 mmface. All rights reserved.
+//  Copyright © 2020 pfdetect. All rights reserved.
 //
 
 #import "PFDateHandle.h"
@@ -98,19 +98,18 @@
     return array;
 }
 
-+(NSArray<PFBeautyParam *>*)setupSticker{
-   NSArray *prams = @[@"makeup_noitem",@"baixiaomaohuxu",@"ballCap"];//,@"chri1"
++(NSArray<PFBeautyParam *>*)setupFaceType{
+   NSArray *prams = @[@"makeup_noitem",@"ziran",@"keai",@"nvshen",@"baijing"];//,@"chri1"
 
-  NSDictionary *titelDic = @{@"makeup_noitem":@"取消",@"baixiaomaohuxu":@"猫",@"ballCap":@"ballCap"};
+  NSDictionary *titelDic = @{@"makeup_noitem":@"origin",@"ziran":@"自然",@"keai":@"可爱",@"nvshen":@"女神",@"baijing":@"白净"};
     
    NSMutableArray *array = [[NSMutableArray alloc] init];
    for (NSString *str in prams) {
        PFBeautyParam *modle = [[PFBeautyParam alloc] init];
        modle.mParam = str;
        modle.mTitle = [titelDic valueForKey:str];
-      modle.type = FUDataTypeStrick;
+      modle.type = FUDataTypeFilter;
        [array addObject:modle];
-       
    }
     
     return array;
@@ -135,6 +134,41 @@
     return array;
 }
 
+
+
++(NSDictionary *)setFaceType:(int)face{
+    NSDictionary *defaultValueDic = nil;
+    switch (face) {
+        case 1://自然
+            defaultValueDic = @{@"runddy":@(0.6),@"writen":@(0.6),@"blur":@(0.7),@"sharpen":@(0.2),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.2),@"face_EyeStrength":@(0.2),@"face_thinning":@(0.2),@"face_narrow":@(0.2),@"face_chin":@(0.5),
+                                              @"face_V":@(0.2),@"face_small":@(0.2),@"face_nose":@(0.2),@"face_forehead":@(0.5),
+                                              @"face_mouth":@(0.5),@"face_philtrum":@(0.5),@"face_long_nose":@(0.5),@"face_eye_space":@(0.5)
+            };
+            break;
+        case 2://可爱
+            defaultValueDic = @{@"runddy":@(0.6),@"writen":@(0.6),@"blur":@(0.7),@"sharpen":@(0.3),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.3),@"face_EyeStrength":@(0.6),@"face_thinning":@(0.3),@"face_narrow":@(0.0),@"face_chin":@(0.2),
+                                              @"face_V":@(0.0),@"face_small":@(0.2),@"face_nose":@(0.2),@"face_forehead":@(0.2),
+                                              @"face_mouth":@(0.5),@"face_philtrum":@(0.5),@"face_long_nose":@(0.5),@"face_eye_space":@(0.5)
+            };
+            break;
+        case 3://女神
+            defaultValueDic = @{@"runddy":@(0.5),@"writen":@(0.5),@"blur":@(0.6),@"sharpen":@(0.2),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.2),@"face_EyeStrength":@(0.4),@"face_thinning":@(0.3),@"face_narrow":@(0.4),@"face_chin":@(0.5),
+                                              @"face_V":@(0.2),@"face_small":@(0.2),@"face_nose":@(0.2),@"face_forehead":@(0.5),
+                                              @"face_mouth":@(0.5),@"face_philtrum":@(0.5),@"face_long_nose":@(0.5),@"face_eye_space":@(0.5)
+            };
+            break;
+        case 4://净白
+            defaultValueDic = @{@"runddy":@(0.5),@"writen":@(0.8),@"blur":@(0.7),@"sharpen":@(0.2),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.2),@"face_EyeStrength":@(0.2),@"face_thinning":@(0.2),@"face_narrow":@(0.0),@"face_chin":@(0.5),
+                                              @"face_V":@(0.0),@"face_small":@(0.0),@"face_nose":@(0.5),@"face_forehead":@(0.5),
+                                              @"face_mouth":@(0.5),@"face_philtrum":@(0.5),@"face_long_nose":@(0.5),@"face_eye_space":@(0.5)
+            };
+            break;
+            
+        default:
+            break;
+    }
+    return defaultValueDic;
+}
 
 
 @end

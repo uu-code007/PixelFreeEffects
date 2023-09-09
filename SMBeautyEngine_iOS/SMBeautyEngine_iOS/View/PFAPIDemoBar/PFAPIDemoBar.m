@@ -18,14 +18,15 @@
 @property (weak, nonatomic) IBOutlet UIButton *skinBtn;
 @property (weak, nonatomic) IBOutlet UIButton *shapeBtn;
 @property (weak, nonatomic) IBOutlet UIButton *beautyFilterBtn;
-@property (weak, nonatomic) IBOutlet UIButton *stickerBtn;
+@property (weak, nonatomic) IBOutlet UIButton *faceTypeBtn;
+
 @property (weak, nonatomic) IBOutlet UIButton *makeupBtn;
 @property (weak, nonatomic) IBOutlet UIButton *bodyBtn;
 
 // 上半部分
 @property (weak, nonatomic) IBOutlet UIView *topView;
 // 滤镜页
-@property (weak, nonatomic) IBOutlet PFFilterView *stickerView;
+@property (weak, nonatomic) IBOutlet PFFilterView *faceTypeView;
 // 美颜滤镜页
 @property (weak, nonatomic) IBOutlet PFFilterView *beautyFilterView;
 @property (weak, nonatomic) IBOutlet PFFilterView *makeupView;
@@ -48,7 +49,7 @@
 /* 美型参数 */
 @property (nonatomic, strong) NSArray<PFBeautyParam *> *shapeParams;
 
-@property (nonatomic, strong) NSArray<PFBeautyParam *> *stickerParams;
+@property (nonatomic, strong) NSArray<PFBeautyParam *> *faceTypeParams;
 @property (nonatomic, strong) NSArray<PFBeautyParam *> *makeupParams;
 @property (nonatomic, strong) NSArray<PFBeautyParam *> *bodyParams;
 @end
@@ -80,16 +81,16 @@
     [_makeupView setDefaultFilter:_makeupParams[0]];
     [_makeupView reloadData];
     
-    _stickerView.filters = _stickerParams;
-    [_makeupView setDefaultFilter:_stickerParams[0]];
-    [_stickerView reloadData];
+    _faceTypeView.filters = _faceTypeParams;
+    [_makeupView setDefaultFilter:_faceTypeParams[0]];
+    [_faceTypeView reloadData];
     
     _bodyView.dataArray = _bodyParams;
     [_makeupView setDefaultFilter:_bodyParams[0]];
     _bodyView.selectedIndex = 1;
     [_bodyView reloadData];
     
-    self.stickerView.mDelegate = self ;
+    self.faceTypeView.mDelegate = self ;
     self.makeupView.mDelegate = self;
     self.beautyFilterView.mDelegate = self ;
     
@@ -104,7 +105,7 @@
     self.skinBtn.tag = 101;
     self.shapeBtn.tag = 102;
     self.beautyFilterBtn.tag = 103 ;
-    self.stickerBtn.tag = 104;
+    self.faceTypeBtn.tag = 104;
     self.makeupBtn.tag = 105;
     self.bodyBtn.tag = 106;
     
@@ -114,7 +115,7 @@
     _filtersParams = [PFDateHandle setupFilterData];
     _shapeParams  = [PFDateHandle setupShapData];
      _skinParams = [PFDateHandle setupSkinData];
-     _stickerParams = [PFDateHandle setupSticker];
+    _faceTypeParams = [PFDateHandle setupFaceType];
      _makeupParams = [PFDateHandle setupMakeupData];
 }
 
@@ -127,7 +128,7 @@
     self.shapeBtn.selected = NO;
     self.beautyFilterBtn.selected = NO;
     
-    self.stickerBtn.selected = NO;
+    self.faceTypeBtn.selected = NO;
     self.makeupBtn.selected = NO;
     self.bodyBtn.selected = NO;
     
@@ -137,7 +138,7 @@
     self.beautyFilterView.hidden = YES;
     
     self.makeupView.hidden = YES;
-    self.stickerView.hidden = YES;
+    self.faceTypeView.hidden = YES;
     self.bodyView.hidden = YES;
     
     sender.selected = YES;
@@ -145,8 +146,8 @@
     if (sender == self.skinBtn) {
         self.skinView.hidden = NO;
     }
-    if (sender == self.stickerBtn) {
-        self.stickerView.hidden = NO;
+    if (sender == self.faceTypeBtn) {
+        self.faceTypeView.hidden = NO;
 
     }
     if (sender == self.makeupBtn) {
@@ -207,8 +208,8 @@
         }
     }
     
-    if (self.stickerBtn.selected) {
-        NSInteger selectedIndex = self.stickerView.selectedIndex ;
+    if (self.faceTypeBtn.selected) {
+        NSInteger selectedIndex = self.faceTypeView.selectedIndex ;
         self.beautySlider.hidden = YES;
         if (selectedIndex >= 0) {
             PFBeautyParam *modle = self.beautyFilterView.filters[selectedIndex];
@@ -327,6 +328,10 @@
 #pragma mark ---- PFFilterViewDelegate
 // 开启滤镜
 -(void)filterViewDidSelectedFilter:(PFBeautyParam *)param{
+    if (self.faceTypeBtn.selected) {
+        [self setFaceType:param];
+        return;
+    }
     _seletedParam = param;
     self.beautySlider.hidden = YES;
 
@@ -408,6 +413,40 @@
 
 -(BOOL)isTopViewShow {
     return !self.topView.hidden ;
+}
+
+
+-(void)setFaceType:(PFBeautyParam *)paramm {
+    int indexValue = (int)[_faceTypeParams indexOfObject:paramm];
+    NSDictionary *dic = [PFDateHandle setFaceType:indexValue];
+    
+    for (PFBeautyParam *param in _shapeParams) {
+        if([dic.allKeys containsObject:param.mParam]) {
+            param.mValue = [dic[param.mParam] floatValue];
+        }else {
+            param.mValue = 0.0f;
+        }
+        
+        if (_mDelegate && [_mDelegate respondsToSelector:@selector(filterValueChange:)]) {
+            [_mDelegate filterValueChange:param];
+        }
+        
+    }
+    
+    for (PFBeautyParam *param in _skinParams) {
+        if([dic.allKeys containsObject:param.mParam]) {
+            param.mValue = [dic[param.mParam] floatValue];
+        } else {
+            param.mValue = 0.0f;
+        }
+        if (_mDelegate && [_mDelegate respondsToSelector:@selector(filterValueChange:)]) {
+            [_mDelegate filterValueChange:param];
+        }
+    }
+    
+
+    [_skinView reloadData];
+    [_shapeView reloadData];
 }
 
 

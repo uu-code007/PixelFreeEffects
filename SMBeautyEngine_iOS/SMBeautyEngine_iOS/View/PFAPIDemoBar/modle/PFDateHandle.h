@@ -3,7 +3,7 @@
 //  SMEngineDemo
 //
 //  Created by mumu on 2020/6/20.
-//  Copyright © 2020 mmface. All rights reserved.
+//  Copyright © 2020 pfdetect. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -16,10 +16,13 @@ NS_ASSUME_NONNULL_BEGIN
 +(NSArray<PFBeautyParam *>*)setupSkinData;
 
 +(NSArray<PFBeautyParam *>*)setupShapData;
++(NSArray<PFBeautyParam *>*)setupFaceType;
 
-+(NSArray<PFBeautyParam *>*)setupSticker;
+
 
 +(NSArray<PFBeautyParam *>*)setupMakeupData;
+
++(NSDictionary *)setFaceType:(int)face;
 
 @end
 

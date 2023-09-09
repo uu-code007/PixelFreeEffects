@@ -3,7 +3,7 @@
 //  SMEngineDemo
 //
 //  Created by mumu on 2019/11/6.
-//  Copyright © 2019 mmface. All rights reserved.
+//  Copyright © 2019 pfdetect. All rights reserved.
 //
 
 #import "PFBottomColletionView.h"

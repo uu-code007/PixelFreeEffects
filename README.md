@@ -18,10 +18,6 @@
 
 ![aaa](./res/comp_effectBeatu.png)
 
-演示2 绿幕背景替换
-
-![aaa](./res/lvmuCom.png)   
-
 #### 美颜全开性能
 
 ![aaa](./res/option.png)   
@@ -54,11 +50,14 @@
 
    ```
    // 素材路径
-   NSString *face_FiltePath = [[NSBundle mainBundle] pathForResource:@"face_fiter.bundle" ofType:nil];
-   NSString *face_DetectPath = [[NSBundle mainBundle] pathForResource:@"face_detect.bundle" ofType:nil];
-       
-   // 初始化实例
-    _mPixelFree = [[SMPixelFree alloc] initWithProcessContext:nil srcFilterPath:face_FiltePath srcDetectPath:face_DetectPath];
+    NSString *face_FiltePath = [[NSBundle mainBundle] pathForResource:@"filter_model.bundle" ofType:nil];
+    
+    // 授权文件
+    NSString *authFile = [[NSBundle mainBundle] pathForResource:@"pixelfreeAuth.lic" ofType:nil];
+    
+    // 初始化实例
+    self.mPixelFree = [[SMPixelFree alloc] initWithProcessContext:nil srcFilterPath:face_FiltePath authFile:authFile];
+    
    ```
 
 2. 美颜参数设置
@@ -85,9 +84,12 @@
    [_mPixelFree processWithBuffer:pixbuffer];
    ```
 
-
    
 #### 更新日志
+**2023-09-09 日更新** v2.4.0
+- 新增一键美颜
+- 包体与 CPU 优化
+
 **2023-08-12 日更新** v2.3.3
 伟大优化，性能提升 30%
 - 磨皮优化

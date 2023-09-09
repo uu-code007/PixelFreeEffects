@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -24,7 +24,7 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pt2-fx-Wpc">
-                            <rect key="frame" x="0.0" y="9.5" width="125" height="30"/>
+                            <rect key="frame" x="94" y="9.5" width="93.5" height="30"/>
                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <state key="normal" title="美肤">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -37,7 +37,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UdX-KP-ajT">
-                            <rect key="frame" x="125" y="9.5" width="125" height="30"/>
+                            <rect key="frame" x="187.5" y="9.5" width="94" height="30"/>
                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <state key="normal" title="美型">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -50,7 +50,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0jq-Oa-c5T">
-                            <rect key="frame" x="250" y="9.5" width="125" height="30"/>
+                            <rect key="frame" x="281.5" y="9.5" width="93.5" height="30"/>
                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <state key="normal" title="滤镜">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -62,24 +62,41 @@
                                 <action selector="bottomBtnsSelected:" destination="iN0-l3-epB" eventType="touchUpInside" id="94o-xa-Mp1"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rhf-zE-HNM">
+                            <rect key="frame" x="0.0" y="9.5" width="94" height="30"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="一键美颜">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <state key="selected">
+                                <color key="titleColor" red="0.36862745099999999" green="0.78039215689999997" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="bottomBtnsSelected:" destination="iN0-l3-epB" eventType="touchUpInside" id="ICo-OC-MS7"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.59773651541095896" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="49" id="0qd-yb-zhU"/>
+                        <constraint firstItem="Pt2-fx-Wpc" firstAttribute="width" secondItem="rhf-zE-HNM" secondAttribute="width" id="1qa-6m-fYI"/>
                         <constraint firstItem="UdX-KP-ajT" firstAttribute="leading" secondItem="Pt2-fx-Wpc" secondAttribute="trailing" id="2h5-lt-RGC"/>
                         <constraint firstItem="Pt2-fx-Wpc" firstAttribute="height" secondItem="0jq-Oa-c5T" secondAttribute="height" id="3CE-2z-X5g"/>
+                        <constraint firstItem="rhf-zE-HNM" firstAttribute="centerY" secondItem="Pt2-fx-Wpc" secondAttribute="centerY" id="C87-Jg-VVO"/>
                         <constraint firstItem="0jq-Oa-c5T" firstAttribute="centerY" secondItem="Eeq-TV-ISu" secondAttribute="centerY" id="GrI-wa-uz1"/>
                         <constraint firstItem="Pt2-fx-Wpc" firstAttribute="height" secondItem="UdX-KP-ajT" secondAttribute="height" id="LrX-0n-257"/>
                         <constraint firstItem="cgd-Ki-Kx1" firstAttribute="top" secondItem="Eeq-TV-ISu" secondAttribute="top" id="NEp-Ow-L9U"/>
                         <constraint firstItem="0jq-Oa-c5T" firstAttribute="leading" secondItem="UdX-KP-ajT" secondAttribute="trailing" id="PBr-7O-vJW"/>
                         <constraint firstItem="Pt2-fx-Wpc" firstAttribute="width" secondItem="0jq-Oa-c5T" secondAttribute="width" id="WAd-YQ-Sfl"/>
+                        <constraint firstItem="rhf-zE-HNM" firstAttribute="leading" secondItem="Eeq-TV-ISu" secondAttribute="leading" id="YmU-et-n6W"/>
                         <constraint firstItem="cgd-Ki-Kx1" firstAttribute="leading" secondItem="Eeq-TV-ISu" secondAttribute="leading" id="eKg-ha-9VI"/>
                         <constraint firstItem="Pt2-fx-Wpc" firstAttribute="width" secondItem="UdX-KP-ajT" secondAttribute="width" id="ebH-Iy-Tyc"/>
                         <constraint firstItem="UdX-KP-ajT" firstAttribute="leading" secondItem="Pt2-fx-Wpc" secondAttribute="trailing" id="fcP-cL-E79"/>
                         <constraint firstItem="UdX-KP-ajT" firstAttribute="centerY" secondItem="Eeq-TV-ISu" secondAttribute="centerY" id="hwd-Pe-Vld"/>
                         <constraint firstItem="Pt2-fx-Wpc" firstAttribute="centerY" secondItem="Eeq-TV-ISu" secondAttribute="centerY" id="jZY-mx-lZ1"/>
+                        <constraint firstItem="rhf-zE-HNM" firstAttribute="height" secondItem="Pt2-fx-Wpc" secondAttribute="height" id="lyB-Ul-Caz"/>
                         <constraint firstAttribute="trailing" secondItem="cgd-Ki-Kx1" secondAttribute="trailing" id="pde-53-lnB"/>
-                        <constraint firstItem="Pt2-fx-Wpc" firstAttribute="leading" secondItem="Eeq-TV-ISu" secondAttribute="leading" id="xnZ-1q-4nS"/>
+                        <constraint firstItem="Pt2-fx-Wpc" firstAttribute="leading" secondItem="rhf-zE-HNM" secondAttribute="trailing" id="sii-XW-EbE"/>
                         <constraint firstAttribute="trailing" secondItem="0jq-Oa-c5T" secondAttribute="trailing" id="y59-kI-mTG"/>
                     </constraints>
                 </view>
@@ -183,7 +200,7 @@
                             </collectionViewFlowLayout>
                         </collectionView>
                         <switch hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UJ5-JZ-btw">
-                            <rect key="frame" x="1" y="15" width="49" height="31"/>
+                            <rect key="frame" x="327" y="16" width="49" height="31"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <connections>
                                 <action selector="isOpenFURender:" destination="iN0-l3-epB" eventType="valueChanged" id="zKZ-cg-LzD"/>
@@ -238,12 +255,13 @@
                 <outlet property="beautyFilterView" destination="VKT-X8-6nB" id="iVl-4J-XbS"/>
                 <outlet property="beautySlider" destination="yzS-kB-xDl" id="Avt-f9-G9E"/>
                 <outlet property="bodyView" destination="i91-a1-eDy" id="gss-Z3-Hql"/>
+                <outlet property="faceTypeBtn" destination="rhf-zE-HNM" id="olj-5g-bBx"/>
+                <outlet property="faceTypeView" destination="VSF-ei-fYl" id="5Tb-7z-RJ8"/>
                 <outlet property="makeupView" destination="jln-LU-yB7" id="yEg-Dk-tln"/>
                 <outlet property="shapeBtn" destination="UdX-KP-ajT" id="Gpr-kc-Vde"/>
                 <outlet property="shapeView" destination="uvW-i0-quc" id="vUf-ul-OGa"/>
                 <outlet property="skinBtn" destination="Pt2-fx-Wpc" id="xGX-ry-ILC"/>
                 <outlet property="skinView" destination="Oz7-LF-H3c" id="sre-fn-5d3"/>
-                <outlet property="stickerView" destination="VSF-ei-fYl" id="and-Ky-2eN"/>
                 <outlet property="topView" destination="EDc-v0-QNc" id="fvz-Iv-Rs5"/>
             </connections>
             <point key="canvasLocation" x="12" y="330.13493253373315"/>

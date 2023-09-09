@@ -157,7 +157,7 @@ enum
     if (self = [super initWithCoder:aDecoder]) {
         
         self.disapplePointIndex = -1 ;
-        _contextQueue = dispatch_queue_create("com.mmface.contextQueue", DISPATCH_QUEUE_SERIAL);
+        _contextQueue = dispatch_queue_create("com.pfdetect.contextQueue", DISPATCH_QUEUE_SERIAL);
         
         self.contentScaleFactor = [[UIScreen mainScreen] scale];
         
@@ -192,7 +192,7 @@ enum
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame] ) {
         self.disapplePointIndex = -1 ;
-        _contextQueue = dispatch_queue_create("com.mmface.contextQueue", DISPATCH_QUEUE_SERIAL);
+        _contextQueue = dispatch_queue_create("com.pfdetect.contextQueue", DISPATCH_QUEUE_SERIAL);
         
         self.contentScaleFactor = [[UIScreen mainScreen] scale];
         
@@ -227,7 +227,7 @@ enum
 -(instancetype)initWithFrame:(CGRect)frame context:(nonnull EAGLContext *)contex{
     if (self = [super initWithFrame:frame] ) {
         self.disapplePointIndex = -1 ;
-        _contextQueue = dispatch_queue_create("com.mmface.contextQueue", DISPATCH_QUEUE_SERIAL);
+        _contextQueue = dispatch_queue_create("com.pfdetect.contextQueue", DISPATCH_QUEUE_SERIAL);
         
         self.contentScaleFactor = [[UIScreen mainScreen] scale];
         

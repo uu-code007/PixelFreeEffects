@@ -22,16 +22,16 @@
     [_mCamera startCapture];
 //    [_mCamera changeCameraInputDeviceisFront:NO];
     _mCamera.delegate = self;
-    _openGlView = [[PFOpenGLView alloc] initWithFrame:CGRectZero context:nil];
+    _openGlView = [[PFOpenGLView alloc] initWithFrame:CGRectZero context:self.mPixelFree.glContext];
     _openGlView.frame = self.view.bounds;
     [self.view insertSubview:self.openGlView atIndex:0];
     
-    UIButton *lvBtn = [[UIButton alloc] initWithFrame:CGRectMake(20, 100, 140, 44)];
-    [lvBtn addTarget:self action:@selector(aclick:) forControlEvents:UIControlEventTouchUpInside];
-    [lvBtn setTitle:@"绿幕分割开" forState:UIControlStateNormal];
-    [lvBtn setTitle:@"绿幕分割关" forState:UIControlStateSelected];
-    [lvBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [self.view addSubview:lvBtn];
+//    UIButton *lvBtn = [[UIButton alloc] initWithFrame:CGRectMake(20, 100, 140, 44)];
+//    [lvBtn addTarget:self action:@selector(aclick:) forControlEvents:UIControlEventTouchUpInside];
+//    [lvBtn setTitle:@"绿幕分割开" forState:UIControlStateNormal];
+//    [lvBtn setTitle:@"绿幕分割关" forState:UIControlStateSelected];
+//    [lvBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+//    [self.view addSubview:lvBtn];
     
 //    UIButton *stickerBtn = [[UIButton alloc] initWithFrame:CGRectMake(20, 150, 140, 44)];
 //    [stickerBtn addTarget:self action:@selector(stickerBtnClick:) forControlEvents:UIControlEventTouchUpInside];
