@@ -77,6 +77,17 @@
         if ([param.mParam isEqualToString:@"face_eye_space"]) {
             [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFace_eye_space value:&value];
         }
+        
+        if ([param.mParam isEqualToString:@"face_smile"]) {
+            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFace_smile value:&value];
+        }
+        if ([param.mParam isEqualToString:@"face_eye_rotate"]) {
+            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFace_eye_rotate value:&value];
+        }
+        if ([param.mParam isEqualToString:@"face_canthus"]) {
+            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFace_canthus value:&value];
+        }
+
 
           if ([param.mParam isEqualToString:@"runddy"]) {
               [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFaceRuddyStrength value:&value];

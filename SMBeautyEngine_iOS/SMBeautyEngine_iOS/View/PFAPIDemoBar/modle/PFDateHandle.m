@@ -68,21 +68,22 @@
    
     NSArray *prams = @[@"face_EyeStrength",@"face_thinning",@"face_narrow",@"face_chin",
                                       @"face_V",@"face_small",@"face_nose",@"face_forehead",
-                       @"face_mouth",@"face_philtrum",@"face_long_nose",@"face_eye_space"];
+                       @"face_mouth",@"face_philtrum",@"face_long_nose",@"face_eye_space",@"face_smile",@"face_eye_rotate",@"face_canthus"];
+
      NSDictionary *titelDic = @{@"face_EyeStrength":@"大眼",@"face_thinning":@"瘦脸",@"face_narrow":@"窄脸",@"face_chin":@"下巴",
                                 @"face_V":@"v脸",@"face_small":@"小脸",@"face_nose":@"瘦鼻",@"face_forehead":@"额头",
-                                @"face_mouth":@"嘴巴",@"face_philtrum":@"人中",@"face_long_nose":@"长鼻",@"face_eye_space":@"眼距"
+                                @"face_mouth":@"嘴巴",@"face_philtrum":@"人中",@"face_long_nose":@"长鼻",@"face_eye_space":@"眼距",@"face_smile":@"微笑嘴角",@"face_eye_rotate":@"眼睛角度",@"face_canthus":@"开眼角"
      };
     NSDictionary *defaultValueDic = @{@"face_EyeStrength":@(0.2),@"face_thinning":@(0.2),@"face_narrow":@(0.2),@"face_chin":@(0.5),
                                       @"face_V":@(0.2),@"face_small":@(0.2),@"face_nose":@(0.2),@"face_forehead":@(0.5),
-                                      @"face_mouth":@(0.5),@"face_philtrum":@(0.5),@"face_long_nose":@(0.5),@"face_eye_space":@(0.5)
+                                      @"face_mouth":@(0.5),@"face_philtrum":@(0.5),@"face_long_nose":@(0.5),@"face_eye_space":@(0.5),@"face_smile":@(0),@"face_eye_rotate":@(0.5),@"face_canthus":@(0)
     };
     
     
    NSMutableArray *array = [[NSMutableArray alloc] init];
    for (NSString *str in prams) {
     BOOL isStyle101 = NO;
-    if ([str isEqualToString:@"face_chin"] || [str isEqualToString:@"face_forehead"] || [str isEqualToString:@"face_mouth"] || [str isEqualToString:@"face_eye_space"] || [str isEqualToString:@"face_long_nose"] || [str isEqualToString:@"face_philtrum"]) {
+    if ([str isEqualToString:@"face_chin"] || [str isEqualToString:@"face_forehead"] || [str isEqualToString:@"face_mouth"] || [str isEqualToString:@"face_eye_space"] || [str isEqualToString:@"face_long_nose"] || [str isEqualToString:@"face_philtrum"] || [str isEqualToString:@"face_eye_rotate"]) {
            isStyle101 = YES;
     }
        PFBeautyParam *modle = [[PFBeautyParam alloc] init];
