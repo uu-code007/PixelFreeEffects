@@ -66,25 +66,32 @@ enum class PFBeautyFiterType(val intType: Int) {
     //眼距
     PFBeautyFiterTypeFace_eye_space(11),
 
+    //微笑嘴角
+    PFBeautyFiterTypeFace_smile(12),
+    //旋转眼睛
+    PFBeautyFiterTypeFace_eye_rotate(13),
+    //开眼角
+    PFBeautyFiterTypeFace_canthus(14),
 
-    //美白
-    PFBeautyFiterTypeFaceWhitenStrength(13),
     //磨皮
-    PFBeautyFiterTypeFaceBlurStrength(12),
+    PFBeautyFiterTypeFaceBlurStrength(15),
+    //美白
+    PFBeautyFiterTypeFaceWhitenStrength(16),
 
     //红润
-    PFBeautyFiterTypeFaceRuddyStrength(14),
+    PFBeautyFiterTypeFaceRuddyStrength(17),
 
     //锐化
-    PFBeautyFiterTypeFaceSharpenStrength(15),
+    PFBeautyFiterTypeFaceSharpenStrength(18),
 
     //新美白算法
-    PFBeautyFiterTypeFaceM_newWhitenStrength(16),
+    PFBeautyFiterTypeFaceM_newWhitenStrength(19),
 
     //画质增强
-    PFBeautyFiterTypeFaceH_qualityStrength(17),
+    PFBeautyFiterTypeFaceH_qualityStrength(20),
 
-    PFBeautyFiterName(18),
+    PFBeautyFiterName(21),
+    PFBeautyFiterStrength(22),
 
 }
 

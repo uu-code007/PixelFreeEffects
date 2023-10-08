@@ -38,10 +38,11 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                         R.mipmap.mopi
                     )
                 )
+                // android 建议配置低一些
                 add(
                     BeautyItem(
                         PFBeautyFiterType.PFBeautyFiterTypeFaceSharpenStrength,
-                        0.2f,
+                        0.0f,
                         "锐化",
                         R.mipmap.ruihua
                     )

@@ -46,7 +46,6 @@ typedef enum PFRotationMode{
 
 typedef enum PFSrcType{
     PFSrcTypeFilter = 0,
-    PFSrcTypeDetect = 1,
     PFSrcTypeAuthFile = 2,
 } PFSrcType;
 
@@ -56,7 +55,6 @@ typedef struct {
 } PFDetectPath;
 
 typedef struct {
-
   int textureID;
   int wigth;
   int height;
@@ -72,7 +70,6 @@ typedef struct {
 } PFIamgeInput;
 
 typedef struct {
-
   char *imagePath;
 } PFFiter;
 
@@ -107,8 +104,16 @@ typedef enum PFBeautyFiterType{
     PFBeautyFiterTypeFace_long_nose = 10,
     //眼距
     PFBeautyFiterTypeFace_eye_space,
+    
+    //微笑嘴角
+    PFBeautyFiterTypeFace_smile,
+    //旋转眼睛
+    PFBeautyFiterTypeFace_eye_rotate,
+    //开眼角
+    PFBeautyFiterTypeFace_canthus,
+    
     //磨皮
-    PFBeautyFiterTypeFaceBlurStrength,
+    PFBeautyFiterTypeFaceBlurStrength = 15,
     //美白
     PFBeautyFiterTypeFaceWhitenStrength,
     //红润
@@ -124,7 +129,6 @@ typedef enum PFBeautyFiterType{
     PFBeautyFiterStrength,
     
     PFBeautyFiterLvmu,
-    
     PFBeautyFiterSticker2DFilter,
     
 } PFBeautyFiterType;

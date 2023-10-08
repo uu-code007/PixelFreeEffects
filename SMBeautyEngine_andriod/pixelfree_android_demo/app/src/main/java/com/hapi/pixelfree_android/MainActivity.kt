@@ -65,20 +65,20 @@ class MainActivity : AppCompatActivity() {
             val authData = mPixelFree.readBundleFile(this@MainActivity, "pixelfreeAuth.lic")
             mPixelFree.auth(this.applicationContext, authData, authData.size)
             val face_fiter =
-                mPixelFree.readBundleFile(this@MainActivity, "face_fiter.bundle")
+                mPixelFree.readBundleFile(this@MainActivity, "filter_model.bundle")
             mPixelFree.createBeautyItemFormBundle(
                 face_fiter,
                 face_fiter.size,
                 PFSrcType.PFSrcTypeFilter
             )
-            val face_detect =
-                mPixelFree.readBundleFile(this@MainActivity, "face_detect.bundle")
-
-            mPixelFree.createBeautyItemFormBundle(
-                face_detect,
-                face_detect.size,
-                PFSrcType.PFSrcTypeDetect
-            )
+//            val face_detect =
+//                mPixelFree.readBundleFile(this@MainActivity, "face_detect.bundle")
+//
+//            mPixelFree.createBeautyItemFormBundle(
+//                face_detect,
+//                face_detect.size,
+//                PFSrcType.PFSrcTypeDetect
+//            )
         }
         findViewById<Button>(R.id.showBeauty).setOnClickListener {
             mPixeBeautyDialog.show(supportFragmentManager, "")
