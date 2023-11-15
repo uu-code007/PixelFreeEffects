@@ -66,6 +66,7 @@ class BeautyView : FrameLayout {
 
     fun setList(list: MutableList<BeautyItem>) {
         mBeautyItemAdapter.setList(list)
+        mBeautyItemAdapter.selectedItem = list.get(0)
         list.forEach() {
             if (it.type == PFBeautyFiterType.PFBeautyFiterName) {
 //                pixelFreeGetter.invoke()
@@ -85,7 +86,7 @@ class BeautyView : FrameLayout {
 
         }
         var selectedItem: BeautyItem? = null
-            private set
+
 
         @SuppressLint("NotifyDataSetChanged")
         override fun convert(holder: BaseViewHolder, item: BeautyItem) {

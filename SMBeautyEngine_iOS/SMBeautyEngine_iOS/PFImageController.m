@@ -65,7 +65,7 @@
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    _image = [UIImage imageNamed:@"IMG_2424.PNG"];
+    _image = [UIImage imageNamed:@"IMG_2403.PNG"];
 }
 
 
