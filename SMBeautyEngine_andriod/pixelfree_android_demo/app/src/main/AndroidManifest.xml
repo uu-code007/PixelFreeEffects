@@ -28,10 +28,10 @@
         android:theme="@style/Theme.Pixelfree_android"
         tools:targetApi="31" >
         <activity
-            android:name=".MainActivity"
+            android:name=".StartActivity"
             android:exported="false" />
         <activity
-            android:name=".StartActivity"
+            android:name=".MainActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -42,7 +42,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                 add(
                     BeautyItem(
                         PFBeautyFiterType.PFBeautyFiterTypeFaceSharpenStrength,
-                        0.0f,
+                        0.2f,
                         "锐化",
                         R.mipmap.ruihua
                     )

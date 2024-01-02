@@ -34,6 +34,7 @@ class BeautyView : FrameLayout {
 
         }
         val seek = findViewById<IndicatorSeekBar>(R.id.seekbarProgress)
+        seek.updateTextView(20)
         mBeautyItemAdapter.itemChangeCall = {
             seek.getSeekBar().progress = (it.progress * 100).toInt()
             if (it.type == PFBeautyFiterType.PFBeautyFiterName) {

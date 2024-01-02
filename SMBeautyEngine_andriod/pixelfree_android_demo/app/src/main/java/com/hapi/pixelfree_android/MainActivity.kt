@@ -1,6 +1,7 @@
 package com.hapi.pixelfree_android
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.hapi.pixelfree.*
@@ -79,6 +80,7 @@ class MainActivity : AppCompatActivity() {
 //                face_detect.size,
 //                PFSrcType.PFSrcTypeDetect
 //            )
+            mPixeBeautyDialog.show(supportFragmentManager, "")
         }
         findViewById<Button>(R.id.showBeauty).setOnClickListener {
             mPixeBeautyDialog.show(supportFragmentManager, "")
