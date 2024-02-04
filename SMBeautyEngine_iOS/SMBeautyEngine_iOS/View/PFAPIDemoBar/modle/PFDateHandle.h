@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(NSArray<PFBeautyParam *>*)setupShapData;
 +(NSArray<PFBeautyParam *>*)setupFaceType;
 
-
++(NSArray<PFBeautyParam *>*)setupStickers;
 
 +(NSArray<PFBeautyParam *>*)setupMakeupData;
 

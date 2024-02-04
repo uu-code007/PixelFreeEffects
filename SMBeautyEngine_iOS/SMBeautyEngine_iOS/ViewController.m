@@ -117,18 +117,20 @@
         [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterStrength value:&value];
     }
 
-    if (param.type == FUDataTypeStrick) {
-
-    }
-
-    if(param.type == FUDataTypeMakeup){
-
-    }
-
-
-//    CFAbsoluteTime endTime = (CFAbsoluteTimeGetCurrent() - startTime);
+    if (param.type == FUDataTypeStickers) {
+        if([param.mParam isEqualToString:@"origin"]){
+            [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:NULL];
+        } else{
+//            NSString *path =  [[NSBundle mainBundle] pathForResource:@"Stickers" ofType:nil];
+//            NSString *currentFolder = [path stringByAppendingPathComponent:param.mParam];
+//            const char *aaa = [currentFolder UTF8String];
+ //           [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)aaa];
 //
-//    NSLog(@"setparms 方法耗时: %f ms", endTime * 1000.0);
+            NSString *name = [NSString stringWithFormat:@"%@.boudle",param.mParam];
+            NSString *paths = [[NSBundle mainBundle] pathForResource:name ofType:nil];
+            [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)[paths UTF8String]];
+        }
+    }
 
 }
 

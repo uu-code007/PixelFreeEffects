@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C9718E202AD2B5EE006EB435 /* PixelFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9718E1E2AD2B59E006EB435 /* PixelFree.framework */; };
-		C9718E212AD2B5EE006EB435 /* PixelFree.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C9718E1E2AD2B59E006EB435 /* PixelFree.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C995D5972A3A00C20086C531 /* Stickers in Resources */ = {isa = PBXBuildFile; fileRef = C995D5942A3A00C10086C531 /* Stickers */; };
+		C9BF6C9C2B6CF4E90034E744 /* flowers_glasses.boudle in Resources */ = {isa = PBXBuildFile; fileRef = C9BF6C992B6CF4E90034E744 /* flowers_glasses.boudle */; };
+		C9BF6C9E2B6F72BD0034E744 /* baixiaomaohuxu.boudle in Resources */ = {isa = PBXBuildFile; fileRef = C9BF6C9D2B6F72BD0034E744 /* baixiaomaohuxu.boudle */; };
+		C9BF6CA32B6FA4420034E744 /* PixelFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BF6CA12B6FA40D0034E744 /* PixelFree.framework */; };
+		C9BF6CA42B6FA4420034E744 /* PixelFree.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C9BF6CA12B6FA40D0034E744 /* PixelFree.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C9CF037B2A8670FC00B2C394 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9CF03782A8670FB00B2C394 /* Accelerate.framework */; };
 		C9CF03812A87685100B2C394 /* PFOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CF037F2A87685000B2C394 /* PFOpenGLView.m */; };
 		C9CF08542AA9E83800B2C394 /* CoreML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3BD4591274752E900CB44C9 /* CoreML.framework */; };
@@ -47,13 +48,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		C9718E222AD2B5EE006EB435 /* Embed Frameworks */ = {
+		C9BF6CA52B6FA4420034E744 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C9718E212AD2B5EE006EB435 /* PixelFree.framework in Embed Frameworks */,
+				C9BF6CA42B6FA4420034E744 /* PixelFree.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -61,8 +62,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		C9718E1E2AD2B59E006EB435 /* PixelFree.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PixelFree.framework; sourceTree = "<group>"; };
-		C995D5942A3A00C10086C531 /* Stickers */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Stickers; sourceTree = "<group>"; };
+		C9BF6C992B6CF4E90034E744 /* flowers_glasses.boudle */ = {isa = PBXFileReference; lastKnownFileType = file; path = flowers_glasses.boudle; sourceTree = "<group>"; };
+		C9BF6C9D2B6F72BD0034E744 /* baixiaomaohuxu.boudle */ = {isa = PBXFileReference; lastKnownFileType = file; path = baixiaomaohuxu.boudle; sourceTree = "<group>"; };
+		C9BF6CA12B6FA40D0034E744 /* PixelFree.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PixelFree.framework; sourceTree = "<group>"; };
 		C9CF03782A8670FB00B2C394 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		C9CF037F2A87685000B2C394 /* PFOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFOpenGLView.m; sourceTree = "<group>"; };
 		C9CF03802A87685100B2C394 /* PFOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFOpenGLView.h; sourceTree = "<group>"; };
@@ -131,7 +133,7 @@
 				C9CF08542AA9E83800B2C394 /* CoreML.framework in Frameworks */,
 				E31A9AC02903913400AF311C /* CoreImage.framework in Frameworks */,
 				C9CF037B2A8670FC00B2C394 /* Accelerate.framework in Frameworks */,
-				C9718E202AD2B5EE006EB435 /* PixelFree.framework in Frameworks */,
+				C9BF6CA32B6FA4420034E744 /* PixelFree.framework in Frameworks */,
 				E3BD4590274752DC00CB44C9 /* libc++.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -142,7 +144,7 @@
 		E3BD452A27474A4E00CB44C9 = {
 			isa = PBXGroup;
 			children = (
-				C9718E1E2AD2B59E006EB435 /* PixelFree.framework */,
+				C9BF6CA12B6FA40D0034E744 /* PixelFree.framework */,
 				E3BD453527474A4E00CB44C9 /* SMBeautyEngine_iOS */,
 				E3BD453427474A4E00CB44C9 /* Products */,
 				E3BD458E274752D600CB44C9 /* Frameworks */,
@@ -190,11 +192,12 @@
 		E3BD455227474A9400CB44C9 /* res */ = {
 			isa = PBXGroup;
 			children = (
+				C9BF6C9D2B6F72BD0034E744 /* baixiaomaohuxu.boudle */,
+				C9BF6C992B6CF4E90034E744 /* flowers_glasses.boudle */,
 				C9CF08592AAC9F4300B2C394 /* filter_model.bundle */,
 				E3B90821298E6E1A00B96ADF /* image.jpeg */,
 				E3B9081D298E527300B96ADF /* bg.jpeg */,
 				E32C9FDF28E69A3300FB225E /* pixelfreeAuth.lic */,
-				C995D5942A3A00C10086C531 /* Stickers */,
 			);
 			path = res;
 			sourceTree = "<group>";
@@ -269,7 +272,7 @@
 				E3BD452F27474A4E00CB44C9 /* Sources */,
 				E3BD453027474A4E00CB44C9 /* Frameworks */,
 				E3BD453127474A4E00CB44C9 /* Resources */,
-				C9718E222AD2B5EE006EB435 /* Embed Frameworks */,
+				C9BF6CA52B6FA4420034E744 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -319,16 +322,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				E3BD454627474A5300CB44C9 /* LaunchScreen.storyboard in Resources */,
-				C995D5972A3A00C20086C531 /* Stickers in Resources */,
 				E3BD457F27474A9800CB44C9 /* Media.xcassets in Resources */,
 				E32C9FE028E69A3300FB225E /* pixelfreeAuth.lic in Resources */,
 				E3B90820298E527300B96ADF /* bg.jpeg in Resources */,
 				C9CF085A2AAC9F4300B2C394 /* filter_model.bundle in Resources */,
+				C9BF6C9E2B6F72BD0034E744 /* baixiaomaohuxu.boudle in Resources */,
 				E3BD454327474A5300CB44C9 /* Assets.xcassets in Resources */,
 				E3BD458A27474A9800CB44C9 /* Localizable.strings in Resources */,
 				E3BD457E27474A9800CB44C9 /* PFAPIDemoBar.xib in Resources */,
 				E3BD458927474A9800CB44C9 /* PFDemoBar.strings in Resources */,
 				E3BD454127474A4E00CB44C9 /* Main.storyboard in Resources */,
+				C9BF6C9C2B6CF4E90034E744 /* flowers_glasses.boudle in Resources */,
 				E3B90822298E6E1A00B96ADF /* image.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -550,22 +554,24 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.4.1;
+				MARKETING_VERSION = 2.4.5;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mumu.SMBeautyEngine;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mumu.SMBeautyEngine.cn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -594,22 +600,24 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.4.1;
+				MARKETING_VERSION = 2.4.5;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mumu.SMBeautyEngine;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mumu.SMBeautyEngine.cn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

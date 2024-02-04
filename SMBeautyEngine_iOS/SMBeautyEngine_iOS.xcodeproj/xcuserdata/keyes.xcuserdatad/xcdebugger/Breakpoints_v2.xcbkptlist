@@ -5,21 +5,418 @@
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0D1B5150-1F35-4823-816F-4CB2320FB2F5"
+            uuid = "0A86B91F-8E82-4C09-BCDC-78BC67C585FE"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            breakpointStackSelectionBehavior = "1"
-            scope = "1"
-            stopOnStyle = "0">
+            filePath = "../PixelFreeCxx/DetectFace/face/pfdetect_types.h"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "140"
+            endingLineNumber = "140"
+            landmarkName = "operator=(that)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0A86B91F-8E82-4C09-BCDC-78BC67C585FE - b7e01ecf1c8ddb78"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "pfdetect::FaceResult::operator=(pfdetect::FaceResult const&amp;)"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/face/pfdetect_types.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "140"
+                  endingLineNumber = "140"
+                  offsetFromSymbolStart = "376">
+               </Location>
+               <Location
+                  uuid = "0A86B91F-8E82-4C09-BCDC-78BC67C585FE - b7e01ecf1c8ddb78"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "pfdetect::FaceResult::operator=(pfdetect::FaceResult const&amp;)"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/face/pfdetect_types.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "140"
+                  endingLineNumber = "140"
+                  offsetFromSymbolStart = "600">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F8A76C97-C1D1-43E8-A08B-B06DCB3A5BF6"
+            uuid = "D396212F-9696-459D-ABED-D028038FA44F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../PixelFreeCxx/PixelFree/PFPixelFree.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "268"
+            endingLineNumber = "268"
+            landmarkName = "pixelFree::processWithBuffer(imageInput)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D396212F-9696-459D-ABED-D028038FA44F - 7bca65803e26ad74"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PixelFree::pixelFree::processWithBuffer(PFIamgeInput)"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/PixelFree/PFPixelFree.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "268"
+                  endingLineNumber = "268"
+                  offsetFromSymbolStart = "3176">
+               </Location>
+               <Location
+                  uuid = "D396212F-9696-459D-ABED-D028038FA44F - 7bca65803e26ad74"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PixelFree::pixelFree::processWithBuffer(PFIamgeInput)"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/PixelFree/PFPixelFree.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "268"
+                  endingLineNumber = "268"
+                  offsetFromSymbolStart = "2492">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "45210107-3F12-44EA-A593-CB2930703118"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../PixelFreeCxx/DetectFace/face/mmface_types.h"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "481"
+            endingLineNumber = "481"
+            landmarkName = "UpdateAllLandmarks()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8322975A-BEC5-48C7-BB7B-63780F8D7B56"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../PixelFreeCxx/DetectFace/json/json_reader.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1970"
+            endingLineNumber = "1970"
+            landmarkName = "CharReaderBuilder::validate(invalid)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "8322975A-BEC5-48C7-BB7B-63780F8D7B56 - 1ad5a38553db571d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::CharReaderBuilder::validate(mmface::Json::Value*) const"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_reader.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1970"
+                  endingLineNumber = "1970"
+                  offsetFromSymbolStart = "76">
+               </Location>
+               <Location
+                  uuid = "8322975A-BEC5-48C7-BB7B-63780F8D7B56 - 1ad5a38553db571d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::CharReaderBuilder::validate(mmface::Json::Value*) const"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_reader.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1970"
+                  endingLineNumber = "1970"
+                  offsetFromSymbolStart = "92">
+               </Location>
+               <Location
+                  uuid = "8322975A-BEC5-48C7-BB7B-63780F8D7B56 - 1ad5a38553db571d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::CharReaderBuilder::validate(mmface::Json::Value*) const"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_reader.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1970"
+                  endingLineNumber = "1970"
+                  offsetFromSymbolStart = "660">
+               </Location>
+               <Location
+                  uuid = "8322975A-BEC5-48C7-BB7B-63780F8D7B56 - 1ad5a38553db571d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::CharReaderBuilder::validate(mmface::Json::Value*) const"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_reader.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1970"
+                  endingLineNumber = "1970"
+                  offsetFromSymbolStart = "112">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "60CDDF17-8030-4ACF-B2ED-7BBF03CBC53A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../PixelFreeCxx/DetectFace/json/json_reader.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1960"
+            endingLineNumber = "1960"
+            landmarkName = "getValidReaderKeys(valid_keys)"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  uuid = "60CDDF17-8030-4ACF-B2ED-7BBF03CBC53A - 61dadcb854363ada"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::getValidReaderKeys(std::__1::set&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::less&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt;, std::__1::allocator&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt; &gt;*)"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_reader.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1960"
+                  endingLineNumber = "1960"
+                  offsetFromSymbolStart = "408">
+               </Location>
+               <Location
+                  uuid = "60CDDF17-8030-4ACF-B2ED-7BBF03CBC53A - 61dadcb854363ada"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::getValidReaderKeys(std::__1::set&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::less&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt;, std::__1::allocator&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt; &gt;*)"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_reader.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1960"
+                  endingLineNumber = "1960"
+                  offsetFromSymbolStart = "484">
+               </Location>
+               <Location
+                  uuid = "60CDDF17-8030-4ACF-B2ED-7BBF03CBC53A - 61dadcb854363ada"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::getValidReaderKeys(std::__1::set&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::less&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt;, std::__1::allocator&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt; &gt;*)"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_reader.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1960"
+                  endingLineNumber = "1960"
+                  offsetFromSymbolStart = "2148">
+               </Location>
+               <Location
+                  uuid = "60CDDF17-8030-4ACF-B2ED-7BBF03CBC53A - 61dadcb854363ada"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::getValidReaderKeys(std::__1::set&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::less&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt;, std::__1::allocator&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt; &gt;*)"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_reader.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1960"
+                  endingLineNumber = "1960"
+                  offsetFromSymbolStart = "636">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A93D2079-DB48-48D4-9395-C55FBD855EF8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../PixelFreeCxx/DetectFace/json/json_reader.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2029"
+            endingLineNumber = "2029"
+            landmarkName = "parseFromStream(fact, sin, root, errs)"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  uuid = "A93D2079-DB48-48D4-9395-C55FBD855EF8 - 8981f2cc64e896b5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::parseFromStream(mmface::Json::CharReader::Factory const&amp;, std::__1::basic_istream&lt;char, std::__1::char_traits&lt;char&gt; &gt;&amp;, mmface::Json::Value*, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;*)"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_reader.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2030"
+                  endingLineNumber = "2030"
+                  offsetFromSymbolStart = "148">
+               </Location>
+               <Location
+                  uuid = "A93D2079-DB48-48D4-9395-C55FBD855EF8 - 8981f2cc64e89694"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::parseFromStream(mmface::Json::CharReader::Factory const&amp;, std::__1::basic_istream&lt;char, std::__1::char_traits&lt;char&gt; &gt;&amp;, mmface::Json::Value*, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;*)"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_reader.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2029"
+                  endingLineNumber = "2029"
+                  offsetFromSymbolStart = "148">
+               </Location>
+               <Location
+                  uuid = "A93D2079-DB48-48D4-9395-C55FBD855EF8 - 8981f2cc64e89694"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::parseFromStream(mmface::Json::CharReader::Factory const&amp;, std::__1::basic_istream&lt;char, std::__1::char_traits&lt;char&gt; &gt;&amp;, mmface::Json::Value*, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;*)"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_reader.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2029"
+                  endingLineNumber = "2029"
+                  offsetFromSymbolStart = "1028">
+               </Location>
+               <Location
+                  uuid = "A93D2079-DB48-48D4-9395-C55FBD855EF8 - 6cafd17f45b0017a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::operator&gt;&gt;(std::__1::basic_istream&lt;char, std::__1::char_traits&lt;char&gt; &gt;&amp;, mmface::Json::Value&amp;)"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_reader.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2031"
+                  endingLineNumber = "2031"
+                  offsetFromSymbolStart = "28">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E5F9617A-2B3C-4897-858F-BA6C1235C799"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../PixelFreeCxx/DetectFace/json/json_reader.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1983"
+            endingLineNumber = "1983"
+            landmarkName = "CharReaderBuilder::operator[](key)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E5F9617A-2B3C-4897-858F-BA6C1235C799 - a953fe1b1222acde"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::CharReaderBuilder::operator[](std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;)"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_reader.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1983"
+                  endingLineNumber = "1983"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  uuid = "E5F9617A-2B3C-4897-858F-BA6C1235C799 - a953fe1b1222acde"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::CharReaderBuilder::operator[](std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;)"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_reader.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1983"
+                  endingLineNumber = "1983"
+                  offsetFromSymbolStart = "96">
+               </Location>
+               <Location
+                  uuid = "E5F9617A-2B3C-4897-858F-BA6C1235C799 - 968170ada1a0cbf6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::CharReaderBuilder::strictMode(mmface::Json::Value*)"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_reader.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1986"
+                  endingLineNumber = "1986"
+                  offsetFromSymbolStart = "28">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4180B753-849B-4487-B979-CEF20F60CC24"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -32,7 +429,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "F8A76C97-C1D1-43E8-A08B-B06DCB3A5BF6 - 89dffb0081ed9016"
+                  uuid = "4180B753-849B-4487-B979-CEF20F60CC24 - 89dffb0081ed9016"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -47,11 +444,11 @@
                   offsetFromSymbolStart = "200">
                </Location>
                <Location
-                  uuid = "F8A76C97-C1D1-43E8-A08B-B06DCB3A5BF6 - 937e86d9932caffe"
+                  uuid = "4180B753-849B-4487-B979-CEF20F60CC24 - 89dffb0081ed9016"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "pfdetect::Json::StreamWriterBuilder::newStreamWriter() const"
+                  symbolName = "mmface::Json::StreamWriterBuilder::newStreamWriter() const"
                   moduleName = "SMBeautyEngine_iOS"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_writer.cpp"
@@ -59,7 +456,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1173"
                   endingLineNumber = "1173"
-                  offsetFromSymbolStart = "200">
+                  offsetFromSymbolStart = "1324">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -67,123 +464,47 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "47507A1A-9A94-4EA3-AA40-5C3B06515F03"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../PixelFreeCxx/PixelFree/Thirdparty/stb_image/stb_image.h"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "892"
-            endingLineNumber = "892"
-            landmarkName = "stbi__malloc(size)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "812DB6A1-B5EE-47FE-8ABE-CE5DB2AA61BF"
+            uuid = "0A40113E-26EA-4A55-8B16-9A5BC0D143CE"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../PixelFreeCxx/PixelFree/GL/PixelFreeGLProgram.cpp"
+            filePath = "../PixelFreeCxx/DetectFace/json/json_writer.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "147"
-            endingLineNumber = "147"
-            landmarkName = "GLProgram::~GLProgram()"
+            startingLineNumber = "1237"
+            endingLineNumber = "1237"
+            landmarkName = "StreamWriterBuilder::operator[](key)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "812DB6A1-B5EE-47FE-8ABE-CE5DB2AA61BF - f9a9bdd862e50969"
+                  uuid = "0A40113E-26EA-4A55-8B16-9A5BC0D143CE - 890f81167536c051"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "PixelFree::GLProgram::~GLProgram()"
+                  symbolName = "mmface::Json::StreamWriterBuilder::operator[](std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;)"
                   moduleName = "SMBeautyEngine_iOS"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/sunmu/sunmu/faceUWorkSpace/SMBeautyEngine/PixelFreeCxx/PixelFree/GL/PixelFreeGLProgram.cpp"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_writer.cpp"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "149"
-                  endingLineNumber = "149"
-                  offsetFromSymbolStart = "32">
+                  startingLineNumber = "1237"
+                  endingLineNumber = "1237"
+                  offsetFromSymbolStart = "20">
                </Location>
                <Location
-                  uuid = "812DB6A1-B5EE-47FE-8ABE-CE5DB2AA61BF - f9a9bdd862e5090a"
+                  uuid = "0A40113E-26EA-4A55-8B16-9A5BC0D143CE - 890f81167536c051"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "PixelFree::GLProgram::~GLProgram()"
+                  symbolName = "mmface::Json::StreamWriterBuilder::operator[](std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;)"
                   moduleName = "SMBeautyEngine_iOS"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/sunmu/sunmu/faceUWorkSpace/SMBeautyEngine/PixelFreeCxx/PixelFree/GL/PixelFreeGLProgram.cpp"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_writer.cpp"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "148"
-                  endingLineNumber = "148"
-                  offsetFromSymbolStart = "24">
-               </Location>
-               <Location
-                  uuid = "812DB6A1-B5EE-47FE-8ABE-CE5DB2AA61BF - f9a9bdd862e5092b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "PixelFree::GLProgram::~GLProgram()"
-                  moduleName = "SMBeautyEngine_iOS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/sunmu/sunmu/faceUWorkSpace/SMBeautyEngine/PixelFreeCxx/PixelFree/GL/PixelFreeGLProgram.cpp"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "147"
-                  endingLineNumber = "147"
-                  offsetFromSymbolStart = "32">
-               </Location>
-               <Location
-                  uuid = "812DB6A1-B5EE-47FE-8ABE-CE5DB2AA61BF - 2ec7a9515abf1934"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "PixelFree::GLProgram::~GLProgram()"
-                  moduleName = "SMBeautyEngine_iOS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/sunmu%201/sunmu/faceUWorkSpace/SMBeautyEngine/PixelFreeCxx/PixelFree/GL/PixelFreeGLProgram.cpp"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "147"
-                  endingLineNumber = "147"
-                  offsetFromSymbolStart = "32">
-               </Location>
-               <Location
-                  uuid = "812DB6A1-B5EE-47FE-8ABE-CE5DB2AA61BF - 524f96476c0cd314"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "PixelFree::GLProgram::GLProgram(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;) (.cold.1)"
-                  moduleName = "SMBeautyEngine_iOS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/sunmu%201/sunmu/faceUWorkSpace/SMBeautyEngine/PixelFreeCxx/PixelFree/GL/PixelFreeGLProgram.cpp"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "256"
-                  endingLineNumber = "256"
-                  offsetFromSymbolStart = "28">
-               </Location>
-               <Location
-                  uuid = "812DB6A1-B5EE-47FE-8ABE-CE5DB2AA61BF - 9c69be5e15104187"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "PixelFree::GLProgram::~GLProgram()"
-                  moduleName = "SMBeautyEngine_iOS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/PixelFree/GL/PixelFreeGLProgram.cpp"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "147"
-                  endingLineNumber = "147"
-                  offsetFromSymbolStart = "32">
+                  startingLineNumber = "1237"
+                  endingLineNumber = "1237"
+                  offsetFromSymbolStart = "96">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -191,224 +512,424 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "16AB5935-FE4B-4367-AFB9-F98F69A35D4C"
+            uuid = "0607D98F-27EF-4FBB-8766-E7ED1B566072"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../PixelFreeCxx/DetectFace/json/json_writer.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1226"
+            endingLineNumber = "1226"
+            landmarkName = "StreamWriterBuilder::validate(invalid)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0607D98F-27EF-4FBB-8766-E7ED1B566072 - 83b7c1fa698adc25"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::StreamWriterBuilder::validate(mmface::Json::Value*) const"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_writer.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1226"
+                  endingLineNumber = "1226"
+                  offsetFromSymbolStart = "112">
+               </Location>
+               <Location
+                  uuid = "0607D98F-27EF-4FBB-8766-E7ED1B566072 - 83b7c1fa698adc25"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::StreamWriterBuilder::validate(mmface::Json::Value*) const"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_writer.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1226"
+                  endingLineNumber = "1226"
+                  offsetFromSymbolStart = "700">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C794EB9F-B01B-40A8-B8A8-5E51520AA879"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../PixelFreeCxx/DetectFace/face/mmface_detect_landmark.cc"
+            filePath = "../PixelFreeCxx/DetectFace/json/json_value.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "336"
-            endingLineNumber = "336"
-            landmarkName = "MMFaceDetectLandmark::FaceLandmarkInference(camera_view, rect, face_info)"
+            startingLineNumber = "1148"
+            endingLineNumber = "1148"
+            landmarkName = "Value::operator[](key)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C794EB9F-B01B-40A8-B8A8-5E51520AA879 - 4c84287b5f794961"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::Value::operator[](char const*) const"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_value.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1148"
+                  endingLineNumber = "1148"
+                  offsetFromSymbolStart = "100">
+               </Location>
+               <Location
+                  uuid = "C794EB9F-B01B-40A8-B8A8-5E51520AA879 - 4c84287b5f794961"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::Value::operator[](char const*) const"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_value.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1148"
+                  endingLineNumber = "1148"
+                  offsetFromSymbolStart = "368">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7E127A39-546F-4999-91BC-D135BEC400A9"
+            uuid = "278D5822-5888-4956-8F45-B61329D78BCE"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../PixelFreeCxx/DetectFace/json/json_value.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1154"
+            endingLineNumber = "1154"
+            landmarkName = "Value::operator[](key)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "278D5822-5888-4956-8F45-B61329D78BCE - c2bed221ce971840"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::Value::operator[](std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;) const"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_value.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1154"
+                  endingLineNumber = "1154"
+                  offsetFromSymbolStart = "108">
+               </Location>
+               <Location
+                  uuid = "278D5822-5888-4956-8F45-B61329D78BCE - c2bed221ce971840"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::Value::operator[](std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;) const"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_value.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1154"
+                  endingLineNumber = "1154"
+                  offsetFromSymbolStart = "508">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "ECF45C93-DA4C-4422-B819-7B76F032939C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../PixelFreeCxx/DetectFace/json/json_value.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1177"
+            endingLineNumber = "1177"
+            landmarkName = "Value::operator[](key)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "ECF45C93-DA4C-4422-B819-7B76F032939C - 726c8ceff592582b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::Value::append(mmface::Json::Value const&amp;)"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_value.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1182"
+                  endingLineNumber = "1182"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  uuid = "ECF45C93-DA4C-4422-B819-7B76F032939C - 726c8ceff592582b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::Value::append(mmface::Json::Value const&amp;)"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_value.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1182"
+                  endingLineNumber = "1182"
+                  offsetFromSymbolStart = "404">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1D57323E-DCF3-42CA-9ACB-DA9A972EC1C4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../PixelFreeCxx/DetectFace/json/json_value.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1655"
+            endingLineNumber = "1655"
+            landmarkName = "Path::resolve(root)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "1D57323E-DCF3-42CA-9ACB-DA9A972EC1C4 - 40fedd96c69128f5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::Path::resolve(mmface::Json::Value const&amp;) const"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_value.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1655"
+                  endingLineNumber = "1655"
+                  offsetFromSymbolStart = "304">
+               </Location>
+               <Location
+                  uuid = "1D57323E-DCF3-42CA-9ACB-DA9A972EC1C4 - 40fedd96c69128f5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::Path::resolve(mmface::Json::Value const&amp;) const"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_value.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1655"
+                  endingLineNumber = "1655"
+                  offsetFromSymbolStart = "2336">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B58C38F1-CF43-4E39-B89C-773DC7EF187E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../PixelFreeCxx/DetectFace/json/json_value.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1127"
+            endingLineNumber = "1127"
+            landmarkName = "Value::get(index, defaultValue)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B58C38F1-CF43-4E39-B89C-773DC7EF187E - 22c1f90b22ce8316"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::Value::get(unsigned int, mmface::Json::Value const&amp;) const"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_value.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1127"
+                  endingLineNumber = "1127"
+                  offsetFromSymbolStart = "48">
+               </Location>
+               <Location
+                  uuid = "B58C38F1-CF43-4E39-B89C-773DC7EF187E - 22c1f90b22ce8316"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::Json::Value::get(unsigned int, mmface::Json::Value const&amp;) const"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/json/json_value.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1127"
+                  endingLineNumber = "1127"
+                  offsetFromSymbolStart = "188">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
+         <BreakpointContent
+            uuid = "41C8E19D-25DE-4652-95A1-960D5EE75F4E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            breakpointStackSelectionBehavior = "1"
+            scope = "1"
+            stopOnStyle = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.SymbolicBreakpoint">
+         <BreakpointContent
+            uuid = "F8787A7D-6F0C-4337-A4F9-B03D7E60DB01"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../PixelFreeCxx/DetectFace/face/mmface_detect_landmark.cc"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "332"
-            endingLineNumber = "332"
-            landmarkName = "MMFaceDetectLandmark::FaceLandmarkInference(camera_view, rect, face_info)"
-            landmarkType = "7">
+            symbolName = "stbi__do_png"
+            moduleName = "">
+            <Locations>
+               <Location
+                  uuid = "F8787A7D-6F0C-4337-A4F9-B03D7E60DB01 - 6ce2c261c281d14b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "stbi__do_png(stbi__png*, int*, int*, int*, int, stbi__result_info*)"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/PixelFree/Thirdparty/stb_image/stb_image.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "4972"
+                  endingLineNumber = "4972"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C789E4DE-5BE7-4A6A-8744-6469C0825ED2"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../PixelFreeCxx/DetectFace/face/mmface_recognizer.cc"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "10"
-            endingLineNumber = "10"
-            landmarkName = "MMFaceRecognizer::Run(camera_view, results)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "A6F9FD66-6D40-46C3-9C5C-9210DBEEA8A8"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../PixelFreeCxx/DetectFace/face/mmface_tongue_classifier.cc"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "10"
-            endingLineNumber = "10"
-            landmarkName = "MMFaceTongueClassifier::InitParam(param_string)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "62A3394F-C26A-435E-B18A-E27EF47DA3EC"
+            uuid = "40F00CF0-09A2-4919-B333-D975C4AA26B5"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../PixelFreeCxx/DetectFace/face/mmface_sse.cc"
+            filePath = "../PixelFreeCxx/PixelFree/Include/SMPixelFree.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "396"
-            endingLineNumber = "396"
-            landmarkName = "mmfaceSse::InitParam(param)"
+            startingLineNumber = "483"
+            endingLineNumber = "483"
+            landmarkName = "-renderTarget"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "62061D86-8410-4C97-8A55-E30A8DD43DFB"
+            uuid = "78B9A2AE-4C98-44C1-8654-80C8594B371C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../PixelFreeCxx/DetectFace/face/mmface_sse.cc"
+            filePath = "../PixelFreeCxx/DetectFace/face/mmface_processor.cc"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "409"
-            endingLineNumber = "409"
-            landmarkName = "mmfaceSse::InitModel(file_buffer)"
+            startingLineNumber = "636"
+            endingLineNumber = "636"
+            landmarkName = "MMFaceProcessor::ProcessFaceCapture(image_view, results)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "78B9A2AE-4C98-44C1-8654-80C8594B371C - 302b147fa7dd4508"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::MMFaceProcessor::ProcessFaceCapture(mmface::ImageView const&amp;, std::__1::vector&lt;std::__1::shared_ptr&lt;mmface::FaceResult&gt;, std::__1::allocator&lt;std::__1::shared_ptr&lt;mmface::FaceResult&gt; &gt; &gt;&amp;)"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/face/mmface_processor.cc"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "636"
+                  endingLineNumber = "636"
+                  offsetFromSymbolStart = "1568">
+               </Location>
+               <Location
+                  uuid = "78B9A2AE-4C98-44C1-8654-80C8594B371C - 302b147fa7dd4508"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "mmface::MMFaceProcessor::ProcessFaceCapture(mmface::ImageView const&amp;, std::__1::vector&lt;std::__1::shared_ptr&lt;mmface::FaceResult&gt;, std::__1::allocator&lt;std::__1::shared_ptr&lt;mmface::FaceResult&gt; &gt; &gt;&amp;)"
+                  moduleName = "SMBeautyEngine_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/keyes/Desktop/mumuFU/SMBeautyEngine/PixelFreeCxx/DetectFace/face/mmface_processor.cc"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "636"
+                  endingLineNumber = "636"
+                  offsetFromSymbolStart = "564">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E31C10E6-6CD5-46EA-A21C-F3587238626F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../PixelFreeCxx/DetectFace/face/mmface_processor.cc"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "484"
+            endingLineNumber = "484"
+            landmarkName = "MMFaceProcessor::ProcessDenseLandmarks(image_view, results)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "BA531F49-A6AB-4B93-9935-A77C5DE6C652"
+            uuid = "389E46C5-47CC-437C-937D-43511A08482D"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../PixelFreeCxx/DetectFace/face/mmface_detect.cc"
+            filePath = "../PixelFreeCxx/DetectFace/face/mmface_processor.cc"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "673"
-            endingLineNumber = "673"
-            landmarkName = "mmdetectFace::FProcess(image_view, prev_landmarks, pre_rect, gray_image)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "3ECDBCEC-08A7-44A6-8051-42036D0368BF"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../PixelFreeCxx/DetectFace/face/mmface_ffn.cc"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "510"
-            endingLineNumber = "510"
-            landmarkName = "mmfaceFfn::Process(image_view, landmarks_before_smooth, dde_result, landmarks_uniformityer, expression_uniformityer)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "EF51D07E-399A-44CA-A66F-261415970134"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../PixelFreeCxx/DetectFace/face/mmface_ffn.cc"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "271"
-            endingLineNumber = "271"
-            landmarkName = "InitContext(raw_data, context)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "64DB9FA0-4C83-4E8C-87C1-45D72E147E5B"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../PixelFreeCxx/DetectFace/face/mmface_identifier.cc"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "17"
-            endingLineNumber = "17"
-            landmarkName = "MMFaceIdentifier::InitParam(param_string)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "9F42C035-837B-404E-8456-21763350430A"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../PixelFreeCxx/DetectFace/face/mmface_identifier.cc"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "MMFaceIdentifier::InitParam(param)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "5101E16D-9339-4EF8-BE9B-C2B4BF2484E7"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../PixelFreeCxx/DetectFace/face/mmface_identifier.cc"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "MMFaceIdentifier::InitModel(buffer)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "03849F4C-3221-413E-A8C2-6776D331F77A"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../PixelFreeCxx/DetectFace/face/mmface_landmark_all.cc"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "391"
-            endingLineNumber = "391"
-            landmarkName = "MMFaceLandmarkAll::PreprocessScoreFaceTransfrom(camera_view)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "6CCE7C87-8BAF-40B8-BECA-6FC89E4EA4AF"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../PixelFreeCxx/DetectFace/face/mmface_landmark_all.cc"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "MMFaceLandmarkAll::InitModel(file_buffer)"
+            startingLineNumber = "228"
+            endingLineNumber = "228"
+            landmarkName = "MMFaceProcessor::ProcessInternal(image_view, results)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -47,10 +47,17 @@
     CVPixelBufferLockBaseAddress(pixbuffer, 0);
 
     if(pixbuffer){
+        CFAbsoluteTime startTime = CFAbsoluteTimeGetCurrent();
+        
         [self.mPixelFree processWithBuffer:pixbuffer rotationMode:PFRotationMode0];
+        
+        CFAbsoluteTime endTime = (CFAbsoluteTimeGetCurrent() - startTime);
+//        NSLog(@"方法耗时: %f ms", endTime * 1000.0);
     }
     [_openGlView displayPixelBuffer:pixbuffer];
     CVPixelBufferUnlockBaseAddress(pixbuffer, 0);
+
+
 }
 
 -(void)aclick:(UIButton *)btn{
@@ -67,16 +74,20 @@
     btn.selected = !btn.selected;
     if(btn.selected){
         NSString *path =  [[NSBundle mainBundle] pathForResource:@"Stickers" ofType:nil];
-        NSString *currentFolder = [path stringByAppendingPathComponent:@"baixiaomaohuxu"];
+        NSString *currentFolder = [path stringByAppendingPathComponent:@"flowers_glasses"];
         const char *aaa = [currentFolder UTF8String];
-         [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)aaa];
+        
+        NSString *paths = [[NSBundle mainBundle] pathForResource:@"flowers_glasses.boudle" ofType:nil];
+         [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)[paths UTF8String]];
     } else{
         [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:NULL];
     }
 
 }
 
-
+-(void)dealloc{
+    NSLog(@"dealloc------");
+}
 
 
 @end

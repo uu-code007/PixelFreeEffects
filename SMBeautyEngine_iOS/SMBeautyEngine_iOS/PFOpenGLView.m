@@ -278,9 +278,7 @@ enum
     }
 }
 
-- (void)dealloc
-{
-    
+- (void)dealloc{
     dispatch_sync(_contextQueue, ^{
         [self destroyDisplayFramebuffer];
         [self destoryProgram];
@@ -288,7 +286,6 @@ enum
             CVOpenGLESTextureCacheFlush(self->videoTextureCache, 0);
             CFRelease(self->videoTextureCache);
             self->videoTextureCache = NULL;
-            
         }
     });
 }

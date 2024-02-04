@@ -35,6 +35,7 @@ typedef enum PFDetectFormat{
     PFFORMAT_IMAGE_YUV_NV12 = 8,
     PFFORMAT_IMAGE_YUV_NV21 = 9,
     PFFORMAT_IMAGE_YUV_I420 = 10,
+    PFFORMAT_IMAGE_TEXTURE = 11,
 } PFDetectFormat;
 
 typedef enum PFRotationMode{
@@ -47,6 +48,7 @@ typedef enum PFRotationMode{
 typedef enum PFSrcType{
     PFSrcTypeFilter = 0,
     PFSrcTypeAuthFile = 2,
+    PFSrcTypeStickerFile = 3,
 } PFSrcType;
 
 typedef struct {
@@ -104,7 +106,6 @@ typedef enum PFBeautyFiterType{
     PFBeautyFiterTypeFace_long_nose = 10,
     //眼距
     PFBeautyFiterTypeFace_eye_space,
-    
     //微笑嘴角
     PFBeautyFiterTypeFace_smile,
     //旋转眼睛
@@ -124,11 +125,13 @@ typedef enum PFBeautyFiterType{
     PFBeautyFiterTypeFaceM_newWhitenStrength,
     //画质增强
     PFBeautyFiterTypeFaceH_qualityStrength,
-
+    //滤镜类型
     PFBeautyFiterName,
+    //滤镜强度
     PFBeautyFiterStrength,
-    
+    //绿幕
     PFBeautyFiterLvmu,
+    // 2D 贴纸
     PFBeautyFiterSticker2DFilter,
     
 } PFBeautyFiterType;
@@ -146,7 +149,7 @@ PF_CAPI_EXPORT extern PFPixelFree* PF_NewPixelFree();
 PF_CAPI_EXPORT extern void PF_DeletePixelFree(PFPixelFree* pixelFree);
 
 //目前仅支持双输入。GPU 纹理由于渲染，cpu buffer 用检测
-PF_CAPI_EXPORT extern void PF_processWithBuffer(PFPixelFree* pixelFree,PFIamgeInput inputImage);
+PF_CAPI_EXPORT extern int PF_processWithBuffer(PFPixelFree* pixelFree,PFIamgeInput inputImage);
 
 PF_CAPI_EXPORT extern void PF_pixelFreeSetBeautyFiterParam(PFPixelFree* pixelFree, int key,void *value);
 PF_CAPI_EXPORT extern void PF_createBeautyItemFormBundle(PFPixelFree* pixelFree, void *data,int size,PFSrcType type);

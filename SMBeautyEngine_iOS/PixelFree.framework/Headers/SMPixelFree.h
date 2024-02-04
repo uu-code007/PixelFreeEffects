@@ -44,7 +44,7 @@ __attribute__((visibility("default"))) @interface SMPixelFree : NSObject
 @param rotationMode 人脸检测方向
 
 */
-- (void)processWithBuffer:(CVPixelBufferRef)pixelBuffer rotationMode:(PFRotationMode)rotationMode;
+- (int)processWithBuffer:(CVPixelBufferRef)pixelBuffer rotationMode:(PFRotationMode)rotationMode;
 
 /**
 图片处理

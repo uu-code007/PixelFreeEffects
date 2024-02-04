@@ -31,7 +31,7 @@
         _bottomColletionView = [[PFBottomColletionView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(frame) - 49,[UIScreen mainScreen].bounds.size.width, 49)];
         _bottomColletionView.delegate = self;
         _bottomColletionView.backgroundColor = [UIColor whiteColor];
-        _bottomColletionView.dataArray = @[@"美肤",@"美型",@"滤镜"];
+        _bottomColletionView.dataArray = @[@"美肤",@"美型",@"滤镜",@"贴纸"];
         [self addSubview:_bottomColletionView];
     }
     

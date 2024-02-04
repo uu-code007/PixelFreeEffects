@@ -21,7 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *faceTypeBtn;
 
 @property (weak, nonatomic) IBOutlet UIButton *makeupBtn;
-@property (weak, nonatomic) IBOutlet UIButton *bodyBtn;
+@property (weak, nonatomic) IBOutlet UIButton *stickersBtn;
 
 // 上半部分
 @property (weak, nonatomic) IBOutlet UIView *topView;
@@ -32,7 +32,7 @@
 @property (weak, nonatomic) IBOutlet PFFilterView *makeupView;
 
 @property (weak, nonatomic) IBOutlet PFSlider *beautySlider;
-@property (weak, nonatomic) IBOutlet PFBeautyView *bodyView;
+@property (weak, nonatomic) IBOutlet PFFilterView *stickersView;
 // 美型页
 @property (weak, nonatomic) IBOutlet PFBeautyView *shapeView;
 // 美肤页
@@ -51,7 +51,7 @@
 
 @property (nonatomic, strong) NSArray<PFBeautyParam *> *faceTypeParams;
 @property (nonatomic, strong) NSArray<PFBeautyParam *> *makeupParams;
-@property (nonatomic, strong) NSArray<PFBeautyParam *> *bodyParams;
+@property (nonatomic, strong) NSArray<PFBeautyParam *> *stickersParams;
 @end
 
 @implementation PFAPIDemoBar
@@ -85,16 +85,15 @@
     [_makeupView setDefaultFilter:_faceTypeParams[0]];
     [_faceTypeView reloadData];
     
-    _bodyView.dataArray = _bodyParams;
-    [_makeupView setDefaultFilter:_bodyParams[0]];
-    _bodyView.selectedIndex = 1;
-    [_bodyView reloadData];
+    _stickersView.filters = _stickersParams;
+    [_stickersView setDefaultFilter:_stickersParams[0]];
+    [_stickersView reloadData];
     
     self.faceTypeView.mDelegate = self ;
     self.makeupView.mDelegate = self;
     self.beautyFilterView.mDelegate = self ;
     
-    self.bodyView.mDelegate = self;
+    self.stickersView.mDelegate = self;
     self.shapeView.mDelegate = self ;
     self.skinView.mDelegate = self;
     
@@ -107,7 +106,7 @@
     self.beautyFilterBtn.tag = 103 ;
     self.faceTypeBtn.tag = 104;
     self.makeupBtn.tag = 105;
-    self.bodyBtn.tag = 106;
+    self.stickersBtn.tag = 106;
     
 }
 
@@ -117,6 +116,7 @@
      _skinParams = [PFDateHandle setupSkinData];
     _faceTypeParams = [PFDateHandle setupFaceType];
      _makeupParams = [PFDateHandle setupMakeupData];
+    _stickersParams = [PFDateHandle setupStickers];
 }
 
 -(void)layoutSubviews{
@@ -130,7 +130,7 @@
     
     self.faceTypeBtn.selected = NO;
     self.makeupBtn.selected = NO;
-    self.bodyBtn.selected = NO;
+    self.stickersBtn.selected = NO;
     
     
     self.skinView.hidden = YES;
@@ -139,7 +139,7 @@
     
     self.makeupView.hidden = YES;
     self.faceTypeView.hidden = YES;
-    self.bodyView.hidden = YES;
+    self.stickersView.hidden = YES;
     
     sender.selected = YES;
     
@@ -159,8 +159,8 @@
     if (sender == self.shapeBtn) {
         self.shapeView.hidden = NO;
     }
-    if (sender == self.bodyBtn) {
-        self.bodyView.hidden = NO;
+    if (sender == self.stickersBtn) {
+        self.stickersView.hidden = NO;
     }
 }
 
@@ -229,12 +229,12 @@
         }
     }
 
-    if (self.bodyBtn.selected) {
-        NSInteger selectedIndex = self.bodyView.selectedIndex;
-        self.beautySlider.hidden = selectedIndex < 0 ;
+    if (self.stickersBtn.selected) {
+        NSInteger selectedIndex = self.stickersView.selectedIndex;
+        self.beautySlider.hidden = YES;
         
         if (selectedIndex >= 0) {
-            PFBeautyParam *modle = self.bodyView.dataArray[selectedIndex];
+            PFBeautyParam *modle = self.stickersView.filters[selectedIndex];
             _seletedParam = modle;
             self.beautySlider.value = modle.mValue;
         }
@@ -345,7 +345,7 @@
         self.beautySlider.hidden = NO;
     }
     
-    if(param.type == FUDataTypebody&& _bodyView.selectedIndex > 0){
+    if(param.type == FUDataTypebody&& _stickersView.selectedIndex > 0){
         self.beautySlider.value = param.mValue;
         self.beautySlider.hidden = NO;
     }

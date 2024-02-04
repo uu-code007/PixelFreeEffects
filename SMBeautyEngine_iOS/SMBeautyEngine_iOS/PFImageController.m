@@ -29,7 +29,7 @@
     self.view.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1.0];
     _imageView = [[UIImageView alloc] init];
 //    _image = [UIImage imageNamed:@"IMG_2403"];
-    _image = [UIImage imageNamed:@"image_00"];
+    _image = [UIImage imageNamed:@"IMG_2406"];
     _imageView.image = _image;
     
     float x = ([UIScreen mainScreen].bounds.size.width - 250)/2;
@@ -65,7 +65,7 @@
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    _image = [UIImage imageNamed:@"IMG_2403.PNG"];
+    _image = [UIImage imageNamed:@"IMG_2406.PNG"];
 }
 
 

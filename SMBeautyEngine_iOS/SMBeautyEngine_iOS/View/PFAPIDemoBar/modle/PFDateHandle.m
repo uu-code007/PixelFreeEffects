@@ -22,13 +22,14 @@
                                          @"xiaoqingxin1",
                                          @"heibai1"];
     
-    NSDictionary *filtersCHName = @{@"makeup_noitem":@"原图",@"filter_lutup_ol":@"时尚",@"filter_lutup_pink":@"粉嫩"};
+    NSDictionary *filtersCHName = @{@"origin":@"原图",@"filter_lutup_ol":@"时尚",@"filter_lutup_pink":@"粉嫩"};
+    NSDictionary *titelDic = @{@"origin":@"原图",@"meibai1":@"美白",@"liangbai1":@"白亮", @"fennen1":@"粉嫩",@"nuansediao1":@"暖色调",@"gexing1":@"个性1",@"xiaoqingxin1":@"小清新",@"heibai1":@"黑白"};
 
     NSMutableArray *array = [[NSMutableArray alloc] init];
     for (NSString *str in beautyFiltersDataSource) {
         PFBeautyParam *modle = [[PFBeautyParam alloc] init];
         modle.mParam = str;
-        modle.mTitle = str;
+        modle.mTitle = [titelDic valueForKey:str];
         modle.mValue = 0.5;
         modle.type = FUDataTypeFilter;
         [array addObject:modle];
@@ -38,7 +39,7 @@
 }
 
 +(NSArray<PFBeautyParam *>*)setupSkinData{
-    NSArray *prams = @[@"newWhitenStrength",@"runddy",@"blur",@"sharpen",@"qualityStrength"];//
+    NSArray *prams = @[@"writen",@"runddy",@"blur",@"sharpen",@"qualityStrength"];//
     NSDictionary *titelDic = @{@"writen":@"美白",@"runddy":@"红润",@"blur":@"磨皮",@"sharpen":@"锐化",@"newWhitenStrength":@"新美白",@"qualityStrength":@"增强画质"};
     NSDictionary *defaultValueDic = @{@"runddy":@(0.6),@"writen":@(0.6),@"blur":@(0.7),@"sharpen":@(0.2),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.2)};
     
@@ -171,5 +172,22 @@
     return defaultValueDic;
 }
 
+
++(NSArray<PFBeautyParam *>*)setupStickers{
+    NSArray *beautyFiltersDataSource = @[@"origin",@"flowers_glasses",@"baixiaomaohuxu"];
+
+    NSDictionary *titelDic = @{@"origin":@"origin",@"flowers_glasses":@"flowers",@"baixiaomaohuxu":@"baixiaomaohuxu"};
+
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    for (NSString *str in beautyFiltersDataSource) {
+        PFBeautyParam *modle = [[PFBeautyParam alloc] init];
+        modle.mParam = str;
+        modle.mTitle = [titelDic valueForKey:str];
+        modle.type = FUDataTypeStickers;
+        [array addObject:modle];
+    }
+    
+    return array;
+}
 
 @end

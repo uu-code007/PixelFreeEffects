@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSUInteger, FUDataType) {
     FUDataTypeBeautify            = 0,
     FUDataTypeFilter,
-    FUDataTypeStrick,
+    FUDataTypeStickers,
     FUDataTypeMakeup,
     FUDataTypebody
 };
