@@ -22,7 +22,7 @@
     [_mCamera startCapture];
 //    [_mCamera changeCameraInputDeviceisFront:NO];
     _mCamera.delegate = self;
-    _openGlView = [[PFOpenGLView alloc] initWithFrame:CGRectZero context:self.mPixelFree.glContext];
+    _openGlView = [[PFOpenGLView alloc] initWithFrame:CGRectZero context:nil];
     _openGlView.frame = self.view.bounds;
     [self.view insertSubview:self.openGlView atIndex:0];
     
