@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		C95026402B8F39F700A25674 /* PixelFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C950263B2B8F399000A25674 /* PixelFree.framework */; };
 		C95026412B8F39F700A25674 /* PixelFree.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C950263B2B8F399000A25674 /* PixelFree.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C9BF6C9C2B6CF4E90034E744 /* flowers_glasses.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C9BF6C992B6CF4E90034E744 /* flowers_glasses.bundle */; };
-		C9BF6C9E2B6F72BD0034E744 /* baixiaomaohuxu.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C9BF6C9D2B6F72BD0034E744 /* baixiaomaohuxu.bundle */; };
+		C950264B2B8F40E800A25674 /* baixiaomao.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C95026492B8F40E800A25674 /* baixiaomao.bundle */; };
+		C950264C2B8F40E800A25674 /* flowers.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C950264A2B8F40E800A25674 /* flowers.bundle */; };
 		C9CF037B2A8670FC00B2C394 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9CF03782A8670FB00B2C394 /* Accelerate.framework */; };
 		C9CF03812A87685100B2C394 /* PFOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CF037F2A87685000B2C394 /* PFOpenGLView.m */; };
 		C9CF08542AA9E83800B2C394 /* CoreML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3BD4591274752E900CB44C9 /* CoreML.framework */; };
@@ -63,8 +63,8 @@
 
 /* Begin PBXFileReference section */
 		C950263B2B8F399000A25674 /* PixelFree.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PixelFree.framework; sourceTree = "<group>"; };
-		C9BF6C992B6CF4E90034E744 /* flowers_glasses.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = flowers_glasses.bundle; sourceTree = "<group>"; };
-		C9BF6C9D2B6F72BD0034E744 /* baixiaomaohuxu.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = baixiaomaohuxu.bundle; sourceTree = "<group>"; };
+		C95026492B8F40E800A25674 /* baixiaomao.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = baixiaomao.bundle; sourceTree = "<group>"; };
+		C950264A2B8F40E800A25674 /* flowers.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = flowers.bundle; sourceTree = "<group>"; };
 		C9CF03782A8670FB00B2C394 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		C9CF037F2A87685000B2C394 /* PFOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFOpenGLView.m; sourceTree = "<group>"; };
 		C9CF03802A87685100B2C394 /* PFOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFOpenGLView.h; sourceTree = "<group>"; };
@@ -192,8 +192,8 @@
 		E3BD455227474A9400CB44C9 /* res */ = {
 			isa = PBXGroup;
 			children = (
-				C9BF6C9D2B6F72BD0034E744 /* baixiaomaohuxu.bundle */,
-				C9BF6C992B6CF4E90034E744 /* flowers_glasses.bundle */,
+				C95026492B8F40E800A25674 /* baixiaomao.bundle */,
+				C950264A2B8F40E800A25674 /* flowers.bundle */,
 				C9CF08592AAC9F4300B2C394 /* filter_model.bundle */,
 				E3B90821298E6E1A00B96ADF /* image.jpeg */,
 				E3B9081D298E527300B96ADF /* bg.jpeg */,
@@ -326,13 +326,13 @@
 				E32C9FE028E69A3300FB225E /* pixelfreeAuth.lic in Resources */,
 				E3B90820298E527300B96ADF /* bg.jpeg in Resources */,
 				C9CF085A2AAC9F4300B2C394 /* filter_model.bundle in Resources */,
-				C9BF6C9E2B6F72BD0034E744 /* baixiaomaohuxu.bundle in Resources */,
+				C950264B2B8F40E800A25674 /* baixiaomao.bundle in Resources */,
 				E3BD454327474A5300CB44C9 /* Assets.xcassets in Resources */,
+				C950264C2B8F40E800A25674 /* flowers.bundle in Resources */,
 				E3BD458A27474A9800CB44C9 /* Localizable.strings in Resources */,
 				E3BD457E27474A9800CB44C9 /* PFAPIDemoBar.xib in Resources */,
 				E3BD458927474A9800CB44C9 /* PFDemoBar.strings in Resources */,
 				E3BD454127474A4E00CB44C9 /* Main.storyboard in Resources */,
-				C9BF6C9C2B6CF4E90034E744 /* flowers_glasses.bundle in Resources */,
 				E3B90822298E6E1A00B96ADF /* image.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

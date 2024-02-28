@@ -121,13 +121,13 @@
         if([param.mParam isEqualToString:@"origin"]){
             [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:NULL];
         } else{
-            NSString *path =  [[NSBundle mainBundle] pathForResource:@"Stickers" ofType:nil];
-            NSString *currentFolder = [path stringByAppendingPathComponent:param.mParam];
-            const char *aaa = [currentFolder UTF8String];
-            [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)aaa];
-//            NSString *name = [NSString stringWithFormat:@"%@.bundle",param.mParam];
-//            NSString *paths = [[NSBundle mainBundle] pathForResource:name ofType:nil];
-//            [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)[paths UTF8String]];
+//            NSString *path =  [[NSBundle mainBundle] pathForResource:@"Stickers" ofType:nil];
+//            NSString *currentFolder = [path stringByAppendingPathComponent:param.mParam];
+//            const char *aaa = [currentFolder UTF8String];
+//            [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)aaa];
+            NSString *name = [NSString stringWithFormat:@"%@.bundle",param.mParam];
+            NSString *paths = [[NSBundle mainBundle] pathForResource:name ofType:nil];
+            [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)[paths UTF8String]];
         }
     }
     
