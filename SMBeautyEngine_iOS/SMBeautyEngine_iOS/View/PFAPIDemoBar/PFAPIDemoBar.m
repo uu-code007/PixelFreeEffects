@@ -101,10 +101,11 @@
     [self.shapeBtn setTitle:NSLocalizedString(@"美型", nil) forState:UIControlStateNormal];
     [self.beautyFilterBtn setTitle:NSLocalizedString(@"滤镜", nil) forState:UIControlStateNormal];
     
-    self.skinBtn.tag = 101;
-    self.shapeBtn.tag = 102;
-    self.beautyFilterBtn.tag = 103 ;
-    self.faceTypeBtn.tag = 104;
+    self.faceTypeBtn.tag = 101;
+    self.skinBtn.tag = 102;
+    self.shapeBtn.tag = 103;
+    self.beautyFilterBtn.tag = 104 ;
+    
     self.makeupBtn.tag = 105;
     self.stickersBtn.tag = 106;
     
@@ -115,7 +116,7 @@
     _shapeParams  = [PFDateHandle setupShapData];
      _skinParams = [PFDateHandle setupSkinData];
     _faceTypeParams = [PFDateHandle setupFaceType];
-     _makeupParams = [PFDateHandle setupMakeupData];
+//     _makeupParams = [PFDateHandle setupMakeupData];
     _stickersParams = [PFDateHandle setupStickers];
 }
 
@@ -245,7 +246,7 @@
     [self setSliderTyep:_seletedParam];
     
     if ([self.mDelegate respondsToSelector:@selector(bottomDidChange:)]) {
-            [self.mDelegate bottomDidChange:sender.tag - 101];
+        [self.mDelegate bottomDidChange:sender.tag - 101];
     }
 }
 
@@ -328,25 +329,11 @@
 #pragma mark ---- PFFilterViewDelegate
 // 开启滤镜
 -(void)filterViewDidSelectedFilter:(PFBeautyParam *)param{
-    if (self.faceTypeBtn.selected) {
-        [self setFaceType:param];
-        return;
-    }
     _seletedParam = param;
     self.beautySlider.hidden = YES;
 
     if(param.type == FUDataTypeFilter&& _beautyFilterView.selectedIndex > 0){
                 self.beautySlider.value = param.mValue;
-        self.beautySlider.hidden = NO;
-    }
-    
-    if(param.type == FUDataTypeMakeup&& _makeupView.selectedIndex > 0){
-                self.beautySlider.value = param.mValue;
-        self.beautySlider.hidden = NO;
-    }
-    
-    if(param.type == FUDataTypebody&& _stickersView.selectedIndex > 0){
-        self.beautySlider.value = param.mValue;
         self.beautySlider.hidden = NO;
     }
 
@@ -449,6 +436,14 @@
     [_shapeView reloadData];
 }
 
+
+-(void)setOneKeyType:(int)oneKeyType {
+    _faceTypeView.selectedIndex = oneKeyType;
+}
+
+- (int)oneKeyType{
+    return _faceTypeView.selectedIndex;
+}
 
 
 @end

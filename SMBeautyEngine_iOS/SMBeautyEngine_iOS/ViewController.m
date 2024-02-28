@@ -121,19 +121,62 @@
         if([param.mParam isEqualToString:@"origin"]){
             [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:NULL];
         } else{
-//            NSString *path =  [[NSBundle mainBundle] pathForResource:@"Stickers" ofType:nil];
-//            NSString *currentFolder = [path stringByAppendingPathComponent:param.mParam];
-//            const char *aaa = [currentFolder UTF8String];
- //           [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)aaa];
-//
-            NSString *name = [NSString stringWithFormat:@"%@.boudle",param.mParam];
-            NSString *paths = [[NSBundle mainBundle] pathForResource:name ofType:nil];
-            [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)[paths UTF8String]];
+            NSString *path =  [[NSBundle mainBundle] pathForResource:@"Stickers" ofType:nil];
+            NSString *currentFolder = [path stringByAppendingPathComponent:param.mParam];
+            const char *aaa = [currentFolder UTF8String];
+            [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)aaa];
+//            NSString *name = [NSString stringWithFormat:@"%@.bundle",param.mParam];
+//            NSString *paths = [[NSBundle mainBundle] pathForResource:name ofType:nil];
+//            [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)[paths UTF8String]];
+        }
+    }
+    
+    if (param.type == FUDataTypeOneKey) {
+        if ([param.mTitle isEqualToString:@"origin"]) {
+            int value = PFBeautyTypeOneKeyNormal;
+            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeOneKey value:&value];
+        }
+        if ([param.mTitle isEqualToString:@"自然"]) {
+            int value = PFBeautyTypeOneKeyNatural;
+            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeOneKey value:&value];
+        }
+        if ([param.mTitle isEqualToString:@"可爱"]) {
+            int value = PFBeautyTypeOneKeyCute;
+            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeOneKey value:&value];
+        }
+        if ([param.mTitle isEqualToString:@"女神"]) {
+            int value = PFBeautyTypeOneKeyGoddess;
+            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeOneKey value:&value];
+        }
+        if ([param.mTitle isEqualToString:@"白净"]) {
+            int value = PFBeautyTypeOneKeyFair;
+            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeOneKey value:&value];
         }
     }
 
 }
 
+-(void)bottomDidChange:(int)index{
+    if (index != 0 && _beautyEditView.oneKeyType != PFBeautyTypeOneKeyNormal) {
+        int value = PFBeautyTypeOneKeyNormal;
+        [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeOneKey value:&value];
+        [self showDelayedAlert];
+        _beautyEditView.oneKeyType = PFBeautyTypeOneKeyNormal;
+    }
+}
+
+
+- (void)showDelayedAlert {
+    // 创建 UIAlertController
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"一键美颜已关闭" preferredStyle:UIAlertControllerStyleAlert];
+    
+    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC));
+    dispatch_after(delay, dispatch_get_main_queue(), ^{
+        [alertController dismissViewControllerAnimated:YES completion:nil];
+    });
+
+    [self presentViewController:alertController animated:YES completion:nil];
+}
 
 
 - (void)viewDidLoad {

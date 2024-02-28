@@ -9,6 +9,7 @@ import com.hapi.avcapture.FrameCall
 import com.hapi.avcapture.HapiTrackFactory
 import com.hapi.avparam.VideoFrame
 import com.hapi.avrender.HapiCapturePreView
+import com.hapi.pixelfreeuikit.IndicatorSeekBar
 import com.hapi.pixelfreeuikit.PixeBeautyDialog
 import java.nio.ByteBuffer
 import java.util.concurrent.CountDownLatch
@@ -72,14 +73,7 @@ class MainActivity : AppCompatActivity() {
                 face_fiter.size,
                 PFSrcType.PFSrcTypeFilter
             )
-//            val face_detect =
-//                mPixelFree.readBundleFile(this@MainActivity, "face_detect.bundle")
-//
-//            mPixelFree.createBeautyItemFormBundle(
-//                face_detect,
-//                face_detect.size,
-//                PFSrcType.PFSrcTypeDetect
-//            )
+
             mPixeBeautyDialog.show(supportFragmentManager, "")
         }
         findViewById<Button>(R.id.showBeauty).setOnClickListener {

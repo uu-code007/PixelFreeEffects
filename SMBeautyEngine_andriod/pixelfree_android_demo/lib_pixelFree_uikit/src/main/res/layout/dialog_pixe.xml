@@ -21,7 +21,10 @@
         <com.hapi.pixelfreeuikit.BeautyViewPage
             android:id="@+id/vpEffect"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck">
+
+        </com.hapi.pixelfreeuikit.BeautyViewPage>
 
         <View
             android:layout_width="match_parent"
@@ -36,6 +39,16 @@
             android:layout_height="40dp"
             android:layout_gravity="bottom"
             android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbFaceOnekey"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:text="一键美颜"
+                android:textColor="@drawable/color_pixe_op" />
 
             <RadioButton
                 android:id="@+id/rbBaseBeauty"
@@ -65,6 +78,16 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="滤镜"
+                android:textColor="@drawable/color_pixe_op" />
+
+            <RadioButton
+                android:id="@+id/rbSticker"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:text="贴纸"
                 android:textColor="@drawable/color_pixe_op" />
 
         </RadioGroup>

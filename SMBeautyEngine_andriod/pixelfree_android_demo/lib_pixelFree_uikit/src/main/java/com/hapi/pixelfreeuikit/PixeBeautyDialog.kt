@@ -1,17 +1,62 @@
 package com.hapi.pixelfreeuikit
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioGroup
 import com.hapi.pixelfree.PFBeautyFiterType
+import com.hapi.pixelfree.PFBeautyTypeOneKey
 import com.hapi.pixelfree.PixelFree
 
 class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
-
+    lateinit var mPixelFree:PixelFree;
     private val page by lazy {
+        mPixelFree = pixelFree;
         listOf(BeautyView(requireContext()).apply {
+            this.pixelFreeGetter = { pixelFree }
+            setList(ArrayList<BeautyItem>().apply {
+                add(
+                    BeautyItem(
+                        PFBeautyFiterType.PFBeautyFiterTypeOneKey,
+                        PFBeautyTypeOneKey.PFBeautyTypeOneKeyNormal,
+                        "origin",
+                        R.mipmap.filter_origin
+                    )
+                )
+                add(
+                    BeautyItem(
+                        PFBeautyFiterType.PFBeautyFiterTypeOneKey, PFBeautyTypeOneKey.PFBeautyTypeOneKeyNatural,
+                        "自然",
+                        R.mipmap.face_ziran,
+                    )
+                )
+                add(
+                    BeautyItem(
+                        PFBeautyFiterType.PFBeautyFiterTypeOneKey, PFBeautyTypeOneKey.PFBeautyTypeOneKeyCute,
+                        "可爱",
+                        R.mipmap.face_keai,
+                    )
+                )
+                add(
+                    BeautyItem(
+                        PFBeautyFiterType.PFBeautyFiterTypeOneKey, PFBeautyTypeOneKey.PFBeautyTypeOneKeyGoddess,
+                        "女神",
+                        R.mipmap.face_nvsheng,
+                    )
+                )
+                add(
+                    BeautyItem(
+                        PFBeautyFiterType.PFBeautyFiterTypeOneKey, PFBeautyTypeOneKey.PFBeautyTypeOneKeyFair,
+                        "白净",
+                        R.mipmap.face_baijin,
+                    )
+                )
+            })
+        },BeautyView(requireContext()).apply {
             this.pixelFreeGetter = { pixelFree }
             setList(ArrayList<BeautyItem>().apply {
                 add(
@@ -42,7 +87,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                 add(
                     BeautyItem(
                         PFBeautyFiterType.PFBeautyFiterTypeFaceSharpenStrength,
-                        0.2f,
+                        0.0f,
                         "锐化",
                         R.mipmap.ruihua
                     )
@@ -80,7 +125,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                         PFBeautyFiterType.PFBeautyFiterTypeFace_narrow,
                         0.2f,
                         "窄脸",
-                        R.mipmap.edanlian
+                        R.mipmap.zhailian
                     )
                 )
                 add(
@@ -216,10 +261,46 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                     )
                 )
             })
-        }
+        },
+            BeautyView(requireContext()).apply {
+                this.pixelFreeGetter = { pixelFree }
+                setList(ArrayList<BeautyItem>().apply {
+                    add(
+                        BeautyItem(
+                            PFBeautyFiterType.PFBeautyFiterSticker2DFilter,
+                            "origin",
+                            R.mipmap.filter_origin,
+                        )
+                    )
+                    add(
+                        BeautyItem(
+                            PFBeautyFiterType.PFBeautyFiterSticker2DFilter,
+                            "flowers",
+                            R.mipmap.flowers,
+                        )
+                    )
+                    add(
+                        BeautyItem(
+                            PFBeautyFiterType.PFBeautyFiterSticker2DFilter,
+                            "baixiaomao",
+                            R.mipmap.baixiaomao,
+                        )
+                    )
+                })
+            }
         )
     }
 
+
+//    fun c(){
+//        page.forEach {
+//            it.mBeautyItemAdapter.data.forEach {
+//                it.name
+//                it.progress
+//            }
+//            it.mBeautyItemAdapter.notifyDataSetChanged()
+//        }
+//    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -232,18 +313,25 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
         super.onViewCreated(view, savedInstanceState)
         val vp = view.findViewById<BeautyViewPage>(R.id.vpEffect)
         val rgOP = view.findViewById<RadioGroup>(R.id.rgOP)
+
         vp.adapter = CommonViewPagerAdapter(page)
         rgOP.setOnCheckedChangeListener { p0, id ->
             val index = when (id) {
-                R.id.rbBaseBeauty -> 0
-                R.id.rbShapeBeauty -> 1
-                R.id.rbFilter -> 2
+                R.id.rbFaceOnekey -> 0
+                R.id.rbBaseBeauty -> 1
+                R.id.rbShapeBeauty -> 2
+                R.id.rbFilter -> 3
+                R.id.rbSticker -> 4
                 else -> 0
+            }
+            if (vp.currentItem == 0 && vp.currentItem != index) {
+                mPixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFiterType.PFBeautyFiterTypeOneKey,PFBeautyTypeOneKey.PFBeautyTypeOneKeyNormal.ordinal)
             }
             if (vp.currentItem != index) {
                 vp.currentItem = index
             }
         }
     }
+
 
 }

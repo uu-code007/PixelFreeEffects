@@ -110,31 +110,31 @@
        PFBeautyParam *modle = [[PFBeautyParam alloc] init];
        modle.mParam = str;
        modle.mTitle = [titelDic valueForKey:str];
-      modle.type = FUDataTypeFilter;
+       modle.type = FUDataTypeOneKey;
        [array addObject:modle];
    }
     
     return array;
 }
 
-+(NSArray<PFBeautyParam *>*)setupMakeupData{
-   NSArray *prams = @[@"makeup_noitem",@"lip"];
-    NSDictionary *titelDic = @{@"makeup_noitem":@"卸妆",@"lip":@"口红"};
-    
-    NSDictionary *defaultValueDic = @{@"makeup_noitem":@(0),@"lip":@(0.5)};
-
-   NSMutableArray *array = [[NSMutableArray alloc] init];
-   for (NSString *str in prams) {
-       PFBeautyParam *modle = [[PFBeautyParam alloc] init];
-       modle.mParam = str;
-       modle.mTitle = [titelDic valueForKey:str];
-       modle.type = FUDataTypeMakeup;
-       modle.mValue = [[defaultValueDic valueForKey:str] floatValue];;
-       [array addObject:modle];
-   }
-    
-    return array;
-}
+//+(NSArray<PFBeautyParam *>*)setupMakeupData{
+//   NSArray *prams = @[@"makeup_noitem",@"lip"];
+//    NSDictionary *titelDic = @{@"makeup_noitem":@"卸妆",@"lip":@"口红"};
+//    
+//    NSDictionary *defaultValueDic = @{@"makeup_noitem":@(0),@"lip":@(0.5)};
+//
+//   NSMutableArray *array = [[NSMutableArray alloc] init];
+//   for (NSString *str in prams) {
+//       PFBeautyParam *modle = [[PFBeautyParam alloc] init];
+//       modle.mParam = str;
+//       modle.mTitle = [titelDic valueForKey:str];
+//       modle.type = FUDataTypeMakeup;
+//       modle.mValue = [[defaultValueDic valueForKey:str] floatValue];;
+//       [array addObject:modle];
+//   }
+//    
+//    return array;
+//}
 
 
 
@@ -174,9 +174,9 @@
 
 
 +(NSArray<PFBeautyParam *>*)setupStickers{
-    NSArray *beautyFiltersDataSource = @[@"origin",@"flowers_glasses",@"baixiaomaohuxu"];
+    NSArray *beautyFiltersDataSource = @[@"origin",@"flowers_glasses",@"baixiaomaohuxu",@"candy"];
 
-    NSDictionary *titelDic = @{@"origin":@"origin",@"flowers_glasses":@"flowers",@"baixiaomaohuxu":@"baixiaomaohuxu"};
+    NSDictionary *titelDic = @{@"origin":@"origin",@"flowers_glasses":@"flowers",@"baixiaomaohuxu":@"baixiaomaohuxu",@"candy":@"candy"};
 
     NSMutableArray *array = [[NSMutableArray alloc] init];
     for (NSString *str in beautyFiltersDataSource) {

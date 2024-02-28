@@ -24,6 +24,7 @@
 
 @property (nonatomic, assign) id<PFAPIDemoBarDelegate>mDelegate ;
 
+@property (nonatomic, assign) int oneKeyType;
 
 // 关闭上半部分
 -(void)hiddenTopViewWithAnimation:(BOOL)animation;
@@ -32,6 +33,7 @@
 @property (nonatomic, assign) BOOL isTopViewShow ;
 
 -(void)setDefaultFilter:(PFBeautyParam *)filter;
+
 
 
 @end

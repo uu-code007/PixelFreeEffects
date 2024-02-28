@@ -14,8 +14,7 @@ typedef NS_ENUM(NSUInteger, FUDataType) {
     FUDataTypeBeautify            = 0,
     FUDataTypeFilter,
     FUDataTypeStickers,
-    FUDataTypeMakeup,
-    FUDataTypebody
+    FUDataTypeOneKey
 };
 
 @interface PFBeautyParam : NSObject
