@@ -200,6 +200,30 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                         R.mipmap.yanju
                     )
                 )
+                add(
+                    BeautyItem(
+                        PFBeautyFiterType.PFBeautyFiterTypeFace_smile,
+                        0.0f,
+                        "微笑嘴角",
+                        R.mipmap.weixiaozuijiao
+                    )
+                )
+                add(
+                    BeautyItem(
+                        PFBeautyFiterType.PFBeautyFiterTypeFace_eye_rotate,
+                        0.5f,
+                        "旋转眼睛",
+                        R.mipmap.yanjingjiaodu
+                    )
+                )
+                add(
+                    BeautyItem(
+                        PFBeautyFiterType.PFBeautyFiterTypeFace_canthus,
+                        0.0f,
+                        "开眼角",
+                        R.mipmap.kaiyanjiao
+                    )
+                )
             })
         }, BeautyView(requireContext()).apply {
             this.pixelFreeGetter = { pixelFree }
