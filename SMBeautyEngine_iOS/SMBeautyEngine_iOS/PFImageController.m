@@ -6,7 +6,7 @@
 //
 
 #import "PFImageController.h"
-
+#import <Vision/Vision.h>
 @interface PFImageController ()
 
 @property(nonatomic,strong)UIImage *image;
@@ -66,7 +66,45 @@
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     _image = [UIImage imageNamed:@"IMG_2406.PNG"];
+    
+    
+    
 }
+
+
+//- (void)performPortraitSegmentationWithImage:(UIImage *)image {
+//    VNImageRequestHandler *handler = [[VNImageRequestHandler alloc] initWithCGImage:image.CGImage options:@{}];
+//    
+//    // 创建人像分割请求
+//    VNDetectHumanBodyPoseRequest *poseRequest = [[VNDetectHumanBodyPoseRequest alloc] init];
+//    VNImageBasedRequest *segmentationRequest = [[VNGeneratePersonSegmentationRequest alloc] init];
+//    
+//    NSError *error = nil;
+//    [handler performRequests:@[poseRequest, segmentationRequest] error:&error];
+//    if (error) {
+//        NSLog(@"Error performing requests: %@", error);
+//        return;
+//    }
+//    
+//    // 获取人像分割结果
+//    VNGeneratePersonSegmentationRequest *segmentationObservation = nil;
+//    for (VNRequest *request in @[poseRequest, segmentationRequest]) {
+//        NSArray *results = [handler.resultsForRequest request];
+//        for (VNResult *result in results) {
+//            if ([result isKindOfClass:[VNGeneratePersonSegmentationObservation class]]) {
+//                segmentationObservation = (VNGeneratePersonSegmentationObservation *)result;
+//                break;
+//            }
+//        }
+//    }
+//    
+//    if (segmentationObservation) {
+//        CVPixelBufferRef segmentationBuffer = segmentationObservation.pixelBuffer;
+//        
+//        // 处理分割结果（segmentationBuffer）
+//        // 将分割结果可视化或应用到其他图像处理操作
+//    }
+//}
 
 
 -(void)viewWillDisappear:(BOOL)animated{

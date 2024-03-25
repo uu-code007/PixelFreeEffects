@@ -37,7 +37,7 @@ dependencies {
     api depend.appcompat()
     api depend.coroutines()
     api depend.cardview()
-    implementation project(path: ':lib_pixelFree')
+    implementation project(':sdk-aar')
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

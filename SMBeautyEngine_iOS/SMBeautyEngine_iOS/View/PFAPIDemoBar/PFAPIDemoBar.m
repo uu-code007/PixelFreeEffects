@@ -41,17 +41,6 @@
 /* 当前选中参数 */
 @property (strong, nonatomic) PFBeautyParam *seletedParam;
 
-
-/* 滤镜参数 */
-@property (nonatomic, strong) NSArray<PFBeautyParam *> *filtersParams;
-/* 美肤参数 */
-@property (nonatomic, strong) NSArray<PFBeautyParam *> *skinParams;
-/* 美型参数 */
-@property (nonatomic, strong) NSArray<PFBeautyParam *> *shapeParams;
-
-@property (nonatomic, strong) NSArray<PFBeautyParam *> *faceTypeParams;
-@property (nonatomic, strong) NSArray<PFBeautyParam *> *makeupParams;
-@property (nonatomic, strong) NSArray<PFBeautyParam *> *stickersParams;
 @end
 
 @implementation PFAPIDemoBar
@@ -82,7 +71,7 @@
     [_makeupView reloadData];
     
     _faceTypeView.filters = _faceTypeParams;
-    [_makeupView setDefaultFilter:_faceTypeParams[0]];
+    [_faceTypeView setDefaultFilter:_faceTypeParams[0]];
     [_faceTypeView reloadData];
     
     _stickersView.filters = _stickersParams;
@@ -118,6 +107,20 @@
     _faceTypeParams = [PFDateHandle setupFaceType];
 //     _makeupParams = [PFDateHandle setupMakeupData];
     _stickersParams = [PFDateHandle setupStickers];
+}
+
+-(void)updateDemoBar{
+    _faceTypeView.filters = _faceTypeParams;
+    [_faceTypeView reloadData];
+    _beautyFilterView.filters = _filtersParams;
+    [_beautyFilterView reloadData];
+    _stickersView.filters = _stickersParams;
+    [_stickersView reloadData];
+    _shapeView.dataArray = _shapeParams;
+    [_shapeView reloadData];
+    // 美肤页
+    _skinView.dataArray = _skinParams;
+    [_skinView reloadData];
 }
 
 -(void)layoutSubviews{
@@ -443,6 +446,14 @@
 
 - (int)oneKeyType{
     return _faceTypeView.selectedIndex;
+}
+
+-(void)setFilterIndex:(int)filterIndex{
+    _beautyFilterView.selectedIndex = filterIndex;
+}
+
+- (int)filterIndex{
+    return _beautyFilterView.selectedIndex;
 }
 
 

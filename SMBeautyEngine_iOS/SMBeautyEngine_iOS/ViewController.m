@@ -14,7 +14,7 @@
 
 @property(nonatomic, strong) PFAPIDemoBar *beautyEditView;
 
-
+@property (nonatomic, strong) NSUserDefaults *def;
 @end
 
 @implementation ViewController
@@ -135,23 +135,29 @@
         if ([param.mTitle isEqualToString:@"origin"]) {
             int value = PFBeautyTypeOneKeyNormal;
             [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeOneKey value:&value];
+            
         }
         if ([param.mTitle isEqualToString:@"自然"]) {
             int value = PFBeautyTypeOneKeyNatural;
             [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeOneKey value:&value];
+         
         }
         if ([param.mTitle isEqualToString:@"可爱"]) {
             int value = PFBeautyTypeOneKeyCute;
             [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeOneKey value:&value];
+            
         }
         if ([param.mTitle isEqualToString:@"女神"]) {
             int value = PFBeautyTypeOneKeyGoddess;
             [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeOneKey value:&value];
+            
         }
         if ([param.mTitle isEqualToString:@"白净"]) {
             int value = PFBeautyTypeOneKeyFair;
             [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeOneKey value:&value];
+           
         }
+
     }
 
 }
@@ -181,13 +187,30 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.def = [NSUserDefaults standardUserDefaults];
     
     [self initPixelFree];
     
     [self setDefaultParam];
+    
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    // 归档
+    NSData *shapeParamsData = [NSKeyedArchiver archivedDataWithRootObject:_beautyEditView.shapeParams];
+    NSData *skinParamsData = [NSKeyedArchiver archivedDataWithRootObject:_beautyEditView.skinParams];
+    NSUserDefaults*userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setInteger:_beautyEditView.oneKeyType forKey:@"oneKeyType"];
+    [userDefaults setInteger:_beautyEditView.filterIndex forKey:@"filtersUseIndex"];;
+    [userDefaults synchronize];
+    
+    // 写本地
+    [self writeData:shapeParamsData fileName:@"shapeParamsData"];
+    [self writeData:skinParamsData fileName:@"skinParamsData"];
 
     
 }
+
 
 -(void)initPixelFree{
     NSString *face_FiltePath = [[NSBundle mainBundle] pathForResource:@"filter_model.bundle" ofType:nil];
@@ -207,14 +230,99 @@
 
 -(void)setDefaultParam{
     NSArray<PFBeautyParam *>* defaultData = [PFDateHandle setupShapData];
+    NSArray<PFBeautyParam *>* defaultSkinData = [PFDateHandle setupSkinData];
+    NSArray<PFBeautyParam *>* defaultfiltersData = [PFDateHandle setupFilterData];
+    NSArray<PFBeautyParam *>* defaultfaceData = [PFDateHandle setupFaceType];
+    // 读本地缓存
+    NSData *data = [self readDatafileName:@"shapeParamsData"];
+    if (data) {
+        defaultData = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    }
+    
+    data = [self readDatafileName:@"skinParamsData"];
+    if (data) {
+        defaultSkinData = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    }
+    
+    data = [self readDatafileName:@"filtersParamsData"];
+    if (data) {
+        defaultfiltersData = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    }
+    
+    data = [self readDatafileName:@"oneKeyParamsData"];
+    if (data) {
+        defaultfaceData = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    }
+
+    // 更新 UI
+    self.beautyEditView.shapeParams = defaultData;
+    self.beautyEditView.skinParams = defaultSkinData;
+    self.beautyEditView.filtersParams = defaultfiltersData;
+    self.beautyEditView.faceTypeParams = defaultfaceData;
+    
+    NSUserDefaults*userDefaults = [NSUserDefaults standardUserDefaults];
+    int oneKeyType = (int)[userDefaults integerForKey:@"oneKeyType"];
+    int filtersIndex = (int)[userDefaults integerForKey:@"filtersUseIndex"];
+
+    self.beautyEditView.oneKeyType = oneKeyType;
+    self.beautyEditView.filterIndex = filtersIndex;
+    
+    [self.beautyEditView updateDemoBar];
+    
+    
+    // 更新 SDK 设置
     for (PFBeautyParam *param in defaultData) {
         [self filterValueChange:param];
     }
     
-    NSArray<PFBeautyParam *>* defaultSkinData = [PFDateHandle setupSkinData];
     for (PFBeautyParam *param in defaultSkinData) {
         [self filterValueChange:param];
     }
+    
+    
+    PFBeautyParam *param = defaultfaceData[oneKeyType];
+    [self filterValueChange:param];
+    param = defaultfiltersData[filtersIndex];
+    [self filterValueChange:param];
+}
+
+
+
+
+-(void)appBecomeActive{
+    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
+}
+
+
+-(void)writeData:(NSData *)data fileName:(NSString *)fileName{
+    NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [documentDirectories objectAtIndex:0];
+
+    // 获取目标文件的完整路径
+    NSString *filePath = [documentDirectory stringByAppendingPathComponent:fileName];
+    
+//    [[NSFileManager defaultManager] fileExistsAtPath:filePath];
+    // 创建文件并覆盖写入数据
+    BOOL success = [[NSFileManager defaultManager] createFileAtPath:filePath
+                                                          contents:data
+                                                        attributes:nil];
+    if (success) {
+        NSLog(@"数据写入成功");
+    } else {
+        NSLog(@"数据写入失败");
+    }
+    
+}
+
+-(NSData *)readDatafileName:(NSString *)fileName{
+    NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [documentDirectories objectAtIndex:0];
+
+    // 获取目标文件的完整路径
+    NSString *filePath = [documentDirectory stringByAppendingPathComponent:fileName];
+    
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    return data;
 }
 
 

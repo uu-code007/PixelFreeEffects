@@ -34,9 +34,9 @@
 //    [self.view addSubview:lvBtn];
     
 //    UIButton *stickerBtn = [[UIButton alloc] initWithFrame:CGRectMake(20, 150, 140, 44)];
-//    [stickerBtn addTarget:self action:@selector(stickerBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//    [stickerBtn setTitle:@"添加贴纸" forState:UIControlStateNormal];
-//    [stickerBtn setTitle:@"移除贴纸" forState:UIControlStateSelected];
+//    [stickerBtn addTarget:self action:@selector(watermarkBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//    [stickerBtn setTitle:@"添加水印" forState:UIControlStateNormal];
+//    [stickerBtn setTitle:@"移除水印" forState:UIControlStateSelected];
 //    [stickerBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
 //    [self.view addSubview:stickerBtn];
     
@@ -52,7 +52,6 @@
         [self.mPixelFree processWithBuffer:pixbuffer rotationMode:PFRotationMode0];
         
         CFAbsoluteTime endTime = (CFAbsoluteTimeGetCurrent() - startTime);
-//        NSLog(@"方法耗时: %f ms", endTime * 1000.0);
     }
     [_openGlView displayPixelBuffer:pixbuffer];
     CVPixelBufferUnlockBaseAddress(pixbuffer, 0);
@@ -70,19 +69,23 @@
     [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterLvmu value:(void *)&setting];
 }
 
--(void)stickerBtnClick:(UIButton *)btn{
+-(void)watermarkBtnClick:(UIButton *)btn{
     btn.selected = !btn.selected;
     if(btn.selected){
-        NSString *path =  [[NSBundle mainBundle] pathForResource:@"Stickers" ofType:nil];
-        NSString *currentFolder = [path stringByAppendingPathComponent:@"flowers_glasses"];
-        const char *aaa = [currentFolder UTF8String];
-        
-        NSString *paths = [[NSBundle mainBundle] pathForResource:@"flowers_glasses.boudle" ofType:nil];
-         [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)[paths UTF8String]];
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"qiniu_logo.png" ofType:nil];
+        PFFiterWatermark setting;
+        setting.path = [path UTF8String];
+        setting.positionX = 0.8;
+        setting.positionY = 0.1;
+        setting.w = 110.0/720 * 2;
+        setting.h = 34.0/1280 * 2;
+        setting.isUse = YES;
+        [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterWatermark value:(void *)&setting];
     } else{
-        [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:NULL];
+        PFFiterWatermark setting;
+        setting.isUse = NO;
+        [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterWatermark value:(void *)&setting];
     }
-
 }
 
 -(void)dealloc{

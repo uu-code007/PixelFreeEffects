@@ -30,8 +30,9 @@ typedef NS_ENUM(NSUInteger, FUDataType) {
 /* 默认值用于，设置默认和恢复 */
 @property (nonatomic,assign)float defaultValue;
 
-
 @property (nonatomic,assign)FUDataType type;
+
+@property (nonatomic,assign) BOOL isUse;
 @end
 
 NS_ASSUME_NONNULL_END

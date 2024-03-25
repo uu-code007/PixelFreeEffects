@@ -81,6 +81,16 @@ typedef struct {
     const char *bgSrcPath;
 } PFFiterLvmuSetting;
 
+typedef struct {
+    bool isUse; //false
+    char *path; //
+    float positionX;// 0-1.0
+    float positionY;// 0-1.0
+    float w;  // 0-1.0
+    float h;// 0-1.0
+    bool isMirror; // false
+} PFFiterWatermark;
+
 /* 美颜类型 */
 typedef enum PFBeautyFiterType{
     PFBeautyFiterTypeFace_EyeStrength = 0,
@@ -133,7 +143,9 @@ typedef enum PFBeautyFiterType{
     // 2D 贴纸
     PFBeautyFiterSticker2DFilter,
     // 一键美颜
-    PFBeautyFiterTypeOneKey,
+    PFBeautyFiterTypeOneKey = 25,
+    // 水印
+    PFBeautyFiterWatermark,
     // 扩展字段
     PFBeautyFiterExtend,
     
@@ -170,6 +182,7 @@ PF_CAPI_EXPORT extern int PF_processWithBuffer(PFPixelFree* pixelFree,PFIamgeInp
 
 PF_CAPI_EXPORT extern void PF_pixelFreeSetBeautyFiterParam(PFPixelFree* pixelFree, int key,void *value);
 PF_CAPI_EXPORT extern void PF_createBeautyItemFormBundle(PFPixelFree* pixelFree, void *data,int size,PFSrcType type);
+
 #ifdef __cplusplus
 }
 #endif

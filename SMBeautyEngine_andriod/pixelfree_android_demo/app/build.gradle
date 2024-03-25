@@ -38,7 +38,7 @@ android {
 dependencies {
 
     implementation project(':hapiAVRender')
-    implementation project(':lib_pixelFree')
+    implementation project(':sdk-aar')
     implementation project(':lib_pixelFree_uikit')
 
     implementation 'androidx.core:core-ktx:1.7.0'

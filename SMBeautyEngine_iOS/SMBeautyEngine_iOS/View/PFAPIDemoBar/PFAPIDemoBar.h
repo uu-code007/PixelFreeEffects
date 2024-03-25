@@ -22,10 +22,22 @@
 
 @interface PFAPIDemoBar : UIView
 
+/* 滤镜参数 */
+@property (nonatomic, strong) NSArray<PFBeautyParam *> *filtersParams;
+/* 美肤参数 */
+@property (nonatomic, strong) NSArray<PFBeautyParam *> *skinParams;
+/* 美型参数 */
+@property (nonatomic, strong) NSArray<PFBeautyParam *> *shapeParams;
+
+@property (nonatomic, strong) NSArray<PFBeautyParam *> *faceTypeParams;
+@property (nonatomic, strong) NSArray<PFBeautyParam *> *makeupParams;
+@property (nonatomic, strong) NSArray<PFBeautyParam *> *stickersParams;
+
 @property (nonatomic, assign) id<PFAPIDemoBarDelegate>mDelegate ;
 
 @property (nonatomic, assign) int oneKeyType;
 
+@property (nonatomic, assign) int filterIndex;
 // 关闭上半部分
 -(void)hiddenTopViewWithAnimation:(BOOL)animation;
 
@@ -34,6 +46,7 @@
 
 -(void)setDefaultFilter:(PFBeautyParam *)filter;
 
+-(void)updateDemoBar;
 
 
 @end

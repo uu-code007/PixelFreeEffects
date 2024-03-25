@@ -11,7 +11,6 @@
 
 @implementation PFDateHandle
 
-
 +(NSArray<PFBeautyParam *>*)setupFilterData{
     NSArray *beautyFiltersDataSource = @[@"origin",@"meibai1",
                             
@@ -42,7 +41,6 @@
     NSArray *prams = @[@"writen",@"runddy",@"blur",@"sharpen",@"qualityStrength"];//
     NSDictionary *titelDic = @{@"writen":@"美白",@"runddy":@"红润",@"blur":@"磨皮",@"sharpen":@"锐化",@"newWhitenStrength":@"新美白",@"qualityStrength":@"增强画质"};
     NSDictionary *defaultValueDic = @{@"runddy":@(0.6),@"writen":@(0.6),@"blur":@(0.7),@"sharpen":@(0.2),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.2)};
-    
     
     NSMutableArray *array = [[NSMutableArray alloc] init];
 
