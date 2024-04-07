@@ -93,6 +93,7 @@ public class ScreenRecordService extends Service {
                     listener.onImageAvailable(rgbaProducer.getRgbaByteArray(), rgbaProducer.getMWidth(), rgbaProducer.getMHeight()
                             , rgbaProducer.getPixelStride(), rgbaProducer.getRowPadding());
                 }
+                Log.d("sunmu", "onImageAvailable: ");
                 image.close();
             }
         }, getBackgroundHandler());

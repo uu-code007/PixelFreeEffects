@@ -30,14 +30,17 @@ class OpenGLRender : GLSurfaceView.Renderer, VideoRender {
     }
 
     override fun onDrawFrame(p0: GL10?) {
+        if (renderHandler == -1L) return;
         native_OnDrawFrame(renderHandler)
     }
 
     fun release() {
+        renderHandler = -1
         native_release(renderHandler)
     }
 
-    private var renderHandler: Long = 0
+    @Volatile
+    private var  renderHandler: Long = 0
 
     private external fun native_create(): Long
     private external fun native_OnSurfaceCreated(renderHandler: Long)

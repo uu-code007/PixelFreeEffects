@@ -306,8 +306,22 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                     add(
                         BeautyItem(
                             PFBeautyFiterType.PFBeautyFiterSticker2DFilter,
-                            "baixiaomao",
-                            R.mipmap.baixiaomao,
+                            "candy",
+                            R.mipmap.candy,
+                        )
+                    )
+                    add(
+                        BeautyItem(
+                            PFBeautyFiterType.PFBeautyFiterSticker2DFilter,
+                            "maorong",
+                            R.mipmap.maorong,
+                        )
+                    )
+                    add(
+                        BeautyItem(
+                            PFBeautyFiterType.PFBeautyFiterSticker2DFilter,
+                            "xiongerduo",
+                            R.mipmap.xiongerduo,
                         )
                     )
                 })

@@ -287,8 +287,6 @@
 }
 
 
-
-
 -(void)appBecomeActive{
     [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
 }

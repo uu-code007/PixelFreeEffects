@@ -33,12 +33,12 @@
 //    [lvBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
 //    [self.view addSubview:lvBtn];
     
-//    UIButton *stickerBtn = [[UIButton alloc] initWithFrame:CGRectMake(20, 150, 140, 44)];
-//    [stickerBtn addTarget:self action:@selector(watermarkBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//    [stickerBtn setTitle:@"添加水印" forState:UIControlStateNormal];
-//    [stickerBtn setTitle:@"移除水印" forState:UIControlStateSelected];
-//    [stickerBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-//    [self.view addSubview:stickerBtn];
+    UIButton *stickerBtn = [[UIButton alloc] initWithFrame:CGRectMake(20, 150, 140, 44)];
+    [stickerBtn addTarget:self action:@selector(watermarkBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [stickerBtn setTitle:@"添加水印" forState:UIControlStateNormal];
+    [stickerBtn setTitle:@"移除水印" forState:UIControlStateSelected];
+    [stickerBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [self.view addSubview:stickerBtn];
     
 }
 

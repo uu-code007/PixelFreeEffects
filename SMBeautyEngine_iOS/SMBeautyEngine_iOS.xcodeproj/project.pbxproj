@@ -7,11 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C90321F32BB14FB5008C47E5 /* qiniu_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C90321F22BB14FB5008C47E5 /* qiniu_logo.png */; };
-		C90321F62BB15025008C47E5 /* PixelFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90321F42BB14FF8008C47E5 /* PixelFree.framework */; };
-		C90321F72BB15025008C47E5 /* PixelFree.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C90321F42BB14FF8008C47E5 /* PixelFree.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C95026472B8F40D700A25674 /* flowers.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C95026432B8F40D700A25674 /* flowers.bundle */; };
-		C95026482B8F40D700A25674 /* baixiaomao.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C95026462B8F40D700A25674 /* baixiaomao.bundle */; };
+		C9032C3B2BBD34E3008C47E5 /* xiantiaoxiongmao.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C9032C362BBD34E3008C47E5 /* xiantiaoxiongmao.bundle */; };
+		C9032C3C2BBD34E3008C47E5 /* baixiaomao.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C9032C372BBD34E3008C47E5 /* baixiaomao.bundle */; };
+		C9032C3D2BBD34E3008C47E5 /* candy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C9032C382BBD34E3008C47E5 /* candy.bundle */; };
+		C9032C3E2BBD34E3008C47E5 /* flowers.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C9032C392BBD34E3008C47E5 /* flowers.bundle */; };
+		C9032C3F2BBD34E3008C47E5 /* maorong.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C9032C3A2BBD34E3008C47E5 /* maorong.bundle */; };
+		C9032C412BBD359B008C47E5 /* xiongerduo.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C9032C402BBD359B008C47E5 /* xiongerduo.bundle */; };
+		C9032C472BBD4718008C47E5 /* qiniu_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C9032C462BBD4718008C47E5 /* qiniu_logo.png */; };
+		C9032C4A2BBD47C6008C47E5 /* PixelFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9032C482BBD473C008C47E5 /* PixelFree.framework */; };
+		C9032C4B2BBD47C6008C47E5 /* PixelFree.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C9032C482BBD473C008C47E5 /* PixelFree.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C9CF037B2A8670FC00B2C394 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9CF03782A8670FB00B2C394 /* Accelerate.framework */; };
 		C9CF03812A87685100B2C394 /* PFOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CF037F2A87685000B2C394 /* PFOpenGLView.m */; };
 		C9CF08542AA9E83800B2C394 /* CoreML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3BD4591274752E900CB44C9 /* CoreML.framework */; };
@@ -49,13 +53,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		C90321F82BB15025008C47E5 /* Embed Frameworks */ = {
+		C9032C4C2BBD47C6008C47E5 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C90321F72BB15025008C47E5 /* PixelFree.framework in Embed Frameworks */,
+				C9032C4B2BBD47C6008C47E5 /* PixelFree.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -63,10 +67,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		C90321F22BB14FB5008C47E5 /* qiniu_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qiniu_logo.png; sourceTree = "<group>"; };
-		C90321F42BB14FF8008C47E5 /* PixelFree.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PixelFree.framework; sourceTree = "<group>"; };
-		C95026432B8F40D700A25674 /* flowers.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = flowers.bundle; sourceTree = "<group>"; };
-		C95026462B8F40D700A25674 /* baixiaomao.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = baixiaomao.bundle; sourceTree = "<group>"; };
+		C9032C362BBD34E3008C47E5 /* xiantiaoxiongmao.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = xiantiaoxiongmao.bundle; sourceTree = "<group>"; };
+		C9032C372BBD34E3008C47E5 /* baixiaomao.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = baixiaomao.bundle; sourceTree = "<group>"; };
+		C9032C382BBD34E3008C47E5 /* candy.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = candy.bundle; sourceTree = "<group>"; };
+		C9032C392BBD34E3008C47E5 /* flowers.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = flowers.bundle; sourceTree = "<group>"; };
+		C9032C3A2BBD34E3008C47E5 /* maorong.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = maorong.bundle; sourceTree = "<group>"; };
+		C9032C402BBD359B008C47E5 /* xiongerduo.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = xiongerduo.bundle; sourceTree = "<group>"; };
+		C9032C462BBD4718008C47E5 /* qiniu_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qiniu_logo.png; sourceTree = "<group>"; };
+		C9032C482BBD473C008C47E5 /* PixelFree.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PixelFree.framework; sourceTree = "<group>"; };
 		C9CF03782A8670FB00B2C394 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		C9CF037F2A87685000B2C394 /* PFOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFOpenGLView.m; sourceTree = "<group>"; };
 		C9CF03802A87685100B2C394 /* PFOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFOpenGLView.h; sourceTree = "<group>"; };
@@ -135,7 +143,7 @@
 				C9CF08542AA9E83800B2C394 /* CoreML.framework in Frameworks */,
 				E31A9AC02903913400AF311C /* CoreImage.framework in Frameworks */,
 				C9CF037B2A8670FC00B2C394 /* Accelerate.framework in Frameworks */,
-				C90321F62BB15025008C47E5 /* PixelFree.framework in Frameworks */,
+				C9032C4A2BBD47C6008C47E5 /* PixelFree.framework in Frameworks */,
 				E3BD4590274752DC00CB44C9 /* libc++.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -143,10 +151,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C9032C322BBD346D008C47E5 /* Stickers */ = {
+			isa = PBXGroup;
+			children = (
+				C9032C402BBD359B008C47E5 /* xiongerduo.bundle */,
+				C9032C372BBD34E3008C47E5 /* baixiaomao.bundle */,
+				C9032C382BBD34E3008C47E5 /* candy.bundle */,
+				C9032C392BBD34E3008C47E5 /* flowers.bundle */,
+				C9032C3A2BBD34E3008C47E5 /* maorong.bundle */,
+				C9032C362BBD34E3008C47E5 /* xiantiaoxiongmao.bundle */,
+			);
+			path = Stickers;
+			sourceTree = "<group>";
+		};
 		E3BD452A27474A4E00CB44C9 = {
 			isa = PBXGroup;
 			children = (
-				C90321F42BB14FF8008C47E5 /* PixelFree.framework */,
+				C9032C482BBD473C008C47E5 /* PixelFree.framework */,
 				E3BD453527474A4E00CB44C9 /* SMBeautyEngine_iOS */,
 				E3BD453427474A4E00CB44C9 /* Products */,
 				E3BD458E274752D600CB44C9 /* Frameworks */,
@@ -194,10 +215,9 @@
 		E3BD455227474A9400CB44C9 /* res */ = {
 			isa = PBXGroup;
 			children = (
-				C90321F22BB14FB5008C47E5 /* qiniu_logo.png */,
-				C95026462B8F40D700A25674 /* baixiaomao.bundle */,
-				C95026432B8F40D700A25674 /* flowers.bundle */,
+				C9032C462BBD4718008C47E5 /* qiniu_logo.png */,
 				C9CF08592AAC9F4300B2C394 /* filter_model.bundle */,
+				C9032C322BBD346D008C47E5 /* Stickers */,
 				E3B90821298E6E1A00B96ADF /* image.jpeg */,
 				E3B9081D298E527300B96ADF /* bg.jpeg */,
 				E32C9FDF28E69A3300FB225E /* pixelfreeAuth.lic */,
@@ -275,7 +295,7 @@
 				E3BD452F27474A4E00CB44C9 /* Sources */,
 				E3BD453027474A4E00CB44C9 /* Frameworks */,
 				E3BD453127474A4E00CB44C9 /* Resources */,
-				C90321F82BB15025008C47E5 /* Embed Frameworks */,
+				C9032C4C2BBD47C6008C47E5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -326,17 +346,21 @@
 			files = (
 				E3BD454627474A5300CB44C9 /* LaunchScreen.storyboard in Resources */,
 				E3BD457F27474A9800CB44C9 /* Media.xcassets in Resources */,
-				C95026482B8F40D700A25674 /* baixiaomao.bundle in Resources */,
-				C90321F32BB14FB5008C47E5 /* qiniu_logo.png in Resources */,
+				C9032C3E2BBD34E3008C47E5 /* flowers.bundle in Resources */,
+				C9032C472BBD4718008C47E5 /* qiniu_logo.png in Resources */,
+				C9032C3D2BBD34E3008C47E5 /* candy.bundle in Resources */,
+				C9032C3F2BBD34E3008C47E5 /* maorong.bundle in Resources */,
 				E32C9FE028E69A3300FB225E /* pixelfreeAuth.lic in Resources */,
 				E3B90820298E527300B96ADF /* bg.jpeg in Resources */,
+				C9032C412BBD359B008C47E5 /* xiongerduo.bundle in Resources */,
 				C9CF085A2AAC9F4300B2C394 /* filter_model.bundle in Resources */,
 				E3BD454327474A5300CB44C9 /* Assets.xcassets in Resources */,
-				C95026472B8F40D700A25674 /* flowers.bundle in Resources */,
 				E3BD458A27474A9800CB44C9 /* Localizable.strings in Resources */,
 				E3BD457E27474A9800CB44C9 /* PFAPIDemoBar.xib in Resources */,
 				E3BD458927474A9800CB44C9 /* PFDemoBar.strings in Resources */,
 				E3BD454127474A4E00CB44C9 /* Main.storyboard in Resources */,
+				C9032C3C2BBD34E3008C47E5 /* baixiaomao.bundle in Resources */,
+				C9032C3B2BBD34E3008C47E5 /* xiantiaoxiongmao.bundle in Resources */,
 				E3B90822298E6E1A00B96ADF /* image.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
