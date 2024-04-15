@@ -336,16 +336,16 @@ void VideoGLRender::OnDrawFrame() {
 
     bool isRend = m_RenderImage==nullptr;
 
-    LOGCATE("VideoGLRender::OnDrawFrame ->textureID!=-1000 %d]", isRend);
+//    LOGCATE("VideoGLRender::OnDrawFrame ->textureID!=-1000 %d]", isRend);
     if (m_RenderImage == nullptr) {
         return;
     }
-    LOGCATE("VideoGLRender::OnDrawFrame ->textureID!=-1000 %d]", m_RenderImage->textureID);
+//    LOGCATE("VideoGLRender::OnDrawFrame ->textureID!=-1000 %d]", m_RenderImage->textureID);
    // if (m_ProgramObj == GL_NONE || m_RenderImage->ppPlane[0] == nullptr) return;
     m_FrameIndex++;
     if (m_RenderImage->textureID > 0) {
         m_TextureIds[0] = m_RenderImage->textureID;
-        LOGCATE("VideoGLRender::OnDrawFrame ->textureID!=-1000 %d]", m_RenderImage->textureID);
+//        LOGCATE("VideoGLRender::OnDrawFrame ->textureID!=-1000 %d]", m_RenderImage->textureID);
     } else {
         switch (m_RenderImage->format) {
             case IMAGE_FORMAT_RGBA:

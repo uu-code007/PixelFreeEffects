@@ -35,8 +35,8 @@ class OpenGLRender : GLSurfaceView.Renderer, VideoRender {
     }
 
     fun release() {
-        renderHandler = -1
         native_release(renderHandler)
+        renderHandler = -1
     }
 
     @Volatile
