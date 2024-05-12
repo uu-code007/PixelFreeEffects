@@ -28,7 +28,7 @@
 -(void)setIsSel:(BOOL)isSel{
     _isSel = isSel;
     if (isSel) {
-        _botlabel.textColor = [UIColor colorWithRed:31/255.0 green:178/255.0 blue:255/255.0 alpha:1.0];
+        _botlabel.textColor = [UIColor colorWithRed:186/255.0 green:174/255.0 blue:255/255.0 alpha:1.0];
     }else{
         _botlabel.textColor = [UIColor colorWithRed:44/255.0 green:46/255.0 blue:48/255.0 alpha:1.0];
     }

@@ -20,7 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *beautyFilterBtn;
 @property (weak, nonatomic) IBOutlet UIButton *faceTypeBtn;
 
-@property (weak, nonatomic) IBOutlet UIButton *makeupBtn;
+@property (weak, nonatomic) IBOutlet UIButton *comparisonButton;
 @property (weak, nonatomic) IBOutlet UIButton *stickersBtn;
 
 // 上半部分
@@ -94,9 +94,13 @@
     self.skinBtn.tag = 102;
     self.shapeBtn.tag = 103;
     self.beautyFilterBtn.tag = 104 ;
+        self.stickersBtn.tag = 106;
     
-    self.makeupBtn.tag = 105;
-    self.stickersBtn.tag = 106;
+    self.comparisonButton.tag = 101;
+    [self.comparisonButton setImage:[UIImage imageNamed:@"comparison_icon"] forState:UIControlStateNormal];
+    [self.comparisonButton setImage:[UIImage imageNamed:@"comparison_icon"] forState:UIControlStateSelected];
+    [self.comparisonButton addTarget:self action:@selector(onBtnCompareTouchDown:) forControlEvents:UIControlEventTouchDown];
+    [self.comparisonButton addTarget:self action:@selector(onBtnCompareTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
     
 }
 
@@ -133,7 +137,6 @@
     self.beautyFilterBtn.selected = NO;
     
     self.faceTypeBtn.selected = NO;
-    self.makeupBtn.selected = NO;
     self.stickersBtn.selected = NO;
     
     
@@ -153,9 +156,6 @@
     if (sender == self.faceTypeBtn) {
         self.faceTypeView.hidden = NO;
 
-    }
-    if (sender == self.makeupBtn) {
-        self.makeupView.hidden = NO;
     }
     if (sender == self.beautyFilterBtn) {
         self.beautyFilterView.hidden = NO;
@@ -222,16 +222,16 @@
     }
     
     
-    if (self.makeupBtn.selected) {
-        NSInteger selectedIndex = self.makeupView.selectedIndex ;
-        self.makeupView.type = FUFilterSliderType01 ;
-        self.beautySlider.hidden = selectedIndex <= 0;
-        if (selectedIndex >= 0) {
-            PFBeautyParam *modle = self.makeupView.filters[selectedIndex];
-            _seletedParam = modle;
-            self.beautySlider.value = modle.mValue;
-        }
-    }
+//    if (self.makeupBtn.selected) {
+//        NSInteger selectedIndex = self.makeupView.selectedIndex ;
+//        self.makeupView.type = FUFilterSliderType01 ;
+//        self.beautySlider.hidden = selectedIndex <= 0;
+//        if (selectedIndex >= 0) {
+//            PFBeautyParam *modle = self.makeupView.filters[selectedIndex];
+//            _seletedParam = modle;
+//            self.beautySlider.value = modle.mValue;
+//        }
+//    }
 
     if (self.stickersBtn.selected) {
         NSInteger selectedIndex = self.stickersView.selectedIndex;
@@ -326,6 +326,21 @@
         }
     }
     return nil;
+}
+
+#pragma mark - Action
+- (void)onBtnCompareTouchDown:(UIButton *)sender{
+    sender.selected = YES;
+    if ([self.mDelegate respondsToSelector:@selector(comparisonButtonDidClick:)]) {
+        [self.mDelegate comparisonButtonDidClick:sender.selected];
+    }
+}
+
+- (void)onBtnCompareTouchUpInside:(UIButton *)sender{
+    sender.selected = NO;
+    if ([self.mDelegate respondsToSelector:@selector(comparisonButtonDidClick:)]) {
+        [self.mDelegate comparisonButtonDidClick:sender.selected];
+    }
 }
 
 

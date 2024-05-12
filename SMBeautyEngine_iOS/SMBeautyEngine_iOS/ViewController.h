@@ -6,12 +6,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#include <PixelFree/SMPixelFree.h>
+#include "SMPixelFree.h"
 
 @interface ViewController : UIViewController
 
 @property (nonatomic,strong) SMPixelFree *mPixelFree;
 
-
+@property (nonatomic,assign)BOOL clickCompare;
 @end
 

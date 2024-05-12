@@ -18,6 +18,8 @@
 // 开启关闭按钮
 - (void)switchRenderState:(BOOL)state;
 
+- (void)comparisonButtonDidClick:(BOOL)state;
+
 @end
 
 @interface PFAPIDemoBar : UIView

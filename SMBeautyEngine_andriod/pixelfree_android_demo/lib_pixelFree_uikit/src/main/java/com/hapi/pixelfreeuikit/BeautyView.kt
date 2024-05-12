@@ -37,7 +37,6 @@ class BeautyView : FrameLayout {
 
         }
         seek = findViewById<IndicatorSeekBar>(R.id.seekbarProgress)
-        seek.updateTextView(20)
         seek.getSeekBar().progress = 20
         mBeautyItemAdapter.itemChangeCall = {
             seek.getSeekBar().progress = (it.progress * 100).toInt()

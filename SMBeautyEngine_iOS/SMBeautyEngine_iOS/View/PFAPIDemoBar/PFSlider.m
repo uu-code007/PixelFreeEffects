@@ -71,7 +71,7 @@
     
     if (!middleView) {
         middleView = [[UIView alloc] initWithFrame:CGRectMake(2, self.frame.size.height /2.0 - 1, 100, 4)];
-        middleView.backgroundColor = [UIColor colorWithHexColorString:@"5EC7FE"];
+        middleView.backgroundColor = [UIColor colorWithHexColorString:@"BAACFF"];
         middleView.hidden = YES;
         [self insertSubview:middleView atIndex: self.subviews.count - 1];
     }
@@ -106,7 +106,7 @@
             
             line.hidden = YES ;
             middleView.hidden = YES ;
-            [self setMinimumTrackTintColor:[UIColor colorWithHexColorString:@"5EC7FE"]];
+            [self setMinimumTrackTintColor:[UIColor colorWithHexColorString:@"BAACFF"]];
         }
             break;
     }

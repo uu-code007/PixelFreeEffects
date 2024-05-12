@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import android.widget.RadioGroup
 import com.hapi.pixelfree.PFBeautyFiterType
 import com.hapi.pixelfree.PFBeautyTypeOneKey
@@ -351,6 +352,8 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
         super.onViewCreated(view, savedInstanceState)
         val vp = view.findViewById<BeautyViewPage>(R.id.vpEffect)
         val rgOP = view.findViewById<RadioGroup>(R.id.rgOP)
+        val firstButtonId: Int = rgOP.getChildAt(0).id
+        rgOP.check(firstButtonId)
 
         vp.adapter = CommonViewPagerAdapter(page)
         rgOP.setOnCheckedChangeListener { p0, id ->

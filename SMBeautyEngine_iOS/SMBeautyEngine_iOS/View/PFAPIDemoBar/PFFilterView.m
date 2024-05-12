@@ -67,8 +67,8 @@
     if (_selectedIndex == indexPath.row) {
         
         cell.imageView.layer.borderWidth = 2.0 ;
-        cell.imageView.layer.borderColor = [UIColor colorWithHexColorString:@"5EC7FE"].CGColor;
-        cell.titleLabel.textColor = [UIColor colorWithHexColorString:@"5EC7FE"];
+        cell.imageView.layer.borderColor = [UIColor colorWithHexColorString:@"BAACFF"].CGColor;
+        cell.titleLabel.textColor = [UIColor colorWithHexColorString:@"BAACFF"];
     }
     
     return cell ;

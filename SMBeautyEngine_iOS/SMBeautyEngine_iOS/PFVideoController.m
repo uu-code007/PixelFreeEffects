@@ -46,7 +46,7 @@
     CVPixelBufferRef pixbuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
     CVPixelBufferLockBaseAddress(pixbuffer, 0);
 
-    if(pixbuffer){
+    if(pixbuffer && !self.clickCompare){
         CFAbsoluteTime startTime = CFAbsoluteTimeGetCurrent();
         
         [self.mPixelFree processWithBuffer:pixbuffer rotationMode:PFRotationMode0];

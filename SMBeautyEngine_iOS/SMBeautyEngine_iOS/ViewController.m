@@ -22,12 +22,17 @@
 
 -(PFAPIDemoBar *)beautyEditView {
     if (!_beautyEditView) {
-        _beautyEditView = [[PFAPIDemoBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 231, self.view.frame.size.width, 231)];
+        _beautyEditView = [[PFAPIDemoBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 280, self.view.frame.size.width, 280)];
         
         _beautyEditView.mDelegate = self;
     }
     return _beautyEditView ;
 }
+
+-(void)comparisonButtonDidClick:(BOOL)state{
+    self.clickCompare = state;
+}
+
 
 -(void)filterValueChange:(PFBeautyParam *)param{
 
@@ -121,13 +126,13 @@
         if([param.mParam isEqualToString:@"origin"]){
             [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:NULL];
         } else{
-//            NSString *path =  [[NSBundle mainBundle] pathForResource:@"Stickers" ofType:nil];
-//            NSString *currentFolder = [path stringByAppendingPathComponent:param.mParam];
-//            const char *aaa = [currentFolder UTF8String];
-//            [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)aaa];
-            NSString *name = [NSString stringWithFormat:@"%@.bundle",param.mParam];
-            NSString *paths = [[NSBundle mainBundle] pathForResource:name ofType:nil];
-            [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)[paths UTF8String]];
+            NSString *path =  [[NSBundle mainBundle] pathForResource:@"Stickers" ofType:nil];
+            NSString *currentFolder = [path stringByAppendingPathComponent:param.mParam];
+            const char *aaa = [currentFolder UTF8String];
+            [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)aaa];
+//            NSString *name = [NSString stringWithFormat:@"%@.bundle",param.mParam];
+//            NSString *paths = [[NSBundle mainBundle] pathForResource:name ofType:nil];
+//            [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)[paths UTF8String]];
         }
     }
     
