@@ -6,7 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#include "SMPixelFree.h"
+#include <PixelFree/SMPixelFree.h>
 
 @interface ViewController : UIViewController
 
