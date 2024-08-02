@@ -1,0 +1,35 @@
+PODS:
+  - Flutter (1.0.0)
+  - integration_test (0.0.1):
+    - Flutter
+  - pixel_free (0.0.1):
+    - Flutter
+    - PixelFree
+  - PixelFree (2.4.5)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
+  - pixel_free (from `.symlinks/plugins/pixel_free/ios`)
+
+SPEC REPOS:
+  trunk:
+    - PixelFree
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
+  pixel_free:
+    :path: ".symlinks/plugins/pixel_free/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  integration_test: ce0a3ffa1de96d1a89ca0ac26fca7ea18a749ef4
+  pixel_free: f78b10acd5ef0b00a5e4f51149d9e43070e39808
+  PixelFree: 046e11785d86919eeb1a05c99bb1944513c3b924
+
+PODFILE CHECKSUM: 0aa733d2e3c0f870e2e8eb3230899daea5fadee1
+
+COCOAPODS: 1.12.1

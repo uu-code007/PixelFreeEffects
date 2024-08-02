@@ -1,0 +1,2 @@
+rootProject.name = 'pixel_free'
+include ':sdk-aar'
