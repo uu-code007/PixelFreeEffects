@@ -70,7 +70,7 @@
     [super layoutSubviews];
     
     if (!middleView) {
-        middleView = [[UIView alloc] initWithFrame:CGRectMake(2, self.frame.size.height /2.0 - 1, 100, 4)];
+        middleView = [[UIView alloc] initWithFrame:CGRectMake(2, self.frame.size.height /2.0 - 2, 100, 4)];
         middleView.backgroundColor = [UIColor colorWithHexColorString:@"BAACFF"];
         middleView.hidden = YES;
         [self insertSubview:middleView atIndex: self.subviews.count - 1];

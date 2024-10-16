@@ -564,7 +564,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = W2TP34G2MM;
+				DEVELOPMENT_TEAM = HN6VGCRNY9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -577,6 +577,7 @@
 					"\"$(SRCROOT)/../PixelFreeCxx/DetectFace/c\"",
 				);
 				INFOPLIST_FILE = SMBeautyEngine_iOS/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "望图美颜SDK";
 				INFOPLIST_KEY_NSCameraUsageDescription = "app 想要访问相机";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "app 想要访问mic";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -592,7 +593,7 @@
 				MARKETING_VERSION = 2.4.5;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mumu.SMBeautyEngine.cn;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixelFree.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -610,7 +611,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = W2TP34G2MM;
+				DEVELOPMENT_TEAM = HN6VGCRNY9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -623,6 +624,7 @@
 					"\"$(SRCROOT)/../PixelFreeCxx/DetectFace/c\"",
 				);
 				INFOPLIST_FILE = SMBeautyEngine_iOS/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "望图美颜SDK";
 				INFOPLIST_KEY_NSCameraUsageDescription = "app 想要访问相机";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "app 想要访问mic";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -638,7 +640,7 @@
 				MARKETING_VERSION = 2.4.5;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mumu.SMBeautyEngine.cn;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixelFree.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

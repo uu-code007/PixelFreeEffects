@@ -260,8 +260,14 @@ iphone 8 **测试**
 | 耗时（ms） |                        18.6ms                         |
 
 
-#### Android 体验 demo
+####  Android 体验 demo
 ![android 体验](./res/qrcode_www.pgyer.com.png)
+
+####  iOS 体验 demo
+
+
+
+![iOS 体验](./res/testflight_apple.png)
 
 
 
