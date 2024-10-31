@@ -63,6 +63,10 @@ __attribute__((visibility("default"))) @interface SMPixelFree : NSObject
 // 加载美颜bundle
 - (void)createBeautyItemFormBundle:(void*)data size:(int)sz;
 
+- (void)pixelFreeGetFaceRect:(float *)faceRect;
+
+- (int)getPixelFreeFaceNum;
+
 @end
 
 NS_ASSUME_NONNULL_END

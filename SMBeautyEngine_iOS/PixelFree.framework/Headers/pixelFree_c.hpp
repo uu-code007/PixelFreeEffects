@@ -183,6 +183,9 @@ PF_CAPI_EXPORT extern int PF_processWithBuffer(PFPixelFree* pixelFree,PFIamgeInp
 PF_CAPI_EXPORT extern void PF_pixelFreeSetBeautyFiterParam(PFPixelFree* pixelFree, int key,void *value);
 PF_CAPI_EXPORT extern void PF_createBeautyItemFormBundle(PFPixelFree* pixelFree, void *data,int size,PFSrcType type);
 
+PF_CAPI_EXPORT extern void PF_pixelFreeGetFaceRect(PFPixelFree* pixelFree,float *faceRect);
+
+PF_CAPI_EXPORT extern int PF_pixelFreeHaveFaceSize(PFPixelFree* pixelFree);
 #ifdef __cplusplus
 }
 #endif
