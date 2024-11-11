@@ -42,7 +42,7 @@ class CameraXTrack internal constructor(
     private val imageAnalyzer by lazy {
         ImageAnalysis.Builder()
             .setTargetResolution(Size(width, height))
-            .setBackpressureStrategy(ImageAnalysis.STRATEGY_BLOCK_PRODUCER)
+            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888)
             .build()
             .also {

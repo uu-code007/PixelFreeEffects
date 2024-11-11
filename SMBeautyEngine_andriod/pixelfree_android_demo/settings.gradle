@@ -2,7 +2,7 @@
 include ':app'
 
 include ':hapiAVRender'
-include ':sdk-aar'
+// include ':lib_pixelFree'
 //include ':nativelib'
 include ':lib_pixelFree_uikit'
-
+include ':sdk-aar'

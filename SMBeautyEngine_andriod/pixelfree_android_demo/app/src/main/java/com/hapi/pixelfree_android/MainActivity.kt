@@ -46,7 +46,12 @@ class MainActivity : AppCompatActivity() {
                             format = PFDetectFormat.PFFORMAT_IMAGE_RGBA
                             rotationMode = PFRotationMode.PFRotationMode90
                         }
+                        val startTime = System.currentTimeMillis()
                         mPixelFree.processWithBuffer(pxInput)
+                        val endTime = System.currentTimeMillis()
+                        val timeCost = endTime - startTime
+                        println("sunmu----processWithBuffer 耗时：$timeCost 毫秒")
+
                         frame.textureID = pxInput.textureID
                     }
                     return super.onProcessFrame(frame)

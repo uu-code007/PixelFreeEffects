@@ -36,5 +36,9 @@ class StartActivity : AppCompatActivity() {
         findViewById<Button>(R.id.record).setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }
+
+        findViewById<Button>(R.id.image).setOnClickListener {
+            startActivity(Intent(this, ImageActivity::class.java))
+        }
     }
 }
