@@ -1,0 +1,33 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "望图美颜SDK"
+    },
+    {
+      "name": "CAMERA",
+      "value": "CAMERA"
+    },
+    {
+      "name": "READ_MEDIA",
+      "value": "READ_MEDIA"
+    },
+    {
+      "name": "WRITE_MEDIA",
+      "value": "WRITE_MEDIA"
+    }
+  ,
+    {
+      "name": "STORE",
+      "value": "STORE"
+    }
+  ]
+}

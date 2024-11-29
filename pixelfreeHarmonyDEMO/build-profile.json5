@@ -1,0 +1,55 @@
+{
+  "app": {
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+        "compatibleSdkVersion": "5.0.0(12)",
+        "runtimeOS": "HarmonyOS",
+        "buildOption": {
+          "strictMode": {
+            "caseSensitiveCheck": true,
+            "useNormalizedOHMUrl": true
+          }
+        }
+      }
+    ],
+    "buildModeSet": [
+      {
+        "name": "debug"
+      },
+      {
+        "name": "release"
+      }
+    ],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "/Users/keyes/.ohos/config/default_pixelfreeHarmonyDEMO_uXXgXgwQhPPlqCZGt7RghuXfToCnPhP_pQjQkVo-NCA=.cer",
+          "storePassword": "0000001B60A004A1714911F2D3C5998A98E1BBA138ED1A919ECF220A56320BE5E98F87EB15D06E22189C52",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001BEB80A344806F34749B7E94D4A68E2DCAC6E90238CEA83F0E93AD7B1069D44CD3A3104802ACF7BA",
+          "profile": "/Users/keyes/.ohos/config/default_pixelfreeHarmonyDEMO_uXXgXgwQhPPlqCZGt7RghuXfToCnPhP_pQjQkVo-NCA=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "/Users/keyes/.ohos/config/default_pixelfreeHarmonyDEMO_uXXgXgwQhPPlqCZGt7RghuXfToCnPhP_pQjQkVo-NCA=.p12"
+        }
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    }
+  ]
+}
