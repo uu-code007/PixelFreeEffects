@@ -135,6 +135,16 @@ public class PixelFreePlugin implements FlutterPlugin, MethodCallHandler {
         result.success(null);
       }
         break;
+
+      case "pixelFreeSetBeautyTypeParam": {
+        int type = (int) call.argument("type");
+        int value = (int) call.argument("value");
+        mPixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFiterType.PFBeautyFiterTypeOneKey, (int)value);
+        result.success(null);
+      }
+      break;
+
+      
 //      case "processWithBuffer":
 //        try {
 //          int textureID = (int) call.argument("textureID");

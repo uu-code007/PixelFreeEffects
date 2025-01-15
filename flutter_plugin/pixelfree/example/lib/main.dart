@@ -73,6 +73,7 @@ Future<void> readerImageAsyncTask(ByteData bytes, int width, int height) async {
 
     Timer.periodic(Duration(milliseconds: 200), (_) async {
       // _pixelFreePlugin.pixelFreeSetFilterParam("heibai1", 1.0);
+        _pixelFreePlugin.pixelFreeSetBeautyTypeParam(PFBeautyFiterType.typeOneKey, 1);
        await readerImageAsyncTask(_rgba!,imageInfo.image.width, imageInfo.image.height);
     });
   }

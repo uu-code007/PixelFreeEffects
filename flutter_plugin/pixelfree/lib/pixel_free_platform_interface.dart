@@ -61,8 +61,13 @@ Future<void> pixelFreeSetBeautyFilterParam(
 
 Future<void> pixelFreeSetFilterParam(
       String filterName, double value) {
-throw UnimplementedError('not been implemented');
+    throw UnimplementedError('not been implemented');
 }
+
+  Future<void> pixelFreeSetBeautyTypeParam(PFBeautyFiterType type, int value) {
+    throw UnimplementedError('not been implemented');
+  }
+
 
 Future<void> processWithBuffer(PFIamgeInput imageInput) {
     throw UnimplementedError('not been implemented');
@@ -148,8 +153,6 @@ enum PFBeautyFiterType {
   // 扩展字段
   extend,
 }
-
-  
 
 
 

@@ -49,6 +49,12 @@ class PixelFree {
     return PixelFreePlatform.instance.pixelFreeSetFilterParam(filterName, value);
   }
 
+  Future<void> pixelFreeSetBeautyTypeParam(
+      PFBeautyFiterType type, int value) {
+    return PixelFreePlatform.instance.pixelFreeSetBeautyTypeParam(type, value);
+  }
+
+
   Future<void> processWithBuffer(PFIamgeInput imageInput) {
     return PixelFreePlatform.instance.processWithBuffer(imageInput);
   }

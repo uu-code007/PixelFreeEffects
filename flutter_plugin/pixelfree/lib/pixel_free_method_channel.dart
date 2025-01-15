@@ -64,6 +64,12 @@ Future<void> pixelFreeSetFilterParam(
 }
 
 @override
+Future<void> pixelFreeSetBeautyTypeParam(PFBeautyFiterType type, int value)  async {
+      await methodChannel.invokeMethod(
+        'pixelFreeSetBeautyTypeParam', {'type': type.index,'value': value,});
+}
+
+@override
 Future<void> processWithBuffer(PFIamgeInput imageInput) async {
     await methodChannel.invokeMethod('processWithBuffer', imageInput.toMap());
 }
