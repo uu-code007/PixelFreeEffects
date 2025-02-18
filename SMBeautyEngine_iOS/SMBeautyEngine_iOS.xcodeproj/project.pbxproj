@@ -20,6 +20,10 @@
 		C9CF03812A87685100B2C394 /* PFOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CF037F2A87685000B2C394 /* PFOpenGLView.m */; };
 		C9CF08542AA9E83800B2C394 /* CoreML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3BD4591274752E900CB44C9 /* CoreML.framework */; };
 		C9CF085A2AAC9F4300B2C394 /* filter_model.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C9CF08592AAC9F4300B2C394 /* filter_model.bundle */; };
+		C9D8C8C02D631E5500F69766 /* SMEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = C9D8C8BF2D631E5500F69766 /* SMEncoder.m */; };
+		C9D8C8C52D631EA000F69766 /* SMVideoConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = C9D8C8C22D631EA000F69766 /* SMVideoConfiguration.m */; };
+		C9D8C8C62D631EA000F69766 /* SMAudioConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = C9D8C8C42D631EA000F69766 /* SMAudioConfiguration.m */; };
+		C9D8C8CA2D6320C200F69766 /* SMUtilFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = C9D8C8C82D63201100F69766 /* SMUtilFunctions.m */; };
 		E31A9AC02903913400AF311C /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E31A9ABD2903913400AF311C /* CoreImage.framework */; };
 		E32C9FE028E69A3300FB225E /* pixelfreeAuth.lic in Resources */ = {isa = PBXBuildFile; fileRef = E32C9FDF28E69A3300FB225E /* pixelfreeAuth.lic */; };
 		E335682728E5883C00551FB3 /* PFImageController.m in Sources */ = {isa = PBXBuildFile; fileRef = E335682628E5883C00551FB3 /* PFImageController.m */; };
@@ -79,6 +83,14 @@
 		C9CF037F2A87685000B2C394 /* PFOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFOpenGLView.m; sourceTree = "<group>"; };
 		C9CF03802A87685100B2C394 /* PFOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFOpenGLView.h; sourceTree = "<group>"; };
 		C9CF08592AAC9F4300B2C394 /* filter_model.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = filter_model.bundle; sourceTree = "<group>"; };
+		C9D8C8BE2D631E5500F69766 /* SMEncoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMEncoder.h; sourceTree = "<group>"; };
+		C9D8C8BF2D631E5500F69766 /* SMEncoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMEncoder.m; sourceTree = "<group>"; };
+		C9D8C8C12D631EA000F69766 /* SMVideoConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMVideoConfiguration.h; sourceTree = "<group>"; };
+		C9D8C8C22D631EA000F69766 /* SMVideoConfiguration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMVideoConfiguration.m; sourceTree = "<group>"; };
+		C9D8C8C32D631EA000F69766 /* SMAudioConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMAudioConfiguration.h; sourceTree = "<group>"; };
+		C9D8C8C42D631EA000F69766 /* SMAudioConfiguration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMAudioConfiguration.m; sourceTree = "<group>"; };
+		C9D8C8C72D63201100F69766 /* SMUtilFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMUtilFunctions.h; sourceTree = "<group>"; };
+		C9D8C8C82D63201100F69766 /* SMUtilFunctions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMUtilFunctions.m; sourceTree = "<group>"; };
 		E31A9ABD2903913400AF311C /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		E32C9FDF28E69A3300FB225E /* pixelfreeAuth.lic */ = {isa = PBXFileReference; lastKnownFileType = file; path = pixelfreeAuth.lic; sourceTree = "<group>"; };
 		E335682528E5883C00551FB3 /* PFImageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFImageController.h; sourceTree = "<group>"; };
@@ -164,6 +176,21 @@
 			path = Stickers;
 			sourceTree = "<group>";
 		};
+		C9D8C8BD2D631E4400F69766 /* Encoder */ = {
+			isa = PBXGroup;
+			children = (
+				C9D8C8C12D631EA000F69766 /* SMVideoConfiguration.h */,
+				C9D8C8C22D631EA000F69766 /* SMVideoConfiguration.m */,
+				C9D8C8C32D631EA000F69766 /* SMAudioConfiguration.h */,
+				C9D8C8C42D631EA000F69766 /* SMAudioConfiguration.m */,
+				C9D8C8BE2D631E5500F69766 /* SMEncoder.h */,
+				C9D8C8BF2D631E5500F69766 /* SMEncoder.m */,
+				C9D8C8C72D63201100F69766 /* SMUtilFunctions.h */,
+				C9D8C8C82D63201100F69766 /* SMUtilFunctions.m */,
+			);
+			path = Encoder;
+			sourceTree = "<group>";
+		};
 		E3BD452A27474A4E00CB44C9 = {
 			isa = PBXGroup;
 			children = (
@@ -185,6 +212,7 @@
 		E3BD453527474A4E00CB44C9 /* SMBeautyEngine_iOS */ = {
 			isa = PBXGroup;
 			children = (
+				C9D8C8BD2D631E4400F69766 /* Encoder */,
 				C9CF03802A87685100B2C394 /* PFOpenGLView.h */,
 				C9CF037F2A87685000B2C394 /* PFOpenGLView.m */,
 				E3BD457A27474A9600CB44C9 /* PFCamera.h */,
@@ -375,9 +403,13 @@
 				E3BD453E27474A4E00CB44C9 /* ViewController.m in Sources */,
 				E3BD458227474A9800CB44C9 /* PFBeautyParam.m in Sources */,
 				E3BD453827474A4E00CB44C9 /* AppDelegate.m in Sources */,
+				C9D8C8C52D631EA000F69766 /* SMVideoConfiguration.m in Sources */,
+				C9D8C8C62D631EA000F69766 /* SMAudioConfiguration.m in Sources */,
 				E335683028E5897600551FB3 /* PFVideoController.m in Sources */,
 				C9CF03812A87685100B2C394 /* PFOpenGLView.m in Sources */,
+				C9D8C8CA2D6320C200F69766 /* SMUtilFunctions.m in Sources */,
 				E3BD458627474A9800CB44C9 /* PFSlider.m in Sources */,
+				C9D8C8C02D631E5500F69766 /* SMEncoder.m in Sources */,
 				E3BD458B27474A9800CB44C9 /* PFDateHandle.m in Sources */,
 				E3BD458427474A9800CB44C9 /* PFBottomColletionView.m in Sources */,
 				E3BBBA04295C274A00306BD9 /* PFMainViewController.m in Sources */,

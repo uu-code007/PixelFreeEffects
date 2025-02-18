@@ -172,7 +172,7 @@
 
 
 +(NSArray<PFBeautyParam *>*)setupStickers{
-    NSArray *beautyFiltersDataSource = @[@"origin",@"flowers",@"baixiaomao",@"candy",@"maorong",@"xiongerduo",@"xiantiaoxiongmao"];
+    NSArray *beautyFiltersDataSource = @[@"origin",@"flowers",@"candy",@"maorong",@"xiongerduo",@"xiantiaoxiongmao"];//,@"baixiaomao"
 
     NSDictionary *titelDic = @{@"origin":@"origin",@"flowers":@"flowers",@"baixiaomao":@"baixiaomao",@"candy":@"candy",@"maorong":@"maorong",@"xiongerduo":@"xiongerduo",@"xiantiaoxiongmao":@"xiantiaoxiongmao"};
 

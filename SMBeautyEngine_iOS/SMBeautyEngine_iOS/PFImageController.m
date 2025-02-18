@@ -2,7 +2,7 @@
 //  PFImageController.m
 //  SMBeautyEngine_iOS
 //
-//  Created by 孙慕 on 2022/9/29.
+//  Created by pixelfree on 2022/9/29.
 //
 
 #import "PFImageController.h"
