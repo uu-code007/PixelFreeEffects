@@ -93,14 +93,14 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                         R.mipmap.ruihua
                     )
                 )
-                add(
-                    BeautyItem(
-                        PFBeautyFiterType.PFBeautyFiterTypeFaceH_qualityStrength,
-                        0.2f,
-                        "增强画质",
-                        R.mipmap.huazhizengqiang
-                    )
-                )
+//                add(
+//                    BeautyItem(
+//                        PFBeautyFiterType.PFBeautyFiterTypeFaceH_qualityStrength,
+//                        0.2f,
+//                        "增强画质",
+//                        R.mipmap.huazhizengqiang
+//                    )
+//                )
             })
         }, BeautyView(requireContext()).apply {
             this.pixelFreeGetter = { pixelFree }
@@ -323,6 +323,13 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                             PFBeautyFiterType.PFBeautyFiterSticker2DFilter,
                             "xiongerduo",
                             R.mipmap.xiongerduo,
+                        )
+                    )
+                    add(
+                        BeautyItem(
+                            PFBeautyFiterType.PFBeautyFiterSticker2DFilter,
+                            "xiongmao",
+                            R.mipmap.xiongmao,
                         )
                     )
                 })
