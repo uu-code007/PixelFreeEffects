@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                         mPixelFree.processWithBuffer(pxInput)
                         val endTime = System.currentTimeMillis()
                         val timeCost = endTime - startTime
-                        println("sunmu----processWithBuffer 耗时：$timeCost 毫秒")
+//                        println("processWithBuffer 耗时：$timeCost 毫秒")
 
                         frame.textureID = pxInput.textureID
                     }

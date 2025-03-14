@@ -106,7 +106,10 @@
           if ([param.mParam isEqualToString:@"sharpen"]) {
               [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFaceSharpenStrength value:&value];
           }
-
+        if ([param.mParam isEqualToString:@"eye_b"]) {
+            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFaceEyeBrighten value:&value];
+        }
+        
         if ([param.mParam isEqualToString:@"newWhitenStrength"]) {
             [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFaceM_newWhitenStrength value:&value];
         }
@@ -204,15 +207,18 @@
     // 归档
     NSData *shapeParamsData = [NSKeyedArchiver archivedDataWithRootObject:_beautyEditView.shapeParams];
     NSData *skinParamsData = [NSKeyedArchiver archivedDataWithRootObject:_beautyEditView.skinParams];
+    NSData *stickerseData = [NSKeyedArchiver archivedDataWithRootObject:_beautyEditView.stickersParams];
+    
     NSUserDefaults*userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setInteger:_beautyEditView.oneKeyType forKey:@"oneKeyType"];
-    [userDefaults setInteger:_beautyEditView.filterIndex forKey:@"filtersUseIndex"];;
+    [userDefaults setInteger:_beautyEditView.filterIndex forKey:@"filtersUseIndex"];
+    [userDefaults setInteger:_beautyEditView.stickersIndex forKey:@"stickerUseIndex"];
     [userDefaults synchronize];
     
     // 写本地
     [self writeData:shapeParamsData fileName:@"shapeParamsData"];
     [self writeData:skinParamsData fileName:@"skinParamsData"];
-
+    [self writeData:stickerseData fileName:@"stickerseData"];
     
 }
 
@@ -238,6 +244,8 @@
     NSArray<PFBeautyParam *>* defaultSkinData = [PFDateHandle setupSkinData];
     NSArray<PFBeautyParam *>* defaultfiltersData = [PFDateHandle setupFilterData];
     NSArray<PFBeautyParam *>* defaultfaceData = [PFDateHandle setupFaceType];
+    NSArray<PFBeautyParam *>* defaultStickerseData = [PFDateHandle setupStickers];
+    
     // 读本地缓存
     NSData *data = [self readDatafileName:@"shapeParamsData"];
     if (data) {
@@ -258,19 +266,27 @@
     if (data) {
         defaultfaceData = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     }
+    
+    data = [self readDatafileName:@"stickerseData"];
+    if (data) {
+        defaultStickerseData = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    }
 
     // 更新 UI
     self.beautyEditView.shapeParams = defaultData;
     self.beautyEditView.skinParams = defaultSkinData;
     self.beautyEditView.filtersParams = defaultfiltersData;
     self.beautyEditView.faceTypeParams = defaultfaceData;
+    self.beautyEditView.stickersParams = defaultStickerseData;
     
     NSUserDefaults*userDefaults = [NSUserDefaults standardUserDefaults];
     int oneKeyType = (int)[userDefaults integerForKey:@"oneKeyType"];
     int filtersIndex = (int)[userDefaults integerForKey:@"filtersUseIndex"];
+    int stickerIndex = (int)[userDefaults integerForKey:@"stickerUseIndex"];
 
     self.beautyEditView.oneKeyType = oneKeyType;
     self.beautyEditView.filterIndex = filtersIndex;
+    self.beautyEditView.stickersIndex = stickerIndex;
     
     [self.beautyEditView updateDemoBar];
     
@@ -289,6 +305,10 @@
     [self filterValueChange:param];
     param = defaultfiltersData[filtersIndex];
     [self filterValueChange:param];
+    
+    param = defaultStickerseData[stickerIndex];
+    [self filterValueChange:param];
+    
 }
 
 

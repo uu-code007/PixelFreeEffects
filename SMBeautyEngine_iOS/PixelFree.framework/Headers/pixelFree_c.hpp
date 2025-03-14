@@ -134,6 +134,8 @@ typedef enum PFBeautyFiterType{
     PFBeautyFiterTypeFaceM_newWhitenStrength,
     //画质增强
     PFBeautyFiterTypeFaceH_qualityStrength,
+    //亮眼（0~1）
+    PFBeautyFiterTypeFaceEyeBrighten,
     //滤镜类型
     PFBeautyFiterName,
     //滤镜强度
@@ -143,11 +145,12 @@ typedef enum PFBeautyFiterType{
     // 2D 贴纸
     PFBeautyFiterSticker2DFilter,
     // 一键美颜
-    PFBeautyFiterTypeOneKey = 25,
+    PFBeautyFiterTypeOneKey = 26,
     // 水印
     PFBeautyFiterWatermark,
     // 扩展字段
     PFBeautyFiterExtend,
+    
     
 } PFBeautyFiterType;
 

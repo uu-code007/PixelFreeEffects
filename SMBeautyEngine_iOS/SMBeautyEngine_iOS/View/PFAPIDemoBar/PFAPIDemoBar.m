@@ -467,6 +467,14 @@
     _beautyFilterView.selectedIndex = filterIndex;
 }
 
+-(void)setStickersIndex:(int)stickersIndex {
+    _stickersView.selectedIndex = stickersIndex;
+}
+
+-(int)stickersIndex {
+    return _stickersView.selectedIndex;
+}
+
 - (int)filterIndex{
     return _beautyFilterView.selectedIndex;
 }

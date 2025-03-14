@@ -38,9 +38,9 @@
 }
 
 +(NSArray<PFBeautyParam *>*)setupSkinData{
-    NSArray *prams = @[@"writen",@"runddy",@"blur",@"sharpen",@"qualityStrength"];//
-    NSDictionary *titelDic = @{@"writen":@"美白",@"runddy":@"红润",@"blur":@"磨皮",@"sharpen":@"锐化",@"newWhitenStrength":@"新美白",@"qualityStrength":@"增强画质"};
-    NSDictionary *defaultValueDic = @{@"runddy":@(0.6),@"writen":@(0.6),@"blur":@(0.7),@"sharpen":@(0.2),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.2)};
+    NSArray *prams = @[@"writen",@"runddy",@"blur",@"sharpen",@"eye_b",@"qualityStrength"];//
+    NSDictionary *titelDic = @{@"writen":@"美白",@"runddy":@"红润",@"blur":@"磨皮",@"sharpen":@"锐化",@"newWhitenStrength":@"新美白",@"eye_b":@"亮眼",@"qualityStrength":@"增强画质"};
+    NSDictionary *defaultValueDic = @{@"runddy":@(0.6),@"writen":@(0.6),@"blur":@(0.7),@"sharpen":@(0.2),@"eye_b":@(0.0),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.2)};
     
     NSMutableArray *array = [[NSMutableArray alloc] init];
 
@@ -172,7 +172,7 @@
 
 
 +(NSArray<PFBeautyParam *>*)setupStickers{
-    NSArray *beautyFiltersDataSource = @[@"origin",@"flowers",@"candy",@"maorong",@"xiongerduo",@"xiantiaoxiongmao"];//,@"baixiaomao"
+    NSArray *beautyFiltersDataSource = @[@"origin",@"flowers",@"candy",@"maorong",@"xiongerduo",@"xiantiaoxiongmao"];
 
     NSDictionary *titelDic = @{@"origin":@"origin",@"flowers":@"flowers",@"baixiaomao":@"baixiaomao",@"candy":@"candy",@"maorong":@"maorong",@"xiongerduo":@"xiongerduo",@"xiantiaoxiongmao":@"xiantiaoxiongmao"};
 

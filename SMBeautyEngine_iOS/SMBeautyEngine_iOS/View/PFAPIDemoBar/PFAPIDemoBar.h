@@ -40,6 +40,9 @@
 @property (nonatomic, assign) int oneKeyType;
 
 @property (nonatomic, assign) int filterIndex;
+
+@property (nonatomic, assign) int stickersIndex;
+
 // 关闭上半部分
 -(void)hiddenTopViewWithAnimation:(BOOL)animation;
 
