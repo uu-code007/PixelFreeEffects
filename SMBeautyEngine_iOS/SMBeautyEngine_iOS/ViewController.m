@@ -6,13 +6,9 @@
 //
 
 #import "ViewController.h"
-
-#import "PFAPIDemoBar.h"
 #import "PFDateHandle.h"
 
 @interface ViewController ()<PFAPIDemoBarDelegate>
-
-@property(nonatomic, strong) PFAPIDemoBar *beautyEditView;
 
 @property (nonatomic, strong) NSUserDefaults *def;
 @end
@@ -98,7 +94,7 @@
               [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFaceRuddyStrength value:&value];
           }
           if ([param.mParam isEqualToString:@"writen"]) {
-              [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFaceWhitenStrength value:&value];
+              [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFaceM_newWhitenStrength value:&value];
           }
           if ([param.mParam isEqualToString:@"blur"]) {
               [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFaceBlurStrength value:&value];
@@ -133,9 +129,17 @@
 //            NSString *currentFolder = [path stringByAppendingPathComponent:param.mParam];
 //            const char *aaa = [currentFolder UTF8String];
 //            [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)aaa];
+            
             NSString *name = [NSString stringWithFormat:@"%@.bundle",param.mParam];
             NSString *paths = [[NSBundle mainBundle] pathForResource:name ofType:nil];
             [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)[paths UTF8String]];
+            
+//            NSString *path =  [[NSBundle mainBundle] pathForResource:@"effect" ofType:nil];
+//            NSString *currentFolder = [path stringByAppendingPathComponent:@"roseEyeMakeup"];
+//            const char *aaa = [currentFolder UTF8String];
+//            [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)aaa];
+            
+            
         }
     }
     

@@ -91,6 +91,29 @@ typedef struct {
     bool isMirror; // false
 } PFFiterWatermark;
 
+
+typedef struct {
+    bool isUse; //false
+    float brightness;// -1.0 to 1.0
+    float contrast; // Contrast ranges from 0.0 to 4.0 (max contrast), with 1.0 as the normal level
+    float exposure; // Exposure ranges from -10.0 to 10.0, with 0.0 as the normal level
+    float highlights; //0 - 1, increase to lighten shadows.
+    float shadows;  //0 - 1, decrease to darken highlights.
+    float saturation; //Saturation ranges from 0.0 (fully desaturated) to 2.0 (max saturation), with 1.0 as the normal level
+    float temperature;//choose color temperature, in degrees Kelvin  default 5000.0
+    float tint;       //adjust tint to compensate
+    float hue;       //0-360
+    
+} PFImageColorGrading;
+
+
+typedef struct {
+    float key_color[3]; // 0~1
+    float hue;
+    float saturation;// 0-1.0
+    float brightness;  // 0-1.0
+} PFHLSFilterParams;
+
 /* 美颜类型 */
 typedef enum PFBeautyFiterType{
     PFBeautyFiterTypeFace_EyeStrength = 0,
@@ -189,6 +212,11 @@ PF_CAPI_EXPORT extern void PF_createBeautyItemFormBundle(PFPixelFree* pixelFree,
 PF_CAPI_EXPORT extern void PF_pixelFreeGetFaceRect(PFPixelFree* pixelFree,float *faceRect);
 
 PF_CAPI_EXPORT extern int PF_pixelFreeHaveFaceSize(PFPixelFree* pixelFree);
+
+PF_CAPI_EXPORT extern int PF_pixelFreeColorGrading(PFPixelFree* pixelFree,PFImageColorGrading* ImageColorGrading);
+PF_CAPI_EXPORT extern int PF_pixelFreeAddHLSFilter(PFPixelFree* pixelFree,PFHLSFilterParams* HLSFilterParams);
+PF_CAPI_EXPORT extern int PF_pixelFreeDeleteHLSFilter(PFPixelFree* pixelFree,int handle);
+PF_CAPI_EXPORT extern int PF_pixelFreeChangeHLSFilter(PFPixelFree* pixelFree,int handle,PFHLSFilterParams* HLSFilterParams);
 #ifdef __cplusplus
 }
 #endif

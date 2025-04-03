@@ -7,10 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C94EE9A92D9E9371007ACC97 /* PixelFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C94EE9A72D9E92DC007ACC97 /* PixelFree.framework */; };
+		C94EE9AA2D9E9371007ACC97 /* PixelFree.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C94EE9A72D9E92DC007ACC97 /* PixelFree.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C958A3102D90019C0019ED6F /* AdjustmentItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C958A3052D90019C0019ED6F /* AdjustmentItem.m */; };
+		C958A3122D90019C0019ED6F /* AdjustmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C958A3032D90019C0019ED6F /* AdjustmentCell.m */; };
+		C958A3132D90019C0019ED6F /* PFTakeColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = C958A3082D90019C0019ED6F /* PFTakeColorView.m */; };
+		C958A3142D90019C0019ED6F /* PFImageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C958A30E2D90019C0019ED6F /* PFImageHelper.m */; };
+		C958A3152D90019C0019ED6F /* PFHLSToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = C958A30A2D90019C0019ED6F /* PFHLSToolView.m */; };
+		C958A31D2D9004E20019ED6F /* ToolUI.m in Sources */ = {isa = PBXBuildFile; fileRef = C958A31C2D9004E20019ED6F /* ToolUI.m */; };
+		C958A3302D91867D0019ED6F /* Pods_SMBeautyEngine_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C958A32D2D9186710019ED6F /* Pods_SMBeautyEngine_iOS.framework */; };
+		C95AB8702D93961900F59BD5 /* 2631742911906.png in Resources */ = {isa = PBXBuildFile; fileRef = C95AB86F2D93961900F59BD5 /* 2631742911906.png */; };
 		C99D8B6D2D7E8FAB00DC5D41 /* face_mask.png in Resources */ = {isa = PBXBuildFile; fileRef = C99D8B6C2D7E8FAB00DC5D41 /* face_mask.png */; };
 		C9AFDF0D2BC92ED9009C38CD /* qiniu_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C9AFDF0C2BC92ED9009C38CD /* qiniu_logo.png */; };
-		C9BB181D2D846F9D002AF75D /* PixelFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9AF5A5D2D846E27006613D6 /* PixelFree.framework */; };
-		C9BB181E2D846F9E002AF75D /* PixelFree.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C9AF5A5D2D846E27006613D6 /* PixelFree.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C9BB18232D858830002AF75D /* face2.png in Resources */ = {isa = PBXBuildFile; fileRef = C9BB18222D858830002AF75D /* face2.png */; };
+		C9C0EC062D9688D200BE1D3A /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C9C0EC052D96887B00BE1D3A /* libz.tbd */; };
 		C9CF037B2A8670FC00B2C394 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9CF03782A8670FB00B2C394 /* Accelerate.framework */; };
 		C9CF03812A87685100B2C394 /* PFOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CF037F2A87685000B2C394 /* PFOpenGLView.m */; };
 		C9CF08542AA9E83800B2C394 /* CoreML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3BD4591274752E900CB44C9 /* CoreML.framework */; };
@@ -54,13 +64,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		C9BB181F2D846F9E002AF75D /* Embed Frameworks */ = {
+		C94EE9AB2D9E9371007ACC97 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C9BB181E2D846F9E002AF75D /* PixelFree.framework in Embed Frameworks */,
+				C94EE9AA2D9E9371007ACC97 /* PixelFree.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -68,9 +78,28 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D61E344F4C535ACE64C554A /* Pods-SMBeautyEngine_iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SMBeautyEngine_iOS.debug.xcconfig"; path = "Target Support Files/Pods-SMBeautyEngine_iOS/Pods-SMBeautyEngine_iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		5C8A829A339A9CDADB015B9D /* Pods_SMBeautyEngine_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SMBeautyEngine_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D80F176E4A4919062FB8C44 /* Pods-SMBeautyEngine_iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SMBeautyEngine_iOS.release.xcconfig"; path = "Target Support Files/Pods-SMBeautyEngine_iOS/Pods-SMBeautyEngine_iOS.release.xcconfig"; sourceTree = "<group>"; };
+		C94EE9A72D9E92DC007ACC97 /* PixelFree.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PixelFree.framework; sourceTree = "<group>"; };
+		C958A3022D90019C0019ED6F /* AdjustmentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdjustmentCell.h; sourceTree = "<group>"; };
+		C958A3032D90019C0019ED6F /* AdjustmentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AdjustmentCell.m; sourceTree = "<group>"; };
+		C958A3042D90019C0019ED6F /* AdjustmentItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdjustmentItem.h; sourceTree = "<group>"; };
+		C958A3052D90019C0019ED6F /* AdjustmentItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AdjustmentItem.m; sourceTree = "<group>"; };
+		C958A3062D90019C0019ED6F /* ToolUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToolUI.h; sourceTree = "<group>"; };
+		C958A3072D90019C0019ED6F /* PFTakeColorView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFTakeColorView.h; sourceTree = "<group>"; };
+		C958A3082D90019C0019ED6F /* PFTakeColorView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PFTakeColorView.m; sourceTree = "<group>"; };
+		C958A3092D90019C0019ED6F /* PFHLSToolView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFHLSToolView.h; sourceTree = "<group>"; };
+		C958A30A2D90019C0019ED6F /* PFHLSToolView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PFHLSToolView.m; sourceTree = "<group>"; };
+		C958A30D2D90019C0019ED6F /* PFImageHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFImageHelper.h; sourceTree = "<group>"; };
+		C958A30E2D90019C0019ED6F /* PFImageHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PFImageHelper.m; sourceTree = "<group>"; };
+		C958A31C2D9004E20019ED6F /* ToolUI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToolUI.m; sourceTree = "<group>"; };
+		C958A32D2D9186710019ED6F /* Pods_SMBeautyEngine_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_SMBeautyEngine_iOS.framework; path = "../../../../Library/Developer/Xcode/DerivedData/SMBeautyEngine_iOS-fzdtawbuxtsbdeaqkxzxbdrevrwh/Build/Products/Debug-iphoneos/Pods_SMBeautyEngine_iOS.framework"; sourceTree = "<group>"; };
+		C95AB86F2D93961900F59BD5 /* 2631742911906.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2631742911906.png; sourceTree = "<group>"; };
 		C99D8B6C2D7E8FAB00DC5D41 /* face_mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face_mask.png; sourceTree = "<group>"; };
-		C9AF5A5D2D846E27006613D6 /* PixelFree.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PixelFree.framework; sourceTree = "<group>"; };
 		C9AFDF0C2BC92ED9009C38CD /* qiniu_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qiniu_logo.png; sourceTree = "<group>"; };
+		C9BB18222D858830002AF75D /* face2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face2.png; sourceTree = "<group>"; };
+		C9C0EC052D96887B00BE1D3A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		C9CF03782A8670FB00B2C394 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		C9CF037F2A87685000B2C394 /* PFOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFOpenGLView.m; sourceTree = "<group>"; };
 		C9CF03802A87685100B2C394 /* PFOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFOpenGLView.h; sourceTree = "<group>"; };
@@ -87,7 +116,6 @@
 		E335682628E5883C00551FB3 /* PFImageController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PFImageController.m; sourceTree = "<group>"; };
 		E335682E28E5897600551FB3 /* PFVideoController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFVideoController.h; sourceTree = "<group>"; };
 		E335682F28E5897600551FB3 /* PFVideoController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PFVideoController.m; sourceTree = "<group>"; };
-		E39CFC932874189500D738FF /* DetectFace.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = DetectFace.a; path = ../PixelFreeCxx/DetectFace.a; sourceTree = "<group>"; };
 		E3B9081D298E527300B96ADF /* bg.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpeg; sourceTree = "<group>"; };
 		E3B90821298E6E1A00B96ADF /* image.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image.jpeg; sourceTree = "<group>"; };
 		E3BBBA02295C274A00306BD9 /* PFMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFMainViewController.h; sourceTree = "<group>"; };
@@ -142,10 +170,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C958A3302D91867D0019ED6F /* Pods_SMBeautyEngine_iOS.framework in Frameworks */,
 				C9CF08542AA9E83800B2C394 /* CoreML.framework in Frameworks */,
 				E31A9AC02903913400AF311C /* CoreImage.framework in Frameworks */,
 				C9CF037B2A8670FC00B2C394 /* Accelerate.framework in Frameworks */,
-				C9BB181D2D846F9D002AF75D /* PixelFree.framework in Frameworks */,
+				C94EE9A92D9E9371007ACC97 /* PixelFree.framework in Frameworks */,
+				C9C0EC062D9688D200BE1D3A /* libz.tbd in Frameworks */,
 				E3BD4590274752DC00CB44C9 /* libc++.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -153,6 +183,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		17CBBCD9010203B207CC6C2B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4D61E344F4C535ACE64C554A /* Pods-SMBeautyEngine_iOS.debug.xcconfig */,
+				6D80F176E4A4919062FB8C44 /* Pods-SMBeautyEngine_iOS.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		C958A30F2D90019C0019ED6F /* ColorGradingView */ = {
+			isa = PBXGroup;
+			children = (
+				C958A3022D90019C0019ED6F /* AdjustmentCell.h */,
+				C958A3032D90019C0019ED6F /* AdjustmentCell.m */,
+				C958A3042D90019C0019ED6F /* AdjustmentItem.h */,
+				C958A3052D90019C0019ED6F /* AdjustmentItem.m */,
+				C958A3062D90019C0019ED6F /* ToolUI.h */,
+				C958A31C2D9004E20019ED6F /* ToolUI.m */,
+				C958A3072D90019C0019ED6F /* PFTakeColorView.h */,
+				C958A3082D90019C0019ED6F /* PFTakeColorView.m */,
+				C958A3092D90019C0019ED6F /* PFHLSToolView.h */,
+				C958A30A2D90019C0019ED6F /* PFHLSToolView.m */,
+				C958A30D2D90019C0019ED6F /* PFImageHelper.h */,
+				C958A30E2D90019C0019ED6F /* PFImageHelper.m */,
+			);
+			path = ColorGradingView;
+			sourceTree = "<group>";
+		};
 		C9FCFEA52C85BE9D002E1906 /* Stickers */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,10 +227,11 @@
 		E3BD452A27474A4E00CB44C9 = {
 			isa = PBXGroup;
 			children = (
-				C9AF5A5D2D846E27006613D6 /* PixelFree.framework */,
+				C94EE9A72D9E92DC007ACC97 /* PixelFree.framework */,
 				E3BD453527474A4E00CB44C9 /* SMBeautyEngine_iOS */,
 				E3BD453427474A4E00CB44C9 /* Products */,
 				E3BD458E274752D600CB44C9 /* Frameworks */,
+				17CBBCD9010203B207CC6C2B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -217,6 +276,8 @@
 		E3BD455227474A9400CB44C9 /* res */ = {
 			isa = PBXGroup;
 			children = (
+				C95AB86F2D93961900F59BD5 /* 2631742911906.png */,
+				C9BB18222D858830002AF75D /* face2.png */,
 				C9FCFEA52C85BE9D002E1906 /* Stickers */,
 				C9AFDF0C2BC92ED9009C38CD /* qiniu_logo.png */,
 				C9CF08592AAC9F4300B2C394 /* filter_model.bundle */,
@@ -232,6 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				E3BD455827474A9600CB44C9 /* PFAPIDemoBar */,
+				C958A30F2D90019C0019ED6F /* ColorGradingView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -279,11 +341,13 @@
 		E3BD458E274752D600CB44C9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C9C0EC052D96887B00BE1D3A /* libz.tbd */,
+				C958A32D2D9186710019ED6F /* Pods_SMBeautyEngine_iOS.framework */,
 				C9CF03782A8670FB00B2C394 /* Accelerate.framework */,
 				E31A9ABD2903913400AF311C /* CoreImage.framework */,
-				E39CFC932874189500D738FF /* DetectFace.a */,
 				E3BD4591274752E900CB44C9 /* CoreML.framework */,
 				E3BD458F274752D700CB44C9 /* libc++.tbd */,
+				5C8A829A339A9CDADB015B9D /* Pods_SMBeautyEngine_iOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -295,10 +359,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E3BD454C27474A5300CB44C9 /* Build configuration list for PBXNativeTarget "SMBeautyEngine_iOS" */;
 			buildPhases = (
+				0B1FDE39FF7CEC34AA434F6B /* [CP] Check Pods Manifest.lock */,
 				E3BD452F27474A4E00CB44C9 /* Sources */,
 				E3BD453027474A4E00CB44C9 /* Frameworks */,
 				E3BD453127474A4E00CB44C9 /* Resources */,
-				C9BB181F2D846F9E002AF75D /* Embed Frameworks */,
+				52EBBC8AC168428F0F72EE10 /* [CP] Embed Pods Frameworks */,
+				C94EE9AB2D9E9371007ACC97 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -350,11 +416,13 @@
 				E3BD454627474A5300CB44C9 /* LaunchScreen.storyboard in Resources */,
 				E3BD457F27474A9800CB44C9 /* Media.xcassets in Resources */,
 				C9FCFEAD2C85BE9D002E1906 /* xiongerduo.bundle in Resources */,
+				C95AB8702D93961900F59BD5 /* 2631742911906.png in Resources */,
 				C9FCFEAA2C85BE9D002E1906 /* flowers.bundle in Resources */,
 				C9FCFEA82C85BE9D002E1906 /* baixiaomao.bundle in Resources */,
 				C9FCFEAB2C85BE9D002E1906 /* maorong.bundle in Resources */,
 				C9FCFEAC2C85BE9D002E1906 /* xiantiaoxiongmao.bundle in Resources */,
 				C9AFDF0D2BC92ED9009C38CD /* qiniu_logo.png in Resources */,
+				C9BB18232D858830002AF75D /* face2.png in Resources */,
 				E32C9FE028E69A3300FB225E /* pixelfreeAuth.lic in Resources */,
 				E3B90820298E527300B96ADF /* bg.jpeg in Resources */,
 				C9CF085A2AAC9F4300B2C394 /* filter_model.bundle in Resources */,
@@ -371,6 +439,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0B1FDE39FF7CEC34AA434F6B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SMBeautyEngine_iOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		52EBBC8AC168428F0F72EE10 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SMBeautyEngine_iOS/Pods-SMBeautyEngine_iOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SMBeautyEngine_iOS/Pods-SMBeautyEngine_iOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SMBeautyEngine_iOS/Pods-SMBeautyEngine_iOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E3BD452F27474A4E00CB44C9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -380,7 +490,13 @@
 				E3BD458227474A9800CB44C9 /* PFBeautyParam.m in Sources */,
 				E3BD453827474A4E00CB44C9 /* AppDelegate.m in Sources */,
 				E335683028E5897600551FB3 /* PFVideoController.m in Sources */,
+				C958A3102D90019C0019ED6F /* AdjustmentItem.m in Sources */,
+				C958A3122D90019C0019ED6F /* AdjustmentCell.m in Sources */,
+				C958A3132D90019C0019ED6F /* PFTakeColorView.m in Sources */,
+				C958A3142D90019C0019ED6F /* PFImageHelper.m in Sources */,
+				C958A3152D90019C0019ED6F /* PFHLSToolView.m in Sources */,
 				C9CF03812A87685100B2C394 /* PFOpenGLView.m in Sources */,
+				C958A31D2D9004E20019ED6F /* ToolUI.m in Sources */,
 				E3BD458627474A9800CB44C9 /* PFSlider.m in Sources */,
 				E3BD458B27474A9800CB44C9 /* PFDateHandle.m in Sources */,
 				E3BD458427474A9800CB44C9 /* PFBottomColletionView.m in Sources */,
@@ -562,9 +678,11 @@
 		};
 		E3BD454D27474A5300CB44C9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4D61E344F4C535ACE64C554A /* Pods-SMBeautyEngine_iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -579,11 +697,13 @@
 					"\"$(SRCROOT)/../PixelFreeCxx/Include\"",
 					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Include\"",
 					"\"$(SRCROOT)/../PixelFreeCxx/DetectFace/c\"",
+					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Thirdparty/png\"",
 				);
 				INFOPLIST_FILE = SMBeautyEngine_iOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "望图美颜SDK";
 				INFOPLIST_KEY_NSCameraUsageDescription = "app 想要访问相机";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "app 想要访问mic";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "aap 想要访问你的相册";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -593,12 +713,16 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Thirdparty\"",
+				);
 				MARKETING_VERSION = 2.4.8;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pixelFree.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -610,9 +734,11 @@
 		};
 		E3BD454E27474A5300CB44C9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6D80F176E4A4919062FB8C44 /* Pods-SMBeautyEngine_iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HN6VGCRNY9;
@@ -626,11 +752,13 @@
 					"\"$(SRCROOT)/../PixelFreeCxx/Include\"",
 					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Include\"",
 					"\"$(SRCROOT)/../PixelFreeCxx/DetectFace/c\"",
+					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Thirdparty/png\"",
 				);
 				INFOPLIST_FILE = SMBeautyEngine_iOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "望图美颜SDK";
 				INFOPLIST_KEY_NSCameraUsageDescription = "app 想要访问相机";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "app 想要访问mic";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "aap 想要访问你的相册";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -640,12 +768,16 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Thirdparty\"",
+				);
 				MARKETING_VERSION = 2.4.8;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pixelFree.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

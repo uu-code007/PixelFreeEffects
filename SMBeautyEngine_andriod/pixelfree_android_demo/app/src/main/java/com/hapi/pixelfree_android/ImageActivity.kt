@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.hapi.avparam.ImgFmt
 import com.hapi.avparam.VideoFrame
 import com.hapi.avrender.HapiCapturePreView
+import com.hapi.avrender.ScaleType
 import com.hapi.pixelfree.PFDetectFormat
 import com.hapi.pixelfree.PFIamgeInput
 import com.hapi.pixelfree.PFRotationMode
@@ -53,7 +54,7 @@ class ImageActivity: AppCompatActivity()  {
         options.inDensity = DisplayMetrics.DENSITY_DEFAULT // 设置输入密度为默认值
         options.inTargetDensity = resources.displayMetrics.densityDpi // 设置目标密度为设备屏幕密度
 
-        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.image_face, options)
+        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.face2, options)
 
         w = bitmap.width;
         h = bitmap.height;
@@ -79,6 +80,7 @@ class ImageActivity: AppCompatActivity()  {
             mPixeBeautyDialog.show(supportFragmentManager, "")
         }
 
+        hapiCapturePreView.setScaleType(ScaleType.FIT_CENTER )
 
         findViewById<Button>(R.id.showBeauty).setOnClickListener {
             mPixeBeautyDialog.show(supportFragmentManager, "")

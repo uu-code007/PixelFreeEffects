@@ -66,6 +66,14 @@ __attribute__((visibility("default"))) @interface SMPixelFree : NSObject
 
 - (int)getPixelFreeFaceNum;
 
+// 图片调色设置
+- (int)pixelFreeSetColorGrading:(PFImageColorGrading *)imageColorGrading;
+
+// HLS 功能
+- (int)pixelFreeAddHLSFilter:(PFHLSFilterParams*)HLSFilterParams;
+- (int)pixelFreeDeleteHLSFilter:(int)handle;
+- (int)pixelFreeChangeHLSFilter:(int)handle params:(PFHLSFilterParams*)HLSFilterParams;
+
 @end
 
 NS_ASSUME_NONNULL_END
