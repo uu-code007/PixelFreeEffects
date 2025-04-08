@@ -9,8 +9,18 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="234dp"
+        android:layout_height="278dp"
         android:layout_gravity="bottom">
+
+        <RadioButton
+            android:id="@+id/compBtn"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:button="@null"
+            android:gravity="center"
+            android:layout_gravity="right"
+            android:drawableTop="@mipmap/comparison_icon"
+            android:textColor="@drawable/color_pixe_op" />
 
         <View
             android:layout_width="match_parent"
@@ -21,7 +31,8 @@
         <com.hapi.pixelfreeuikit.BeautyViewPage
             android:id="@+id/vpEffect"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="239dp"
+            android:layout_gravity="bottom"
             tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck">
 
         </com.hapi.pixelfreeuikit.BeautyViewPage>

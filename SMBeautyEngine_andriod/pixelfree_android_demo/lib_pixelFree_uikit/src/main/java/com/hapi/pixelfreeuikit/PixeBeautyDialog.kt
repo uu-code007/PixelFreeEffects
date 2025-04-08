@@ -1,12 +1,12 @@
 package com.hapi.pixelfreeuikit
 
-import android.app.AlertDialog
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import com.hapi.pixelfree.PFBeautyFiterType
@@ -14,6 +14,17 @@ import com.hapi.pixelfree.PFBeautyTypeOneKey
 import com.hapi.pixelfree.PixelFree
 
 class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
+    // 新增回调接口
+    interface OnCompButtonStateListener {
+        fun onCompButtonPressed(isPressed: Boolean) // true=长按按下，false=松开
+    }
+
+    private var compButtonListener: OnCompButtonStateListener? = null
+
+    // 设置回调的方法
+    fun setOnCompButtonStateListener(listener: OnCompButtonStateListener) {
+        this.compButtonListener = listener
+    }
     lateinit var mPixelFree:PixelFree;
     private val page by lazy {
         mPixelFree = pixelFree;
@@ -96,7 +107,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                 add(
                     BeautyItem(
                         PFBeautyFiterType.PFBeautyFiterTypeFaceSharpenStrength,
-                        0.0f,
+                        0.3f,
                         "锐化",
                         R.mipmap.ruihua
                     )
@@ -356,11 +367,33 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
         return inflater.inflate(R.layout.dialog_pixe, container)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val vp = view.findViewById<BeautyViewPage>(R.id.vpEffect)
         val rgOP = view.findViewById<RadioGroup>(R.id.rgOP)
         val firstButtonId: Int = rgOP.getChildAt(0).id
+        val compBtn = view.findViewById<RadioButton>(R.id.compBtn)
+        compBtn.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    compButtonListener?.onCompButtonPressed(true)
+                    true
+                }
+                MotionEvent.ACTION_UP -> {
+                    // 确保调用 performClick() 以支持无障碍功能
+                    compButtonListener?.onCompButtonPressed(false)
+                    v.performClick()
+                    true
+                }
+                MotionEvent.ACTION_CANCEL -> {
+                    compButtonListener?.onCompButtonPressed(false)
+                    true
+                }
+                else -> false
+            }
+        }
+
         rgOP.check(firstButtonId)
 
         vp.adapter = CommonViewPagerAdapter(page)

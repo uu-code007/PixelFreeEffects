@@ -205,7 +205,8 @@ void VideoGLRender::RenderVideoFrame(NativeImage *image) {
             default:
                 //rgba
                 int lenNew = width * height * pixel_stride;
-                if (m_RenderImage == nullptr) {
+                if (m_RenderImage == nullptr || mUseTexture) {
+                    mUseTexture = false;
                     m_RenderImage = new NativeImage();
                     m_RenderImage->pLineSize[0] = lenNew;
                     m_RenderImage->ppPlane[0] = static_cast<uint8_t *>(malloc(lenNew));
@@ -230,8 +231,9 @@ void VideoGLRender::RenderVideoFrame(NativeImage *image) {
                 break;
         }
     } else {
-        if (m_RenderImage == nullptr) {
+        if (m_RenderImage == nullptr || !mUseTexture) {
             m_RenderImage = new NativeImage();
+            mUseTexture = true;
         }
         m_RenderImage->textureID = image->textureID;
     }

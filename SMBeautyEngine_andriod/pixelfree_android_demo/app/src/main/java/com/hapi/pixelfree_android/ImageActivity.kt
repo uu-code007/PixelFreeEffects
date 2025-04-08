@@ -54,7 +54,7 @@ class ImageActivity: AppCompatActivity()  {
         options.inDensity = DisplayMetrics.DENSITY_DEFAULT // 设置输入密度为默认值
         options.inTargetDensity = resources.displayMetrics.densityDpi // 设置目标密度为设备屏幕密度
 
-        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.face2, options)
+        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.image_face, options)
 
         w = bitmap.width;
         h = bitmap.height;
@@ -80,11 +80,21 @@ class ImageActivity: AppCompatActivity()  {
             mPixeBeautyDialog.show(supportFragmentManager, "")
         }
 
-        hapiCapturePreView.setScaleType(ScaleType.FIT_CENTER )
-
+        hapiCapturePreView.setScaleType(ScaleType.FIT_CENTER)
         findViewById<Button>(R.id.showBeauty).setOnClickListener {
             mPixeBeautyDialog.show(supportFragmentManager, "")
         }
+        mPixeBeautyDialog.setOnCompButtonStateListener(object : PixeBeautyDialog.OnCompButtonStateListener {
+            override fun onCompButtonPressed(isPressed: Boolean) {
+                if (isPressed) {
+                    Log.d("TAG", "长按按下")
+                    // 执行长按逻辑（如显示提示、开始录制等）
+                } else {
+                    Log.d("TAG", "松开")
+                    // 执行松开逻辑（如结束录制）
+                }
+            }
+        })
 
         fpstTextView = findViewById<TextView>(R.id.fpst)
 
@@ -134,7 +144,7 @@ class ImageActivity: AppCompatActivity()  {
 
                 if (frame != null) {
                     hapiCapturePreView.onFrame(frame)
-                    println("frame.textureID : ${frame.textureID}")
+//                    println("frame.textureID : ${frame.textureID}")
                 };
 
                 frameCount++
@@ -155,7 +165,7 @@ class ImageActivity: AppCompatActivity()  {
             val duration = endTime - startTime // 耗时（毫秒）
             println("[PixelFree] processWithBuffer all: $duration ms")
 
-            var delay = 33L - duration
+            var delay = 80L - duration
             if (delay < 0) {
                 delay = 0L;
             }

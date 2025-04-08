@@ -16,6 +16,8 @@ import java.util.concurrent.CountDownLatch
 
 class MainActivity : AppCompatActivity() {
 
+    var isLongPress = false
+
     private val mPixelFree by lazy {
         PixelFree()
     }
@@ -52,7 +54,7 @@ class MainActivity : AppCompatActivity() {
                         val timeCost = endTime - startTime
 //                        println("processWithBuffer 耗时：$timeCost 毫秒")
 
-                        frame.textureID = pxInput.textureID
+                        frame.textureID = if (isLongPress) 0 else pxInput.textureID;
                     }
                     return super.onProcessFrame(frame)
                 }
@@ -84,6 +86,19 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.showBeauty).setOnClickListener {
             mPixeBeautyDialog.show(supportFragmentManager, "")
         }
+
+        mPixeBeautyDialog.setOnCompButtonStateListener(object : PixeBeautyDialog.OnCompButtonStateListener {
+            override fun onCompButtonPressed(isPressed: Boolean) {
+                if (isPressed) {
+                    Log.d("TAG", "长按按下")
+                    // 执行长按逻辑（如显示提示、开始录制等）
+                    isLongPress = true;
+                } else {
+                    Log.d("TAG", "长按松开")
+                    isLongPress = false;
+                }
+            }
+        })
     }
 
     override fun onDestroy() {

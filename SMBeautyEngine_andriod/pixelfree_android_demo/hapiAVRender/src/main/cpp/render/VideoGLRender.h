@@ -54,6 +54,8 @@ private:
     int m_FrameIndex{};
     vec2 m_TouchXY;
     vec2 m_ScreenSize;
+
+    bool  mUseTexture;
 };
 
 
