@@ -57,7 +57,7 @@ Agora, Tencent, ZEGO, Qiniu
 
 #### Integration Guides
 
-[iOS Integration](./doc/doc_ios.md)
+[iOS Integration](./doc/doc_iOS.md)
 
 [Android Integration](./doc/doc_android.md)
 

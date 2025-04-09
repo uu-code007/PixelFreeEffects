@@ -55,11 +55,11 @@
 
 七牛云，声网，腾讯，即构
 
-#### iOS 接入方式
+####  接入 pixelfree
 
 [iOS 接入文档](./doc/doc_ios.md)
 
-[android 接入文档](./doc/doc_ios.md)
+[android 接入文档](./doc/doc_android.md)
 
 [常见问题](./doc/frequently_asked_questions.md)
 
