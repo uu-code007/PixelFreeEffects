@@ -57,7 +57,7 @@
 
 ####  接入 pixelfree
 
-[iOS 接入文档](./doc/doc_ios.md)
+[iOS 接入文档](./doc/doc_iOS.md)
 
 [android 接入文档](./doc/doc_android.md)
 
