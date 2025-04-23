@@ -1,6 +1,6 @@
 #### 自定义贴纸配置
 
-##### 文件结构   ([模板见](.././SMBeautyEngine_iOS/res/baixiaomaohuxu) ./SMBeautyEngine_iOS/res/baixiaomaohuxu)
+##### 文件结构   ([模板](.././SMBeautyEngine_iOS/SMBeautyEngine_iOS/res/baixiaomaohuxu) ./SMBeautyEngine_iOS/res/baixiaomaohuxu)
 
  如果有需要，请配置贴纸。贴纸相关资源文件存放在stickers目录下，一套贴纸对应一个目录，每套贴纸包含一个config.json文件，其中配置了音效文件名及每个item参数等信息。其结构如下：
 
