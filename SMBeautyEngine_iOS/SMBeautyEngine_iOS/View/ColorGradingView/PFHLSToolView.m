@@ -22,10 +22,10 @@ typedef NS_ENUM(NSUInteger, FULvMuState) {
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        _bgImageView = [[UIImageView alloc] initWithFrame:CGRectMake(1, 1, frame.size.width -2, frame.size.width-2)];
-        _bgImageView.image = [UIImage imageNamed:@"demo_bg_transparent"];
-        _bgImageView.layer.cornerRadius = _bgImageView.frame.size.width / 2.0 ;
-        [self addSubview:_bgImageView];
+        _bgImageLayer = [[UIImageView alloc] initWithFrame:CGRectMake(1, 1, frame.size.width -2, frame.size.width-2)];
+        _bgImageLayer.image = [UIImage imageNamed:@"demo_bg_transparent"];
+        _bgImageLayer.layer.cornerRadius = _bgImageLayer.frame.size.width / 2.0 ;
+        [self addSubview:_bgImageLayer];
         
         self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.width)];
         self.imageView.layer.masksToBounds = YES ;
@@ -45,17 +45,17 @@ typedef NS_ENUM(NSUInteger, FULvMuState) {
 -(void)setColorItemSelected:(BOOL)selecte{
     if (selecte) {
         self.imageView.transform = CGAffineTransformIdentity;
-        self.bgImageView.transform = CGAffineTransformIdentity;
+        self.bgImageLayer.transform = CGAffineTransformIdentity;
         self.contentView.layer.borderWidth = 2;
         [UIView animateWithDuration:0.25 animations:^{
             self.imageView.transform = CGAffineTransformMakeScale(0.7, 0.7);
-            self.bgImageView.transform = CGAffineTransformMakeScale(0.7, 0.7);
+            self.bgImageLayer.transform = CGAffineTransformMakeScale(0.7, 0.7);
         }];
     }else{
         self.contentView.layer.borderWidth = 0;
         //        [UIView animateWithDuration:0.25 animations:^{
         self.imageView.transform = CGAffineTransformIdentity;
-        self.bgImageView.transform = CGAffineTransformIdentity;
+        self.bgImageLayer.transform = CGAffineTransformIdentity;
         //        }];
     }
 }

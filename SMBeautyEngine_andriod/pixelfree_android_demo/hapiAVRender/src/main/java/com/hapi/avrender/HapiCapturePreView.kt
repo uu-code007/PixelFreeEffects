@@ -22,6 +22,17 @@ class HapiCapturePreView : FrameLayout, VideoRender {
         mHapiGLSurfacePreview.mVideoSizeAdapter.mScaleType = scaleType
     }
 
+    fun setMirror(
+        xRotateAngle: Int = 0,
+        yRotateAngle: Int = 0,
+        scaleX: Float = 1.0f,
+        scaleY: Float = 1.0f,
+        mirrorHorizontal: Boolean = false,
+        mirrorVertical: Boolean = false
+    ) {
+        mHapiGLSurfacePreview.setMirror(xRotateAngle, yRotateAngle, scaleX, scaleY, mirrorHorizontal, mirrorVertical)
+    }
+
     override fun onFrame(frame: VideoFrame) {
         mHapiGLSurfacePreview.onFrame(frame)
     }

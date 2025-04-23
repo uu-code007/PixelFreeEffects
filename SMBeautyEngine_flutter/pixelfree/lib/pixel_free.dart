@@ -1,18 +1,13 @@
-
-import 'dart:ui';
-
 import 'pixel_free_platform_interface.dart';
 import 'dart:async';
 import 'dart:convert';
-import 'dart:ffi';
-import 'dart:io';
 import 'dart:typed_data';
 
 class PixelFree {
 
-  // Future<void> auth(String licPath) {
-  // return PixelFreePlatform.instance.auth(licPath);
-  // }
+  Future<void> auth(String licPath) {
+  return PixelFreePlatform.instance.auth(licPath);
+  }
 
 
   Future<void> create() {
@@ -20,10 +15,10 @@ class PixelFree {
   }
 
 
-  // Future<void> createBeautyItemFormBundle(
-  //     ByteData data, PFSrcType type) {
-  //   return PixelFreePlatform.instance.createBeautyItemFormBundle(data, type);
-  // }
+  Future<void> createBeautyItemFormBundle(
+      ByteData data, PFSrcType type) {
+    return PixelFreePlatform.instance.createBeautyItemFormBundle(data, type);
+  }
 
  // 是否初始化了
   Future<bool> isCreate() {
@@ -62,6 +57,10 @@ class PixelFree {
 // 图片渲染
   Future<int> processWithImage(Uint8List imageData,int w,int h) async {
     return PixelFreePlatform.instance.processWithImage(imageData,w,h);
+}
+
+Future<ByteData?> processWithImageToByteData(Uint8List imageData, int width, int height) async {
+    return PixelFreePlatform.instance.processWithImageToByteData(imageData, width, height);
 }
 
 

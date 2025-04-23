@@ -1,15 +1,11 @@
 import 'dart:async';
-import 'dart:ffi';
-import 'dart:io';
 import 'dart:ui' as ui;
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
 import 'package:pixel_free/pixel_free.dart';
 
-import 'dart:async';
 import 'dart:ui';
-import 'package:flutter/material.dart';
 import 'package:pixel_free/pixel_free_platform_interface.dart';
 
 
@@ -29,27 +25,90 @@ class _MyAppState extends State<MyApp> {
   double _currentValue = 0.0;
   final _pixelFreePlugin = PixelFree();
   int _currentTextureId = 0;
-  late final _rgba ;
+  late final _rgba;
   int w = 720;
   int h = 1024;
+  ui.Image? _processedImage;
+  bool _useTexture = true; // 切换渲染方式
 
   @override
   void initState() {
     super.initState();
     _pixelFreePlugin.create();
-
     initPlatformState();
   }
 
-
-
 Future<void> readerImageAsyncTask(ByteData bytes, int width, int height) async {
-    final texid = await _pixelFreePlugin.processWithImage(bytes.buffer.asUint8List(0),width,height);
-      setState(()  {
-        _currentTextureId = texid;
-      });
+  try {
+    if (_useTexture) {
+      final texid = await _pixelFreePlugin.processWithImage(
+        bytes.buffer.asUint8List(0), 
+        width, 
+        height
+      );
+      setState(() => _currentTextureId = texid);
+      return;
+    }
+
+    print('Processing image with dimensions: $width x $height');
+    final processedBytes = await processImageToByteData(bytes, width, height);
+    if (processedBytes == null) {
+      print('Failed to process image: received null bytes');
+      return;
+    }
+
+    final uint8List = processedBytes.buffer.asUint8List();
+    print('Creating image with data size: ${uint8List.length}');
+    
+    // Validate data size
+    final expectedSize = width * height * 4; // RGBA format
+    if (uint8List.length != expectedSize) {
+      print('Warning: Data size mismatch. Expected: $expectedSize, Got: ${uint8List.length}');
+      return;
+    }
+    
+    // Properly await the image creation
+    final image = await createImage(uint8List, width, height);
+    
+    setState(() {
+      _processedImage = image; // No casting needed now
+    });
+    print('Successfully created and displayed processed image');
+  } catch (e, stackTrace) {
+    print('Error in readerImageAsyncTask: $e\n$stackTrace');
+  }
 }
 
+Future<ui.Image> createImage(Uint8List bytes, int width, int height) async {
+  final completer = Completer<ui.Image>();
+  
+  ui.decodeImageFromPixels(
+    bytes,
+    width,
+    height,
+    ui.PixelFormat.rgba8888,
+    (ui.Image image) {
+      completer.complete(image);  // Make sure to call complete() inside the callback
+      return;  // Explicit return for void callback
+    },
+  );
+  
+  return completer.future;
+}
+
+  Future<ByteData?> processImageToByteData(ByteData inputBytes, int width, int height) async {
+    try {
+      final result = await _pixelFreePlugin.processWithImageToByteData(
+        inputBytes.buffer.asUint8List(0),
+        width,
+        height,
+      );
+      return result;
+    } catch (e) {
+      print('Error processing image: $e');
+      return null;
+    }
+  }
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
@@ -71,9 +130,9 @@ Future<void> readerImageAsyncTask(ByteData bytes, int width, int height) async {
       
     _rgba = await imageInfo.image.toByteData(format: ImageByteFormat.rawRgba);
 
-    Timer.periodic(Duration(milliseconds: 200), (_) async {
+    Timer.periodic(const Duration(milliseconds: 200), (_) async {
       // _pixelFreePlugin.pixelFreeSetFilterParam("heibai1", 1.0);
-        _pixelFreePlugin.pixelFreeSetBeautyTypeParam(PFBeautyFiterType.typeOneKey, 1);
+        // _pixelFreePlugin.pixelFreeSetBeautyTypeParam(PFBeautyFiterType.typeOneKey, 1);
        await readerImageAsyncTask(_rgba!,imageInfo.image.width, imageInfo.image.height);
     });
   }
@@ -86,6 +145,17 @@ Future<void> readerImageAsyncTask(ByteData bytes, int width, int height) async {
       home: Scaffold(
         appBar: AppBar(
           title: const Text('pixfree Plugin example app'),
+          actions: [
+            Switch(
+              value: _useTexture,
+              onChanged: (value) {
+                setState(() {
+                  _useTexture = value;
+                });
+              },
+            ),
+            Text(_useTexture ? 'Texture' : 'Image'),
+          ],
         ),
         body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -96,9 +166,16 @@ Future<void> readerImageAsyncTask(ByteData bytes, int width, int height) async {
 
                             AspectRatio(
                             aspectRatio: w/ h,
-                            child: Texture(
+                            child: _useTexture
+                                ? Texture(
                                    textureId: _currentTextureId,
-                                   ),
+                                   )
+                                : _processedImage != null
+                                    ? RawImage(
+                                        image: _processedImage,
+                                        fit: BoxFit.contain,
+                                      )
+                                    : const CircularProgressIndicator(),
                              ),
 
             const Text(

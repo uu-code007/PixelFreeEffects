@@ -52,7 +52,9 @@ class BeautyView : FrameLayout {
                         PFSrcType.PFSrcTypeStickerFile
                     )
                 } else {
+                    // 前置是镜像横屏的数据
                     pixelFreeGetter.invoke().pixelFreeSetBeautyExtend(PFBeautyFiterType.PFBeautyFiterExtend,"mirrorX_1");
+                    pixelFreeGetter.invoke().pixelFreeSetBeautyExtend(PFBeautyFiterType.PFBeautyFiterExtend,"rotation_90");
                     val sticker_bundle =
                         pixelFreeGetter.invoke().readBundleFile(context,it.name + ".bundle")
                     pixelFreeGetter.invoke().createBeautyItemFormBundle(
@@ -114,6 +116,21 @@ class BeautyView : FrameLayout {
         }
         var selectedItem: BeautyItem? = null
 
+        fun updateSelectedItem(item:BeautyItem?) {
+            // 获取新旧选中项的位置
+            val oldPosition = selectedItem?.let { data.indexOf(it) }.takeIf { it != -1 }
+            val newPosition = item?.let { data.indexOf(it) }.takeIf { it != -1 }
+
+            // 更新选中项引用
+            selectedItem = item
+
+            // 只刷新受影响的item
+            oldPosition?.let { notifyItemChanged(it) }
+            newPosition?.let { notifyItemChanged(it) }
+            if (item != null) {
+                itemChangeCall.invoke(item)
+            }
+        }
 
         @SuppressLint("NotifyDataSetChanged")
         override fun convert(holder: BaseViewHolder, item: BeautyItem) {

@@ -127,7 +127,7 @@ typedef enum PFBeautyFiterType{
     PFBeautyFiterTypeFace_V,
     //small
     PFBeautyFiterTypeFace_small,
-    //鼻子
+    //瘦鼻
     PFBeautyFiterTypeFace_nose,
     //额头
     PFBeautyFiterTypeFace_forehead,

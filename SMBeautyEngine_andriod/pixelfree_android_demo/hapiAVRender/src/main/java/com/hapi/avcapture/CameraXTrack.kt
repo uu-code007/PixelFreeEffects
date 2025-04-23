@@ -25,10 +25,14 @@ class CameraXTrack internal constructor(
     private val cameraExecutor: ExecutorService by lazy {
         Executors.newSingleThreadExecutor()
     }
+    private var currentCameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
+    private var cameraProvider: ProcessCameraProvider? = null
+
     private val mLuminosityAnalyzer = ImageAnalysis.Analyzer { image ->
         rgbaProducer.parseImg(image)
         val outFrame = VideoFrame(
-            rgbaProducer.mWidth, rgbaProducer.mHeight, ImgFmt.IMAGE_FORMAT_RGBA,
+            rgbaProducer.mWidth, rgbaProducer.mHeight, 
+            ImgFmt.IMAGE_FORMAT_RGBA,
             rgbaProducer.rgbaByteArray!!,
             image.imageInfo.rotationDegrees,
             rgbaProducer.pixelStride,
@@ -50,16 +54,36 @@ class CameraXTrack internal constructor(
             }
     }
 
+    fun switchCamera() {
+        currentCameraSelector = if (currentCameraSelector == CameraSelector.DEFAULT_FRONT_CAMERA) {
+            CameraSelector.DEFAULT_BACK_CAMERA
+        } else {
+            CameraSelector.DEFAULT_FRONT_CAMERA
+        }
+        restartCamera()
+    }
+
+    private fun restartCamera() {
+        cameraProvider?.let { provider ->
+            try {
+                provider.unbindAll()
+                provider.bindToLifecycle(
+                    lifecycleOwner, currentCameraSelector, imageAnalyzer
+                )
+            } catch (exc: Exception) {
+                exc.printStackTrace()
+            }
+        }
+    }
+
     override fun start() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
         cameraProviderFuture.addListener(Runnable {
-            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
-            val cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
-
+            cameraProvider = cameraProviderFuture.get()
             try {
-                cameraProvider.unbindAll()
-                cameraProvider.bindToLifecycle(
-                    lifecycleOwner, cameraSelector, imageAnalyzer
+                cameraProvider?.unbindAll()
+                cameraProvider?.bindToLifecycle(
+                    lifecycleOwner, currentCameraSelector, imageAnalyzer
                 )
             } catch (exc: Exception) {
                 exc.printStackTrace()
@@ -69,7 +93,7 @@ class CameraXTrack internal constructor(
 
     @SuppressLint("RestrictedApi")
     override fun stop() {
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
-        cameraProviderFuture.get().shutdown()
+        cameraProvider?.shutdown()
+        cameraProvider = null
     }
 }

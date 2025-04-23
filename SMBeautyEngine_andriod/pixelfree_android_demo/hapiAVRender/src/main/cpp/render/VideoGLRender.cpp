@@ -250,16 +250,19 @@ void VideoGLRender::UnInit() {
 }
 
 void VideoGLRender::UpdateMVPMatrix(int angleX, int angleY, float scaleX, float scaleY) {
+    UpdateMVPMatrix(angleX, angleY, scaleX, scaleY, false, false);
+}
+
+void VideoGLRender::UpdateMVPMatrix(int angleX, int angleY, float scaleX, float scaleY, bool mirrorHorizontal, bool mirrorVertical) {
     angleX = angleX % 360;
     angleY = angleY % 360;
 
     //转化为弧度角
     auto radiansX = static_cast<float>(MATH_PI / 180.0f * angleX);
     auto radiansY = static_cast<float>(MATH_PI / 180.0f * angleY);
+    
     // Projection matrix
     glm::mat4 Projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, 0.1f, 100.0f);
-    //glm::mat4 Projection = glm::frustum(-ratio, ratio, -1.0f, 1.0f, 4.0f, 100.0f);
-    //glm::mat4 Projection = glm::perspective(45.0f,ratio, 0.1f,100.f);
 
     // View matrix
     glm::mat4 View = glm::lookAt(
@@ -270,10 +273,25 @@ void VideoGLRender::UpdateMVPMatrix(int angleX, int angleY, float scaleX, float 
 
     // Model matrix
     glm::mat4 Model = glm::mat4(1.0f);
+    
+    // Apply mirroring
+    if (mirrorHorizontal) {
+        Model = glm::scale(Model, glm::vec3(-1.0f, 1.0f, 1.0f));
+    }
+    if (mirrorVertical) {
+        Model = glm::scale(Model, glm::vec3(1.0f, -1.0f, 1.0f));
+    }
+    
+    // Apply scaling
     Model = glm::scale(Model, glm::vec3(scaleX, scaleY, 1.0f));
+    
+    // Apply rotation
     Model = glm::rotate(Model, radiansX, glm::vec3(1.0f, 0.0f, 0.0f));
     Model = glm::rotate(Model, radiansY + static_cast<float>(MATH_PI), glm::vec3(0.0f, 1.0f, 0.0f));
+    
+    // Apply translation
     Model = glm::translate(Model, glm::vec3(0.0f, 0.0f, 0.0f));
+    
     m_MVPMatrix = Projection * View * Model;
 }
 

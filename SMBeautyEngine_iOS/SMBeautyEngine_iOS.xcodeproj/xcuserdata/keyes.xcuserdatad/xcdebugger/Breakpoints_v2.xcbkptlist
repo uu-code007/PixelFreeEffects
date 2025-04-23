@@ -45,7 +45,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "289"
             endingLineNumber = "289"
-            landmarkName = "MMFaceProcessor::ProcessInternal(image_view, results)"
+            landmarkName = "MMFaceProcessor::ProcessInternal(image_layer, results)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

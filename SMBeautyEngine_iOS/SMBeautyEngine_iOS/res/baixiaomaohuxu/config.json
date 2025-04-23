@@ -1,0 +1,39 @@
+{
+  "itemList": [
+    {
+      "type": 1,
+      "facePos": 4,
+      "scaleWidthOffset": 1.07,
+      "scaleHeightOffset": 0,
+      "scaleXOffset": 0,
+      "scaleYOffset": -0.02,
+      "frameFolder": "F_CatMustache",
+      "frameNum": "72",
+      "frameWidth": 200,
+      "frameHeight": 100,
+      "alignPos": 0,
+      "alignX": 0,
+      "alignY": 0,
+      "frameDuration": 100,
+      "triggerType": 0
+    },
+    {
+      "type": 1,
+      "facePos": 2,
+      "scaleWidthOffset": 0.3,
+      "scaleHeightOffset": 0,
+      "scaleXOffset": -3.3,
+      "scaleYOffset": -0.05,
+      "frameFolder": "F_MouceHeart",
+      "frameNum": "72",
+      "frameWidth": 200,
+      "frameHeight": 150,
+      "alignPos": 0,
+      "alignX": 0,
+      "alignY": 0,
+      "frameDuration": 100,
+      "triggerType": 0
+    }
+  ],
+  "index":0
+}

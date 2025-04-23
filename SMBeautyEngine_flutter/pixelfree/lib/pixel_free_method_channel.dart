@@ -4,9 +4,6 @@ import 'package:flutter/services.dart';
 import 'pixel_free_platform_interface.dart';
 import 'dart:async';
 import 'dart:convert';
-import 'dart:ffi';
-import 'dart:io';
-import 'dart:typed_data';
 
 /// An implementation of [PixelFreePlatform] that uses method channels.
 class MethodChannelPixelFree extends PixelFreePlatform {
@@ -20,22 +17,22 @@ class MethodChannelPixelFree extends PixelFreePlatform {
 //     return version;
 //   }
 
-//  @override
-//  Future<void> auth(String licPath) async {
-//     await methodChannel.invokeMethod('auth', licPath);
-//   }
+ @override
+ Future<void> auth(String licPath) async {
+    await methodChannel.invokeMethod('auth', licPath);
+  }
 
 @override
 Future<void> create() async {
     await methodChannel.invokeMethod('create');
   }
 
-// @override
-// Future<void> createBeautyItemFormBundle(
-//       ByteData data, PFSrcType type) async {
-//     await methodChannel.invokeMethod('createBeautyItemFormBundle',
-//         [data.buffer.asUint8List(), type.index]);
-//   }
+@override
+Future<void> createBeautyItemFormBundle(
+      ByteData data, PFSrcType type) async {
+    await methodChannel.invokeMethod('createBeautyItemFormBundle',
+        [data.buffer.asUint8List(), type.index]);
+  }
 
 @override
 Future<bool> isCreate() async {
@@ -77,6 +74,45 @@ Future<void> processWithBuffer(PFIamgeInput imageInput) async {
 @override
 Future<int> processWithImage(Uint8List imageData,int w,int h) async {
     return await methodChannel.invokeMethod('processWithImage',{'imageData': imageData,'w': w,'h': h} );
+}
+
+@override
+Future<ByteData?> processWithImageToByteData(Uint8List imageData, int width, int height) async {
+    try {
+        print('processWithImageToByteData - Input data size: ${imageData.length}, width: $width, height: $height');
+        final result = await methodChannel.invokeMethod('processWithImageToByteData', {
+            'imageData': imageData,
+            'width': width,
+            'height': height,
+        });
+        
+        if (result == null) {
+            print('processWithImageToByteData - Received null result');
+            return null;
+        }
+
+        final List<int> resultList = result as List<int>;
+        print('processWithImageToByteData - Result data size: ${resultList.length}');
+        
+        if (resultList.isEmpty) {
+            print('processWithImageToByteData - Received empty result');
+            return null;
+        }
+
+        // 确保返回的数据大小与输入图像大小匹配
+        final expectedSize = width * height * 4; // RGBA format
+        if (resultList.length != expectedSize) {
+            print('processWithImageToByteData - Invalid data size. Expected: $expectedSize, Got: ${resultList.length}');
+            return null;
+        }
+
+        final byteData = ByteData.view(Uint8List.fromList(resultList).buffer);
+        print('processWithImageToByteData - Successfully created ByteData');
+        return byteData;
+    } catch (e) {
+        print('Error in processWithImageToByteData: $e');
+        return null;
+    }
 }
 
 

@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -31,19 +29,19 @@ abstract class PixelFreePlatform extends PlatformInterface {
 //     throw UnimplementedError('platformVersion() has not been implemented.');
 //   }
 
-//  Future<void> auth(String licPath) {
-//     throw UnimplementedError('not been implemented');
-//   }
+ Future<void> auth(String licPath) {
+    throw UnimplementedError('not been implemented');
+  }
 
 
 Future<void> create() {
-    throw UnimplementedError('not been implemented');;
+    throw UnimplementedError('not been implemented');
 }
 
-// Future<void> createBeautyItemFormBundle(
-//       ByteData data, PFSrcType type) {
-//     throw UnimplementedError('not been implemented');
-//   }
+Future<void> createBeautyItemFormBundle(
+      ByteData data, PFSrcType type) {
+    throw UnimplementedError('not been implemented');
+  }
 
 Future<bool> isCreate() {
     throw UnimplementedError('not been implemented');
@@ -77,6 +75,9 @@ Future<int> processWithImage(Uint8List imageData,int w,int h) async {
     throw UnimplementedError('not been implemented');
 }
 
+Future<ByteData?> processWithImageToByteData(Uint8List imageData, int width, int height) async {
+    throw UnimplementedError('processWithImageToByteData() has not been implemented.');
+}
 
 //  Future<Uint8List> readBundleFile(String fileName) {
 //     throw UnimplementedError('not been implemented');

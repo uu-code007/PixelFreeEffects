@@ -84,5 +84,21 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9C192893-9A6C-4DBC-AF70-81E274A0A920"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../PixelFreeCxx/DetectFace/face/mmface_expression_recognizer.cc"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
+            landmarkName = "MMFaceExpressionRecognizer::Process2(image_layer, face_landmarks, rotation, translation, pre_expression, normal_brow_len, normal_lip_dis, cnn_expression, mmface_expression_types, expression_smoother)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

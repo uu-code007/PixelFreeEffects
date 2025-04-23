@@ -40,7 +40,7 @@ class OpenGLRender : GLSurfaceView.Renderer, VideoRender {
     }
 
     @Volatile
-    private var  renderHandler: Long = 0
+    private var  renderHandler: Long = -1
 
     private external fun native_create(): Long
     private external fun native_OnSurfaceCreated(renderHandler: Long)
@@ -68,6 +68,30 @@ class OpenGLRender : GLSurfaceView.Renderer, VideoRender {
     )
 
     private external fun native_SetTouchLoc(renderHandler: Long, touchX: Float, touchY: Float)
+
+    // New method for setting mirror
+    private external fun native_SetMirror(
+        renderHandler: Long,
+        xRotateAngle: Int,
+        yRotateAngle: Int,
+        scaleX: Float,
+        scaleY: Float,
+        mirrorHorizontal: Boolean,
+        mirrorVertical: Boolean
+    )
+
+    // Public method to set mirror
+    fun setMirror(
+        xRotateAngle: Int,
+        yRotateAngle: Int,
+        scaleX: Float,
+        scaleY: Float,
+        mirrorHorizontal: Boolean,
+        mirrorVertical: Boolean
+    ) {
+        if (renderHandler == -1L) return
+        native_SetMirror(renderHandler, xRotateAngle, yRotateAngle, scaleX, scaleY, mirrorHorizontal, mirrorVertical)
+    }
 
     override fun onFrame(frame: VideoFrame) {
         Log.d("hapiplayer"," onFrame(frame: VideoFrame) ${frame.textureID}" )

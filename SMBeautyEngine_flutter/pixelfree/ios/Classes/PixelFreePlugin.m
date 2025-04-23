@@ -79,6 +79,29 @@
             [self.textures textureFrameAvailable:_textureId];
         }
       result(@(_textureId));
+    }else if ([@"processWithImageToByteData" isEqualToString:call.method]) {
+        FlutterStandardTypedData* imageData = (FlutterStandardTypedData *)dicArguments[@"imageData"];
+        int w =  [dicArguments[@"width"] intValue];
+        int h =  [dicArguments[@"height"] intValue];
+        [self getRenderTargetWithWidth:w height:h rgbaBuffer:(char *)imageData.data.bytes];
+//        _glTexture.target = _renderTarget;
+        if (_renderTarget) {// 如果是视频帧，自行替换，
+            [_mPixelFree processWithBuffer:_renderTarget rotationMode:PFRotationMode0];
+            [self.textures textureFrameAvailable:_textureId];
+        }
+        
+        CVPixelBufferLockBaseAddress(_renderTarget, kCVPixelBufferLock_ReadOnly);
+
+        // 3. 获取 BGRA 数据的指针和大小
+        uint8_t *baseAddress = (uint8_t *)CVPixelBufferGetBaseAddress(_renderTarget);
+        size_t bytesPerRow = CVPixelBufferGetBytesPerRow(_renderTarget);
+        size_t height = CVPixelBufferGetHeight(_renderTarget);
+        size_t bufferSize = bytesPerRow * height;
+        NSData *pixelData = [NSData dataWithBytes:baseAddress length:bufferSize];
+        CVPixelBufferUnlockBaseAddress(_renderTarget, kCVPixelBufferLock_ReadOnly);
+
+        FlutterStandardTypedData *flutterData = [FlutterStandardTypedData typedDataWithBytes:pixelData];
+      result(flutterData);
     }else if ([@"pixelFreeSetBeautyExtend" isEqualToString:call.method]) { // 更新 2.4.5 后
 //        [_mPixelFree pixelFreeSetBeautyFiterParam:<#(int)#> value:<#(nonnull void *)#>]
 //        _textureId = [_textures unregisterTexture:_glTexture];

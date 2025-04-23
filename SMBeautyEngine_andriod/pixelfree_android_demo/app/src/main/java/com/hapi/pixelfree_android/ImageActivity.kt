@@ -54,7 +54,7 @@ class ImageActivity: AppCompatActivity()  {
         options.inDensity = DisplayMetrics.DENSITY_DEFAULT // 设置输入密度为默认值
         options.inTargetDensity = resources.displayMetrics.densityDpi // 设置目标密度为设备屏幕密度
 
-        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.image_face, options)
+        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.face_kh, options)
 
         w = bitmap.width;
         h = bitmap.height;
@@ -65,6 +65,8 @@ class ImageActivity: AppCompatActivity()  {
         handler.postDelayed(updateImageRunnable, 1)
 
         hapiCapturePreView.mHapiGLSurfacePreview.mOpenGLRender.glCreateCall = {
+            hapiCapturePreView.setMirror(mirrorHorizontal = true)
+
             //在绑定上下文后初始化
             mPixelFree.create()
             val authData = mPixelFree.readBundleFile(this@ImageActivity, "pixelfreeAuth.lic")
@@ -136,11 +138,18 @@ class ImageActivity: AppCompatActivity()  {
                 }
 
                 // 截图
-//                if (frameCount == 100) {
+                if (frameCount == 100) {
 //                    mPixelFree.glThread.runOnGLThread {
 //                        textureIdToBitmap(pxInput.textureID,pxInput.wigth,pxInput.height);
 //                    }
-//                }
+                    mPixelFree.textureIdToBitmap(pxInput.textureID, pxInput.wigth, pxInput.height) { bitmap ->
+                        if (bitmap != null) {
+                            println("[PixelFree] get image bitmap")
+                        } else {
+                            // Handle error case
+                        }
+                    }
+                }
 
                 if (frame != null) {
                     hapiCapturePreView.onFrame(frame)

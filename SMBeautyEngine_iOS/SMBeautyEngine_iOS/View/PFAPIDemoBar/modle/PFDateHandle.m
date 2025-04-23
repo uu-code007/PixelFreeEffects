@@ -69,8 +69,8 @@
                                       @"face_V",@"face_small",@"face_nose",@"face_forehead",
                        @"face_mouth",@"face_philtrum",@"face_long_nose",@"face_eye_space",@"face_smile",@"face_eye_rotate",@"face_canthus"];
 
-     NSDictionary *titelDic = @{@"face_EyeStrength":@"大眼",@"face_thinning":@"瘦脸",@"face_narrow":@"窄脸",@"face_chin":@"下巴",
-                                @"face_V":@"v脸",@"face_small":@"小脸",@"face_nose":@"瘦鼻",@"face_forehead":@"额头",
+     NSDictionary *titelDic = @{@"face_EyeStrength":@"大眼",@"face_thinning":@"瘦脸",@"face_narrow":@"瘦颧骨",@"face_chin":@"下巴",
+                                @"face_V":@"瘦下颔",@"face_small":@"小脸",@"face_nose":@"瘦鼻",@"face_forehead":@"额头",
                                 @"face_mouth":@"嘴巴",@"face_philtrum":@"人中",@"face_long_nose":@"长鼻",@"face_eye_space":@"眼距",@"face_smile":@"微笑嘴角",@"face_eye_rotate":@"眼睛角度",@"face_canthus":@"开眼角"
      };
     NSDictionary *defaultValueDic = @{@"face_EyeStrength":@(0.2),@"face_thinning":@(0.2),@"face_narrow":@(0.2),@"face_chin":@(0.5),
@@ -172,20 +172,68 @@
 
 
 +(NSArray<PFBeautyParam *>*)setupStickers{
-    NSArray *beautyFiltersDataSource = @[@"origin",@"flowers",@"candy",@"maorong",@"xiongerduo",@"xiantiaoxiongmao"];
+    NSMutableArray *beautyFiltersDataSource = [@[@"origin",@"flowers",@"candy",@"maorong",@"xiongerduo",@"xiantiaoxiongmao",@"sunflower_glasses"] mutableCopy];
 
     NSDictionary *titelDic = @{@"origin":@"origin",@"flowers":@"flowers",@"baixiaomao":@"baixiaomao",@"candy":@"candy",@"maorong":@"maorong",@"xiongerduo":@"xiongerduo",@"xiantiaoxiongmao":@"xiantiaoxiongmao"};
+    
+
+//    NSArray<NSString *> * aar = [self getAllSubdirectoryNames];
+//    [beautyFiltersDataSource addObjectsFromArray:aar];
 
     NSMutableArray *array = [[NSMutableArray alloc] init];
     for (NSString *str in beautyFiltersDataSource) {
         PFBeautyParam *modle = [[PFBeautyParam alloc] init];
         modle.mParam = str;
-        modle.mTitle = [titelDic valueForKey:str];
+        modle.mTitle = str;
         modle.type = FUDataTypeStickers;
         [array addObject:modle];
     }
     
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"allStickers" ofType:@"json"];
+    NSData *jsonData = [NSData dataWithContentsOfFile:filePath];
+    NSError *error;
+    NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
+    if (error) {
+        NSLog(@"Error parsing JSON: %@", error.localizedDescription);
+        return array;
+    }
+
+    for (NSDictionary *dict in jsonArray) {
+        PFBeautyParam *param = [[PFBeautyParam alloc] init];
+        param.mParam = dict[@"mParam"];
+        param.mTitle = dict[@"mTitle"];
+        param.type = FUDataTypeStickers;
+        [array addObject:param];
+    }
+    
     return array;
+}
+
++ (NSArray<NSString *> *)getAllSubdirectoryNames{
+    NSString *s2dPath = [[NSBundle mainBundle] pathForResource:@"pixelfree2D" ofType:nil];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL isDirectory = NO;
+    BOOL exists = [fileManager fileExistsAtPath:s2dPath isDirectory:&isDirectory];
+
+    if (exists && isDirectory) {
+        NSLog(@"kiwi2D 文件夹路径: %@", s2dPath);
+    } else {
+        NSLog(@"kiwi2D 文件夹不存在");
+    }
+    
+    NSArray *contents = [fileManager contentsOfDirectoryAtPath:s2dPath error:nil];
+    NSMutableArray *subdirectories = [NSMutableArray array];
+
+    for (NSString *item in contents) {
+        NSString *fullPath = [s2dPath stringByAppendingPathComponent:item];
+        BOOL isSubDirectory = NO;
+        [fileManager fileExistsAtPath:fullPath isDirectory:&isSubDirectory];
+        
+        if (isSubDirectory) {
+            [subdirectories addObject:item];
+        }
+    }
+    return subdirectories;
 }
 
 @end

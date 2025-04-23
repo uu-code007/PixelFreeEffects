@@ -84,6 +84,22 @@ Java_com_hapi_avrender_OpenGLRender_native_1SetGesture(JNIEnv *env, jobject thiz
     auto videoGlRender = reinterpret_cast<VideoGLRender *>(render_handler);
     videoGlRender->UpdateMVPMatrix(x_rotate_angle, y_rotate_angle, scale, scale);
 }
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_hapi_avrender_OpenGLRender_native_1SetMirror(JNIEnv *env, jobject thiz,
+                                                      jlong render_handler,
+                                                      jint x_rotate_angle,
+                                                      jint y_rotate_angle,
+                                                      jfloat scale_x,
+                                                      jfloat scale_y,
+                                                      jboolean mirror_horizontal,
+                                                      jboolean mirror_vertical) {
+    auto videoGlRender = reinterpret_cast<VideoGLRender *>(render_handler);
+    videoGlRender->UpdateMVPMatrix(x_rotate_angle, y_rotate_angle, scale_x, scale_y, 
+                                  mirror_horizontal, mirror_vertical);
+}
+
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_hapi_avrender_OpenGLRender_native_1SetTouchLoc(JNIEnv *env,

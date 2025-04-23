@@ -46,7 +46,7 @@ typedef NS_ENUM(NSUInteger, FUTakeColorState) {
 
 @interface PFMuColorCell : UICollectionViewCell
 @property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, strong) UIImageView *bgImageView ;
+@property (nonatomic, strong) UIImageView *bgImageLayer ;
 @property (nonatomic, strong) UILabel *titleLabel ;
 @property (nonatomic, strong) UIColor *color;
 @end

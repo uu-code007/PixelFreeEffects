@@ -125,10 +125,10 @@
         if([param.mParam isEqualToString:@"origin"]){
             [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:NULL];
         } else{
-//            NSString *path =  [[NSBundle mainBundle] pathForResource:@"Stickers" ofType:nil];
+//            NSString *path =  [[NSBundle mainBundle] pathForResource:@"pixelfree2D" ofType:nil];
 //            NSString *currentFolder = [path stringByAppendingPathComponent:param.mParam];
 //            const char *aaa = [currentFolder UTF8String];
-//            [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)aaa];
+//            [self.mPixelFree  pixelFreeSetFiterStickerWithPath:currentFolder];
             
             NSString *name = [NSString stringWithFormat:@"%@.bundle",param.mParam];
             NSString *paths = [[NSBundle mainBundle] pathForResource:name ofType:nil];

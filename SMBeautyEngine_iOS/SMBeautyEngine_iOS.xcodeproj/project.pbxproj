@@ -7,8 +7,73 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C94EE9A92D9E9371007ACC97 /* PixelFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C94EE9A72D9E92DC007ACC97 /* PixelFree.framework */; };
-		C94EE9AA2D9E9371007ACC97 /* PixelFree.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C94EE9A72D9E92DC007ACC97 /* PixelFree.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C90C3CC82DB883B300A1C13B /* sunflower_glasses.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CC72DB883B300A1C13B /* sunflower_glasses.bundle */; };
+		C90C3D092DB8B31600A1C13B /* bear_headgear.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CCA2DB8B31600A1C13B /* bear_headgear.bundle */; };
+		C90C3D0A2DB8B31600A1C13B /* fannao.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CDA2DB8B31600A1C13B /* fannao.bundle */; };
+		C90C3D0B2DB8B31600A1C13B /* little_bear.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CF02DB8B31600A1C13B /* little_bear.bundle */; };
+		C90C3D0C2DB8B31600A1C13B /* feidie.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CDC2DB8B31600A1C13B /* feidie.bundle */; };
+		C90C3D0D2DB8B31600A1C13B /* big_eyes.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CCB2DB8B31600A1C13B /* big_eyes.bundle */; };
+		C90C3D0E2DB8B31600A1C13B /* birthday.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CCC2DB8B31600A1C13B /* birthday.bundle */; };
+		C90C3D0F2DB8B31600A1C13B /* jiandanxiaomaomi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CE92DB8B31600A1C13B /* jiandanxiaomaomi.bundle */; };
+		C90C3D102DB8B31600A1C13B /* love_gestures.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CF42DB8B31600A1C13B /* love_gestures.bundle */; };
+		C90C3D112DB8B31600A1C13B /* long_ear_dog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CF12DB8B31600A1C13B /* long_ear_dog.bundle */; };
+		C90C3D122DB8B31600A1C13B /* pop_glasses.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CF82DB8B31600A1C13B /* pop_glasses.bundle */; };
+		C90C3D132DB8B31600A1C13B /* jiandanzhuangshi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CEA2DB8B31600A1C13B /* jiandanzhuangshi.bundle */; };
+		C90C3D142DB8B31600A1C13B /* goux.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CE12DB8B31600A1C13B /* goux.bundle */; };
+		C90C3D152DB8B31600A1C13B /* laser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CEC2DB8B31600A1C13B /* laser.bundle */; };
+		C90C3D162DB8B31600A1C13B /* duboji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CD92DB8B31600A1C13B /* duboji.bundle */; };
+		C90C3D172DB8B31600A1C13B /* fengying.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CDD2DB8B31600A1C13B /* fengying.bundle */; };
+		C90C3D182DB8B31600A1C13B /* jianbixiaoheimao.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CE82DB8B31600A1C13B /* jianbixiaoheimao.bundle */; };
+		C90C3D192DB8B31600A1C13B /* baixiaomaohuxu.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CC92DB8B31600A1C13B /* baixiaomaohuxu.bundle */; };
+		C90C3D1A2DB8B31600A1C13B /* xianzi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3D072DB8B31600A1C13B /* xianzi.bundle */; };
+		C90C3D1B2DB8B31600A1C13B /* hdj.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CE22DB8B31600A1C13B /* hdj.bundle */; };
+		C90C3D1C2DB8B31600A1C13B /* hongtoushi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CE62DB8B31600A1C13B /* hongtoushi.bundle */; };
+		C90C3D1D2DB8B31600A1C13B /* maogou.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CF52DB8B31600A1C13B /* maogou.bundle */; };
+		C90C3D1E2DB8B31600A1C13B /* cut_hair.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CD32DB8B31600A1C13B /* cut_hair.bundle */; };
+		C90C3D1F2DB8B31600A1C13B /* buliaoxiaomao.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CCD2DB8B31600A1C13B /* buliaoxiaomao.bundle */; };
+		C90C3D202DB8B31600A1C13B /* hello_glasses.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CE52DB8B31600A1C13B /* hello_glasses.bundle */; };
+		C90C3D212DB8B31600A1C13B /* huangm.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CE72DB8B31600A1C13B /* huangm.bundle */; };
+		C90C3D222DB8B31600A1C13B /* hello_baby.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CE42DB8B31600A1C13B /* hello_baby.bundle */; };
+		C90C3D232DB8B31600A1C13B /* sunflower_glasses 2.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3D002DB8B31600A1C13B /* sunflower_glasses 2.bundle */; };
+		C90C3D242DB8B31600A1C13B /* uniform2.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3D062DB8B31600A1C13B /* uniform2.bundle */; };
+		C90C3D252DB8B31600A1C13B /* xingxing.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3D082DB8B31600A1C13B /* xingxing.bundle */; };
+		C90C3D262DB8B31600A1C13B /* Gentleman_hat.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CDF2DB8B31600A1C13B /* Gentleman_hat.bundle */; };
+		C90C3D272DB8B31600A1C13B /* glasses_space.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CE02DB8B31600A1C13B /* glasses_space.bundle */; };
+		C90C3D282DB8B31600A1C13B /* rabbit_holding_face.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CFC2DB8B31600A1C13B /* rabbit_holding_face.bundle */; };
+		C90C3D292DB8B31600A1C13B /* toy_rabbit_ear_tie.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3D042DB8B31600A1C13B /* toy_rabbit_ear_tie.bundle */; };
+		C90C3D2A2DB8B31600A1C13B /* prison.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CF92DB8B31600A1C13B /* prison.bundle */; };
+		C90C3D2B2DB8B31600A1C13B /* touhua.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3D022DB8B31600A1C13B /* touhua.bundle */; };
+		C90C3D2C2DB8B31600A1C13B /* red_glasses.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CFD2DB8B31600A1C13B /* red_glasses.bundle */; };
+		C90C3D2D2DB8B31600A1C13B /* noodles.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CF72DB8B31600A1C13B /* noodles.bundle */; };
+		C90C3D2E2DB8B31600A1C13B /* shizitou.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CFF2DB8B31600A1C13B /* shizitou.bundle */; };
+		C90C3D2F2DB8B31600A1C13B /* flower.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CDE2DB8B31600A1C13B /* flower.bundle */; };
+		C90C3D302DB8B31600A1C13B /* fashion_laddy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CDB2DB8B31600A1C13B /* fashion_laddy.bundle */; };
+		C90C3D312DB8B31600A1C13B /* cat_on_the_head.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CD02DB8B31600A1C13B /* cat_on_the_head.bundle */; };
+		C90C3D322DB8B31600A1C13B /* tears.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3D012DB8B31600A1C13B /* tears.bundle */; };
+		C90C3D332DB8B31600A1C13B /* under_water_glasses.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3D052DB8B31600A1C13B /* under_water_glasses.bundle */; };
+		C90C3D342DB8B31600A1C13B /* heart_explode.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CE32DB8B31600A1C13B /* heart_explode.bundle */; };
+		C90C3D352DB8B31600A1C13B /* cute_cat.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CD42DB8B31600A1C13B /* cute_cat.bundle */; };
+		C90C3D362DB8B31600A1C13B /* dayuanerduo.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CD72DB8B31600A1C13B /* dayuanerduo.bundle */; };
+		C90C3D372DB8B31600A1C13B /* cat_fa_qia.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CCF2DB8B31600A1C13B /* cat_fa_qia.bundle */; };
+		C90C3D382DB8B31600A1C13B /* liangshanaixinmao.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CEF2DB8B31600A1C13B /* liangshanaixinmao.bundle */; };
+		C90C3D392DB8B31600A1C13B /* dog_tongue.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CD82DB8B31600A1C13B /* dog_tongue.bundle */; };
+		C90C3D3A2DB8B31600A1C13B /* dahudiejie.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CD52DB8B31600A1C13B /* dahudiejie.bundle */; };
+		C90C3D3B2DB8B31600A1C13B /* kitty.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CEB2DB8B31600A1C13B /* kitty.bundle */; };
+		C90C3D3C2DB8B31600A1C13B /* lecher.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CEE2DB8B31600A1C13B /* lecher.bundle */; };
+		C90C3D3D2DB8B31600A1C13B /* long_ear_rabbit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CF22DB8B31600A1C13B /* long_ear_rabbit.bundle */; };
+		C90C3D3E2DB8B31600A1C13B /* myqueen.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CF62DB8B31600A1C13B /* myqueen.bundle */; };
+		C90C3D3F2DB8B31600A1C13B /* toy_dog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3D032DB8B31600A1C13B /* toy_dog.bundle */; };
+		C90C3D402DB8B31600A1C13B /* laugh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CED2DB8B31600A1C13B /* laugh.bundle */; };
+		C90C3D412DB8B31600A1C13B /* cidinmaozi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CD12DB8B31600A1C13B /* cidinmaozi.bundle */; };
+		C90C3D422DB8B31600A1C13B /* sheep.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CFE2DB8B31600A1C13B /* sheep.bundle */; };
+		C90C3D432DB8B31600A1C13B /* rabbit_blush.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CFB2DB8B31600A1C13B /* rabbit_blush.bundle */; };
+		C90C3D442DB8B31600A1C13B /* love_bubbles.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CF32DB8B31600A1C13B /* love_bubbles.bundle */; };
+		C90C3D452DB8B31600A1C13B /* cat_claw.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CCE2DB8B31600A1C13B /* cat_claw.bundle */; };
+		C90C3D462DB8B31600A1C13B /* qifei.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CFA2DB8B31600A1C13B /* qifei.bundle */; };
+		C90C3D472DB8B31600A1C13B /* damengyanjing.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CD62DB8B31600A1C13B /* damengyanjing.bundle */; };
+		C90C3D482DB8B31600A1C13B /* cream_cake.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C90C3CD22DB8B31600A1C13B /* cream_cake.bundle */; };
+		C90C3D4A2DB8B95500A1C13B /* allStickers.json in Resources */ = {isa = PBXBuildFile; fileRef = C90C3D492DB8B95500A1C13B /* allStickers.json */; };
+		C90C3D4C2DB8C79F00A1C13B /* baixiaomaohuxu in Resources */ = {isa = PBXBuildFile; fileRef = C90C3D4B2DB8C79F00A1C13B /* baixiaomaohuxu */; };
 		C958A3102D90019C0019ED6F /* AdjustmentItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C958A3052D90019C0019ED6F /* AdjustmentItem.m */; };
 		C958A3122D90019C0019ED6F /* AdjustmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C958A3032D90019C0019ED6F /* AdjustmentCell.m */; };
 		C958A3132D90019C0019ED6F /* PFTakeColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = C958A3082D90019C0019ED6F /* PFTakeColorView.m */; };
@@ -17,6 +82,8 @@
 		C958A31D2D9004E20019ED6F /* ToolUI.m in Sources */ = {isa = PBXBuildFile; fileRef = C958A31C2D9004E20019ED6F /* ToolUI.m */; };
 		C958A3302D91867D0019ED6F /* Pods_SMBeautyEngine_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C958A32D2D9186710019ED6F /* Pods_SMBeautyEngine_iOS.framework */; };
 		C95AB8702D93961900F59BD5 /* 2631742911906.png in Resources */ = {isa = PBXBuildFile; fileRef = C95AB86F2D93961900F59BD5 /* 2631742911906.png */; };
+		C98CA1582DB8F5D700DF3619 /* PixelFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C98CA1562DB8F56000DF3619 /* PixelFree.framework */; };
+		C98CA1592DB8F5D800DF3619 /* PixelFree.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C98CA1562DB8F56000DF3619 /* PixelFree.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C99D8B6D2D7E8FAB00DC5D41 /* face_mask.png in Resources */ = {isa = PBXBuildFile; fileRef = C99D8B6C2D7E8FAB00DC5D41 /* face_mask.png */; };
 		C9AFDF0D2BC92ED9009C38CD /* qiniu_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C9AFDF0C2BC92ED9009C38CD /* qiniu_logo.png */; };
 		C9BB18232D858830002AF75D /* face2.png in Resources */ = {isa = PBXBuildFile; fileRef = C9BB18222D858830002AF75D /* face2.png */; };
@@ -64,13 +131,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		C94EE9AB2D9E9371007ACC97 /* Embed Frameworks */ = {
+		C98CA15A2DB8F5D800DF3619 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C94EE9AA2D9E9371007ACC97 /* PixelFree.framework in Embed Frameworks */,
+				C98CA1592DB8F5D800DF3619 /* PixelFree.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -81,7 +148,73 @@
 		4D61E344F4C535ACE64C554A /* Pods-SMBeautyEngine_iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SMBeautyEngine_iOS.debug.xcconfig"; path = "Target Support Files/Pods-SMBeautyEngine_iOS/Pods-SMBeautyEngine_iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		5C8A829A339A9CDADB015B9D /* Pods_SMBeautyEngine_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SMBeautyEngine_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D80F176E4A4919062FB8C44 /* Pods-SMBeautyEngine_iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SMBeautyEngine_iOS.release.xcconfig"; path = "Target Support Files/Pods-SMBeautyEngine_iOS/Pods-SMBeautyEngine_iOS.release.xcconfig"; sourceTree = "<group>"; };
-		C94EE9A72D9E92DC007ACC97 /* PixelFree.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PixelFree.framework; sourceTree = "<group>"; };
+		C90C3CC72DB883B300A1C13B /* sunflower_glasses.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = sunflower_glasses.bundle; sourceTree = "<group>"; };
+		C90C3CC92DB8B31600A1C13B /* baixiaomaohuxu.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = baixiaomaohuxu.bundle; sourceTree = "<group>"; };
+		C90C3CCA2DB8B31600A1C13B /* bear_headgear.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = bear_headgear.bundle; sourceTree = "<group>"; };
+		C90C3CCB2DB8B31600A1C13B /* big_eyes.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = big_eyes.bundle; sourceTree = "<group>"; };
+		C90C3CCC2DB8B31600A1C13B /* birthday.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = birthday.bundle; sourceTree = "<group>"; };
+		C90C3CCD2DB8B31600A1C13B /* buliaoxiaomao.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = buliaoxiaomao.bundle; sourceTree = "<group>"; };
+		C90C3CCE2DB8B31600A1C13B /* cat_claw.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = cat_claw.bundle; sourceTree = "<group>"; };
+		C90C3CCF2DB8B31600A1C13B /* cat_fa_qia.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = cat_fa_qia.bundle; sourceTree = "<group>"; };
+		C90C3CD02DB8B31600A1C13B /* cat_on_the_head.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = cat_on_the_head.bundle; sourceTree = "<group>"; };
+		C90C3CD12DB8B31600A1C13B /* cidinmaozi.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = cidinmaozi.bundle; sourceTree = "<group>"; };
+		C90C3CD22DB8B31600A1C13B /* cream_cake.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = cream_cake.bundle; sourceTree = "<group>"; };
+		C90C3CD32DB8B31600A1C13B /* cut_hair.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = cut_hair.bundle; sourceTree = "<group>"; };
+		C90C3CD42DB8B31600A1C13B /* cute_cat.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = cute_cat.bundle; sourceTree = "<group>"; };
+		C90C3CD52DB8B31600A1C13B /* dahudiejie.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = dahudiejie.bundle; sourceTree = "<group>"; };
+		C90C3CD62DB8B31600A1C13B /* damengyanjing.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = damengyanjing.bundle; sourceTree = "<group>"; };
+		C90C3CD72DB8B31600A1C13B /* dayuanerduo.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = dayuanerduo.bundle; sourceTree = "<group>"; };
+		C90C3CD82DB8B31600A1C13B /* dog_tongue.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = dog_tongue.bundle; sourceTree = "<group>"; };
+		C90C3CD92DB8B31600A1C13B /* duboji.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = duboji.bundle; sourceTree = "<group>"; };
+		C90C3CDA2DB8B31600A1C13B /* fannao.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = fannao.bundle; sourceTree = "<group>"; };
+		C90C3CDB2DB8B31600A1C13B /* fashion_laddy.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = fashion_laddy.bundle; sourceTree = "<group>"; };
+		C90C3CDC2DB8B31600A1C13B /* feidie.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = feidie.bundle; sourceTree = "<group>"; };
+		C90C3CDD2DB8B31600A1C13B /* fengying.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = fengying.bundle; sourceTree = "<group>"; };
+		C90C3CDE2DB8B31600A1C13B /* flower.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = flower.bundle; sourceTree = "<group>"; };
+		C90C3CDF2DB8B31600A1C13B /* Gentleman_hat.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = Gentleman_hat.bundle; sourceTree = "<group>"; };
+		C90C3CE02DB8B31600A1C13B /* glasses_space.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = glasses_space.bundle; sourceTree = "<group>"; };
+		C90C3CE12DB8B31600A1C13B /* goux.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = goux.bundle; sourceTree = "<group>"; };
+		C90C3CE22DB8B31600A1C13B /* hdj.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = hdj.bundle; sourceTree = "<group>"; };
+		C90C3CE32DB8B31600A1C13B /* heart_explode.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = heart_explode.bundle; sourceTree = "<group>"; };
+		C90C3CE42DB8B31600A1C13B /* hello_baby.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = hello_baby.bundle; sourceTree = "<group>"; };
+		C90C3CE52DB8B31600A1C13B /* hello_glasses.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = hello_glasses.bundle; sourceTree = "<group>"; };
+		C90C3CE62DB8B31600A1C13B /* hongtoushi.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = hongtoushi.bundle; sourceTree = "<group>"; };
+		C90C3CE72DB8B31600A1C13B /* huangm.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = huangm.bundle; sourceTree = "<group>"; };
+		C90C3CE82DB8B31600A1C13B /* jianbixiaoheimao.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = jianbixiaoheimao.bundle; sourceTree = "<group>"; };
+		C90C3CE92DB8B31600A1C13B /* jiandanxiaomaomi.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = jiandanxiaomaomi.bundle; sourceTree = "<group>"; };
+		C90C3CEA2DB8B31600A1C13B /* jiandanzhuangshi.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = jiandanzhuangshi.bundle; sourceTree = "<group>"; };
+		C90C3CEB2DB8B31600A1C13B /* kitty.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = kitty.bundle; sourceTree = "<group>"; };
+		C90C3CEC2DB8B31600A1C13B /* laser.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = laser.bundle; sourceTree = "<group>"; };
+		C90C3CED2DB8B31600A1C13B /* laugh.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = laugh.bundle; sourceTree = "<group>"; };
+		C90C3CEE2DB8B31600A1C13B /* lecher.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = lecher.bundle; sourceTree = "<group>"; };
+		C90C3CEF2DB8B31600A1C13B /* liangshanaixinmao.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = liangshanaixinmao.bundle; sourceTree = "<group>"; };
+		C90C3CF02DB8B31600A1C13B /* little_bear.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = little_bear.bundle; sourceTree = "<group>"; };
+		C90C3CF12DB8B31600A1C13B /* long_ear_dog.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = long_ear_dog.bundle; sourceTree = "<group>"; };
+		C90C3CF22DB8B31600A1C13B /* long_ear_rabbit.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = long_ear_rabbit.bundle; sourceTree = "<group>"; };
+		C90C3CF32DB8B31600A1C13B /* love_bubbles.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = love_bubbles.bundle; sourceTree = "<group>"; };
+		C90C3CF42DB8B31600A1C13B /* love_gestures.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = love_gestures.bundle; sourceTree = "<group>"; };
+		C90C3CF52DB8B31600A1C13B /* maogou.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = maogou.bundle; sourceTree = "<group>"; };
+		C90C3CF62DB8B31600A1C13B /* myqueen.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = myqueen.bundle; sourceTree = "<group>"; };
+		C90C3CF72DB8B31600A1C13B /* noodles.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = noodles.bundle; sourceTree = "<group>"; };
+		C90C3CF82DB8B31600A1C13B /* pop_glasses.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = pop_glasses.bundle; sourceTree = "<group>"; };
+		C90C3CF92DB8B31600A1C13B /* prison.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = prison.bundle; sourceTree = "<group>"; };
+		C90C3CFA2DB8B31600A1C13B /* qifei.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = qifei.bundle; sourceTree = "<group>"; };
+		C90C3CFB2DB8B31600A1C13B /* rabbit_blush.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = rabbit_blush.bundle; sourceTree = "<group>"; };
+		C90C3CFC2DB8B31600A1C13B /* rabbit_holding_face.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = rabbit_holding_face.bundle; sourceTree = "<group>"; };
+		C90C3CFD2DB8B31600A1C13B /* red_glasses.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = red_glasses.bundle; sourceTree = "<group>"; };
+		C90C3CFE2DB8B31600A1C13B /* sheep.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = sheep.bundle; sourceTree = "<group>"; };
+		C90C3CFF2DB8B31600A1C13B /* shizitou.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = shizitou.bundle; sourceTree = "<group>"; };
+		C90C3D002DB8B31600A1C13B /* sunflower_glasses 2.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = "sunflower_glasses 2.bundle"; sourceTree = "<group>"; };
+		C90C3D012DB8B31600A1C13B /* tears.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = tears.bundle; sourceTree = "<group>"; };
+		C90C3D022DB8B31600A1C13B /* touhua.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = touhua.bundle; sourceTree = "<group>"; };
+		C90C3D032DB8B31600A1C13B /* toy_dog.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = toy_dog.bundle; sourceTree = "<group>"; };
+		C90C3D042DB8B31600A1C13B /* toy_rabbit_ear_tie.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = toy_rabbit_ear_tie.bundle; sourceTree = "<group>"; };
+		C90C3D052DB8B31600A1C13B /* under_water_glasses.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = under_water_glasses.bundle; sourceTree = "<group>"; };
+		C90C3D062DB8B31600A1C13B /* uniform2.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = uniform2.bundle; sourceTree = "<group>"; };
+		C90C3D072DB8B31600A1C13B /* xianzi.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = xianzi.bundle; sourceTree = "<group>"; };
+		C90C3D082DB8B31600A1C13B /* xingxing.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = xingxing.bundle; sourceTree = "<group>"; };
+		C90C3D492DB8B95500A1C13B /* allStickers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = allStickers.json; sourceTree = "<group>"; };
+		C90C3D4B2DB8C79F00A1C13B /* baixiaomaohuxu */ = {isa = PBXFileReference; lastKnownFileType = folder; path = baixiaomaohuxu; sourceTree = "<group>"; };
 		C958A3022D90019C0019ED6F /* AdjustmentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdjustmentCell.h; sourceTree = "<group>"; };
 		C958A3032D90019C0019ED6F /* AdjustmentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AdjustmentCell.m; sourceTree = "<group>"; };
 		C958A3042D90019C0019ED6F /* AdjustmentItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdjustmentItem.h; sourceTree = "<group>"; };
@@ -96,9 +229,11 @@
 		C958A31C2D9004E20019ED6F /* ToolUI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToolUI.m; sourceTree = "<group>"; };
 		C958A32D2D9186710019ED6F /* Pods_SMBeautyEngine_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_SMBeautyEngine_iOS.framework; path = "../../../../Library/Developer/Xcode/DerivedData/SMBeautyEngine_iOS-fzdtawbuxtsbdeaqkxzxbdrevrwh/Build/Products/Debug-iphoneos/Pods_SMBeautyEngine_iOS.framework"; sourceTree = "<group>"; };
 		C95AB86F2D93961900F59BD5 /* 2631742911906.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2631742911906.png; sourceTree = "<group>"; };
+		C98CA1562DB8F56000DF3619 /* PixelFree.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PixelFree.framework; sourceTree = "<group>"; };
 		C99D8B6C2D7E8FAB00DC5D41 /* face_mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face_mask.png; sourceTree = "<group>"; };
 		C9AFDF0C2BC92ED9009C38CD /* qiniu_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qiniu_logo.png; sourceTree = "<group>"; };
 		C9BB18222D858830002AF75D /* face2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face2.png; sourceTree = "<group>"; };
+		C9C0EC022D9686A000BE1D3A /* libpng-universal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libpng-universal.a"; path = "../PixelFreeCxx/PixelFree/Thirdparty/libpng-universal.a"; sourceTree = "<group>"; };
 		C9C0EC052D96887B00BE1D3A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		C9CF03782A8670FB00B2C394 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		C9CF037F2A87685000B2C394 /* PFOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFOpenGLView.m; sourceTree = "<group>"; };
@@ -116,6 +251,7 @@
 		E335682628E5883C00551FB3 /* PFImageController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PFImageController.m; sourceTree = "<group>"; };
 		E335682E28E5897600551FB3 /* PFVideoController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFVideoController.h; sourceTree = "<group>"; };
 		E335682F28E5897600551FB3 /* PFVideoController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PFVideoController.m; sourceTree = "<group>"; };
+		E39CFC932874189500D738FF /* DetectFace.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = DetectFace.a; path = ../PixelFreeCxx/DetectFace.a; sourceTree = "<group>"; };
 		E3B9081D298E527300B96ADF /* bg.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpeg; sourceTree = "<group>"; };
 		E3B90821298E6E1A00B96ADF /* image.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image.jpeg; sourceTree = "<group>"; };
 		E3BBBA02295C274A00306BD9 /* PFMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFMainViewController.h; sourceTree = "<group>"; };
@@ -174,7 +310,7 @@
 				C9CF08542AA9E83800B2C394 /* CoreML.framework in Frameworks */,
 				E31A9AC02903913400AF311C /* CoreImage.framework in Frameworks */,
 				C9CF037B2A8670FC00B2C394 /* Accelerate.framework in Frameworks */,
-				C94EE9A92D9E9371007ACC97 /* PixelFree.framework in Frameworks */,
+				C98CA1582DB8F5D700DF3619 /* PixelFree.framework in Frameworks */,
 				C9C0EC062D9688D200BE1D3A /* libz.tbd in Frameworks */,
 				E3BD4590274752DC00CB44C9 /* libc++.tbd in Frameworks */,
 			);
@@ -220,6 +356,71 @@
 				C9FCFEA22C85BE9D002E1906 /* maorong.bundle */,
 				C9FCFEA32C85BE9D002E1906 /* xiantiaoxiongmao.bundle */,
 				C9FCFEA42C85BE9D002E1906 /* xiongerduo.bundle */,
+				C90C3CC72DB883B300A1C13B /* sunflower_glasses.bundle */,
+				C90C3CC92DB8B31600A1C13B /* baixiaomaohuxu.bundle */,
+				C90C3CCA2DB8B31600A1C13B /* bear_headgear.bundle */,
+				C90C3CCB2DB8B31600A1C13B /* big_eyes.bundle */,
+				C90C3CCC2DB8B31600A1C13B /* birthday.bundle */,
+				C90C3CCD2DB8B31600A1C13B /* buliaoxiaomao.bundle */,
+				C90C3CCE2DB8B31600A1C13B /* cat_claw.bundle */,
+				C90C3CCF2DB8B31600A1C13B /* cat_fa_qia.bundle */,
+				C90C3CD02DB8B31600A1C13B /* cat_on_the_head.bundle */,
+				C90C3CD12DB8B31600A1C13B /* cidinmaozi.bundle */,
+				C90C3CD22DB8B31600A1C13B /* cream_cake.bundle */,
+				C90C3CD32DB8B31600A1C13B /* cut_hair.bundle */,
+				C90C3CD42DB8B31600A1C13B /* cute_cat.bundle */,
+				C90C3CD52DB8B31600A1C13B /* dahudiejie.bundle */,
+				C90C3CD62DB8B31600A1C13B /* damengyanjing.bundle */,
+				C90C3CD72DB8B31600A1C13B /* dayuanerduo.bundle */,
+				C90C3CD82DB8B31600A1C13B /* dog_tongue.bundle */,
+				C90C3CD92DB8B31600A1C13B /* duboji.bundle */,
+				C90C3CDA2DB8B31600A1C13B /* fannao.bundle */,
+				C90C3CDB2DB8B31600A1C13B /* fashion_laddy.bundle */,
+				C90C3CDC2DB8B31600A1C13B /* feidie.bundle */,
+				C90C3CDD2DB8B31600A1C13B /* fengying.bundle */,
+				C90C3CDE2DB8B31600A1C13B /* flower.bundle */,
+				C90C3CDF2DB8B31600A1C13B /* Gentleman_hat.bundle */,
+				C90C3CE02DB8B31600A1C13B /* glasses_space.bundle */,
+				C90C3CE12DB8B31600A1C13B /* goux.bundle */,
+				C90C3CE22DB8B31600A1C13B /* hdj.bundle */,
+				C90C3CE32DB8B31600A1C13B /* heart_explode.bundle */,
+				C90C3CE42DB8B31600A1C13B /* hello_baby.bundle */,
+				C90C3CE52DB8B31600A1C13B /* hello_glasses.bundle */,
+				C90C3CE62DB8B31600A1C13B /* hongtoushi.bundle */,
+				C90C3CE72DB8B31600A1C13B /* huangm.bundle */,
+				C90C3CE82DB8B31600A1C13B /* jianbixiaoheimao.bundle */,
+				C90C3CE92DB8B31600A1C13B /* jiandanxiaomaomi.bundle */,
+				C90C3CEA2DB8B31600A1C13B /* jiandanzhuangshi.bundle */,
+				C90C3CEB2DB8B31600A1C13B /* kitty.bundle */,
+				C90C3CEC2DB8B31600A1C13B /* laser.bundle */,
+				C90C3CED2DB8B31600A1C13B /* laugh.bundle */,
+				C90C3CEE2DB8B31600A1C13B /* lecher.bundle */,
+				C90C3CEF2DB8B31600A1C13B /* liangshanaixinmao.bundle */,
+				C90C3CF02DB8B31600A1C13B /* little_bear.bundle */,
+				C90C3CF12DB8B31600A1C13B /* long_ear_dog.bundle */,
+				C90C3CF22DB8B31600A1C13B /* long_ear_rabbit.bundle */,
+				C90C3CF32DB8B31600A1C13B /* love_bubbles.bundle */,
+				C90C3CF42DB8B31600A1C13B /* love_gestures.bundle */,
+				C90C3CF52DB8B31600A1C13B /* maogou.bundle */,
+				C90C3CF62DB8B31600A1C13B /* myqueen.bundle */,
+				C90C3CF72DB8B31600A1C13B /* noodles.bundle */,
+				C90C3CF82DB8B31600A1C13B /* pop_glasses.bundle */,
+				C90C3CF92DB8B31600A1C13B /* prison.bundle */,
+				C90C3CFA2DB8B31600A1C13B /* qifei.bundle */,
+				C90C3CFB2DB8B31600A1C13B /* rabbit_blush.bundle */,
+				C90C3CFC2DB8B31600A1C13B /* rabbit_holding_face.bundle */,
+				C90C3CFD2DB8B31600A1C13B /* red_glasses.bundle */,
+				C90C3CFE2DB8B31600A1C13B /* sheep.bundle */,
+				C90C3CFF2DB8B31600A1C13B /* shizitou.bundle */,
+				C90C3D002DB8B31600A1C13B /* sunflower_glasses 2.bundle */,
+				C90C3D012DB8B31600A1C13B /* tears.bundle */,
+				C90C3D022DB8B31600A1C13B /* touhua.bundle */,
+				C90C3D032DB8B31600A1C13B /* toy_dog.bundle */,
+				C90C3D042DB8B31600A1C13B /* toy_rabbit_ear_tie.bundle */,
+				C90C3D052DB8B31600A1C13B /* under_water_glasses.bundle */,
+				C90C3D062DB8B31600A1C13B /* uniform2.bundle */,
+				C90C3D072DB8B31600A1C13B /* xianzi.bundle */,
+				C90C3D082DB8B31600A1C13B /* xingxing.bundle */,
 			);
 			path = Stickers;
 			sourceTree = "<group>";
@@ -227,7 +428,7 @@
 		E3BD452A27474A4E00CB44C9 = {
 			isa = PBXGroup;
 			children = (
-				C94EE9A72D9E92DC007ACC97 /* PixelFree.framework */,
+				C98CA1562DB8F56000DF3619 /* PixelFree.framework */,
 				E3BD453527474A4E00CB44C9 /* SMBeautyEngine_iOS */,
 				E3BD453427474A4E00CB44C9 /* Products */,
 				E3BD458E274752D600CB44C9 /* Frameworks */,
@@ -276,6 +477,7 @@
 		E3BD455227474A9400CB44C9 /* res */ = {
 			isa = PBXGroup;
 			children = (
+				C90C3D4B2DB8C79F00A1C13B /* baixiaomaohuxu */,
 				C95AB86F2D93961900F59BD5 /* 2631742911906.png */,
 				C9BB18222D858830002AF75D /* face2.png */,
 				C9FCFEA52C85BE9D002E1906 /* Stickers */,
@@ -285,6 +487,7 @@
 				E3B9081D298E527300B96ADF /* bg.jpeg */,
 				E32C9FDF28E69A3300FB225E /* pixelfreeAuth.lic */,
 				C99D8B6C2D7E8FAB00DC5D41 /* face_mask.png */,
+				C90C3D492DB8B95500A1C13B /* allStickers.json */,
 			);
 			path = res;
 			sourceTree = "<group>";
@@ -342,9 +545,11 @@
 			isa = PBXGroup;
 			children = (
 				C9C0EC052D96887B00BE1D3A /* libz.tbd */,
+				C9C0EC022D9686A000BE1D3A /* libpng-universal.a */,
 				C958A32D2D9186710019ED6F /* Pods_SMBeautyEngine_iOS.framework */,
 				C9CF03782A8670FB00B2C394 /* Accelerate.framework */,
 				E31A9ABD2903913400AF311C /* CoreImage.framework */,
+				E39CFC932874189500D738FF /* DetectFace.a */,
 				E3BD4591274752E900CB44C9 /* CoreML.framework */,
 				E3BD458F274752D700CB44C9 /* libc++.tbd */,
 				5C8A829A339A9CDADB015B9D /* Pods_SMBeautyEngine_iOS.framework */,
@@ -364,7 +569,7 @@
 				E3BD453027474A4E00CB44C9 /* Frameworks */,
 				E3BD453127474A4E00CB44C9 /* Resources */,
 				52EBBC8AC168428F0F72EE10 /* [CP] Embed Pods Frameworks */,
-				C94EE9AB2D9E9371007ACC97 /* Embed Frameworks */,
+				C98CA15A2DB8F5D800DF3619 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -414,6 +619,72 @@
 			buildActionMask = 2147483647;
 			files = (
 				E3BD454627474A5300CB44C9 /* LaunchScreen.storyboard in Resources */,
+				C90C3D092DB8B31600A1C13B /* bear_headgear.bundle in Resources */,
+				C90C3D0A2DB8B31600A1C13B /* fannao.bundle in Resources */,
+				C90C3D0B2DB8B31600A1C13B /* little_bear.bundle in Resources */,
+				C90C3D0C2DB8B31600A1C13B /* feidie.bundle in Resources */,
+				C90C3D0D2DB8B31600A1C13B /* big_eyes.bundle in Resources */,
+				C90C3D0E2DB8B31600A1C13B /* birthday.bundle in Resources */,
+				C90C3D0F2DB8B31600A1C13B /* jiandanxiaomaomi.bundle in Resources */,
+				C90C3D102DB8B31600A1C13B /* love_gestures.bundle in Resources */,
+				C90C3D112DB8B31600A1C13B /* long_ear_dog.bundle in Resources */,
+				C90C3D122DB8B31600A1C13B /* pop_glasses.bundle in Resources */,
+				C90C3D132DB8B31600A1C13B /* jiandanzhuangshi.bundle in Resources */,
+				C90C3D142DB8B31600A1C13B /* goux.bundle in Resources */,
+				C90C3D152DB8B31600A1C13B /* laser.bundle in Resources */,
+				C90C3D162DB8B31600A1C13B /* duboji.bundle in Resources */,
+				C90C3D172DB8B31600A1C13B /* fengying.bundle in Resources */,
+				C90C3D182DB8B31600A1C13B /* jianbixiaoheimao.bundle in Resources */,
+				C90C3D192DB8B31600A1C13B /* baixiaomaohuxu.bundle in Resources */,
+				C90C3D1A2DB8B31600A1C13B /* xianzi.bundle in Resources */,
+				C90C3D1B2DB8B31600A1C13B /* hdj.bundle in Resources */,
+				C90C3D1C2DB8B31600A1C13B /* hongtoushi.bundle in Resources */,
+				C90C3D1D2DB8B31600A1C13B /* maogou.bundle in Resources */,
+				C90C3D1E2DB8B31600A1C13B /* cut_hair.bundle in Resources */,
+				C90C3D1F2DB8B31600A1C13B /* buliaoxiaomao.bundle in Resources */,
+				C90C3D202DB8B31600A1C13B /* hello_glasses.bundle in Resources */,
+				C90C3D212DB8B31600A1C13B /* huangm.bundle in Resources */,
+				C90C3D222DB8B31600A1C13B /* hello_baby.bundle in Resources */,
+				C90C3D232DB8B31600A1C13B /* sunflower_glasses 2.bundle in Resources */,
+				C90C3D242DB8B31600A1C13B /* uniform2.bundle in Resources */,
+				C90C3D252DB8B31600A1C13B /* xingxing.bundle in Resources */,
+				C90C3D262DB8B31600A1C13B /* Gentleman_hat.bundle in Resources */,
+				C90C3D272DB8B31600A1C13B /* glasses_space.bundle in Resources */,
+				C90C3D282DB8B31600A1C13B /* rabbit_holding_face.bundle in Resources */,
+				C90C3D292DB8B31600A1C13B /* toy_rabbit_ear_tie.bundle in Resources */,
+				C90C3D2A2DB8B31600A1C13B /* prison.bundle in Resources */,
+				C90C3D2B2DB8B31600A1C13B /* touhua.bundle in Resources */,
+				C90C3D2C2DB8B31600A1C13B /* red_glasses.bundle in Resources */,
+				C90C3D2D2DB8B31600A1C13B /* noodles.bundle in Resources */,
+				C90C3D2E2DB8B31600A1C13B /* shizitou.bundle in Resources */,
+				C90C3D2F2DB8B31600A1C13B /* flower.bundle in Resources */,
+				C90C3D302DB8B31600A1C13B /* fashion_laddy.bundle in Resources */,
+				C90C3D312DB8B31600A1C13B /* cat_on_the_head.bundle in Resources */,
+				C90C3D322DB8B31600A1C13B /* tears.bundle in Resources */,
+				C90C3D332DB8B31600A1C13B /* under_water_glasses.bundle in Resources */,
+				C90C3D342DB8B31600A1C13B /* heart_explode.bundle in Resources */,
+				C90C3D352DB8B31600A1C13B /* cute_cat.bundle in Resources */,
+				C90C3D362DB8B31600A1C13B /* dayuanerduo.bundle in Resources */,
+				C90C3D4C2DB8C79F00A1C13B /* baixiaomaohuxu in Resources */,
+				C90C3D372DB8B31600A1C13B /* cat_fa_qia.bundle in Resources */,
+				C90C3D382DB8B31600A1C13B /* liangshanaixinmao.bundle in Resources */,
+				C90C3D392DB8B31600A1C13B /* dog_tongue.bundle in Resources */,
+				C90C3D3A2DB8B31600A1C13B /* dahudiejie.bundle in Resources */,
+				C90C3D3B2DB8B31600A1C13B /* kitty.bundle in Resources */,
+				C90C3D3C2DB8B31600A1C13B /* lecher.bundle in Resources */,
+				C90C3D3D2DB8B31600A1C13B /* long_ear_rabbit.bundle in Resources */,
+				C90C3D3E2DB8B31600A1C13B /* myqueen.bundle in Resources */,
+				C90C3D3F2DB8B31600A1C13B /* toy_dog.bundle in Resources */,
+				C90C3D402DB8B31600A1C13B /* laugh.bundle in Resources */,
+				C90C3D412DB8B31600A1C13B /* cidinmaozi.bundle in Resources */,
+				C90C3D422DB8B31600A1C13B /* sheep.bundle in Resources */,
+				C90C3D432DB8B31600A1C13B /* rabbit_blush.bundle in Resources */,
+				C90C3D4A2DB8B95500A1C13B /* allStickers.json in Resources */,
+				C90C3D442DB8B31600A1C13B /* love_bubbles.bundle in Resources */,
+				C90C3D452DB8B31600A1C13B /* cat_claw.bundle in Resources */,
+				C90C3D462DB8B31600A1C13B /* qifei.bundle in Resources */,
+				C90C3D472DB8B31600A1C13B /* damengyanjing.bundle in Resources */,
+				C90C3D482DB8B31600A1C13B /* cream_cake.bundle in Resources */,
 				E3BD457F27474A9800CB44C9 /* Media.xcassets in Resources */,
 				C9FCFEAD2C85BE9D002E1906 /* xiongerduo.bundle in Resources */,
 				C95AB8702D93961900F59BD5 /* 2631742911906.png in Resources */,
@@ -427,6 +698,7 @@
 				E3B90820298E527300B96ADF /* bg.jpeg in Resources */,
 				C9CF085A2AAC9F4300B2C394 /* filter_model.bundle in Resources */,
 				E3BD454327474A5300CB44C9 /* Assets.xcassets in Resources */,
+				C90C3CC82DB883B300A1C13B /* sunflower_glasses.bundle in Resources */,
 				C9FCFEA92C85BE9D002E1906 /* candy.bundle in Resources */,
 				C99D8B6D2D7E8FAB00DC5D41 /* face_mask.png in Resources */,
 				E3BD458A27474A9800CB44C9 /* Localizable.strings in Resources */,
@@ -717,7 +989,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Thirdparty\"",
 				);
-				MARKETING_VERSION = 2.4.8;
+				MARKETING_VERSION = 2.4.9;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pixelFree.demo;
@@ -772,7 +1044,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Thirdparty\"",
 				);
-				MARKETING_VERSION = 2.4.8;
+				MARKETING_VERSION = 2.4.9;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pixelFree.demo;
