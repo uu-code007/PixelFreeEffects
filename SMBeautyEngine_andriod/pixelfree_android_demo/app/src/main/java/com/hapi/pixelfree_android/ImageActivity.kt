@@ -54,7 +54,7 @@ class ImageActivity: AppCompatActivity()  {
         options.inDensity = DisplayMetrics.DENSITY_DEFAULT // 设置输入密度为默认值
         options.inTargetDensity = resources.displayMetrics.densityDpi // 设置目标密度为设备屏幕密度
 
-        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.face_kh, options)
+        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.image_face, options)
 
         w = bitmap.width;
         h = bitmap.height;
