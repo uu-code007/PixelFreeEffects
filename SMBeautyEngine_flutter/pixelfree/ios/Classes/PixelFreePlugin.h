@@ -1,4 +1,4 @@
 #import <Flutter/Flutter.h>
 
-@interface PixelFreePlugin : NSObject<FlutterPlugin>
+@interface PixelfreePlugin : NSObject<FlutterPlugin>
 @end

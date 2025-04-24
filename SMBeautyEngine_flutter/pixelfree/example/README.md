@@ -1,6 +1,6 @@
-# pixel_free_example
+# pixelfree_example
 
-Demonstrates how to use the pixel_free plugin.
+Demonstrates how to use the pixelfree plugin.
 
 ## Getting Started
 

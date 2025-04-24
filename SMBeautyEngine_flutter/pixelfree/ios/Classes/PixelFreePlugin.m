@@ -19,7 +19,7 @@
 
 @end
 
-@interface PixelFreePlugin () <FlutterPlugin> {
+@interface PixelfreePlugin () <FlutterPlugin> {
   int64_t _textureId;
   GLTexture *_glTexture;
 
@@ -34,12 +34,12 @@
 
 @end
 
-@implementation PixelFreePlugin
+@implementation PixelfreePlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
   FlutterMethodChannel *channel =
-      [FlutterMethodChannel methodChannelWithName:@"pixel_free"
+      [FlutterMethodChannel methodChannelWithName:@"pixelfree"
                                   binaryMessenger:[registrar messenger]];
-  PixelFreePlugin *instance = [[PixelFreePlugin alloc] initWithTextures:registrar.textures];
+  PixelfreePlugin *instance = [[PixelfreePlugin alloc] initWithTextures:registrar.textures];
   [registrar addMethodCallDelegate:instance channel:channel];
 }
 

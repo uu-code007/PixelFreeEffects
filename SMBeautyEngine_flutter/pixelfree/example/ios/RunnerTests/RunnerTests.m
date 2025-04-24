@@ -2,7 +2,8 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-@import pixel_free;
+
+@import pixelfree;
 
 // This demonstrates a simple unit test of the Objective-C portion of this plugin's implementation.
 //
@@ -15,7 +16,7 @@
 @implementation RunnerTests
 
 - (void)testExample {
-  PixelFreePlugin *plugin = [[PixelFreePlugin alloc] init];
+  PixelfreePlugin *plugin = [[PixelfreePlugin alloc] init];
 
   FlutterMethodCall *call = [FlutterMethodCall methodCallWithMethodName:@"getPlatformVersion"
                                                               arguments:nil];

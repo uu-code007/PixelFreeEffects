@@ -4,10 +4,10 @@ import 'dart:ui' as ui;
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
-import 'package:pixel_free/pixel_free.dart';
+import 'package:pixelfree/pixelfree.dart';
 
 import 'dart:ui';
-import 'package:pixel_free/pixel_free_platform_interface.dart';
+import 'package:pixelfree/pixelfree_platform_interface.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main() {
@@ -26,13 +26,13 @@ class _MyAppState extends State<MyApp> {
   static const _modelAssetPath = 'assets/filter_model.bundle';
 
   double _currentValue = 0.0;
-  final _pixelFreePlugin = PixelFree();
+  final _pixelFreePlugin = Pixelfree();
   int _currentTextureId = 0;
   late final _rgba;
   int w = 720;
   int h = 1024;
   ui.Image? _processedImage;
-  bool _useTexture = true;
+  bool _useTexture = false;
   bool _isInitializing = false;
   String? _initializationError;
 
@@ -49,8 +49,6 @@ class _MyAppState extends State<MyApp> {
 
     try {
       final licPath = await _extractAssetToTemp(_licenseAssetPath);
-      // final modelPath = await _extractAssetToTemp(_modelAssetPath);
-      // debugPrint('Initialization path: $licPath\n$modelPath');
       await _pixelFreePlugin.createWithLic(licPath);
       await initPlatformState();
     } catch (e, stack) {
@@ -91,7 +89,6 @@ class _MyAppState extends State<MyApp> {
         return;
       }
 
-      print('Processing image with dimensions: $width x $height');
       final processedBytes = await processImageToByteData(bytes, width, height);
       if (processedBytes == null) {
         print('Failed to process image: received null bytes');
@@ -99,7 +96,6 @@ class _MyAppState extends State<MyApp> {
       }
 
       final uint8List = processedBytes.buffer.asUint8List();
-      print('Creating image with data size: ${uint8List.length}');
 
       // Validate data size
       final expectedSize = width * height * 4; // RGBA format
@@ -116,7 +112,6 @@ class _MyAppState extends State<MyApp> {
       setState(() {
         _processedImage = image; // No casting needed now
       });
-      print('Successfully created and displayed processed image');
     } catch (e, stackTrace) {
       print('Error in readerImageAsyncTask: $e\n$stackTrace');
     }

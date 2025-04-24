@@ -5,16 +5,16 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - pixel_free (0.0.1):
-    - Flutter
-    - PixelFree (= 2.4.8)
   - PixelFree (2.4.8)
+  - pixelfree (2.4.9):
+    - Flutter
+    - PixelFree
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
-  - pixel_free (from `.symlinks/plugins/pixel_free/ios`)
+  - pixelfree (from `.symlinks/plugins/pixelfree/ios`)
 
 SPEC REPOS:
   trunk:
@@ -27,16 +27,16 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
-  pixel_free:
-    :path: ".symlinks/plugins/pixel_free/ios"
+  pixelfree:
+    :path: ".symlinks/plugins/pixelfree/ios"
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
-  pixel_free: 1b549b5cb6209893cb25ee3c682c5cdb333c5376
   PixelFree: f9b49ad908cf69e95c40da141f33843bcd6ff914
+  pixelfree: 1d4fa217581837827dc0f34732cfdc04600f5a10
 
-PODFILE CHECKSUM: 0aa733d2e3c0f870e2e8eb3230899daea5fadee1
+PODFILE CHECKSUM: 6e700dec67e6deac9b1c69bb14c49a2217a12d15
 
 COCOAPODS: 1.12.1
