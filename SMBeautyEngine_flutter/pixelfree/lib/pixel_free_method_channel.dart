@@ -23,8 +23,8 @@ class MethodChannelPixelFree extends PixelFreePlatform {
   }
 
 @override
-Future<void> create() async {
-    await methodChannel.invokeMethod('create');
+Future<void> createWithLic(String licPath) async {
+    await methodChannel.invokeMethod('createWithLic',{'licPath': licPath});
   }
 
 @override

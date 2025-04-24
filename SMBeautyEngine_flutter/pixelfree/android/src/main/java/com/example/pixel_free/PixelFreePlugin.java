@@ -31,6 +31,10 @@ import android.util.Log;
 import android.util.LongSparseArray;
 import android.view.Surface;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 /** PixelFreePlugin */
 public class PixelFreePlugin implements FlutterPlugin, MethodCallHandler {
   /// The MethodChannel that will the communication between Flutter and native Android
@@ -88,26 +92,30 @@ public class PixelFreePlugin implements FlutterPlugin, MethodCallHandler {
   public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
     String method = call.method;
     switch (method) {
-      case "create":{
+      case "createWithLic":{
         if (mPixelFree.isCreate()) return;
         textureRegistry = flutterPluginBinding.getTextureRegistry();
         textureEntry = flutterPluginBinding.getTextureRegistry().createSurfaceTexture();
         surfaceTexture = textureEntry.surfaceTexture();
         mPixelFree.create();
-        Log.d("[PixelFree]", "eglGetError 1 " + EGL14.eglGetError());
-        byte[] bytes = mPixelFree.readBundleFile(mContext, "pixelfreeAuth.lic");
-        mPixelFree.auth(mContext, bytes, bytes.length);
-
+       String licPath = (String) call.argument("licPath");
+      //  String modlePath = (String) call.argument("modlePath");
+        byte[] bytes = new byte[0];
+        try {
+          bytes = loadBinaryFromPath(licPath);
+        } catch (IOException e) {
+          throw new RuntimeException(e);
+        }
+        //  byte[] bytes2 = loadBinaryFromPath(modlePath);
         byte[] bytes2 = mPixelFree.readBundleFile(mContext, "filter_model.bundle");
+        mPixelFree.auth(mContext, bytes, bytes.length);
         mPixelFree.createBeautyItemFormBundle(
                 bytes2,
                 bytes2.length,
                 PFSrcType.PFSrcTypeFilter
         );
 
-        // 默认设置一个瘦脸
-        mPixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFiterType.PFBeautyFiterTypeFace_narrow,1);
-
+        Log.d("[PixelFree]", "bytes len: " + bytes.length + "bytesw len: " + bytes2.length);
         result.success(textureEntry.id());
       }
         break;
@@ -201,6 +209,15 @@ public class PixelFreePlugin implements FlutterPlugin, MethodCallHandler {
     channel.setMethodCallHandler(null);
   }
 
+// 通过绝对路径读取二进制文件
+public byte[] loadBinaryFromPath(String filePath) throws IOException {
+    File file = new File(filePath);
+    FileInputStream fis = new FileInputStream(file);
+    byte[] data = new byte[(int) file.length()];
+    fis.read(data);
+    fis.close();
+    return data;
+}
 
 
 }

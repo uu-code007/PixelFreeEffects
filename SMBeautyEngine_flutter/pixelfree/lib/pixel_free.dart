@@ -10,8 +10,8 @@ class PixelFree {
   }
 
 
-  Future<void> create() {
-    return PixelFreePlatform.instance.create();
+  Future<void> createWithLic(String licPath) {
+    return PixelFreePlatform.instance.createWithLic(licPath);
   }
 
 

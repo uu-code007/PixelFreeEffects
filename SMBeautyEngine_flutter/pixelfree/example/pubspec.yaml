@@ -29,6 +29,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
   image: ^3.3.0
+  path_provider: ^2.1.5
 
 dev_dependencies:
   integration_test:
@@ -86,3 +87,5 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
     - assets/images/image_render.png
+    - assets/filter_model.bundle
+    - assets/pixelfreeAuth.lic

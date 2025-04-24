@@ -34,7 +34,7 @@ abstract class PixelFreePlatform extends PlatformInterface {
   }
 
 
-Future<void> create() {
+Future<void> createWithLic(String licPath) {
     throw UnimplementedError('not been implemented');
 }
 
