@@ -23,4 +23,4 @@ plugins {
 }
 
 include(":app")
-include(":sdk-aar")
+//include(":sdk-aar")

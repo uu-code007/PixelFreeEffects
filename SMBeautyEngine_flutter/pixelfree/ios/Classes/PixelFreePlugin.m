@@ -128,6 +128,12 @@
     CVPixelBufferUnlockBaseAddress(_renderTarget, kCVPixelBufferLock_ReadOnly);
 
     result(flutterData);
+  } else if ([@"processWithImageToByteData" isEqualToString:call.method]) {
+      int textrueID = (int )dicArguments[@"textrueID"];
+      int w = [dicArguments[@"width"] intValue];
+      int h = [dicArguments[@"height"] intValue];
+      [_mPixelFree processWithTexture:textrueID width:w height:h];
+      result(@(textrueID));
   } else if ([@"pixelFreeSetBeautyExtend" isEqualToString:call.method]) {  // 更新 2.4.5 后
     //        [_mPixelFree pixelFreeSetBeautyFiterParam:<#(int)#> value:<#(nonnull void *)#>]
     //        _textureId = [_textures unregisterTexture:_glTexture];

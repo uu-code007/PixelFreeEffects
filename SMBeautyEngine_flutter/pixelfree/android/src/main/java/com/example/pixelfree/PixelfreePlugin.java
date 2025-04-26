@@ -102,6 +102,19 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
         return pxInput.getTextureID();
     }
 
+    public int onPreProcessTexture(int textureid, int w, int h) {
+        PFIamgeInput pxInput = new PFIamgeInput();
+        if (mPixelFree.isCreate()) {
+            pxInput.setWigth(w);
+            pxInput.setHeight(h);
+            pxInput.setFormat(PFDetectFormat.PFFORMAT_IMAGE_TEXTURE);
+            pxInput.setRotationMode(PFRotationMode.PFRotationMode0);
+            pxInput.setTextureID(textureid);
+            mPixelFree.processWithBuffer(pxInput);
+        }
+        return pxInput.getTextureID();
+    }
+
 
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
@@ -248,6 +261,18 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
             }
             break;
 
+            case "processWithTextrueID": {
+                int inputTextureid = (int) call.argument("textrueID");
+                int w = (int) call.argument("width");
+                int h = (int) call.argument("height");
+
+                int textureID = onPreProcessTexture(inputTextureid, w, h);
+                result.success(textureID);
+            }
+            break;
+
+            
+
             case "release": {
                 mPixelFree.release();
                 result.success(null);
@@ -278,7 +303,6 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
     private byte[] bitmapToRgbaByteArray(Bitmap bitmap) {
         try {
             int size = bitmap.getByteCount();
-//            Log.d("[PixelFree]", "Creating buffer of size: " + size);
 
             ByteBuffer buffer = ByteBuffer.allocate(size);
             bitmap.copyPixelsToBuffer(buffer);

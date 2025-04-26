@@ -73,6 +73,9 @@ Future<ByteData?> processWithImageToByteData(Uint8List imageData, int width, int
     throw UnimplementedError('processWithImageToByteData() has not been implemented.');
 }
 
+Future<int?> processWithTextrueID(int textrueID, int w, int h) async {
+     throw UnimplementedError('processWithTextrueID not been implemented');
+}
 //  Future<Uint8List> readBundleFile(String fileName) {
 //     throw UnimplementedError('not been implemented');
 // }

@@ -53,9 +53,14 @@ class Pixelfree {
     return PixelfreePlatform.instance.processWithBuffer(imageInput);
   }
 
-  // 图片渲染
+  // 渲染返回buffer 接口
   Future<int> processWithImage(Uint8List imageData, int w, int h) async {
     return PixelfreePlatform.instance.processWithImage(imageData, w, h);
+  }
+
+    // 渲染纹理接口
+  Future<int?> processWithTextrueID(int textrueID, int w, int h) async {
+    return PixelfreePlatform.instance.processWithTextrueID(textrueID, w, h);
   }
 
   Future<ByteData?> processWithImageToByteData(

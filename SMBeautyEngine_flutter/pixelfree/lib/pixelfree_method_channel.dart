@@ -33,7 +33,6 @@ Future<bool> isCreate() async {
     return await methodChannel.invokeMethod('isCreate');
   }
 
-
 @override
 Future<void> pixelFreeSetBeautyExtend(
       PFBeautyFiterType type, String value) async {
@@ -108,6 +107,15 @@ Future<ByteData?> processWithImageToByteData(Uint8List imageData, int width, int
     }
 }
 
+
+Future<int?> processWithTextrueID(int textrueID, int w, int h) async {
+      final textureid = await methodChannel.invokeMethod<int>('processWithTextrueID', {
+            'textrueID': textrueID,
+            'width': w,
+            'height': h,
+        });
+     return textureid;
+}
 
 
 
