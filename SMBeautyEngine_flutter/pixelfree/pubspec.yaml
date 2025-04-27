@@ -1,6 +1,6 @@
 name: pixelfree
 description: "A PixelFree image processing plugin.."
-version: 2.4.9
+version: 2.4.10
 homepage: https://github.com/uu-code007/PixelFreeEffects # 项目主页
 repository: https://github.com/uu-code007/PixelFreeEffects # 代码仓库
 environment:

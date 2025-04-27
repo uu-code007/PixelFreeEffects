@@ -10,8 +10,6 @@
 
 集成接入参考  *pixelFreeEffects* 演示**DEMO**
 
-注：演示所有素材均来源于网络，如有侵权邮件告知（微信号：17376595626 email:idphoto007@163.com）,将第一时间删除
-
 #### 美颜效果 
 
 磨皮的同时，保留更多细节，美化与真实并存
@@ -62,6 +60,8 @@
 
 [android 接入文档](./doc/doc_android.md)
 
+[flutter 接入文档](./doc/doc_flutter.md)
+
 [常见问题](./doc/frequently_asked_questions.md)
 
 [更新日志](./doc/release_note.md)
@@ -80,7 +80,7 @@
 
 
 
+**注1**：演示所有素材均来源于网络，如有侵权邮件告知（微信号：17376595626 email:idphoto007@163.com）,将第一时间删除
 
-
-
+**注2**：开发不易，SDK 相机调色可免费使用，其他功能需付费，添加我微信请备注 github ，非诚勿扰
 

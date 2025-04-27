@@ -1,3 +1,6 @@
+## 2.4.10
+优化 android 依赖 pixelfree 逻辑  
+
 ## 2.4.9
 
 发布flutter 插件,支持

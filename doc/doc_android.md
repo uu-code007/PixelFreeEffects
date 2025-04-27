@@ -1,5 +1,17 @@
 # pixelFree 美颜SDK使用文档 
 
+#### iOS 接入方式
+
+1. 手动接入
+
+   Demo 工程中有子工程 sdk-aar 拖入到你的项目中，并引用
+
+2. Maven 导入
+
+   ```
+   implementation 'io.github.uu-code007:lib_pixelFree:2.4.9'
+   ```
+
 
 ####  仅需四步，完成接入使用  
 
