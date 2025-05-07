@@ -209,20 +209,20 @@
 
 -(void)viewWillDisappear:(BOOL)animated{
     // 归档
-    NSData *shapeParamsData = [NSKeyedArchiver archivedDataWithRootObject:_beautyEditView.shapeParams];
-    NSData *skinParamsData = [NSKeyedArchiver archivedDataWithRootObject:_beautyEditView.skinParams];
-    NSData *stickerseData = [NSKeyedArchiver archivedDataWithRootObject:_beautyEditView.stickersParams];
-    
-    NSUserDefaults*userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setInteger:_beautyEditView.oneKeyType forKey:@"oneKeyType"];
-    [userDefaults setInteger:_beautyEditView.filterIndex forKey:@"filtersUseIndex"];
-    [userDefaults setInteger:_beautyEditView.stickersIndex forKey:@"stickerUseIndex"];
-    [userDefaults synchronize];
-    
-    // 写本地
-    [self writeData:shapeParamsData fileName:@"shapeParamsData"];
-    [self writeData:skinParamsData fileName:@"skinParamsData"];
-    [self writeData:stickerseData fileName:@"stickerseData"];
+//    NSData *shapeParamsData = [NSKeyedArchiver archivedDataWithRootObject:_beautyEditView.shapeParams];
+//    NSData *skinParamsData = [NSKeyedArchiver archivedDataWithRootObject:_beautyEditView.skinParams];
+//    NSData *stickerseData = [NSKeyedArchiver archivedDataWithRootObject:_beautyEditView.stickersParams];
+//    
+//    NSUserDefaults*userDefaults = [NSUserDefaults standardUserDefaults];
+//    [userDefaults setInteger:_beautyEditView.oneKeyType forKey:@"oneKeyType"];
+//    [userDefaults setInteger:_beautyEditView.filterIndex forKey:@"filtersUseIndex"];
+//    [userDefaults setInteger:_beautyEditView.stickersIndex forKey:@"stickerUseIndex"];
+//    [userDefaults synchronize];
+//    
+//    // 写本地
+//    [self writeData:shapeParamsData fileName:@"shapeParamsData"];
+//    [self writeData:skinParamsData fileName:@"skinParamsData"];
+//    [self writeData:stickerseData fileName:@"stickerseData"];
     
 }
 

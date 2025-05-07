@@ -82,8 +82,8 @@
 		C958A31D2D9004E20019ED6F /* ToolUI.m in Sources */ = {isa = PBXBuildFile; fileRef = C958A31C2D9004E20019ED6F /* ToolUI.m */; };
 		C958A3302D91867D0019ED6F /* Pods_SMBeautyEngine_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C958A32D2D9186710019ED6F /* Pods_SMBeautyEngine_iOS.framework */; };
 		C95AB8702D93961900F59BD5 /* 2631742911906.png in Resources */ = {isa = PBXBuildFile; fileRef = C95AB86F2D93961900F59BD5 /* 2631742911906.png */; };
-		C98CA1582DB8F5D700DF3619 /* PixelFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C98CA1562DB8F56000DF3619 /* PixelFree.framework */; };
-		C98CA1592DB8F5D800DF3619 /* PixelFree.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C98CA1562DB8F56000DF3619 /* PixelFree.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C98CA1672DCAEB4B00DF3619 /* PixelFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C98CA1652DCAEB3B00DF3619 /* PixelFree.framework */; };
+		C98CA1682DCAEB4B00DF3619 /* PixelFree.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C98CA1652DCAEB3B00DF3619 /* PixelFree.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C99D8B6D2D7E8FAB00DC5D41 /* face_mask.png in Resources */ = {isa = PBXBuildFile; fileRef = C99D8B6C2D7E8FAB00DC5D41 /* face_mask.png */; };
 		C9AFDF0D2BC92ED9009C38CD /* qiniu_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C9AFDF0C2BC92ED9009C38CD /* qiniu_logo.png */; };
 		C9BB18232D858830002AF75D /* face2.png in Resources */ = {isa = PBXBuildFile; fileRef = C9BB18222D858830002AF75D /* face2.png */; };
@@ -131,13 +131,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		C98CA15A2DB8F5D800DF3619 /* Embed Frameworks */ = {
+		C98CA1692DCAEB4B00DF3619 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C98CA1592DB8F5D800DF3619 /* PixelFree.framework in Embed Frameworks */,
+				C98CA1682DCAEB4B00DF3619 /* PixelFree.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -229,7 +229,7 @@
 		C958A31C2D9004E20019ED6F /* ToolUI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToolUI.m; sourceTree = "<group>"; };
 		C958A32D2D9186710019ED6F /* Pods_SMBeautyEngine_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_SMBeautyEngine_iOS.framework; path = "../../../../Library/Developer/Xcode/DerivedData/SMBeautyEngine_iOS-fzdtawbuxtsbdeaqkxzxbdrevrwh/Build/Products/Debug-iphoneos/Pods_SMBeautyEngine_iOS.framework"; sourceTree = "<group>"; };
 		C95AB86F2D93961900F59BD5 /* 2631742911906.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2631742911906.png; sourceTree = "<group>"; };
-		C98CA1562DB8F56000DF3619 /* PixelFree.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PixelFree.framework; sourceTree = "<group>"; };
+		C98CA1652DCAEB3B00DF3619 /* PixelFree.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PixelFree.framework; sourceTree = "<group>"; };
 		C99D8B6C2D7E8FAB00DC5D41 /* face_mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face_mask.png; sourceTree = "<group>"; };
 		C9AFDF0C2BC92ED9009C38CD /* qiniu_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qiniu_logo.png; sourceTree = "<group>"; };
 		C9BB18222D858830002AF75D /* face2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face2.png; sourceTree = "<group>"; };
@@ -308,9 +308,9 @@
 			files = (
 				C958A3302D91867D0019ED6F /* Pods_SMBeautyEngine_iOS.framework in Frameworks */,
 				C9CF08542AA9E83800B2C394 /* CoreML.framework in Frameworks */,
+				C98CA1672DCAEB4B00DF3619 /* PixelFree.framework in Frameworks */,
 				E31A9AC02903913400AF311C /* CoreImage.framework in Frameworks */,
 				C9CF037B2A8670FC00B2C394 /* Accelerate.framework in Frameworks */,
-				C98CA1582DB8F5D700DF3619 /* PixelFree.framework in Frameworks */,
 				C9C0EC062D9688D200BE1D3A /* libz.tbd in Frameworks */,
 				E3BD4590274752DC00CB44C9 /* libc++.tbd in Frameworks */,
 			);
@@ -428,7 +428,7 @@
 		E3BD452A27474A4E00CB44C9 = {
 			isa = PBXGroup;
 			children = (
-				C98CA1562DB8F56000DF3619 /* PixelFree.framework */,
+				C98CA1652DCAEB3B00DF3619 /* PixelFree.framework */,
 				E3BD453527474A4E00CB44C9 /* SMBeautyEngine_iOS */,
 				E3BD453427474A4E00CB44C9 /* Products */,
 				E3BD458E274752D600CB44C9 /* Frameworks */,
@@ -569,7 +569,7 @@
 				E3BD453027474A4E00CB44C9 /* Frameworks */,
 				E3BD453127474A4E00CB44C9 /* Resources */,
 				52EBBC8AC168428F0F72EE10 /* [CP] Embed Pods Frameworks */,
-				C98CA15A2DB8F5D800DF3619 /* Embed Frameworks */,
+				C98CA1692DCAEB4B00DF3619 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -969,7 +969,6 @@
 					"\"$(SRCROOT)/../PixelFreeCxx/Include\"",
 					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Include\"",
 					"\"$(SRCROOT)/../PixelFreeCxx/DetectFace/c\"",
-					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Thirdparty/png\"",
 				);
 				INFOPLIST_FILE = SMBeautyEngine_iOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "望图美颜SDK";
@@ -989,7 +988,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Thirdparty\"",
 				);
-				MARKETING_VERSION = 2.4.9;
+				MARKETING_VERSION = 2.4.11;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pixelFree.demo;
@@ -1024,7 +1023,6 @@
 					"\"$(SRCROOT)/../PixelFreeCxx/Include\"",
 					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Include\"",
 					"\"$(SRCROOT)/../PixelFreeCxx/DetectFace/c\"",
-					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Thirdparty/png\"",
 				);
 				INFOPLIST_FILE = SMBeautyEngine_iOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "望图美颜SDK";
@@ -1044,7 +1042,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Thirdparty\"",
 				);
-				MARKETING_VERSION = 2.4.9;
+				MARKETING_VERSION = 2.4.11;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pixelFree.demo;

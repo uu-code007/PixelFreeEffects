@@ -108,13 +108,18 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
             this.pixelFreeGetter = { mPixelFree }
             setList(ArrayList<BeautyItem>().apply {
                 add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.5f, "origin", R.mipmap.filter_origin))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.5f, "meibai1", R.mipmap.f_meibai1))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.5f, "liangbai1", R.mipmap.f_bailiang))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.5f, "fennen1", R.mipmap.f_fennen1))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.5f, "nuansediao1", R.mipmap.f_nuansediao1))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.5f, "gexing1", R.mipmap.f_gexing1))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.5f, "xiaoqingxin1", R.mipmap.f_xiaoqingxin1))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.5f, "heibai1", R.mipmap.f_heibai1))
+                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.8f, "chulian", R.mipmap.chulian))
+                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.8f, "chuxin", R.mipmap.chuxin))
+                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.8f, "fennen", R.mipmap.f_fennen1))
+                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.8f, "lengku", R.mipmap.lengku))
+                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.8f, "meiwei", R.mipmap.meiwei))
+                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.8f, "naicha", R.mipmap.naicha))
+                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.8f, "pailide", R.mipmap.pailide))
+
+                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.8f, "qingxin", R.mipmap.qingxin))
+                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.8f, "rixi", R.mipmap.rixi))
+                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.8f, "riza", R.mipmap.riza))
+                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.8f, "weimei", R.mipmap.weimei))
             })
         }
     }

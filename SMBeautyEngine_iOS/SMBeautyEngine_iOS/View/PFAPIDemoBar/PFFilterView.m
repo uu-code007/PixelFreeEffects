@@ -59,7 +59,7 @@
     
     cell.titleLabel.text = NSLocalizedString(model.mTitle,nil);
     cell.titleLabel.textColor = [UIColor whiteColor];
-    cell.imageView.image = [UIImage imageWithName:model.mTitle];
+    cell.imageView.image = [UIImage imageWithName:model.mParam];
     
     cell.imageView.layer.borderWidth = 0.0 ;
     cell.imageView.layer.borderColor = [UIColor clearColor].CGColor;

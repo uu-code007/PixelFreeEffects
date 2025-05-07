@@ -89,8 +89,8 @@
         [[AdjustmentItem alloc] initWithName:@"亮度" value:0.0 minValue:-1.0 maxValue:1.0], // brightness
         [[AdjustmentItem alloc] initWithName:@"对比度" value:1.0 minValue:0.0 maxValue:4.0], // contrast
         [[AdjustmentItem alloc] initWithName:@"曝光" value:0.0 minValue:-10.0 maxValue:10.0], // exposure
-        [[AdjustmentItem alloc] initWithName:@"高光" value:1.0 minValue:0.0 maxValue:1.0], // highlights
-        [[AdjustmentItem alloc] initWithName:@"阴影" value:0.0 minValue:0.0 maxValue:1.0], // shadows
+        [[AdjustmentItem alloc] initWithName:@"高光" value:0.0 minValue:-1.0 maxValue:1.0], // highlights
+        [[AdjustmentItem alloc] initWithName:@"阴影" value:0.0 minValue:-1.0 maxValue:1.0], // shadows
         [[AdjustmentItem alloc] initWithName:@"饱和度" value:1.0 minValue:0.0 maxValue:2.0], // saturation
         [[AdjustmentItem alloc] initWithName:@"色温" value:5000.0 minValue:0.0 maxValue:10000.0], // temperature
         [[AdjustmentItem alloc] initWithName:@"色相" value:0.0 minValue:0.0 maxValue:360.0] // hue
@@ -101,6 +101,7 @@
         [[AdjustmentItem alloc] initWithName:@"色相" value:0.0 minValue:-0.45 maxValue:0.45], // brightness
         [[AdjustmentItem alloc] initWithName:@"饱和度" value:1.0 minValue:0.3 maxValue:1.8], // contrast
         [[AdjustmentItem alloc] initWithName:@"明亮度" value:0.0 minValue:-3.0 maxValue:3.0], // exposure
+        [[AdjustmentItem alloc] initWithName:@"相似度" value:0.8 minValue:0.0 maxValue:1.0], // exposure
     ];
     
     // 创建 ToolUI
@@ -145,7 +146,7 @@
         .brightness = 0.0f,
         .contrast = 1.0f,
         .exposure = 0.0f,
-        .highlights = 1.0f,
+        .highlights = 0.0f,
         .shadows = 0.0f,
         .saturation = 1.0f,
         .temperature = 5000.0f,
@@ -157,7 +158,8 @@
     PFHLSFilterParams HLSFilterParams = {
         .brightness = 0.0f,
         .saturation = 1.0f,
-        .hue = 0.0f
+        .hue = 0.0f,
+        .similarity = 0.8
     };
     HLSFilterParams.key_color[0] = 0.75;
     HLSFilterParams.key_color[1] = 0.24;
@@ -323,6 +325,8 @@
             mHLSFilterParams.hue = item.value;
         } else if ([item.name isEqualToString:@"饱和度"]) {
             mHLSFilterParams.saturation = item.value;
+        } else if ([item.name isEqualToString:@"相似度"]) {
+            mHLSFilterParams.similarity = item.value;
         }
     [self.mPixelFree pixelFreeChangeHLSFilter:handle params:&mHLSFilterParams];
 }

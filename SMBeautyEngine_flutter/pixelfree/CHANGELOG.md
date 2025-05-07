@@ -1,3 +1,9 @@
+## 2.4.12
+降低 flutter sdk 最低版本
+
+## 2.4.11
+降低 flutter sdk 最低版本
+
 ## 2.4.10
 优化 android 依赖 pixelfree 逻辑  
 

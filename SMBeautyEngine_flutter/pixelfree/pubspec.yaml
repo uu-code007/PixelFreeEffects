@@ -1,11 +1,11 @@
 name: pixelfree
 description: "A PixelFree image processing plugin.."
-version: 2.4.10
+version: 2.4.12
 homepage: https://github.com/uu-code007/PixelFreeEffects # 项目主页
 repository: https://github.com/uu-code007/PixelFreeEffects # 代码仓库
 environment:
-  sdk: ^3.7.2
-  flutter: '>=3.3.0'
+  sdk: '>=3.5.4 <4.0.0'
+  flutter: '>=3.0.0'
 
 dependencies:
   flutter:

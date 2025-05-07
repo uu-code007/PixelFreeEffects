@@ -15,13 +15,13 @@ import androidx.appcompat.app.AppCompatActivity
 import com.hapi.avparam.ImgFmt
 import com.hapi.avparam.VideoFrame
 import com.hapi.avrender.HapiCapturePreView
-import com.hapi.avrender.ScaleType
 import com.hapi.pixelfree.PFDetectFormat
 import com.hapi.pixelfree.PFIamgeInput
 import com.hapi.pixelfree.PFRotationMode
 import com.hapi.pixelfree.PFSrcType
 import com.hapi.pixelfree.PixelFree
 import com.hapi.pixelfreeuikit.PixeBeautyDialog
+import com.hapi.pixelfreeuikit.ColorGradingDialog
 import java.nio.ByteBuffer
 
 class ImageActivity: AppCompatActivity()  {
@@ -31,6 +31,9 @@ class ImageActivity: AppCompatActivity()  {
     }
     private val mPixeBeautyDialog by lazy {
         PixeBeautyDialog(mPixelFree)
+    }
+    private val mColorGradingDialog by lazy {
+        ColorGradingDialog(this, mPixelFree) {}
     }
 
     private val handler = Handler(Looper.getMainLooper())
@@ -64,8 +67,8 @@ class ImageActivity: AppCompatActivity()  {
         // 启动定时任务
         handler.postDelayed(updateImageRunnable, 1)
 
-        hapiCapturePreView.mHapiGLSurfacePreview.mOpenGLRender.glCreateCall = {
-            hapiCapturePreView.setMirror(mirrorHorizontal = true)
+//        hapiCapturePreView.mHapiGLSurfacePreview.mOpenGLRender.glCreateCall = {
+//            hapiCapturePreView.setMirror(mirrorHorizontal = true)
 
             //在绑定上下文后初始化
             mPixelFree.create()
@@ -80,9 +83,9 @@ class ImageActivity: AppCompatActivity()  {
             )
 
             mPixeBeautyDialog.show(supportFragmentManager, "")
-        }
+//        }
 
-        hapiCapturePreView.setScaleType(ScaleType.FIT_CENTER)
+//        hapiCapturePreView.setScaleType(ScaleType.FIT_CENTER)
         findViewById<Button>(R.id.showBeauty).setOnClickListener {
             mPixeBeautyDialog.show(supportFragmentManager, "")
         }
@@ -97,6 +100,11 @@ class ImageActivity: AppCompatActivity()  {
                 }
             }
         })
+
+        // 添加颜色调节按钮
+        findViewById<Button>(R.id.showColorGrading).setOnClickListener {
+            mColorGradingDialog.show()
+        }
 
         fpstTextView = findViewById<TextView>(R.id.fpst)
 
@@ -138,21 +146,22 @@ class ImageActivity: AppCompatActivity()  {
                 }
 
                 // 截图
-                if (frameCount == 100) {
+//                if (frameCount == 100) {
 //                    mPixelFree.glThread.runOnGLThread {
 //                        textureIdToBitmap(pxInput.textureID,pxInput.wigth,pxInput.height);
 //                    }
                     mPixelFree.textureIdToBitmap(pxInput.textureID, pxInput.wigth, pxInput.height) { bitmap ->
                         if (bitmap != null) {
                             println("[PixelFree] get image bitmap")
+                            displayBitmap(bitmap)
                         } else {
                             // Handle error case
                         }
                     }
-                }
+//                }
 
                 if (frame != null) {
-                    hapiCapturePreView.onFrame(frame)
+//                    hapiCapturePreView.onFrame(frame)
 //                    println("frame.textureID : ${frame.textureID}")
                 };
 
@@ -182,6 +191,23 @@ class ImageActivity: AppCompatActivity()  {
             handler.postDelayed(this, delay) // 每分钟调用 30 次
         }
     }
+
+    private fun displayBitmap(bitmap: Bitmap) {
+        runOnUiThread { // 确保在主线程更新UI
+            val imageView = findViewById<ImageView>(R.id.imageView) // 替换为您的ImageView ID
+            imageView.setImageBitmap(bitmap)
+
+            val info = """
+        🖼️ Bitmap信息:
+        尺寸: ${bitmap.width}x${bitmap.height}
+        格式: ${bitmap.config}
+        内存: ${bitmap.allocationByteCount / 1024} KB
+        状态: ${if (bitmap.isRecycled) "已回收" else "可用"}
+    """.trimIndent()
+            Log.d("BitmapDebug", info);
+        }
+    }
+
 
     private fun convertBitmapToRGBA(bitmap: Bitmap): ByteArray {
         val width = bitmap.width

@@ -12,24 +12,31 @@
 @implementation PFDateHandle
 
 +(NSArray<PFBeautyParam *>*)setupFilterData{
-    NSArray *beautyFiltersDataSource = @[@"origin",@"meibai1",
+    NSArray *beautyFiltersDataSource = @[@"origin",@"chengshi",
                             
-                                         @"liangbai1",
-                                         @"fennen1",
-                                         @"nuansediao1",
-                                         @"gexing1",
-                                         @"xiaoqingxin1",
-                                         @"heibai1"];
+                                         @"chulian",
+                                         @"chuxin",
+                                         @"fennen",
+                                         @"hupo",
+                                         @"lengku",
+                                         @"meiwei",@"naicha",@"pailide",@"qingxin",@"rixi",@"riza",@"weimei"];
     
-    NSDictionary *filtersCHName = @{@"origin":@"原图",@"filter_lutup_ol":@"时尚",@"filter_lutup_pink":@"粉嫩"};
-    NSDictionary *titelDic = @{@"origin":@"原图",@"meibai1":@"美白",@"liangbai1":@"白亮", @"fennen1":@"粉嫩",@"nuansediao1":@"暖色调",@"gexing1":@"个性1",@"xiaoqingxin1":@"小清新",@"heibai1":@"黑白"};
+
+    NSDictionary *titelDic = @{@"origin":@"原图",@"chengshi":@"城市",
+                               
+                               @"chulian":@"初恋",
+                               @"chuxin":@"初心",
+                               @"fennen":@"粉嫩",
+                               @"hupo":@"琥珀",
+                               @"lengku":@"冷酷",
+                               @"meiwei":@"美味",@"naicha":@"奶茶",@"pailide":@"拍立得",@"qingxin":@"清新",@"rixi":@"日系",@"riza":@"日杂",@"weimei":@"唯美"};
 
     NSMutableArray *array = [[NSMutableArray alloc] init];
     for (NSString *str in beautyFiltersDataSource) {
         PFBeautyParam *modle = [[PFBeautyParam alloc] init];
         modle.mParam = str;
         modle.mTitle = [titelDic valueForKey:str];
-        modle.mValue = 0.5;
+        modle.mValue = 0.8;
         modle.type = FUDataTypeFilter;
         [array addObject:modle];
     }
@@ -99,9 +106,9 @@
 }
 
 +(NSArray<PFBeautyParam *>*)setupFaceType{
-   NSArray *prams = @[@"makeup_noitem",@"ziran",@"keai",@"nvshen",@"baijing"];//,@"chri1"
+   NSArray *prams = @[@"origin",@"ziran",@"keai",@"nvshen",@"baijing"];//,@"chri1"
 
-  NSDictionary *titelDic = @{@"makeup_noitem":@"origin",@"ziran":@"自然",@"keai":@"可爱",@"nvshen":@"女神",@"baijing":@"白净"};
+  NSDictionary *titelDic = @{@"origin":@"origin",@"ziran":@"自然",@"keai":@"可爱",@"nvshen":@"女神",@"baijing":@"白净"};
     
    NSMutableArray *array = [[NSMutableArray alloc] init];
    for (NSString *str in prams) {
@@ -172,7 +179,7 @@
 
 
 +(NSArray<PFBeautyParam *>*)setupStickers{
-    NSMutableArray *beautyFiltersDataSource = [@[@"origin",@"flowers",@"candy",@"maorong",@"xiongerduo",@"xiantiaoxiongmao",@"sunflower_glasses"] mutableCopy];
+    NSMutableArray *beautyFiltersDataSource = [@[@"origin",@"flowers",@"candy",@"maorong",@"xiongerduo",@"xiantiaoxiongmao"] mutableCopy];
 
     NSDictionary *titelDic = @{@"origin":@"origin",@"flowers":@"flowers",@"baixiaomao":@"baixiaomao",@"candy":@"candy",@"maorong":@"maorong",@"xiongerduo":@"xiongerduo",@"xiantiaoxiongmao":@"xiantiaoxiongmao"};
     

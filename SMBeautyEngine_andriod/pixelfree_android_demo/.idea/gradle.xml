@@ -4,6 +4,7 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <option name="testRunner" value="CHOOSE_PER_TEST" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleJvm" value="corretto-11" />
         <option name="modules">
@@ -11,11 +12,10 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/hapiAVRender" />
+            <option value="$PROJECT_DIR$/lib_pixelFree" />
             <option value="$PROJECT_DIR$/lib_pixelFree_uikit" />
-            <option value="$PROJECT_DIR$/sdk-aar" />
           </set>
         </option>
-        <option name="resolveExternalAnnotations" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

@@ -17,8 +17,18 @@ tools:context=".StartActivity">
         app:layout_constraintTop_toTopOf="parent"
 />
 
-    <com.hapi.avrender.HapiCapturePreView
-        android:id="@+id/preview"
+<!--    <com.hapi.avrender.HapiCapturePreView-->
+<!--        android:id="@+id/preview"-->
+<!--        android:layout_width="300dp"-->
+<!--        android:layout_height="400dp"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:text="@string/fps_30"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.5"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="300dp"
         android:layout_height="400dp"
         android:layout_marginTop="50dp"
@@ -35,5 +45,14 @@ tools:context=".StartActivity">
         android:text="美颜"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/showColorGrading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="颜色调节"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/showBeauty" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
