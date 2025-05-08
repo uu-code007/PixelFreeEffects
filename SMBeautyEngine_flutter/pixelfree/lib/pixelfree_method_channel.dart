@@ -79,30 +79,24 @@ Future<ByteData?> processWithImageToByteData(Uint8List imageData, int width, int
         });
         
         if (result == null) {
-            // print('processWithImageToByteData - Received null result');
             return null;
         }
 
         final List<int> resultList = result as List<int>;
-        // print('processWithImageToByteData - Result data size: ${resultList.length}');
         
         if (resultList.isEmpty) {
-            // print('processWithImageToByteData - Received empty result');
             return null;
         }
 
-        // 确保返回的数据大小与输入图像大小匹配
         final expectedSize = width * height * 4; // RGBA format
         if (resultList.length != expectedSize) {
-            // print('processWithImageToByteData - Invalid data size. Expected: $expectedSize, Got: ${resultList.length}');
             return null;
         }
 
-        final byteData = ByteData.view(Uint8List.fromList(resultList).buffer);
-        // print('processWithImageToByteData - Successfully created ByteData');
-        return byteData;
+        // 直接使用 resultList 创建 ByteData，避免创建额外的 Uint8List
+        return ByteData.view(Uint8List.fromList(resultList).buffer);
     } catch (e) {
-        // print('Error in processWithImageToByteData: $e');
+        print('Error in processWithImageToByteData: $e');
         return null;
     }
 }

@@ -68,11 +68,16 @@ class Pixelfree {
     int width,
     int height,
   ) async {
-    return PixelfreePlatform.instance.processWithImageToByteData(
-      imageData,
-      width,
-      height,
-    );
+    try {
+        return await PixelfreePlatform.instance.processWithImageToByteData(
+            imageData,
+            width,
+            height,
+        );
+    } catch (e) {
+        print('Error in processWithImageToByteData: $e');
+        return null;
+    }
   }
 
   // Future<Uint8List> readBundleFile(String fileName) {

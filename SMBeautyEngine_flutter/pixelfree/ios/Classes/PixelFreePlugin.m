@@ -127,9 +127,11 @@
 
     CVPixelBufferUnlockBaseAddress(_renderTarget, kCVPixelBufferLock_ReadOnly);
 
+    CVPixelBufferRelease(_renderTarget);
     result(flutterData);
-  } else if ([@"processWithImageToByteData" isEqualToString:call.method]) {
-      int textrueID = (int )dicArguments[@"textrueID"];
+      
+  } else if ([@"processWithTextrueID" isEqualToString:call.method]) {
+      int textrueID = (int)dicArguments[@"textrueID"];
       int w = [dicArguments[@"width"] intValue];
       int h = [dicArguments[@"height"] intValue];
       [_mPixelFree processWithTexture:textrueID width:w height:h];

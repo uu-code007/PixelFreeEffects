@@ -137,16 +137,23 @@ class _MyAppState extends State<MyApp> {
 
   Future<ByteData?> processImageToByteData(
       ByteData inputBytes, int width, int height) async {
+    ByteData? processedBytes;
     try {
-      final result = await _pixelFreePlugin.processWithImageToByteData(
-        inputBytes.buffer.asUint8List(0),
-        width,
-        height,
-      );
-      return result;
+        processedBytes = await _pixelFreePlugin.processWithImageToByteData(
+            inputBytes.buffer.asUint8List(0),
+            width,
+            height,
+        );
+        return processedBytes;
     } catch (e) {
-      print('Error processing image: $e');
-      return null;
+        print('Error processing image: $e');
+        return null;
+    } finally {
+        // 确保在使用完后释放资源
+        if (processedBytes != null) {
+            // 如果 processedBytes 有 dispose 方法，调用它
+            // processedBytes.dispose();
+        }
     }
   }
 
@@ -235,5 +242,13 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // 清理资源
+    _processedImage?.dispose();
+    _rgba = null;
+    super.dispose();
   }
 }
