@@ -24,13 +24,11 @@ A new Flutter plugin project.
   # 添加资源文件
   s.resources = [
     'pod/res/filter_model.bundle',
-    'pod/res/*.jpeg'
   ]
   
   # 确保资源文件被正确复制
   s.preserve_paths = [
     'pod/res/filter_model.bundle',
-    'pod/res/*.jpeg'
   ]
 
   # Flutter.framework does not contain a i386 slice.

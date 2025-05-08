@@ -72,4 +72,40 @@ flutter:
   # https://flutter.dev/to/font-from-package
 
   assets:
-    - assets/icons/
+    - assets/icons/yuantu.png
+    - assets/icons/face_ziran.png
+    - assets/icons/face_keai.png
+    - assets/icons/face_nvsheng.png
+    - assets/icons/face_baijin.png
+    - assets/icons/f_meibai1.png
+    - assets/icons/hongrun.png
+    - assets/icons/mopi.png
+    - assets/icons/liangyan.png
+    - assets/icons/ruihua.png
+    - assets/icons/huazhizengqiang.png
+    - assets/icons/dayan.png
+    - assets/icons/shoulian.png
+    - assets/icons/zhailian.png
+    - assets/icons/xiaba.png
+    - assets/icons/vlian.png
+    - assets/icons/xianlian.png
+    - assets/icons/bizhi.png
+    - assets/icons/etou.png
+    - assets/icons/zuiba.png
+    - assets/icons/renzhong.png
+    - assets/icons/changbi.png
+    - assets/icons/yanju.png
+    - assets/icons/weixiaozuijiao.png
+    - assets/icons/yanjingjiaodu.png
+    - assets/icons/kaiyanjiao.png
+    - assets/icons/chulian.png
+    - assets/icons/chuxin.png
+    - assets/icons/f_fennen1.png
+    - assets/icons/lengku.png
+    - assets/icons/meiwei.png
+    - assets/icons/naicha.png
+    - assets/icons/pailide.png
+    - assets/icons/qingxin.png
+    - assets/icons/rixi.png
+    - assets/icons/riza.png
+    - assets/icons/weimei.png

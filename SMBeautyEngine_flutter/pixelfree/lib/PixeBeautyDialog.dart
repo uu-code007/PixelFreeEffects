@@ -17,6 +17,8 @@ class PixeBeautyDialog extends StatefulWidget {
 class _PixeBeautyDialogState extends State<PixeBeautyDialog> {
   int _currentPage = 0;
   late PageController _pageController;
+  BeautyItem? _selectedItem;
+  double _sliderValue = 0.0;
   final List<BeautyPage> _pages = [
     BeautyPage(
       title: '一键美颜',
@@ -31,7 +33,7 @@ class _PixeBeautyDialogState extends State<PixeBeautyDialog> {
     BeautyPage(
       title: '美肤',
       items: [
-        BeautyItem.beauty(PFBeautyFiterType.faceWhitenStrength, 0.2, '美白', 'assets/icons/f_meibai1.png'),
+        BeautyItem.beauty(PFBeautyFiterType.faceWhitenStrength, 0.2, '美白', 'assets/icons/meibai.png'),
         BeautyItem.beauty(PFBeautyFiterType.faceRuddyStrength, 0.6, '红润', 'assets/icons/hongrun.png'),
         BeautyItem.beauty(PFBeautyFiterType.faceBlurStrength, 0.7, '磨皮', 'assets/icons/mopi.png'),
         BeautyItem.beauty(PFBeautyFiterType.faceEyeBrighten, 0.0, '亮眼', 'assets/icons/liangyan.png'),
@@ -100,6 +102,51 @@ class _PixeBeautyDialogState extends State<PixeBeautyDialog> {
       ),
       child: Column(
         children: [
+          if (_selectedItem != null && _selectedItem!.type != BeautyType.oneKey)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        _selectedItem!.title,
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                      Text(
+                        '${(_sliderValue * 100).toInt()}%',
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                  Slider(
+                    value: _sliderValue,
+                    min: 0.0,
+                    max: 1.0,
+                    divisions: 100,
+                    activeColor: Colors.blue,
+                    inactiveColor: Colors.grey,
+                    onChanged: (value) {
+                      setState(() {
+                        _sliderValue = value;
+                      });
+                      if (_selectedItem!.type == BeautyType.beauty) {
+                        widget.pixelFree.pixelFreeSetBeautyFilterParam(
+                          _selectedItem!.beautyType!,
+                          value,
+                        );
+                      } else if (_selectedItem!.type == BeautyType.filter) {
+                        widget.pixelFree.pixelFreeSetFilterParam(
+                          _selectedItem!.filterName!,
+                          value,
+                        );
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ),
           _buildTabBar(),
           Expanded(
             child: PageView(
@@ -107,6 +154,8 @@ class _PixeBeautyDialogState extends State<PixeBeautyDialog> {
               onPageChanged: (index) {
                 setState(() {
                   _currentPage = index;
+                  _selectedItem = null;
+                  _sliderValue = 0.0;
                 });
               },
               children: _pages.map((page) => _buildPage(page)).toList(),
@@ -182,44 +231,60 @@ class _PixeBeautyDialogState extends State<PixeBeautyDialog> {
   }
 
   Widget _buildBeautyItem(BeautyItem item) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.asset(
-              item.iconPath,
-              width: 30,
-              height: 30,
-              fit: BoxFit.contain,
-              errorBuilder: (context, error, stackTrace) {
-                print('Error loading image: ${item.iconPath}');
-                print('Error: $error');
-                return Icon(
-                  Icons.image_not_supported,
-                  color: Colors.white.withOpacity(0.5),
-                  size: 30,
-                );
-              },
+    final isSelected = _selectedItem == item;
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedItem = item;
+          _sliderValue = item.value is double ? item.value : 0.0;
+        });
+        if (item.type == BeautyType.oneKey) {
+          widget.pixelFree.pixelFreeSetBeautyTypeParam(PFBeautyFiterType.typeOneKey, item.value);
+        } else if (item.type == BeautyType.beauty) {
+          widget.pixelFree.pixelFreeSetBeautyFilterParam(item.beautyType!, _sliderValue);
+        } else if (item.type == BeautyType.filter) {
+          widget.pixelFree.pixelFreeSetFilterParam(item.filterName!, _sliderValue);
+        }
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: isSelected ? Colors.blue.withOpacity(0.3) : Colors.white.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.asset(
+                item.iconPath,
+                width: 30,
+                height: 30,
+                fit: BoxFit.contain,
+                errorBuilder: (context, error, stackTrace) {
+                  print('Error loading image: ${item.iconPath}');
+                  print('Error: $error');
+                  return Icon(
+                    Icons.image_not_supported,
+                    color: Colors.white.withOpacity(0.5),
+                    size: 30,
+                  );
+                },
+              ),
             ),
           ),
-        ),
-        const SizedBox(height: 5),
-        Text(
-          item.title,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 12,
+          const SizedBox(height: 5),
+          Text(
+            item.title,
+            style: TextStyle(
+              color: isSelected ? Colors.blue : Colors.white,
+              fontSize: 12,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

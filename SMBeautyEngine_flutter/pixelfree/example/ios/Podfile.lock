@@ -34,7 +34,7 @@ SPEC CHECKSUMS:
   image_picker_ios: 7fe1ff8e34c1790d6fff70a32484959f563a928a
   integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
   path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
-  pixelfree: 8d2ec662cac19020396e77c85d7b46f432a96295
+  pixelfree: ce155f3e2fcb818a193d0c63ef1b80495005eed0
 
 PODFILE CHECKSUM: 6e700dec67e6deac9b1c69bb14c49a2217a12d15
 

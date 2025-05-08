@@ -152,7 +152,11 @@
     [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterName value:(void *)filterName];
     [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterStrength value:&value];
     result(NULL);
-  } else if ([@"release" isEqualToString:call.method]) {
+  } else if ([@"pixelFreeSetBeautyTypeParam" isEqualToString:call.method]) {
+      int value = [dicArguments[@"value"] intValue];
+      [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeOneKey value:&value];
+      result(NULL);
+    } else if ([@"release" isEqualToString:call.method]) {
     [_textures unregisterTexture:_glTexture];
     result(NULL);
   } else {
