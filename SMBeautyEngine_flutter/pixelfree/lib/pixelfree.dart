@@ -45,6 +45,14 @@ class Pixelfree {
     );
   }
 
+  // 设置2D贴纸
+  Future<void> pixelFreeSetSticker2DFilter(String filterName) {
+    return PixelfreePlatform.instance.pixelFreeSetBeautyExtend(
+      PFBeautyFiterType.sticker2DFilter,
+      filterName,
+    );
+  }
+
   Future<void> pixelFreeSetBeautyTypeParam(PFBeautyFiterType type, int value) {
     return PixelfreePlatform.instance.pixelFreeSetBeautyTypeParam(type, value);
   }

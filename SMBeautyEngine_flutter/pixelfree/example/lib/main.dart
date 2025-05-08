@@ -3,8 +3,8 @@ import 'dart:io';
 import 'dart:ui' as ui;
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-
 import 'package:pixelfree/pixelfree.dart';
+import 'package:pixelfree/PixeBeautyDialog.dart';
 
 import 'dart:ui';
 import 'package:pixelfree/pixelfree_platform_interface.dart';
@@ -177,11 +177,31 @@ class _MyAppState extends State<MyApp> {
     _rgba = await imageInfo.image.toByteData(format: ImageByteFormat.rawRgba);
 
     Timer.periodic(const Duration(milliseconds: 200), (_) async {
-      // _pixelFreePlugin.pixelFreeSetFilterParam("heibai1", 1.0);
-      // _pixelFreePlugin.pixelFreeSetBeautyTypeParam(PFBeautyFiterType.typeOneKey, 1);
       await readerImageAsyncTask(
           _rgba!, imageInfo.image.width, imageInfo.image.height);
     });
+  }
+
+  void _showBeautyDialog() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => DraggableScrollableSheet(
+        initialChildSize: 0.7,
+        minChildSize: 0.5,
+        maxChildSize: 0.9,
+        builder: (context, scrollController) => Container(
+          decoration: const BoxDecoration(
+            color: Colors.black87,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: PixeBeautyDialog(
+            pixelFree: _pixelFreePlugin,
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -202,43 +222,38 @@ class _MyAppState extends State<MyApp> {
             Text(_useTexture ? 'Texture' : 'Image'),
           ],
         ),
-        body: Center(
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              AspectRatio(
-                aspectRatio: w / h,
-                child: _useTexture
-                    ? Texture(
-                        textureId: _currentTextureId,
-                      )
-                    : _processedImage != null
-                        ? RawImage(
-                            image: _processedImage,
-                            fit: BoxFit.contain,
+        body: Stack(
+          children: [
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  AspectRatio(
+                    aspectRatio: w / h,
+                    child: _useTexture
+                        ? Texture(
+                            textureId: _currentTextureId,
                           )
-                        : const CircularProgressIndicator(),
+                        : _processedImage != null
+                            ? RawImage(
+                                image: _processedImage,
+                                fit: BoxFit.contain,
+                              )
+                            : const CircularProgressIndicator(),
+                  ),
+                ],
               ),
-              const Text(
-                'v瘦脸参数设置',
+            ),
+            if (!_isInitializing)
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: PixeBeautyDialog(
+                  pixelFree: _pixelFreePlugin,
+                ),
               ),
-              Slider(
-                value: _currentValue,
-                min: 0.0,
-                max: 1.0,
-                divisions: 100,
-                onChanged: (value) {
-                  setState(() {
-                    _currentValue = value;
-                  });
-                  _pixelFreePlugin.pixelFreeSetBeautyFilterParam(
-                      PFBeautyFiterType.faceV, value);
-                },
-              ),
-            ],
-          ),
+          ],
         ),
       ),
     );
