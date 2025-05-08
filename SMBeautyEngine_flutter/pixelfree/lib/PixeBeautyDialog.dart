@@ -102,51 +102,56 @@ class _PixeBeautyDialogState extends State<PixeBeautyDialog> {
       ),
       child: Column(
         children: [
-          if (_selectedItem != null && _selectedItem!.type != BeautyType.oneKey)
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        _selectedItem!.title,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                      Text(
-                        '${(_sliderValue * 100).toInt()}%',
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                  Slider(
-                    value: _sliderValue,
-                    min: 0.0,
-                    max: 1.0,
-                    divisions: 100,
-                    activeColor: Colors.blue,
-                    inactiveColor: Colors.grey,
-                    onChanged: (value) {
-                      setState(() {
-                        _sliderValue = value;
-                      });
-                      if (_selectedItem!.type == BeautyType.beauty) {
-                        widget.pixelFree.pixelFreeSetBeautyFilterParam(
-                          _selectedItem!.beautyType!,
-                          value,
-                        );
-                      } else if (_selectedItem!.type == BeautyType.filter) {
-                        widget.pixelFree.pixelFreeSetFilterParam(
-                          _selectedItem!.filterName!,
-                          value,
-                        );
-                      }
-                    },
-                  ),
-                ],
-              ),
-            ),
+          Container(
+            height: 76,
+            child: _selectedItem != null && _selectedItem!.type != BeautyType.oneKey
+                ? Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              _selectedItem!.title,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            Text(
+                              '${(_sliderValue * 100).toInt()}%',
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                        Slider(
+                          value: _sliderValue,
+                          min: 0.0,
+                          max: 1.0,
+                          divisions: 100,
+                          activeColor: Colors.blue,
+                          inactiveColor: Colors.grey,
+                          onChanged: (value) {
+                            setState(() {
+                              _sliderValue = value;
+                            });
+                            if (_selectedItem!.type == BeautyType.beauty) {
+                              widget.pixelFree.pixelFreeSetBeautyFilterParam(
+                                _selectedItem!.beautyType!,
+                                value,
+                              );
+                            } else if (_selectedItem!.type == BeautyType.filter) {
+                              widget.pixelFree.pixelFreeSetFilterParam(
+                                _selectedItem!.filterName!,
+                                value,
+                              );
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  )
+                : null,
+          ),
           _buildTabBar(),
           Expanded(
             child: PageView(
