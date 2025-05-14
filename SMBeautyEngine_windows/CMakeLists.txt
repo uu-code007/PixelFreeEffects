@@ -12,18 +12,17 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/pixelfreeLib/Include
     ${CMAKE_CURRENT_SOURCE_DIR}/stb
+    ${GLFW3_INCLUDE_DIRS}
 )
 
 # 查找OpenGL和GLFW库
 find_package(OpenGL REQUIRED)
-find_package(GLFW3 REQUIRED)
+# find_package(GLFW3 REQUIRED)
 
-# 如果找不到GLFW3，可以在Windows上手动设置
-if (NOT GLFW3_FOUND)
-    message(STATUS "GLFW3 not found via find_package, using bundled paths")
-    set(GLFW3_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw/include")
-    set(GLFW3_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw/glfw3.lib")
-endif()
+# GLFW3手动设置
+message(STATUS "Using bundled GLFW3 paths")
+set(GLFW3_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw/include")
+set(GLFW3_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw/glfw3.lib")
 
 # 添加源文件
 set(SOURCE_FILES
