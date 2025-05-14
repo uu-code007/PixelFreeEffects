@@ -32,9 +32,34 @@
 #include "gl.h"
 #include "stb_image.h"
 #include "pixelFree_c.hpp"
+#include <GL/glext.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+
+// 定义 OpenGL 扩展函数指针
+PFNGLACTIVETEXTUREPROC glActiveTexture = NULL;
 
 bool dragging = false; // 标志变量，指示是否正在拖动
-double lastX, lastY;   // 上一次鼠标位置
+double lastX = 0, lastY = 0; // 上次鼠标位置
+
+// 定义着色器源代码
+const char* DEFAULT_VERTEX_SHADER = R"(
+attribute vec4 position;
+attribute vec4 inputTextureCoordinate;
+varying vec2 textureCoordinate;
+void main() {
+    gl_Position = position;
+    textureCoordinate = inputTextureCoordinate.xy;
+}
+)";
+
+const char* DEFAULT_FRAGMENT_SHADER = R"(
+varying highp vec2 textureCoordinate;
+uniform sampler2D inputImageTexture;
+void main() {
+    gl_FragColor = texture2D(inputImageTexture, textureCoordinate);
+}
+)";
 
 // 获取可执行文件所在目录
 std::string GetExePath() {
@@ -103,6 +128,14 @@ int main() {
         return -1;
     }
     glfwMakeContextCurrent(window);
+    
+    // 初始化 OpenGL 扩展函数指针
+    glActiveTexture = (PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture");
+    if (!glActiveTexture) {
+        std::cerr << "无法获取 glActiveTexture 函数指针！" << std::endl;
+        glfwTerminate();
+        return -1;
+    }
     
     // 获取可执行文件路径，用于定位资源文件
     std::string exePath = GetExePath();

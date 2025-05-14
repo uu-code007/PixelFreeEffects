@@ -7,6 +7,11 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
+# GLFW3手动设置
+message(STATUS "Using bundled GLFW3 paths")
+set(GLFW3_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw/include")
+set(GLFW3_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw/glfw3.lib")
+
 # 设置包含目录
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/include
@@ -18,11 +23,6 @@ include_directories(
 # 查找OpenGL和GLFW库
 find_package(OpenGL REQUIRED)
 # find_package(GLFW3 REQUIRED)
-
-# GLFW3手动设置
-message(STATUS "Using bundled GLFW3 paths")
-set(GLFW3_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw/include")
-set(GLFW3_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw/glfw3.lib")
 
 # 添加源文件
 set(SOURCE_FILES
