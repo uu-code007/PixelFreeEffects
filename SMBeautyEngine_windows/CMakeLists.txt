@@ -21,8 +21,8 @@ find_package(GLFW3 REQUIRED)
 # 如果找不到GLFW3，可以在Windows上手动设置
 if (NOT GLFW3_FOUND)
     message(STATUS "GLFW3 not found via find_package, using bundled paths")
-    set(GLFW3_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/external/glfw/include")
-    set(GLFW3_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/external/glfw/lib/glfw3.lib")
+    set(GLFW3_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw/include")
+    set(GLFW3_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw/glfw3.lib")
 endif()
 
 # 添加源文件
