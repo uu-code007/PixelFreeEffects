@@ -26,14 +26,11 @@
 #include <stdio.h>
 #include <vector>
 #include <string>
-#include <windows.h>  // 注意使用小写windows.h
+#include <windows.h>
 #include "opengl.h"   // 这个头文件会引入所有必要的OpenGL相关头文件
 #include <GLFW/glfw3.h>
 #include "stb_image.h"
 #include "pixelFree_c.hpp"
-#include <GL/glext.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
 
 // 定义 OpenGL 扩展函数指针
 PFNGLACTIVETEXTUREPROC glActiveTexture = NULL;

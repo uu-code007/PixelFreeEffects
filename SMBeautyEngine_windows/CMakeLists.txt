@@ -81,8 +81,19 @@ include_directories(
     ${GLFW3_INCLUDE_DIRS}
     ${OPENGL_INCLUDE_DIRS}
     ${GLEW_INCLUDE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/third_party/GL/include  # 直接添加GLEW头文件路径
+    ${CMAKE_CURRENT_SOURCE_DIR}/third_party/GL/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw/include
 )
+
+# 如果是Windows平台，添加Windows SDK路径
+if(WIN32)
+    if(MSVC)
+        # 添加Windows SDK路径
+        include_directories("C:/Program Files (x86)/Windows Kits/10/Include/10.0.19041.0/um"
+                          "C:/Program Files (x86)/Windows Kits/10/Include/10.0.19041.0/shared"
+                          "C:/Program Files (x86)/Windows Kits/10/Include/10.0.19041.0/ucrt")
+    endif()
+endif()
 
 # 添加预处理器定义
 # 添加源文件
