@@ -3,9 +3,13 @@ project(SMBeautyEngine_windows)
 
 set(CMAKE_CXX_STANDARD 14)
 
-# 添加编译器选项
+# 设置MSVC运行时库和调试级别
 if(MSVC)
-    add_definitions(-D_ITERATOR_DEBUG_LEVEL=0)
+    # 使用静态调试运行时库
+    set(CMAKE_CXX_FLAGS_DEBUG "/MTd /Zi /Ob0 /Od /RTC1")
+    set(CMAKE_CXX_FLAGS_RELEASE "/MTd /O2 /Ob2 /DNDEBUG")
+    # 设置调试级别为2
+    add_definitions(-D_ITERATOR_DEBUG_LEVEL=2)
 endif()
 
 # 设置输出目录
