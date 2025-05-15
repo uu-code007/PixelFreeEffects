@@ -25,11 +25,10 @@
 #include <fstream>
 #include <stdio.h>
 #include <vector>
-#include <Windows.h>
 #include <string>
+#include <windows.h>  // 注意使用小写windows.h
+#include "opengl.h"   // 这个头文件会引入所有必要的OpenGL相关头文件
 #include <GLFW/glfw3.h>
-#include "opengl.h"
-#include "gl.h"
 #include "stb_image.h"
 #include "pixelFree_c.hpp"
 #include <GL/glext.h>

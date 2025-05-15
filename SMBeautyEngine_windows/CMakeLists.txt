@@ -3,9 +3,18 @@ project(SMBeautyEngine_windows)
 
 set(CMAKE_CXX_STANDARD 14)
 
+# 添加编译器选项
+if(MSVC)
+    add_definitions(-D_ITERATOR_DEBUG_LEVEL=0)
+endif()
+
 # 设置输出目录
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
+# 设置GLEW相关路径
+set(GLEW_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/third_party/GL/include")
+set(GLEW_LIBRARY "${CMAKE_CURRENT_SOURCE_DIR}/third_party/GL/glew32.lib")
 
 # 查找OpenGL包
 find_package(OpenGL REQUIRED)
@@ -67,7 +76,8 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/stb
     ${GLFW3_INCLUDE_DIRS}
     ${OPENGL_INCLUDE_DIRS}
-    ${GLEW_INCLUDE_DIRS}
+    ${GLEW_INCLUDE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/third_party/GL/include  # 直接添加GLEW头文件路径
 )
 
 # 添加预处理器定义
