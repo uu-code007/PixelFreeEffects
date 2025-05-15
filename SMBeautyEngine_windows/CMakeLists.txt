@@ -47,7 +47,8 @@ message(STATUS "Using bundled GLFW3 paths")
 set(GLFW3_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw/include")
 set(GLFW3_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw/glfw3.lib")
 list(APPEND LINK_LIBS ${GLFW3_LIBRARIES})
-
+list(APPEND LINK_LIBS "${CMAKE_CURRENT_SOURCE_DIR}/third_party/GL/glew32.lib")
+set(GLEW_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/third_party/GL/include")
 # 添加pixelFree库
 list(APPEND LINK_LIBS ${CMAKE_CURRENT_SOURCE_DIR}/pixelfreeLib/pixelFree.lib)
 
@@ -66,6 +67,7 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/stb
     ${GLFW3_INCLUDE_DIRS}
     ${OPENGL_INCLUDE_DIRS}
+    ${GLEW_INCLUDE_DIRS}
 )
 
 # 添加预处理器定义
