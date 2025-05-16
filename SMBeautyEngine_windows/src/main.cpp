@@ -32,7 +32,7 @@
 #include "opengl.h"   // 这个头文件会引入所有必要的OpenGL相关头文件
 #include <glad/glad.h>  // GLAD must be included before GLFW
 #include <GLFW/glfw3.h>
-// #include "pixelFree_c.hpp"
+#include "pixelFree_c.hpp"
 
 // Remove the manual function pointer definition since GLAD will handle this
 // PFNGLACTIVETEXTUREPROC glActiveTexture = NULL;
@@ -118,196 +118,222 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 }
 
 int main() {
-    std::cout << "Program started..." << std::endl;
-    
-    glfwInit();
-    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-    GLFWwindow* window = glfwCreateWindow(720, 1024, "SMBeautyEngine Windows", nullptr, nullptr);
-    if(!window) {
-        std::cerr << "Failed to create window!" << std::endl;
+    try {
+        std::cout << "Program started..." << std::endl;
+        
+        glfwInit();
+        glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+        GLFWwindow* window = glfwCreateWindow(720, 1024, "SMBeautyEngine Windows", nullptr, nullptr);
+        if(!window) {
+            std::cerr << "Failed to create window!" << std::endl;
+            glfwTerminate();
+            return -1;
+        }
+        std::cout << "Window created successfully" << std::endl;
+        
+        glfwMakeContextCurrent(window);
+        
+        // Initialize GLAD
+        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+            std::cerr << "Failed to initialize GLAD" << std::endl;
+            glfwTerminate();
+            return -1;
+        }
+        std::cout << "GLAD initialized successfully" << std::endl;
+        
+        // 获取可执行文件路径，用于定位资源文件
+        std::string exePath = GetExePath();
+        std::cout << "Executable path: " << exePath << std::endl;
+        
+        std::string resPath = exePath + "\\Res";
+        std::string authPath = resPath + "\\pixelfreeAuth.lic";
+        std::string filterPath = resPath + "\\filter_model.bundle";
+        std::string imagePath = exePath + "\\IMG_2406.png";
+        
+        std::cout << "Resource directory path: " << resPath << std::endl;
+        std::cout << "Auth file path: " << authPath << std::endl;
+        std::cout << "Filter file path: " << filterPath << std::endl;
+        std::cout << "Image file path: " << imagePath << std::endl;
+        
+        // 检查文件是否存在
+        if (GetFileAttributesA(resPath.c_str()) == INVALID_FILE_ATTRIBUTES) {
+            std::cerr << "Resource directory does not exist: " << resPath << std::endl;
+            std::cerr << "Error code: " << GetLastError() << std::endl;
+        } else {
+            std::cout << "Resource directory exists" << std::endl;
+        }
+        
+        if (GetFileAttributesA(authPath.c_str()) == INVALID_FILE_ATTRIBUTES) {
+            std::cerr << "Auth file does not exist: " << authPath << std::endl;
+            std::cerr << "Error code: " << GetLastError() << std::endl;
+        } else {
+            std::cout << "Auth file exists" << std::endl;
+        }
+        
+        if (GetFileAttributesA(filterPath.c_str()) == INVALID_FILE_ATTRIBUTES) {
+            std::cerr << "Filter file does not exist: " << filterPath << std::endl;
+            std::cerr << "Error code: " << GetLastError() << std::endl;
+        } else {
+            std::cout << "Filter file exists" << std::endl;
+        }
+        
+        if (GetFileAttributesA(imagePath.c_str()) == INVALID_FILE_ATTRIBUTES) {
+            std::cerr << "Image file does not exist: " << imagePath << std::endl;
+            std::cerr << "Error code: " << GetLastError() << std::endl;
+        } else {
+            std::cout << "Image file exists" << std::endl;
+        }
+        
+        std::cout << "About to create PixelFree handle..." << std::endl;
+        PFPixelFree* handle = nullptr;
+        try {
+            handle = PF_NewPixelFree();
+            if (handle == nullptr) {
+                std::cerr << "Failed to create PixelFree handle - returned null" << std::endl;
+                return -1;
+            }
+            std::cout << "PixelFree handle created successfully" << std::endl;
+        } catch (const std::exception& e) {
+            std::cerr << "Exception while creating PixelFree handle: " << e.what() << std::endl;
+            return -1;
+        } catch (...) {
+            std::cerr << "Unknown exception while creating PixelFree handle" << std::endl;
+            return -1;
+        }
+
+        // 读取授权文件
+        std::ifstream file(authPath, std::ios::binary);
+        if (!file) {
+            std::cerr << "Cannot open auth file: " << authPath << std::endl;
+            std::cerr << "Error code: " << GetLastError() << std::endl;
+            if (handle) {
+                PF_DeletePixelFree(handle);
+            }
+            return -1;
+        }
+        std::cout << "Auth file opened successfully" << std::endl;
+        
+        // 获取文件大小
+        file.seekg(0, std::ios::end);
+        std::streamsize size = file.tellg();
+        file.seekg(0, std::ios::beg);
+
+        // 读取文件内容到缓冲区
+        std::vector<char> authBuffer(size);
+        if (file.read(authBuffer.data(), size)) {
+            std::cout << "Successfully read auth file: " << size << " bytes." << std::endl;
+        } else {
+            std::cerr << "Failed to read auth file." << std::endl;
+            return -1;
+        }
+        
+        // PF_createBeautyItemFormBundle(handle, authBuffer.data(), (int)size, PFSrcTypeAuthFile);
+        
+        // 设置一个窄脸，并将程度设置成最大
+        float faceStrength = 1.0;
+        // PF_pixelFreeSetBeautyFiterParam(handle, PFBeautyFiterTypeFace_narrow, &faceStrength);
+        
+        // 读取滤镜文件
+        std::ifstream file2(filterPath, std::ios::binary);
+        if (!file2) {
+            std::cerr << "Cannot open filter file: " << filterPath << std::endl;
+            return -1;
+        }
+        
+        // 获取文件大小
+        file2.seekg(0, std::ios::end);
+        size = file2.tellg();
+        file2.seekg(0, std::ios::beg);
+
+        // 读取文件内容到缓冲区
+        std::vector<char> filterBuffer(size);
+        if (file2.read(filterBuffer.data(), size)) {
+            std::cout << "Successfully read filter file: " << size << " bytes." << std::endl;
+        } else {
+            std::cerr << "Failed to read filter file." << std::endl;
+            return -1;
+        }
+        
+        // PF_createBeautyItemFormBundle(handle, filterBuffer.data(), (int)size, PFSrcTypeFilter);
+        
+        // 设置回调
+        glfwSetKeyCallback(window, keyCallback);
+        glfwSetMouseButtonCallback(window, mouse_button_callback);
+        glfwSetCursorPosCallback(window, cursor_position_callback);
+
+        glDisable(GL_DEPTH_TEST);
+
+        int window_width;
+        int window_height;
+        glfwGetFramebufferSize(window, &window_width, &window_height);
+        pixelfree::OpenGL render_screen(window_width, window_height, DEFAULT_VERTEX_SHADER, DEFAULT_FRAGMENT_SHADER);
+        
+        // 加载图像
+        int nrChannels;
+        stbio_set_flip_vertically_on_load(true);
+        int width;
+        int height;
+        GLuint texture_id;
+
+        // 加载测试图片
+        unsigned char *data = stbio_load((char*)imagePath.c_str(), &width, &height, &nrChannels, 0);
+        if (!data) {
+            std::cerr << "Failed to load image: " << imagePath << std::endl;
+            return -1;
+        }
+        
+        printf("Image size: width = %d height = %d channels = %d\n", width, height, nrChannels);
+        
+        // 处理 Y 轴翻转
+        unsigned char* flippedData = flip_image_y(data, width, height, nrChannels);
+
+        glGenTextures(1, &texture_id);
+
+        // 主循环
+        while(!glfwWindowShouldClose(window)) {
+            glfwPollEvents();
+            
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, texture_id);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, flippedData);
+            glBindTexture(GL_TEXTURE_2D, 0);
+            
+            // PFIamgeInput image;
+            // image.textureID = texture_id;
+            // image.p_data0 = data;
+            // image.wigth = width;
+            // image.height = height;
+            // image.stride_0 = width * 4;
+            // image.format = PFFORMAT_IMAGE_TEXTURE;
+            // image.rotationMode = PFRotationMode0;
+            // PF_processWithBuffer(handle, image);
+            
+            render_screen.ActiveProgram();
+            render_screen.ProcessImage(texture_id);
+            glfwSwapBuffers(window);
+            
+            // 使用Windows的Sleep代替Mac的usleep
+            Sleep(30); // 30毫秒
+        }
+        
+        // 清理资源
+        stbio_image_free(data);
+        free(flippedData);
+        glDeleteTextures(1, &texture_id);
         glfwTerminate();
-        return -1;
-    }
-    std::cout << "Window created successfully" << std::endl;
-    
-    glfwMakeContextCurrent(window);
-    
-    // Initialize GLAD
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        std::cerr << "Failed to initialize GLAD" << std::endl;
-        glfwTerminate();
-        return -1;
-    }
-    std::cout << "GLAD initialized successfully" << std::endl;
-    
-    // 获取可执行文件路径，用于定位资源文件
-    std::string exePath = GetExePath();
-    std::cout << "Executable path: " << exePath << std::endl;
-    
-    std::string resPath = exePath + "\\Res";
-    std::string authPath = resPath + "\\pixelfreeAuth.lic";
-    std::string filterPath = resPath + "\\filter_model.bundle";
-    std::string imagePath = exePath + "\\IMG_2406.png";
-    
-    std::cout << "Resource directory path: " << resPath << std::endl;
-    std::cout << "Auth file path: " << authPath << std::endl;
-    std::cout << "Filter file path: " << filterPath << std::endl;
-    std::cout << "Image file path: " << imagePath << std::endl;
-    
-    // 检查文件是否存在
-    if (GetFileAttributesA(resPath.c_str()) == INVALID_FILE_ATTRIBUTES) {
-        std::cerr << "Resource directory does not exist: " << resPath << std::endl;
-        std::cerr << "Error code: " << GetLastError() << std::endl;
-    } else {
-        std::cout << "Resource directory exists" << std::endl;
-    }
-    
-    if (GetFileAttributesA(authPath.c_str()) == INVALID_FILE_ATTRIBUTES) {
-        std::cerr << "Auth file does not exist: " << authPath << std::endl;
-        std::cerr << "Error code: " << GetLastError() << std::endl;
-    } else {
-        std::cout << "Auth file exists" << std::endl;
-    }
-    
-    if (GetFileAttributesA(filterPath.c_str()) == INVALID_FILE_ATTRIBUTES) {
-        std::cerr << "Filter file does not exist: " << filterPath << std::endl;
-        std::cerr << "Error code: " << GetLastError() << std::endl;
-    } else {
-        std::cout << "Filter file exists" << std::endl;
-    }
-    
-    if (GetFileAttributesA(imagePath.c_str()) == INVALID_FILE_ATTRIBUTES) {
-        std::cerr << "Image file does not exist: " << imagePath << std::endl;
-        std::cerr << "Error code: " << GetLastError() << std::endl;
-    } else {
-        std::cout << "Image file exists" << std::endl;
-    }
-    
-    // PFPixelFree* handle = PF_NewPixelFree();
-    // std::cout << "PixelFree handle created successfully" << std::endl;
+        // PF_DeletePixelFree(handle);
 
-    // 读取授权文件
-    std::ifstream file(authPath, std::ios::binary);
-    if (!file) {
-        std::cerr << "Cannot open auth file: " << authPath << std::endl;
-        std::cerr << "Error code: " << GetLastError() << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "Exception in main: " << e.what() << std::endl;
         return -1;
-    }
-    std::cout << "Auth file opened successfully" << std::endl;
-    
-    // 获取文件大小
-    file.seekg(0, std::ios::end);
-    std::streamsize size = file.tellg();
-    file.seekg(0, std::ios::beg);
-
-    // 读取文件内容到缓冲区
-    std::vector<char> authBuffer(size);
-    if (file.read(authBuffer.data(), size)) {
-        std::cout << "Successfully read auth file: " << size << " bytes." << std::endl;
-    } else {
-        std::cerr << "Failed to read auth file." << std::endl;
+    } catch (...) {
+        std::cerr << "Unknown exception in main" << std::endl;
         return -1;
     }
     
-    // PF_createBeautyItemFormBundle(handle, authBuffer.data(), (int)size, PFSrcTypeAuthFile);
-    
-    // 设置一个窄脸，并将程度设置成最大
-    float faceStrength = 1.0;
-    // PF_pixelFreeSetBeautyFiterParam(handle, PFBeautyFiterTypeFace_narrow, &faceStrength);
-    
-    // 读取滤镜文件
-    std::ifstream file2(filterPath, std::ios::binary);
-    if (!file2) {
-        std::cerr << "Cannot open filter file: " << filterPath << std::endl;
-        return -1;
-    }
-    
-    // 获取文件大小
-    file2.seekg(0, std::ios::end);
-    size = file2.tellg();
-    file2.seekg(0, std::ios::beg);
-
-    // 读取文件内容到缓冲区
-    std::vector<char> filterBuffer(size);
-    if (file2.read(filterBuffer.data(), size)) {
-        std::cout << "Successfully read filter file: " << size << " bytes." << std::endl;
-    } else {
-        std::cerr << "Failed to read filter file." << std::endl;
-        return -1;
-    }
-    
-    // PF_createBeautyItemFormBundle(handle, filterBuffer.data(), (int)size, PFSrcTypeFilter);
-    
-    // 设置回调
-    glfwSetKeyCallback(window, keyCallback);
-    glfwSetMouseButtonCallback(window, mouse_button_callback);
-    glfwSetCursorPosCallback(window, cursor_position_callback);
-
-    glDisable(GL_DEPTH_TEST);
-
-    int window_width;
-    int window_height;
-    glfwGetFramebufferSize(window, &window_width, &window_height);
-    pixelfree::OpenGL render_screen(window_width, window_height, DEFAULT_VERTEX_SHADER, DEFAULT_FRAGMENT_SHADER);
-    
-    // 加载图像
-    int nrChannels;
-    stbio_set_flip_vertically_on_load(true);
-    int width;
-    int height;
-    GLuint texture_id;
-
-    // 加载测试图片
-    unsigned char *data = stbio_load((char*)imagePath.c_str(), &width, &height, &nrChannels, 0);
-    if (!data) {
-        std::cerr << "Failed to load image: " << imagePath << std::endl;
-        return -1;
-    }
-    
-    printf("Image size: width = %d height = %d channels = %d\n", width, height, nrChannels);
-    
-    // 处理 Y 轴翻转
-    unsigned char* flippedData = flip_image_y(data, width, height, nrChannels);
-
-    glGenTextures(1, &texture_id);
-
-    // 主循环
-    while(!glfwWindowShouldClose(window)) {
-        glfwPollEvents();
-        
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture_id);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, flippedData);
-        glBindTexture(GL_TEXTURE_2D, 0);
-        
-        // PFIamgeInput image;
-        // image.textureID = texture_id;
-        // image.p_data0 = data;
-        // image.wigth = width;
-        // image.height = height;
-        // image.stride_0 = width * 4;
-        // image.format = PFFORMAT_IMAGE_TEXTURE;
-        // image.rotationMode = PFRotationMode0;
-        // PF_processWithBuffer(handle, image);
-        
-        render_screen.ActiveProgram();
-        render_screen.ProcessImage(texture_id);
-        glfwSwapBuffers(window);
-        
-        // 使用Windows的Sleep代替Mac的usleep
-        Sleep(30); // 30毫秒
-    }
-    
-    // 清理资源
-    stbio_image_free(data);
-    free(flippedData);
-    glDeleteTextures(1, &texture_id);
-    glfwTerminate();
-    // PF_DeletePixelFree(handle);
-
     return 0;
 } 

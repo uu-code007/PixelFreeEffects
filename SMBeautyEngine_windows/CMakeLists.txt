@@ -111,17 +111,17 @@ target_link_libraries(SMBeautyEngine_windows ${LINK_LIBS})
 if(WIN32)
     # 使用简单的复制命令
     add_custom_command(TARGET SMBeautyEngine_windows POST_BUILD
-        COMMAND cmd /c "if not exist \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\\Res\" mkdir \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\\Res\""
-        COMMAND cmd /c "xcopy /Y /E /I \"${CMAKE_CURRENT_SOURCE_DIR}\\Res\\*\" \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\\Res\\\""
-        COMMAND cmd /c "copy /Y \"${CMAKE_CURRENT_SOURCE_DIR}\\IMG_2406.png\" \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\""
-        # COMMAND cmd /c "copy /Y \"${CMAKE_CURRENT_SOURCE_DIR}\\pixelfreeLib\\pixelFree.dll\" \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\""
+        COMMAND cmd /c "if not exist \"$<TARGET_FILE_DIR:SMBeautyEngine_windows>\\Res\" mkdir \"$<TARGET_FILE_DIR:SMBeautyEngine_windows>\\Res\""
+        COMMAND cmd /c "xcopy /Y /E /I \"${CMAKE_CURRENT_SOURCE_DIR}\\Res\\*\" \"$<TARGET_FILE_DIR:SMBeautyEngine_windows>\\Res\\\""
+        COMMAND cmd /c "copy /Y \"${CMAKE_CURRENT_SOURCE_DIR}\\IMG_2406.png\" \"$<TARGET_FILE_DIR:SMBeautyEngine_windows>\""
+        # COMMAND cmd /c "copy /Y \"${CMAKE_CURRENT_SOURCE_DIR}\\pixelfreeLib\\pixelFree.dll\" \"$<TARGET_FILE_DIR:SMBeautyEngine_windows>\""
     )
 else()
     # 使用 CMake 命令（非 Windows 平台）
     add_custom_command(TARGET SMBeautyEngine_windows POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Res"
-        COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/Res" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Res"
-        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/IMG_2406.png" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
-        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/pixelfreeLib/pixelFree.dll" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+        COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:SMBeautyEngine_windows>/Res"
+        COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/Res" "$<TARGET_FILE_DIR:SMBeautyEngine_windows>/Res"
+        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/IMG_2406.png" "$<TARGET_FILE_DIR:SMBeautyEngine_windows>"
+        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/pixelfreeLib/pixelFree.dll" "$<TARGET_FILE_DIR:SMBeautyEngine_windows>"
     )
 endif() 
