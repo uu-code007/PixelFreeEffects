@@ -118,13 +118,18 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 }
 
 int main() {
+    std::cout << "程序开始执行..." << std::endl;
+    
     glfwInit();
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
     GLFWwindow* window = glfwCreateWindow(720, 1024, "SMBeautyEngine Windows", nullptr, nullptr);
     if(!window) {
+        std::cerr << "创建窗口失败！" << std::endl;
         glfwTerminate();
         return -1;
     }
+    std::cout << "窗口创建成功" << std::endl;
+    
     glfwMakeContextCurrent(window);
     
     // Initialize GLAD
@@ -133,30 +138,62 @@ int main() {
         glfwTerminate();
         return -1;
     }
-    
-    // Remove the manual function pointer loading since GLAD handles this
-    // glActiveTexture = (PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture");
-    // if (!glActiveTexture) {
-    //     std::cerr << "无法获取 glActiveTexture 函数指针！" << std::endl;
-    //     glfwTerminate();
-    //     return -1;
-    // }
+    std::cout << "GLAD 初始化成功" << std::endl;
     
     // 获取可执行文件路径，用于定位资源文件
     std::string exePath = GetExePath();
+    std::cout << "可执行文件路径: " << exePath << std::endl;
+    
     std::string resPath = exePath + "\\Res";
     std::string authPath = resPath + "\\pixelfreeAuth.lic";
     std::string filterPath = resPath + "\\filter_model.bundle";
     std::string imagePath = exePath + "\\IMG_2406.png";
     
-    PFPixelFree* handle = PF_NewPixelFree();
+    std::cout << "资源目录路径: " << resPath << std::endl;
+    std::cout << "授权文件路径: " << authPath << std::endl;
+    std::cout << "滤镜文件路径: " << filterPath << std::endl;
+    std::cout << "图片文件路径: " << imagePath << std::endl;
+    
+    // 检查文件是否存在
+    if (GetFileAttributesA(resPath.c_str()) == INVALID_FILE_ATTRIBUTES) {
+        std::cerr << "资源目录不存在: " << resPath << std::endl;
+        std::cerr << "错误代码: " << GetLastError() << std::endl;
+    } else {
+        std::cout << "资源目录存在" << std::endl;
+    }
+    
+    if (GetFileAttributesA(authPath.c_str()) == INVALID_FILE_ATTRIBUTES) {
+        std::cerr << "授权文件不存在: " << authPath << std::endl;
+        std::cerr << "错误代码: " << GetLastError() << std::endl;
+    } else {
+        std::cout << "授权文件存在" << std::endl;
+    }
+    
+    if (GetFileAttributesA(filterPath.c_str()) == INVALID_FILE_ATTRIBUTES) {
+        std::cerr << "滤镜文件不存在: " << filterPath << std::endl;
+        std::cerr << "错误代码: " << GetLastError() << std::endl;
+    } else {
+        std::cout << "滤镜文件存在" << std::endl;
+    }
+    
+    if (GetFileAttributesA(imagePath.c_str()) == INVALID_FILE_ATTRIBUTES) {
+        std::cerr << "图片文件不存在: " << imagePath << std::endl;
+        std::cerr << "错误代码: " << GetLastError() << std::endl;
+    } else {
+        std::cout << "图片文件存在" << std::endl;
+    }
+    
+    // PFPixelFree* handle = PF_NewPixelFree();
+    // std::cout << "创建 PixelFree 句柄成功" << std::endl;
 
     // 读取授权文件
     std::ifstream file(authPath, std::ios::binary);
     if (!file) {
         std::cerr << "无法打开授权文件: " << authPath << std::endl;
+        std::cerr << "错误代码: " << GetLastError() << std::endl;
         return -1;
     }
+    std::cout << "成功打开授权文件" << std::endl;
     
     // 获取文件大小
     file.seekg(0, std::ios::end);

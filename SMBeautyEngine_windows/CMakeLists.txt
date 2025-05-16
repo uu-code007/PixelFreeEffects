@@ -101,25 +101,20 @@ add_executable(SMBeautyEngine_windows ${SOURCE_FILES})
 target_link_libraries(SMBeautyEngine_windows ${LINK_LIBS})
 
 # 复制资源文件到输出目录
-file(MAKE_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Res)
-
-add_custom_command(TARGET SMBeautyEngine_windows POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-    "${CMAKE_CURRENT_SOURCE_DIR}/Res"
-    "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Res"
-    COMMENT "Copying Res directory"
-)
-
-add_custom_command(TARGET SMBeautyEngine_windows POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy
-    "${CMAKE_CURRENT_SOURCE_DIR}/IMG_2406.png"
-    "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/IMG_2406.png"
-    COMMENT "Copying IMG_2406.png"
-)
-
-add_custom_command(TARGET SMBeautyEngine_windows POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy
-    "${CMAKE_CURRENT_SOURCE_DIR}/pixelfreeLib/pixelFree.dll"
-    "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/pixelFree.dll"
-    COMMENT "Copying pixelFree.dll"
-) 
+if(WIN32)
+    # 使用 Windows 的 xcopy 命令，添加管理员权限
+    add_custom_command(TARGET SMBeautyEngine_windows POST_BUILD
+        COMMAND powershell -Command "Start-Process cmd -ArgumentList '/c if not exist \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\\Res\" mkdir \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\\Res\"' -Verb RunAs"
+        COMMAND powershell -Command "Start-Process cmd -ArgumentList '/c xcopy /Y /E /I \"${CMAKE_CURRENT_SOURCE_DIR}\\Res\" \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\\Res\"' -Verb RunAs"
+        COMMAND powershell -Command "Start-Process cmd -ArgumentList '/c copy /Y \"${CMAKE_CURRENT_SOURCE_DIR}\\IMG_2406.png\" \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\"' -Verb RunAs"
+        COMMAND powershell -Command "Start-Process cmd -ArgumentList '/c copy /Y \"${CMAKE_CURRENT_SOURCE_DIR}\\pixelfreeLib\\pixelFree.dll\" \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\"' -Verb RunAs"
+    )
+else()
+    # 使用 CMake 命令（非 Windows 平台）
+    add_custom_command(TARGET SMBeautyEngine_windows POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Res"
+        COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/Res" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Res"
+        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/IMG_2406.png" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/pixelfreeLib/pixelFree.dll" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+    )
+endif() 
