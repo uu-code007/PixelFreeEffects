@@ -101,15 +101,25 @@ add_executable(SMBeautyEngine_windows ${SOURCE_FILES})
 target_link_libraries(SMBeautyEngine_windows ${LINK_LIBS})
 
 # 复制资源文件到输出目录
+file(MAKE_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Res)
+
 add_custom_command(TARGET SMBeautyEngine_windows POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
-    ${CMAKE_CURRENT_SOURCE_DIR}/Res $<TARGET_FILE_DIR:SMBeautyEngine_windows>/Res
+    "${CMAKE_CURRENT_SOURCE_DIR}/Res"
+    "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Res"
+    COMMENT "Copying Res directory"
 )
+
 add_custom_command(TARGET SMBeautyEngine_windows POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy
-    ${CMAKE_CURRENT_SOURCE_DIR}/IMG_2406.png $<TARGET_FILE_DIR:SMBeautyEngine_windows>/IMG_2406.png
+    "${CMAKE_CURRENT_SOURCE_DIR}/IMG_2406.png"
+    "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/IMG_2406.png"
+    COMMENT "Copying IMG_2406.png"
 )
+
 add_custom_command(TARGET SMBeautyEngine_windows POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy
-    ${CMAKE_CURRENT_SOURCE_DIR}/pixelfreeLib/pixelFree.dll $<TARGET_FILE_DIR:SMBeautyEngine_windows>/pixelFree.dll
+    "${CMAKE_CURRENT_SOURCE_DIR}/pixelfreeLib/pixelFree.dll"
+    "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/pixelFree.dll"
+    COMMENT "Copying pixelFree.dll"
 ) 
