@@ -210,6 +210,24 @@ LONG WINAPI TopLevelExceptionHandler(EXCEPTION_POINTERS* pExceptionInfo) {
     return EXCEPTION_CONTINUE_SEARCH;
 }
 
+// 包装 PF_NewPixelFree 调用
+PFPixelFree* SafeNewPixelFree() {
+    PFPixelFree* handle = nullptr;
+    try {
+        handle = PF_NewPixelFree();
+        if (handle == nullptr) {
+            std::cerr << "PF_NewPixelFree returned null" << std::endl;
+        }
+    } catch (const std::exception& e) {
+        std::cerr << "Exception in PF_NewPixelFree: " << e.what() << std::endl;
+        throw;
+    } catch (...) {
+        std::cerr << "Unknown exception in PF_NewPixelFree" << std::endl;
+        throw;
+    }
+    return handle;
+}
+
 int main() {
     try {
         // 设置异常处理器
@@ -320,15 +338,7 @@ int main() {
             
             // 创建 handle
             std::cout << "Calling PF_NewPixelFree()..." << std::endl;
-            __try {
-                handle = PF_NewPixelFree();
-            }
-            __except(EXCEPTION_EXECUTE_HANDLER) {
-                std::cerr << "Exception occurred in PF_NewPixelFree()" << std::endl;
-                std::cerr << "Exception code: 0x" << std::hex << GetExceptionCode() << std::endl;
-                return -1;
-            }
-            
+            handle = SafeNewPixelFree();
             if (handle == nullptr) {
                 std::cerr << "Failed to create PixelFree handle - returned null" << std::endl;
                 return -1;
