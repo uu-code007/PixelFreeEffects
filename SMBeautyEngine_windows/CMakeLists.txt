@@ -64,6 +64,13 @@ set(GLFW3_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw/glfw3.lib")
 list(APPEND LINK_LIBS ${GLFW3_LIBRARIES})
 
 # 添加pixelFree库
+list(APPEND LINK_LIBS ${CMAKE_CURRENT_SOURCE_DIR}/pixelfreeLib/farmhash.lib)
+list(APPEND LINK_LIBS ${CMAKE_CURRENT_SOURCE_DIR}/pixelfreeLib/fft2d_fftsg.lib)
+list(APPEND LINK_LIBS ${CMAKE_CURRENT_SOURCE_DIR}/pixelfreeLib/fft2d_fftsg2d.lib)
+list(APPEND LINK_LIBS ${CMAKE_CURRENT_SOURCE_DIR}/pixelfreeLib/flatbuffers.lib)
+list(APPEND LINK_LIBS ${CMAKE_CURRENT_SOURCE_DIR}/pixelfreeLib/ruy.lib)
+list(APPEND LINK_LIBS ${CMAKE_CURRENT_SOURCE_DIR}/pixelfreeLib/tensorflow-lite.lib)
+
 list(APPEND LINK_LIBS ${CMAKE_CURRENT_SOURCE_DIR}/pixelfreeLib/pixelFree.lib)
 
 # 设置包含目录
@@ -107,7 +114,7 @@ if(WIN32)
         COMMAND cmd /c "if not exist \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\\Res\" mkdir \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\\Res\""
         COMMAND cmd /c "xcopy /Y /E /I \"${CMAKE_CURRENT_SOURCE_DIR}\\Res\\*\" \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\\Res\\\""
         COMMAND cmd /c "copy /Y \"${CMAKE_CURRENT_SOURCE_DIR}\\IMG_2406.png\" \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\""
-        COMMAND cmd /c "copy /Y \"${CMAKE_CURRENT_SOURCE_DIR}\\pixelfreeLib\\pixelFree.dll\" \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\""
+        # COMMAND cmd /c "copy /Y \"${CMAKE_CURRENT_SOURCE_DIR}\\pixelfreeLib\\pixelFree.dll\" \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\""
     )
 else()
     # 使用 CMake 命令（非 Windows 平台）
