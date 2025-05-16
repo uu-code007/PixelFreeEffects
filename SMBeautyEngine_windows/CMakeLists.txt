@@ -5,11 +5,18 @@ set(CMAKE_CXX_STANDARD 14)
 
 # 设置MSVC运行时库和调试级别
 if(MSVC)
-    # 使用静态调试运行时库
-    set(CMAKE_CXX_FLAGS_DEBUG "/MTd /Zi /Ob0 /Od /RTC1")
-    set(CMAKE_CXX_FLAGS_RELEASE "/MTd /O2 /Ob2 /DNDEBUG")
-    # 设置调试级别为2
-    add_definitions(-D_ITERATOR_DEBUG_LEVEL=2)
+    # 使用静态发布运行时库
+    set(CMAKE_CXX_FLAGS_DEBUG "/MT /Zi /Ob0 /Od")
+    set(CMAKE_CXX_FLAGS_RELEASE "/MT /O2 /Ob2 /DNDEBUG")
+    
+    # 设置迭代器调试级别为0（发布模式）
+    add_definitions(-D_ITERATOR_DEBUG_LEVEL=0)
+    
+    # 禁用特定警告
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+    
+    # 设置运行时库
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded")
 endif()
 
 # 设置输出目录
@@ -18,6 +25,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 # 设置GLEW相关路径
 set(GLEW_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/third_party/GL/include")
+set(GLEW_INCLUDE_STB "${CMAKE_CURRENT_SOURCE_DIR}/third_party/stb")
 set(GLEW_LIBRARY "${CMAKE_CURRENT_SOURCE_DIR}/third_party/GL/glew32.lib")
 
 # 查找OpenGL包
@@ -83,6 +91,7 @@ include_directories(
     ${GLEW_INCLUDE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/third_party/GL/include
     ${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw/include
+    ${GLEW_INCLUDE_STB}
 )
 
 # 如果是Windows平台，添加Windows SDK路径
