@@ -105,7 +105,12 @@ set(SOURCE_FILES
 add_executable(SMBeautyEngine_windows ${SOURCE_FILES})
 
 # 链接所有库
-target_link_libraries(SMBeautyEngine_windows ${LINK_LIBS})
+target_link_libraries(SMBeautyEngine_windows ${LINK_LIBS} dbghelp)
+
+# 设置调试信息
+if(MSVC)
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Zi")
+endif()
 
 # 复制资源文件到输出目录
 if(WIN32)
