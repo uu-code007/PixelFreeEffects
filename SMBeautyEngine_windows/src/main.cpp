@@ -20,6 +20,8 @@
 //  main.cpp
 //  SMBeautyEngine_windows
 //
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 #include <iostream>
 #include <fstream>
@@ -28,12 +30,12 @@
 #include <string>
 #include <windows.h>
 #include "opengl.h"   // 这个头文件会引入所有必要的OpenGL相关头文件
+#include <glad/glad.h>  // GLAD must be included before GLFW
 #include <GLFW/glfw3.h>
-#include "stb_image.h"
-#include "pixelFree_c.hpp"
+// #include "pixelFree_c.hpp"
 
-// 定义 OpenGL 扩展函数指针
-PFNGLACTIVETEXTUREPROC glActiveTexture = NULL;
+// Remove the manual function pointer definition since GLAD will handle this
+// PFNGLACTIVETEXTUREPROC glActiveTexture = NULL;
 
 bool dragging = false; // 标志变量，指示是否正在拖动
 double lastX = 0, lastY = 0; // 上次鼠标位置
@@ -125,13 +127,20 @@ int main() {
     }
     glfwMakeContextCurrent(window);
     
-    // 初始化 OpenGL 扩展函数指针
-    glActiveTexture = (PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture");
-    if (!glActiveTexture) {
-        std::cerr << "无法获取 glActiveTexture 函数指针！" << std::endl;
+    // Initialize GLAD
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+        std::cerr << "Failed to initialize GLAD" << std::endl;
         glfwTerminate();
         return -1;
     }
+    
+    // Remove the manual function pointer loading since GLAD handles this
+    // glActiveTexture = (PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture");
+    // if (!glActiveTexture) {
+    //     std::cerr << "无法获取 glActiveTexture 函数指针！" << std::endl;
+    //     glfwTerminate();
+    //     return -1;
+    // }
     
     // 获取可执行文件路径，用于定位资源文件
     std::string exePath = GetExePath();
@@ -163,11 +172,11 @@ int main() {
         return -1;
     }
     
-    PF_createBeautyItemFormBundle(handle, authBuffer.data(), (int)size, PFSrcTypeAuthFile);
+    // PF_createBeautyItemFormBundle(handle, authBuffer.data(), (int)size, PFSrcTypeAuthFile);
     
     // 设置一个窄脸，并将程度设置成最大
     float faceStrength = 1.0;
-    PF_pixelFreeSetBeautyFiterParam(handle, PFBeautyFiterTypeFace_narrow, &faceStrength);
+    // PF_pixelFreeSetBeautyFiterParam(handle, PFBeautyFiterTypeFace_narrow, &faceStrength);
     
     // 读取滤镜文件
     std::ifstream file2(filterPath, std::ios::binary);
@@ -190,7 +199,7 @@ int main() {
         return -1;
     }
     
-    PF_createBeautyItemFormBundle(handle, filterBuffer.data(), (int)size, PFSrcTypeFilter);
+    // PF_createBeautyItemFormBundle(handle, filterBuffer.data(), (int)size, PFSrcTypeFilter);
     
     // 设置回调
     glfwSetKeyCallback(window, keyCallback);
@@ -238,15 +247,15 @@ int main() {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, flippedData);
         glBindTexture(GL_TEXTURE_2D, 0);
         
-        PFIamgeInput image;
-        image.textureID = texture_id;
-        image.p_data0 = data;
-        image.wigth = width;
-        image.height = height;
-        image.stride_0 = width * 4;
-        image.format = PFFORMAT_IMAGE_TEXTURE;
-        image.rotationMode = PFRotationMode0;
-        PF_processWithBuffer(handle, image);
+        // PFIamgeInput image;
+        // image.textureID = texture_id;
+        // image.p_data0 = data;
+        // image.wigth = width;
+        // image.height = height;
+        // image.stride_0 = width * 4;
+        // image.format = PFFORMAT_IMAGE_TEXTURE;
+        // image.rotationMode = PFRotationMode0;
+        // PF_processWithBuffer(handle, image);
         
         render_screen.ActiveProgram();
         render_screen.ProcessImage(texture_id);
@@ -261,7 +270,7 @@ int main() {
     free(flippedData);
     glDeleteTextures(1, &texture_id);
     glfwTerminate();
-    PF_DeletePixelFree(handle);
+    // PF_DeletePixelFree(handle);
 
     return 0;
 } 

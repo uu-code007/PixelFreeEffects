@@ -30,9 +30,7 @@
 #include <GLES2/gl2ext.h>
 #elif defined(_WIN32)
 #include <windows.h>
-#include <GL/glew.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #elif __APPLE__
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"

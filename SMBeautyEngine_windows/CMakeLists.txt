@@ -23,10 +23,12 @@ endif()
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-# 设置GLEW相关路径
-set(GLEW_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/third_party/GL/include")
-set(GLEW_INCLUDE_STB "${CMAKE_CURRENT_SOURCE_DIR}/third_party/stb")
-set(GLEW_LIBRARY "${CMAKE_CURRENT_SOURCE_DIR}/third_party/GL/glew32.lib")
+# 设置 GLAD 相关路径
+set(GLAD_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glad/include")
+set(GLAD_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glad/src")
+
+# 设置 STB 相关路径
+set(STB_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/third_party/stb")
 
 # 查找OpenGL包
 find_package(OpenGL REQUIRED)
@@ -54,44 +56,25 @@ if(WIN64)
 elseif(WIN32)
     list(APPEND LINK_LIBS opengl32 glu32 gdi32 user32 kernel32)
 endif()
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-
-# 查找OpenGL包
-find_package(OpenGL REQUIRED)
-
-# 设置链接库列表
-set(LINK_LIBS "")
 
 # GLFW3手动设置
 message(STATUS "Using bundled GLFW3 paths")
 set(GLFW3_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw/include")
 set(GLFW3_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw/glfw3.lib")
 list(APPEND LINK_LIBS ${GLFW3_LIBRARIES})
-list(APPEND LINK_LIBS "${CMAKE_CURRENT_SOURCE_DIR}/third_party/GL/glew32.lib")
-set(GLEW_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/third_party/GL/include")
+
 # 添加pixelFree库
 list(APPEND LINK_LIBS ${CMAKE_CURRENT_SOURCE_DIR}/pixelfreeLib/pixelFree.lib)
-
-# 针对64位Windows的特定库
-if(WIN64)
-    list(APPEND LINK_LIBS opengl32 glu32 gdi32 user32 kernel32)
-# 针对32位Windows的特定库
-elseif(WIN32)
-    list(APPEND LINK_LIBS opengl32 glu32 gdi32 user32 kernel32)
-endif()
 
 # 设置包含目录
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/pixelfreeLib/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/stb
+    ${STB_INCLUDE_DIR}
     ${GLFW3_INCLUDE_DIRS}
     ${OPENGL_INCLUDE_DIRS}
-    ${GLEW_INCLUDE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/third_party/GL/include
+    ${GLAD_INCLUDE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw/include
-    ${GLEW_INCLUDE_STB}
 )
 
 # 如果是Windows平台，添加Windows SDK路径
@@ -104,12 +87,11 @@ if(WIN32)
     endif()
 endif()
 
-# 添加预处理器定义
 # 添加源文件
 set(SOURCE_FILES
     src/main.cpp
     src/opengl.cpp
-    src/stb_image.cpp
+    ${GLAD_SOURCE_DIR}/glad.c
 )
 
 # 创建可执行文件
