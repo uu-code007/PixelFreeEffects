@@ -91,7 +91,7 @@ endif()
 set(SOURCE_FILES
     src/main.cpp
     src/opengl.cpp
-    ${GLAD_SOURCE_DIR}/glad.c
+    ${GLAD_SOURCE_DIR}/glad.cc
 )
 
 # 创建可执行文件
@@ -102,12 +102,12 @@ target_link_libraries(SMBeautyEngine_windows ${LINK_LIBS})
 
 # 复制资源文件到输出目录
 if(WIN32)
-    # 使用 Windows 的 xcopy 命令，添加管理员权限
+    # 使用简单的复制命令
     add_custom_command(TARGET SMBeautyEngine_windows POST_BUILD
-        COMMAND powershell -Command "Start-Process cmd -ArgumentList '/c if not exist \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\\Res\" mkdir \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\\Res\"' -Verb RunAs"
-        COMMAND powershell -Command "Start-Process cmd -ArgumentList '/c xcopy /Y /E /I \"${CMAKE_CURRENT_SOURCE_DIR}\\Res\" \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\\Res\"' -Verb RunAs"
-        COMMAND powershell -Command "Start-Process cmd -ArgumentList '/c copy /Y \"${CMAKE_CURRENT_SOURCE_DIR}\\IMG_2406.png\" \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\"' -Verb RunAs"
-        COMMAND powershell -Command "Start-Process cmd -ArgumentList '/c copy /Y \"${CMAKE_CURRENT_SOURCE_DIR}\\pixelfreeLib\\pixelFree.dll\" \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\"' -Verb RunAs"
+        COMMAND cmd /c "if not exist \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\\Res\" mkdir \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\\Res\""
+        COMMAND cmd /c "xcopy /Y /E /I \"${CMAKE_CURRENT_SOURCE_DIR}\\Res\\*\" \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\\Res\\\""
+        COMMAND cmd /c "copy /Y \"${CMAKE_CURRENT_SOURCE_DIR}\\IMG_2406.png\" \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\""
+        COMMAND cmd /c "copy /Y \"${CMAKE_CURRENT_SOURCE_DIR}\\pixelfreeLib\\pixelFree.dll\" \"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\""
     )
 else()
     # 使用 CMake 命令（非 Windows 平台）

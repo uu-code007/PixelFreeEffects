@@ -118,17 +118,17 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 }
 
 int main() {
-    std::cout << "程序开始执行..." << std::endl;
+    std::cout << "Program started..." << std::endl;
     
     glfwInit();
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
     GLFWwindow* window = glfwCreateWindow(720, 1024, "SMBeautyEngine Windows", nullptr, nullptr);
     if(!window) {
-        std::cerr << "创建窗口失败！" << std::endl;
+        std::cerr << "Failed to create window!" << std::endl;
         glfwTerminate();
         return -1;
     }
-    std::cout << "窗口创建成功" << std::endl;
+    std::cout << "Window created successfully" << std::endl;
     
     glfwMakeContextCurrent(window);
     
@@ -138,62 +138,62 @@ int main() {
         glfwTerminate();
         return -1;
     }
-    std::cout << "GLAD 初始化成功" << std::endl;
+    std::cout << "GLAD initialized successfully" << std::endl;
     
     // 获取可执行文件路径，用于定位资源文件
     std::string exePath = GetExePath();
-    std::cout << "可执行文件路径: " << exePath << std::endl;
+    std::cout << "Executable path: " << exePath << std::endl;
     
     std::string resPath = exePath + "\\Res";
     std::string authPath = resPath + "\\pixelfreeAuth.lic";
     std::string filterPath = resPath + "\\filter_model.bundle";
     std::string imagePath = exePath + "\\IMG_2406.png";
     
-    std::cout << "资源目录路径: " << resPath << std::endl;
-    std::cout << "授权文件路径: " << authPath << std::endl;
-    std::cout << "滤镜文件路径: " << filterPath << std::endl;
-    std::cout << "图片文件路径: " << imagePath << std::endl;
+    std::cout << "Resource directory path: " << resPath << std::endl;
+    std::cout << "Auth file path: " << authPath << std::endl;
+    std::cout << "Filter file path: " << filterPath << std::endl;
+    std::cout << "Image file path: " << imagePath << std::endl;
     
     // 检查文件是否存在
     if (GetFileAttributesA(resPath.c_str()) == INVALID_FILE_ATTRIBUTES) {
-        std::cerr << "资源目录不存在: " << resPath << std::endl;
-        std::cerr << "错误代码: " << GetLastError() << std::endl;
+        std::cerr << "Resource directory does not exist: " << resPath << std::endl;
+        std::cerr << "Error code: " << GetLastError() << std::endl;
     } else {
-        std::cout << "资源目录存在" << std::endl;
+        std::cout << "Resource directory exists" << std::endl;
     }
     
     if (GetFileAttributesA(authPath.c_str()) == INVALID_FILE_ATTRIBUTES) {
-        std::cerr << "授权文件不存在: " << authPath << std::endl;
-        std::cerr << "错误代码: " << GetLastError() << std::endl;
+        std::cerr << "Auth file does not exist: " << authPath << std::endl;
+        std::cerr << "Error code: " << GetLastError() << std::endl;
     } else {
-        std::cout << "授权文件存在" << std::endl;
+        std::cout << "Auth file exists" << std::endl;
     }
     
     if (GetFileAttributesA(filterPath.c_str()) == INVALID_FILE_ATTRIBUTES) {
-        std::cerr << "滤镜文件不存在: " << filterPath << std::endl;
-        std::cerr << "错误代码: " << GetLastError() << std::endl;
+        std::cerr << "Filter file does not exist: " << filterPath << std::endl;
+        std::cerr << "Error code: " << GetLastError() << std::endl;
     } else {
-        std::cout << "滤镜文件存在" << std::endl;
+        std::cout << "Filter file exists" << std::endl;
     }
     
     if (GetFileAttributesA(imagePath.c_str()) == INVALID_FILE_ATTRIBUTES) {
-        std::cerr << "图片文件不存在: " << imagePath << std::endl;
-        std::cerr << "错误代码: " << GetLastError() << std::endl;
+        std::cerr << "Image file does not exist: " << imagePath << std::endl;
+        std::cerr << "Error code: " << GetLastError() << std::endl;
     } else {
-        std::cout << "图片文件存在" << std::endl;
+        std::cout << "Image file exists" << std::endl;
     }
     
     // PFPixelFree* handle = PF_NewPixelFree();
-    // std::cout << "创建 PixelFree 句柄成功" << std::endl;
+    // std::cout << "PixelFree handle created successfully" << std::endl;
 
     // 读取授权文件
     std::ifstream file(authPath, std::ios::binary);
     if (!file) {
-        std::cerr << "无法打开授权文件: " << authPath << std::endl;
-        std::cerr << "错误代码: " << GetLastError() << std::endl;
+        std::cerr << "Cannot open auth file: " << authPath << std::endl;
+        std::cerr << "Error code: " << GetLastError() << std::endl;
         return -1;
     }
-    std::cout << "成功打开授权文件" << std::endl;
+    std::cout << "Auth file opened successfully" << std::endl;
     
     // 获取文件大小
     file.seekg(0, std::ios::end);
@@ -203,9 +203,9 @@ int main() {
     // 读取文件内容到缓冲区
     std::vector<char> authBuffer(size);
     if (file.read(authBuffer.data(), size)) {
-        std::cout << "成功读取授权文件: " << size << " 字节." << std::endl;
+        std::cout << "Successfully read auth file: " << size << " bytes." << std::endl;
     } else {
-        std::cerr << "读取授权文件失败." << std::endl;
+        std::cerr << "Failed to read auth file." << std::endl;
         return -1;
     }
     
@@ -218,7 +218,7 @@ int main() {
     // 读取滤镜文件
     std::ifstream file2(filterPath, std::ios::binary);
     if (!file2) {
-        std::cerr << "无法打开滤镜文件: " << filterPath << std::endl;
+        std::cerr << "Cannot open filter file: " << filterPath << std::endl;
         return -1;
     }
     
@@ -230,9 +230,9 @@ int main() {
     // 读取文件内容到缓冲区
     std::vector<char> filterBuffer(size);
     if (file2.read(filterBuffer.data(), size)) {
-        std::cout << "成功读取滤镜文件: " << size << " 字节." << std::endl;
+        std::cout << "Successfully read filter file: " << size << " bytes." << std::endl;
     } else {
-        std::cerr << "读取滤镜文件失败." << std::endl;
+        std::cerr << "Failed to read filter file." << std::endl;
         return -1;
     }
     
@@ -260,11 +260,11 @@ int main() {
     // 加载测试图片
     unsigned char *data = stbio_load((char*)imagePath.c_str(), &width, &height, &nrChannels, 0);
     if (!data) {
-        std::cerr << "无法加载图片: " << imagePath << std::endl;
+        std::cerr << "Failed to load image: " << imagePath << std::endl;
         return -1;
     }
     
-    printf("图片尺寸: width = %d height = %d channels = %d\n", width, height, nrChannels);
+    printf("Image size: width = %d height = %d channels = %d\n", width, height, nrChannels);
     
     // 处理 Y 轴翻转
     unsigned char* flippedData = flip_image_y(data, width, height, nrChannels);
