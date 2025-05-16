@@ -29,6 +29,7 @@
 #include <vector>
 #include <string>
 #include <windows.h>
+#include <dbghelp.h>  // 用于堆栈跟踪
 #include "opengl.h"   // 这个头文件会引入所有必要的OpenGL相关头文件
 #include <glad/glad.h>  // GLAD must be included before GLFW
 #include <GLFW/glfw3.h>
@@ -117,9 +118,78 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
     }
 }
 
+// 设置堆栈跟踪
+void InitStackTrace() {
+    SymInitialize(GetCurrentProcess(), NULL, TRUE);
+}
+
+void PrintStackTrace() {
+    HANDLE process = GetCurrentProcess();
+    HANDLE thread = GetCurrentThread();
+
+    CONTEXT context;
+    context.ContextFlags = CONTEXT_FULL;
+    RtlCaptureContext(&context);
+
+    STACKFRAME64 frame;
+    memset(&frame, 0, sizeof(frame));
+    frame.AddrPC.Offset = context.Rip;
+    frame.AddrPC.Mode = AddrModeFlat;
+    frame.AddrFrame.Offset = context.Rbp;
+    frame.AddrFrame.Mode = AddrModeFlat;
+    frame.AddrStack.Offset = context.Rsp;
+    frame.AddrStack.Mode = AddrModeFlat;
+
+    std::cout << "Stack trace:" << std::endl;
+    for (int i = 0; i < 25; i++) {
+        if (!StackWalk64(IMAGE_FILE_MACHINE_AMD64, process, thread, &frame, &context, NULL, SymFunctionTableAccess64, SymGetModuleBase64, NULL)) {
+            break;
+        }
+        std::cout << "Frame " << i << ": " << std::hex << frame.AddrPC.Offset << std::endl;
+    }
+}
+
+// 验证静态库函数是否可用
+bool VerifyStaticLibrary() {
+    std::cout << "Verifying static library functions..." << std::endl;
+    
+    // 尝试获取函数地址
+    void* funcPtr = (void*)PF_NewPixelFree;
+    if (funcPtr == nullptr) {
+        std::cerr << "Failed to get address of PF_NewPixelFree" << std::endl;
+        return false;
+    }
+    std::cout << "PF_NewPixelFree function found at: " << std::hex << (uintptr_t)funcPtr << std::endl;
+    
+    funcPtr = (void*)PF_DeletePixelFree;
+    if (funcPtr == nullptr) {
+        std::cerr << "Failed to get address of PF_DeletePixelFree" << std::endl;
+        return false;
+    }
+    std::cout << "PF_DeletePixelFree function found at: " << std::hex << (uintptr_t)funcPtr << std::endl;
+    
+    funcPtr = (void*)PF_createBeautyItemFormBundle;
+    if (funcPtr == nullptr) {
+        std::cerr << "Failed to get address of PF_createBeautyItemFormBundle" << std::endl;
+        return false;
+    }
+    std::cout << "PF_createBeautyItemFormBundle function found at: " << std::hex << (uintptr_t)funcPtr << std::endl;
+    
+    return true;
+}
+
 int main() {
     try {
         std::cout << "Program started..." << std::endl;
+        
+        // 初始化堆栈跟踪
+        InitStackTrace();
+        
+        // 验证静态库
+        if (!VerifyStaticLibrary()) {
+            std::cerr << "Static library verification failed!" << std::endl;
+            return -1;
+        }
         
         glfwInit();
         glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
@@ -187,52 +257,64 @@ int main() {
         std::cout << "About to create PixelFree handle..." << std::endl;
         PFPixelFree* handle = nullptr;
         try {
+            // 在创建 handle 之前先读取授权文件
+            std::ifstream authFile(authPath, std::ios::binary);
+            if (!authFile) {
+                std::cerr << "Cannot open auth file: " << authPath << std::endl;
+                std::cerr << "Error code: " << GetLastError() << std::endl;
+                return -1;
+            }
+            std::cout << "Auth file opened successfully" << std::endl;
+            
+            // 获取文件大小
+            authFile.seekg(0, std::ios::end);
+            std::streamsize size = authFile.tellg();
+            authFile.seekg(0, std::ios::beg);
+            
+            // 读取文件内容到缓冲区
+            std::vector<char> authBuffer(size);
+            if (!authFile.read(authBuffer.data(), size)) {
+                std::cerr << "Failed to read auth file" << std::endl;
+                return -1;
+            }
+            std::cout << "Successfully read auth file: " << size << " bytes" << std::endl;
+            
+            // 创建 handle
             handle = PF_NewPixelFree();
             if (handle == nullptr) {
                 std::cerr << "Failed to create PixelFree handle - returned null" << std::endl;
+                PrintStackTrace();  // 打印堆栈跟踪
                 return -1;
             }
             std::cout << "PixelFree handle created successfully" << std::endl;
+            
+            // 初始化授权
+            std::cout << "About to initialize authorization..." << std::endl;
+            int result = PF_createBeautyItemFormBundle(handle, authBuffer.data(), (int)size, PFSrcTypeAuthFile);
+            if (result != 0) {
+                std::cerr << "Failed to initialize authorization. Error code: " << result << std::endl;
+                PrintStackTrace();  // 打印堆栈跟踪
+                PF_DeletePixelFree(handle);
+                return -1;
+            }
+            std::cout << "Authorization initialized successfully" << std::endl;
+            
         } catch (const std::exception& e) {
             std::cerr << "Exception while creating PixelFree handle: " << e.what() << std::endl;
+            PrintStackTrace();  // 打印堆栈跟踪
+            if (handle) {
+                PF_DeletePixelFree(handle);
+            }
             return -1;
         } catch (...) {
             std::cerr << "Unknown exception while creating PixelFree handle" << std::endl;
-            return -1;
-        }
-
-        // 读取授权文件
-        std::ifstream file(authPath, std::ios::binary);
-        if (!file) {
-            std::cerr << "Cannot open auth file: " << authPath << std::endl;
-            std::cerr << "Error code: " << GetLastError() << std::endl;
+            PrintStackTrace();  // 打印堆栈跟踪
             if (handle) {
                 PF_DeletePixelFree(handle);
             }
             return -1;
         }
-        std::cout << "Auth file opened successfully" << std::endl;
-        
-        // 获取文件大小
-        file.seekg(0, std::ios::end);
-        std::streamsize size = file.tellg();
-        file.seekg(0, std::ios::beg);
 
-        // 读取文件内容到缓冲区
-        std::vector<char> authBuffer(size);
-        if (file.read(authBuffer.data(), size)) {
-            std::cout << "Successfully read auth file: " << size << " bytes." << std::endl;
-        } else {
-            std::cerr << "Failed to read auth file." << std::endl;
-            return -1;
-        }
-        
-        // PF_createBeautyItemFormBundle(handle, authBuffer.data(), (int)size, PFSrcTypeAuthFile);
-        
-        // 设置一个窄脸，并将程度设置成最大
-        float faceStrength = 1.0;
-        // PF_pixelFreeSetBeautyFiterParam(handle, PFBeautyFiterTypeFace_narrow, &faceStrength);
-        
         // 读取滤镜文件
         std::ifstream file2(filterPath, std::ios::binary);
         if (!file2) {
