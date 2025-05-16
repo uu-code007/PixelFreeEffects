@@ -51,10 +51,10 @@ endif()
 
 # 针对64位Windows的特定库
 if(WIN64)
-    list(APPEND LINK_LIBS opengl32 glu32 gdi32 user32 kernel32)
+    list(APPEND LINK_LIBS opengl32 glu32 gdi32 user32 kernel32 dbghelp)
 # 针对32位Windows的特定库
 elseif(WIN32)
-    list(APPEND LINK_LIBS opengl32 glu32 gdi32 user32 kernel32)
+    list(APPEND LINK_LIBS opengl32 glu32 gdi32 user32 kernel32 dbghelp)
 endif()
 
 # GLFW3手动设置

@@ -178,12 +178,44 @@ bool VerifyStaticLibrary() {
     return true;
 }
 
+// 设置异常处理
+LONG WINAPI TopLevelExceptionHandler(EXCEPTION_POINTERS* pExceptionInfo) {
+    // 创建 MiniDump 文件
+    HANDLE hFile = CreateFileA("crash.dmp", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+    if (hFile != INVALID_HANDLE_VALUE) {
+        MINIDUMP_EXCEPTION_INFORMATION exInfo;
+        exInfo.ExceptionPointers = pExceptionInfo;
+        exInfo.ThreadId = GetCurrentThreadId();
+        exInfo.ClientPointers = TRUE;
+
+        // 写入 MiniDump
+        MiniDumpWriteDump(
+            GetCurrentProcess(),
+            GetCurrentProcessId(),
+            hFile,
+            MiniDumpNormal,
+            &exInfo,
+            NULL,
+            NULL
+        );
+
+        CloseHandle(hFile);
+    }
+
+    // 打印异常信息
+    std::cerr << "Exception occurred!" << std::endl;
+    std::cerr << "Exception code: 0x" << std::hex << pExceptionInfo->ExceptionRecord->ExceptionCode << std::endl;
+    std::cerr << "Exception address: 0x" << std::hex << (uintptr_t)pExceptionInfo->ExceptionRecord->ExceptionAddress << std::endl;
+
+    return EXCEPTION_CONTINUE_SEARCH;
+}
+
 int main() {
     try {
-        std::cout << "Program started..." << std::endl;
+        // 设置异常处理器
+        SetUnhandledExceptionFilter(TopLevelExceptionHandler);
         
-        // 初始化堆栈跟踪
-        InitStackTrace();
+        std::cout << "Program started..." << std::endl;
         
         // 验证静态库
         if (!VerifyStaticLibrary()) {
@@ -279,21 +311,39 @@ int main() {
             }
             std::cout << "Successfully read auth file: " << size << " bytes" << std::endl;
             
+            // 打印授权文件的前几个字节（用于调试）
+            std::cout << "First few bytes of auth file: ";
+            for (int i = 0; i < std::min(16, (int)size); i++) {
+                printf("%02X ", (unsigned char)authBuffer[i]);
+            }
+            std::cout << std::endl;
+            
             // 创建 handle
-            handle = PF_NewPixelFree();
+            std::cout << "Calling PF_NewPixelFree()..." << std::endl;
+            __try {
+                handle = PF_NewPixelFree();
+            }
+            __except(EXCEPTION_EXECUTE_HANDLER) {
+                std::cerr << "Exception occurred in PF_NewPixelFree()" << std::endl;
+                std::cerr << "Exception code: 0x" << std::hex << GetExceptionCode() << std::endl;
+                return -1;
+            }
+            
             if (handle == nullptr) {
                 std::cerr << "Failed to create PixelFree handle - returned null" << std::endl;
-                PrintStackTrace();  // 打印堆栈跟踪
                 return -1;
             }
             std::cout << "PixelFree handle created successfully" << std::endl;
             
             // 初始化授权
             std::cout << "About to initialize authorization..." << std::endl;
+            std::cout << "Auth buffer size: " << size << " bytes" << std::endl;
+            std::cout << "Auth buffer address: " << std::hex << (uintptr_t)authBuffer.data() << std::endl;
+            std::cout << "Handle address: " << std::hex << (uintptr_t)handle << std::endl;
+            
             int result = PF_createBeautyItemFormBundle(handle, authBuffer.data(), (int)size, PFSrcTypeAuthFile);
             if (result != 0) {
                 std::cerr << "Failed to initialize authorization. Error code: " << result << std::endl;
-                PrintStackTrace();  // 打印堆栈跟踪
                 PF_DeletePixelFree(handle);
                 return -1;
             }
@@ -301,14 +351,12 @@ int main() {
             
         } catch (const std::exception& e) {
             std::cerr << "Exception while creating PixelFree handle: " << e.what() << std::endl;
-            PrintStackTrace();  // 打印堆栈跟踪
             if (handle) {
                 PF_DeletePixelFree(handle);
             }
             return -1;
         } catch (...) {
             std::cerr << "Unknown exception while creating PixelFree handle" << std::endl;
-            PrintStackTrace();  // 打印堆栈跟踪
             if (handle) {
                 PF_DeletePixelFree(handle);
             }
