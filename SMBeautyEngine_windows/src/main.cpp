@@ -180,32 +180,60 @@ bool VerifyStaticLibrary() {
 
 // 设置异常处理
 LONG WINAPI TopLevelExceptionHandler(EXCEPTION_POINTERS* pExceptionInfo) {
+    // 获取当前目录
+    char currentDir[MAX_PATH];
+    GetCurrentDirectoryA(MAX_PATH, currentDir);
+    std::string dumpPath = std::string(currentDir) + "\\crash.dmp";
+    
+    std::cerr << "Creating crash dump at: " << dumpPath << std::endl;
+    
     // 创建 MiniDump 文件
-    HANDLE hFile = CreateFileA("crash.dmp", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-    if (hFile != INVALID_HANDLE_VALUE) {
-        MINIDUMP_EXCEPTION_INFORMATION exInfo;
-        exInfo.ExceptionPointers = pExceptionInfo;
-        exInfo.ThreadId = GetCurrentThreadId();
-        exInfo.ClientPointers = TRUE;
-
-        // 写入 MiniDump
-        MiniDumpWriteDump(
-            GetCurrentProcess(),
-            GetCurrentProcessId(),
-            hFile,
-            MiniDumpNormal,
-            &exInfo,
-            NULL,
-            NULL
-        );
-
-        CloseHandle(hFile);
+    HANDLE hFile = CreateFileA(dumpPath.c_str(), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+    if (hFile == INVALID_HANDLE_VALUE) {
+        std::cerr << "Failed to create crash dump file. Error code: " << GetLastError() << std::endl;
+        return EXCEPTION_CONTINUE_SEARCH;
     }
+
+    MINIDUMP_EXCEPTION_INFORMATION exInfo;
+    exInfo.ExceptionPointers = pExceptionInfo;
+    exInfo.ThreadId = GetCurrentThreadId();
+    exInfo.ClientPointers = TRUE;
+
+    // 写入 MiniDump
+    BOOL result = MiniDumpWriteDump(
+        GetCurrentProcess(),
+        GetCurrentProcessId(),
+        hFile,
+        MiniDumpNormal,
+        &exInfo,
+        NULL,
+        NULL
+    );
+
+    if (!result) {
+        std::cerr << "Failed to write crash dump. Error code: " << GetLastError() << std::endl;
+    } else {
+        std::cerr << "Crash dump created successfully" << std::endl;
+    }
+
+    CloseHandle(hFile);
 
     // 打印异常信息
     std::cerr << "Exception occurred!" << std::endl;
     std::cerr << "Exception code: 0x" << std::hex << pExceptionInfo->ExceptionRecord->ExceptionCode << std::endl;
     std::cerr << "Exception address: 0x" << std::hex << (uintptr_t)pExceptionInfo->ExceptionRecord->ExceptionAddress << std::endl;
+    
+    // 打印寄存器信息
+    std::cerr << "Register values:" << std::endl;
+    std::cerr << "RAX: 0x" << std::hex << pExceptionInfo->ContextRecord->Rax << std::endl;
+    std::cerr << "RBX: 0x" << std::hex << pExceptionInfo->ContextRecord->Rbx << std::endl;
+    std::cerr << "RCX: 0x" << std::hex << pExceptionInfo->ContextRecord->Rcx << std::endl;
+    std::cerr << "RDX: 0x" << std::hex << pExceptionInfo->ContextRecord->Rdx << std::endl;
+    std::cerr << "RSI: 0x" << std::hex << pExceptionInfo->ContextRecord->Rsi << std::endl;
+    std::cerr << "RDI: 0x" << std::hex << pExceptionInfo->ContextRecord->Rdi << std::endl;
+    std::cerr << "RIP: 0x" << std::hex << pExceptionInfo->ContextRecord->Rip << std::endl;
+    std::cerr << "RSP: 0x" << std::hex << pExceptionInfo->ContextRecord->Rsp << std::endl;
+    std::cerr << "RBP: 0x" << std::hex << pExceptionInfo->ContextRecord->Rbp << std::endl;
 
     return EXCEPTION_CONTINUE_SEARCH;
 }
@@ -329,12 +357,8 @@ int main() {
             }
             std::cout << "Successfully read auth file: " << size << " bytes" << std::endl;
             
-            // 打印授权文件的前几个字节（用于调试）
-            std::cout << "First few bytes of auth file: ";
-            for (int i = 0; i < std::min(16, (int)size); i++) {
-                printf("%02X ", (unsigned char)authBuffer[i]);
-            }
-            std::cout << std::endl;
+
+      
             
             // 创建 handle
             std::cout << "Calling PF_NewPixelFree()..." << std::endl;
@@ -351,13 +375,7 @@ int main() {
             std::cout << "Auth buffer address: " << std::hex << (uintptr_t)authBuffer.data() << std::endl;
             std::cout << "Handle address: " << std::hex << (uintptr_t)handle << std::endl;
             
-            int result = PF_createBeautyItemFormBundle(handle, authBuffer.data(), (int)size, PFSrcTypeAuthFile);
-            if (result != 0) {
-                std::cerr << "Failed to initialize authorization. Error code: " << result << std::endl;
-                PF_DeletePixelFree(handle);
-                return -1;
-            }
-            std::cout << "Authorization initialized successfully" << std::endl;
+            PF_createBeautyItemFormBundle(handle, authBuffer.data(), (int)size, PFSrcTypeAuthFile);
             
         } catch (const std::exception& e) {
             std::cerr << "Exception while creating PixelFree handle: " << e.what() << std::endl;
@@ -382,7 +400,7 @@ int main() {
         
         // 获取文件大小
         file2.seekg(0, std::ios::end);
-        size = file2.tellg();
+        int size = file2.tellg();
         file2.seekg(0, std::ios::beg);
 
         // 读取文件内容到缓冲区
