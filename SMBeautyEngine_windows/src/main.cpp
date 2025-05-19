@@ -412,8 +412,12 @@ int main() {
             return -1;
         }
         
-        // PF_createBeautyItemFormBundle(handle, filterBuffer.data(), (int)size, PFSrcTypeFilter);
-        
+        PF_createBeautyItemFormBundle(handle, filterBuffer.data(), (int)size, PFSrcTypeFilter);
+        const char *param = "heibai1";
+        PF_pixelFreeSetBeautyFiterParam(handle,PFBeautyFiterName,(void*)param);
+        float valuea = 1.0f;
+        PF_pixelFreeSetBeautyFiterParam(handle,PFBeautyFiterTypeFace_narrow,&valuea);
+        PF_pixelFreeSetBeautyFiterParam(handle,PFBeautyFiterTypeFace_V,&valuea);
         // 设置回调
         glfwSetKeyCallback(window, keyCallback);
         glfwSetMouseButtonCallback(window, mouse_button_callback);
@@ -443,7 +447,7 @@ int main() {
         printf("Image size: width = %d height = %d channels = %d\n", width, height, nrChannels);
         
         // 处理 Y 轴翻转
-        unsigned char* flippedData = flip_image_y(data, width, height, nrChannels);
+        // unsigned char* flippedData = flip_image_y(data, width, height, nrChannels);
 
         glGenTextures(1, &texture_id);
 
@@ -457,21 +461,21 @@ int main() {
             glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
             glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, flippedData);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
             glBindTexture(GL_TEXTURE_2D, 0);
             
-            // PFIamgeInput image;
-            // image.textureID = texture_id;
-            // image.p_data0 = data;
-            // image.wigth = width;
-            // image.height = height;
-            // image.stride_0 = width * 4;
-            // image.format = PFFORMAT_IMAGE_TEXTURE;
-            // image.rotationMode = PFRotationMode0;
-            // PF_processWithBuffer(handle, image);
+            PFIamgeInput image;
+            image.textureID = texture_id;
+            image.p_data0 = data;
+            image.wigth = width;
+            image.height = height;
+            image.stride_0 = width * 4;
+            image.format = PFFORMAT_IMAGE_TEXTURE;
+            image.rotationMode = PFRotationMode180;
+            int outTexture = PF_processWithBuffer(handle, image);
             
             render_screen.ActiveProgram();
-            render_screen.ProcessImage(texture_id);
+            render_screen.ProcessImage(outTexture);
             glfwSwapBuffers(window);
             
             // 使用Windows的Sleep代替Mac的usleep
@@ -480,10 +484,10 @@ int main() {
         
         // 清理资源
         stbio_image_free(data);
-        free(flippedData);
+        // free(flippedData);
         glDeleteTextures(1, &texture_id);
         glfwTerminate();
-        // PF_DeletePixelFree(handle);
+        PF_DeletePixelFree(handle);
 
     } catch (const std::exception& e) {
         std::cerr << "Exception in main: " << e.what() << std::endl;
