@@ -4,9 +4,9 @@
 
 #### 项目介绍
 
-**pixelFree** 是基于个人几年对图形学习，总结开发的SDK, 轻量级高性能，主要用于直播，短视频，证件照.....
+**pixelFree** 是一款支持全平台, 轻量级高性能的美颜特效 SDK，主要用于直播，短视频，证件照.....
 
-主要功能包含：美白，红润，磨皮，锐化，大眼，瘦脸…….
+主要功能包含：美白，红润，磨皮，锐化，大眼，瘦脸,2D 贴纸 …….
 
 集成接入参考  *pixelFreeEffects* 演示**DEMO**
 
@@ -32,6 +32,7 @@
 | :-----: | :----: |
 |   iOS   | > 9.0  |
 | Andriod | >  5.0 |
+| Windows | >  10.0.0 |
 | harmonyOS | >  12.0  |
 | flutter |   >=3.3.0 |
 
@@ -61,6 +62,8 @@
 [android 接入文档](./doc/doc_android.md)
 
 [flutter 接入文档](./doc/doc_flutter.md)
+
+[Windows 接入文档](./doc/doc_windows.md)
 
 [常见问题](./doc/frequently_asked_questions.md)
 
