@@ -159,6 +159,81 @@
     } else if ([@"release" isEqualToString:call.method]) {
     [_textures unregisterTexture:_glTexture];
     result(NULL);
+  } else if ([@"pixelFreeAddHLSFilter" isEqualToString:call.method]) {
+    NSDictionary *params = dicArguments;
+    PFHLSFilterParams hlsParams = {
+        .brightness = 0.0f,
+        .saturation = 1.0f,
+        .hue = 0.0f,
+        .similarity = 0.0f,
+    };
+    
+    NSArray *keyColor = params[@"keyColor"];
+    hlsParams.key_color[0] = [keyColor[0] floatValue];
+    hlsParams.key_color[1] = [keyColor[1] floatValue];
+    hlsParams.key_color[2] = [keyColor[2] floatValue];
+    
+    hlsParams.hue = [params[@"hue"] floatValue];
+    hlsParams.saturation = [params[@"saturation"] floatValue];
+    hlsParams.brightness = [params[@"brightness"] floatValue];
+    hlsParams.similarity = [params[@"similarity"] floatValue];
+    
+    int handle = [_mPixelFree pixelFreeAddHLSFilter:&hlsParams];
+    result(@(handle));
+  } else if ([@"pixelFreeDeleteHLSFilter" isEqualToString:call.method]) {
+    int handle = [dicArguments[@"handle"] intValue];
+    [_mPixelFree pixelFreeDeleteHLSFilter:handle];
+    result(NULL);
+  } else if ([@"pixelFreeChangeHLSFilter" isEqualToString:call.method]) {
+    int handle = [dicArguments[@"handle"] intValue];
+    NSDictionary *params = dicArguments;
+    
+    PFHLSFilterParams hlsParams = {
+        .brightness = 0.0f,
+        .saturation = 1.0f,
+        .hue = 0.0f,
+        .similarity = 0.0f,
+    };
+    NSArray *keyColor = params[@"keyColor"];
+    hlsParams.key_color[0] = [keyColor[0] floatValue];
+    hlsParams.key_color[1] = [keyColor[1] floatValue];
+    hlsParams.key_color[2] = [keyColor[2] floatValue];
+    
+    hlsParams.hue = [params[@"hue"] floatValue];
+    hlsParams.saturation = [params[@"saturation"] floatValue];
+    hlsParams.brightness = [params[@"brightness"] floatValue];
+    hlsParams.similarity = [params[@"similarity"] floatValue];
+    
+    [_mPixelFree pixelFreeChangeHLSFilter:handle params:&hlsParams];
+    result(NULL);
+  } else if ([@"pixelFreeSetColorGrading" isEqualToString:call.method]) {
+    NSDictionary *params = dicArguments;
+    PFImageColorGrading colorGrading = {
+        .isUse = false,
+        .brightness = 0.0f,
+        .contrast = 1.0f,
+        .exposure = 0.0f,
+        .highlights = 0.0f,
+        .shadows = 0.0f,
+        .saturation = 1.0f,
+        .temperature = 5000.0f,
+        .tint = 0.0f,
+        .hue = 0.0f
+    };
+    
+    colorGrading.isUse = [params[@"isUse"] boolValue];
+    colorGrading.brightness = [params[@"brightness"] floatValue];
+    colorGrading.contrast = [params[@"contrast"] floatValue];
+    colorGrading.exposure = [params[@"exposure"] floatValue];
+    colorGrading.highlights = [params[@"highlights"] floatValue];
+    colorGrading.shadows = [params[@"shadows"] floatValue];
+    colorGrading.saturation = [params[@"saturation"] floatValue];
+    colorGrading.temperature = [params[@"temperature"] floatValue];
+    colorGrading.tint = [params[@"tint"] floatValue];
+    colorGrading.hue = [params[@"hue"] floatValue];
+    
+    [_mPixelFree pixelFreeSetColorGrading:&colorGrading];
+    result(NULL);
   } else {
     result(FlutterMethodNotImplemented);
   }

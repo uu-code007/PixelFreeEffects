@@ -129,4 +129,29 @@ Map<String, dynamic> jsonStringToMap(String jsonString) {
     return json.decode(jsonString);
 }
 
+@override
+Future<int> pixelFreeAddHLSFilter(PFHLSFilterParams params) async {
+  final result = await methodChannel.invokeMethod('pixelFreeAddHLSFilter', params.toMap());
+  return result as int;
+}
+
+@override
+Future<void> pixelFreeDeleteHLSFilter(int handle) async {
+  await methodChannel.invokeMethod('pixelFreeDeleteHLSFilter', {'handle': handle});
+}
+
+@override
+Future<void> pixelFreeChangeHLSFilter(int handle, PFHLSFilterParams params) async {
+  await methodChannel.invokeMethod('pixelFreeChangeHLSFilter', {
+    'handle': handle,
+    ...params.toMap(),
+  });
+}
+
+@override
+Future<int> pixelFreeSetColorGrading(PFImageColorGrading params) async {
+  final result = await methodChannel.invokeMethod('pixelFreeSetColorGrading', params.toMap());
+  return result as int;
+}
+
 }

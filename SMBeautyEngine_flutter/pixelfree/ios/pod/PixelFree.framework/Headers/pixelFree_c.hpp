@@ -112,6 +112,7 @@ typedef struct {
     float hue;
     float saturation;// 0-1.0
     float brightness;  // 0-1.0
+    float similarity; //相似度
 } PFHLSFilterParams;
 
 /* 美颜类型 */
@@ -127,7 +128,7 @@ typedef enum PFBeautyFiterType{
     PFBeautyFiterTypeFace_V,
     //small
     PFBeautyFiterTypeFace_small,
-    //鼻子
+    //瘦鼻
     PFBeautyFiterTypeFace_nose,
     //额头
     PFBeautyFiterTypeFace_forehead,
@@ -173,7 +174,6 @@ typedef enum PFBeautyFiterType{
     PFBeautyFiterWatermark,
     // 扩展字段
     PFBeautyFiterExtend,
-    
     
 } PFBeautyFiterType;
 

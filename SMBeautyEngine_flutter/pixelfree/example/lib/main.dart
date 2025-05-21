@@ -51,6 +51,38 @@ class _MyAppState extends State<MyApp> {
       final licPath = await _extractAssetToTemp(_licenseAssetPath);
       await _pixelFreePlugin.createWithLic(licPath);
       await initPlatformState();
+
+
+// 创建HLS滤镜参数
+// final params2 = PFHLSFilterParams(
+//   keyColor: [0.5, 0.5, 0.5], // RGB值范围0-1
+//   hue: 180.0, // 色相
+//   saturation: 0.5, // 饱和度 0-1
+//   brightness: 0.5, // 亮度 0-1
+//   similarity: 0.8, // 相似度 0-1
+// );
+// // 添加HLS滤镜
+// final handle = await _pixelFreePlugin.pixelFreeAddHLSFilter(params2);
+
+
+// // 删除HLS滤镜
+// await _pixelFreePlugin.pixelFreeDeleteHLSFilter(handle);
+
+// final params = PFImageColorGrading(
+//   isUse: true, // 启用颜色分级
+//   brightness: 0.1, // 增加亮度 (-1.0 到 1.0)
+//   contrast: 1.2, // 增加对比度 (0.0 到 4.0)
+//   exposure: 0.5, // 增加曝光 (-10.0 到 10.0)
+//   highlights: 0.3, // 调整高光 (0-1)
+//   shadows: 0.2, // 调整阴影 (0-1)
+//   saturation: 1.1, // 增加饱和度 (0.0 到 2.0)
+//   temperature: 5500.0, // 调整色温 (开尔文温度)
+//   tint: 0.1, // 调整色调补偿
+//   hue: 180.0, // 调整色相 (0-360)
+// );
+
+// final result = await _pixelFreePlugin.pixelFreeSetColorGrading(params);
+
     } catch (e, stack) {
       debugPrint('Initialization failed: $e\n$stack');
       setState(() =>

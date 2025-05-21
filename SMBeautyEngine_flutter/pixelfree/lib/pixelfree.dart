@@ -99,4 +99,22 @@ class Pixelfree {
   Map<String, dynamic> jsonStringToMap(String jsonString) {
     return json.decode(jsonString);
   }
+
+  // HLS filter operations
+  Future<int> pixelFreeAddHLSFilter(PFHLSFilterParams params) {
+    return PixelfreePlatform.instance.pixelFreeAddHLSFilter(params);
+  }
+
+  Future<void> pixelFreeDeleteHLSFilter(int handle) {
+    return PixelfreePlatform.instance.pixelFreeDeleteHLSFilter(handle);
+  }
+
+  Future<void> pixelFreeChangeHLSFilter(int handle, PFHLSFilterParams params) {
+    return PixelfreePlatform.instance.pixelFreeChangeHLSFilter(handle, params);
+  }
+
+  // Color grading operation
+  Future<int> pixelFreeSetColorGrading(PFImageColorGrading params) {
+    return PixelfreePlatform.instance.pixelFreeSetColorGrading(params);
+  }
 }

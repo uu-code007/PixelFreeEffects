@@ -74,6 +74,9 @@ __attribute__((visibility("default"))) @interface SMPixelFree : NSObject
 - (int)pixelFreeDeleteHLSFilter:(int)handle;
 - (int)pixelFreeChangeHLSFilter:(int)handle params:(PFHLSFilterParams*)HLSFilterParams;
 
+// 自定义贴纸专属
+- (void)pixelFreeSetFiterStickerWithPath:(NSString *)path;
+
 @end
 
 NS_ASSUME_NONNULL_END
