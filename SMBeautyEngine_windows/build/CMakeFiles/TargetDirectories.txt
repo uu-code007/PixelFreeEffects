@@ -1,0 +1,3 @@
+C:/Users/jjjj/Documents/GitHub/PixelFreeEffects/SMBeautyEngine_windows/build/CMakeFiles/SMBeautyEngine_windows.dir
+C:/Users/jjjj/Documents/GitHub/PixelFreeEffects/SMBeautyEngine_windows/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/jjjj/Documents/GitHub/PixelFreeEffects/SMBeautyEngine_windows/build/CMakeFiles/ZERO_CHECK.dir

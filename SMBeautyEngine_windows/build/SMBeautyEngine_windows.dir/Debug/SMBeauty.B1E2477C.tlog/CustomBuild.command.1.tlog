@@ -1,0 +1,10 @@
+^C:\USERS\JJJJ\DOCUMENTS\GITHUB\PIXELFREEEFFECTS\SMBEAUTYENGINE_WINDOWS\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/jjjj/Documents/GitHub/PixelFreeEffects/SMBeautyEngine_windows -BC:/Users/jjjj/Documents/GitHub/PixelFreeEffects/SMBeautyEngine_windows/build --check-stamp-file C:/Users/jjjj/Documents/GitHub/PixelFreeEffects/SMBeautyEngine_windows/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

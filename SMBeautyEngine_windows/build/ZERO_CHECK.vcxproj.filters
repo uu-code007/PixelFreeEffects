@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\jjjj\Documents\GitHub\PixelFreeEffects\SMBeautyEngine_windows\build\CMakeFiles\9c96b623589e003e7fb84c1b1374884a\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{DEC9E8A6-AF56-3D86-AD38-80DEE2A975B7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
