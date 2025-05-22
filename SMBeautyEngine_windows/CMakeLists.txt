@@ -3,19 +3,11 @@ project(SMBeautyEngine_windows)
 
 set(CMAKE_CXX_STANDARD 14)
 
-# 设置MSVC运行时库和调试级别
+# 设置MSVC编译选项
 if(MSVC)
-    # 使用静态发布运行时库
     set(CMAKE_CXX_FLAGS_DEBUG "/MT /Zi /Ob0 /Od")
     set(CMAKE_CXX_FLAGS_RELEASE "/MT /O2 /Ob2 /DNDEBUG")
-    
-    # 设置迭代器调试级别为0（发布模式）
-    add_definitions(-D_ITERATOR_DEBUG_LEVEL=0)
-    
-    # 禁用特定警告
-    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-    
-    # 设置运行时库
+    add_definitions(-D_ITERATOR_DEBUG_LEVEL=0 -D_CRT_SECURE_NO_WARNINGS)
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded")
 endif()
 
@@ -23,48 +15,55 @@ endif()
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-# 设置 GLAD 相关路径
-set(GLAD_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glad/include")
-set(GLAD_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glad/src")
+# 设置第三方库路径
+set(THIRD_PARTY_DIR "${CMAKE_CURRENT_SOURCE_DIR}/third_party")
+set(GLAD_INCLUDE_DIR "${THIRD_PARTY_DIR}/glad/include")
+set(GLAD_SOURCE_DIR "${THIRD_PARTY_DIR}/glad/src")
+set(STB_INCLUDE_DIR "${THIRD_PARTY_DIR}/stb")
+set(GLFW3_INCLUDE_DIRS "${THIRD_PARTY_DIR}/glfw/include")
+set(GLFW3_LIBRARIES "${THIRD_PARTY_DIR}/glfw/glfw3.lib")
 
-# 设置 STB 相关路径
-set(STB_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/third_party/stb")
+# 检查必要的目录和文件
+foreach(DIR GLAD_INCLUDE_DIR GLAD_SOURCE_DIR STB_INCLUDE_DIR GLFW3_INCLUDE_DIRS)
+    if(NOT EXISTS "${${DIR}}")
+        message(FATAL_ERROR "${DIR} not found at: ${${DIR}}")
+    endif()
+endforeach()
 
-# 查找OpenGL包
+if(NOT EXISTS "${GLFW3_LIBRARIES}")
+    message(FATAL_ERROR "GLFW3 library not found at: ${GLFW3_LIBRARIES}")
+endif()
+
+# 查找OpenGL
 find_package(OpenGL REQUIRED)
+if(NOT OPENGL_FOUND)
+    message(FATAL_ERROR "OpenGL not found")
+endif()
 
-# 设置链接库列表
+# 设置链接库
 set(LINK_LIBS "")
 
-# 检测Windows平台类型
+# Windows特定设置
 if(WIN32)
-    # 检测是否为64位平台
+    # 检测64位
     if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-        set(WIN64 TRUE)
-        message(STATUS "Targeting 64-bit Windows")
         add_definitions(-DWIN64)
-    else()
-        set(WIN64 FALSE)
-        message(STATUS "Targeting 32-bit Windows")
     endif()
+    
+    # Windows系统库
+    list(APPEND LINK_LIBS 
+        opengl32 
+        glu32 
+        gdi32 
+        user32 
+        kernel32 
+        dbghelp
+    )
 endif()
 
-# 针对64位Windows的特定库
-if(WIN64)
-    list(APPEND LINK_LIBS opengl32 glu32 gdi32 user32 kernel32 dbghelp)
-# 针对32位Windows的特定库
-elseif(WIN32)
-    list(APPEND LINK_LIBS opengl32 glu32 gdi32 user32 kernel32 dbghelp)
-endif()
-
-# GLFW3手动设置
-message(STATUS "Using bundled GLFW3 paths")
-set(GLFW3_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw/include")
-set(GLFW3_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw/glfw3.lib")
+# 添加第三方库
 list(APPEND LINK_LIBS ${GLFW3_LIBRARIES})
-
-# 添加pixelFree库
-list(APPEND LINK_LIBS ${CMAKE_CURRENT_SOURCE_DIR}/pixelfreeLib/PixelFree.lib)
+list(APPEND LINK_LIBS "${CMAKE_CURRENT_SOURCE_DIR}/pixelfreeLib/PixelFree.lib")
 
 # 设置包含目录
 include_directories(
@@ -74,18 +73,7 @@ include_directories(
     ${GLFW3_INCLUDE_DIRS}
     ${OPENGL_INCLUDE_DIRS}
     ${GLAD_INCLUDE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw/include
 )
-
-# 如果是Windows平台，添加Windows SDK路径
-if(WIN32)
-    if(MSVC)
-        # 添加Windows SDK路径
-        include_directories("C:/Program Files (x86)/Windows Kits/10/Include/10.0.19041.0/um"
-                          "C:/Program Files (x86)/Windows Kits/10/Include/10.0.19041.0/shared"
-                          "C:/Program Files (x86)/Windows Kits/10/Include/10.0.19041.0/ucrt")
-    endif()
-endif()
 
 # 添加源文件
 set(SOURCE_FILES
@@ -97,29 +85,41 @@ set(SOURCE_FILES
 # 创建可执行文件
 add_executable(SMBeautyEngine_windows ${SOURCE_FILES})
 
-# 链接所有库
-target_link_libraries(SMBeautyEngine_windows ${LINK_LIBS} dbghelp)
+# 链接库
+target_link_libraries(SMBeautyEngine_windows ${LINK_LIBS})
 
 # 设置调试信息
 if(MSVC)
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Zi")
 endif()
 
-# 复制资源文件到输出目录
-if(WIN32)
-    # 使用简单的复制命令
-    add_custom_command(TARGET SMBeautyEngine_windows POST_BUILD
-        COMMAND cmd /c "if not exist \"$<TARGET_FILE_DIR:SMBeautyEngine_windows>\\Res\" mkdir \"$<TARGET_FILE_DIR:SMBeautyEngine_windows>\\Res\""
-        COMMAND cmd /c "xcopy /Y /E /I \"${CMAKE_CURRENT_SOURCE_DIR}\\Res\\*\" \"$<TARGET_FILE_DIR:SMBeautyEngine_windows>\\Res\\\""
-        COMMAND cmd /c "copy /Y \"${CMAKE_CURRENT_SOURCE_DIR}\\IMG_2406.png\" \"$<TARGET_FILE_DIR:SMBeautyEngine_windows>\""
-        # COMMAND cmd /c "copy /Y \"${CMAKE_CURRENT_SOURCE_DIR}\\pixelfreeLib\\pixelFree.dll\" \"$<TARGET_FILE_DIR:SMBeautyEngine_windows>\""
-    )
-else()
-    # 使用 CMake 命令（非 Windows 平台）
+# 资源文件处理
+set(RES_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Res")
+set(IMAGE_FILE "${CMAKE_CURRENT_SOURCE_DIR}/IMG_2406.png")
+
+# 检查资源文件
+foreach(FILE "${RES_DIR}" "${IMAGE_FILE}")
+    if(NOT EXISTS "${FILE}")
+        message(FATAL_ERROR "Required file not found: ${FILE}")
+    endif()
+endforeach()
+
+# 复制资源文件
+function(copy_resources)
+    # 创建输出目录
     add_custom_command(TARGET SMBeautyEngine_windows POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:SMBeautyEngine_windows>/Res"
-        COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/Res" "$<TARGET_FILE_DIR:SMBeautyEngine_windows>/Res"
-        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/IMG_2406.png" "$<TARGET_FILE_DIR:SMBeautyEngine_windows>"
-        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/pixelfreeLib/pixelFree.dll" "$<TARGET_FILE_DIR:SMBeautyEngine_windows>"
     )
-endif() 
+    
+    # 复制资源目录
+    add_custom_command(TARGET SMBeautyEngine_windows POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory "${RES_DIR}" "$<TARGET_FILE_DIR:SMBeautyEngine_windows>/Res"
+    )
+    
+    # 复制图片文件
+    add_custom_command(TARGET SMBeautyEngine_windows POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy "${IMAGE_FILE}" "$<TARGET_FILE_DIR:SMBeautyEngine_windows>"
+    )
+endfunction()
+
+copy_resources() 
