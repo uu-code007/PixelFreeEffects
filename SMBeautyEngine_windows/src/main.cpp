@@ -47,7 +47,7 @@ void main() {
 )";
 
 const char* DEFAULT_FRAGMENT_SHADER = R"(
-varying highp vec2 textureCoordinate;
+varying vec2 textureCoordinate;
 uniform sampler2D inputImageTexture;
 void main() {
     gl_FragColor = texture2D(inputImageTexture, textureCoordinate);
