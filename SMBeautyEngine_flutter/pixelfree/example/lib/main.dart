@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:pixelfree/pixelfree.dart';
 import 'package:pixelfree/PixeBeautyDialog.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'dart:ui';
 import 'package:pixelfree/pixelfree_platform_interface.dart';
@@ -24,17 +25,21 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   static const _licenseAssetPath = 'assets/pixelfreeAuth.lic';
   static const _modelAssetPath = 'assets/filter_model.bundle';
+  final ImagePicker _picker = ImagePicker();
 
   double _currentValue = 0.0;
   final _pixelFreePlugin = Pixelfree();
   int _currentTextureId = 0;
-  late final _rgba;
+  ByteData? _rgba;
   int w = 720;
   int h = 1024;
   ui.Image? _processedImage;
   bool _useTexture = false;
   bool _isInitializing = false;
   String? _initializationError;
+  Timer? _timer;
+  bool _isProcessing = false;
+  bool _isTimerActive = false;
 
   @override
   void initState() {
@@ -54,31 +59,30 @@ class _MyAppState extends State<MyApp> {
 
 
 // 创建HLS滤镜参数
-final params2 = PFHLSFilterParams(
-  keyColor: [0.5, 0.5, 0.5], // RGB值范围0-1
-  hue: 100.0, // 色相
-  saturation: 1.0, // 饱和度 0-1
-  brightness: 1.0, // 亮度 0-1
-  similarity: 0.8, // 相似度 0-1
-);
-// 添加HLS滤镜
-final handle = await _pixelFreePlugin.pixelFreeAddHLSFilter(params2);
-
+// final params2 = PFHLSFilterParams(
+//   keyColor: [0.5, 0.5, 0.5], // RGB值范围0-1
+//   hue: 0.0, // 色相 0.45-0.45     0 默认值
+//   saturation: 1.0, // 饱和度 0.3 -1.8       1 默认值
+//   brightness: 1.0, // 亮度 0-1         1 默认值
+//   similarity: 0.8, // 相似度 0-1       0.8 默认值
+// );
+// // 添加HLS滤镜
+// final handle = await _pixelFreePlugin.pixelFreeAddHLSFilter(params2);
 
 // // 删除HLS滤镜
 // await _pixelFreePlugin.pixelFreeDeleteHLSFilter(handle);
 
 // final params = PFImageColorGrading(
-//   isUse: true, // 启用颜色分级
-//   brightness: 0.1, // 增加亮度 (-1.0 到 1.0)
+//   isUse: true, // 启用颜色分级 默认false
+//   brightness: 0.1, // 增加亮度 (-1.0 到 1.0) 默认0
 //   contrast: 1.2, // 增加对比度 (0.0 到 4.0)
 //   exposure: 0.5, // 增加曝光 (-10.0 到 10.0)
-//   highlights: 0.3, // 调整高光 (0-1)
-//   shadows: 0.2, // 调整阴影 (0-1)
-//   saturation: 1.1, // 增加饱和度 (0.0 到 2.0)
-//   temperature: 5500.0, // 调整色温 (开尔文温度)
-//   tint: 0.1, // 调整色调补偿
-//   hue: 180.0, // 调整色相 (0-360)
+//   highlights: 0.3, // 调整高光 (-1-1) 默认0
+//   shadows: 0.2, // 调整阴影 (-1-1) 默认0
+//   saturation: 1.1, // 增加饱和度 (0.0 到 2.0) 默认1
+//   temperature: 5500.0, // 调整色温 (开尔文温度 0-10000) 默认5500
+//   tint: 0.1, // 调整色调补偿 默认0 
+//   hue: 180.0, // 调整色相 (0-360) 默认0
 // );
 
 // final result = await _pixelFreePlugin.pixelFreeSetColorGrading(params);
@@ -113,11 +117,16 @@ final handle = await _pixelFreePlugin.pixelFreeAddHLSFilter(params2);
 
   Future<void> readerImageAsyncTask(
       ByteData bytes, int width, int height) async {
+    if (_isProcessing) return;
+    _isProcessing = true;
+    
     try {
       if (_useTexture) {
         final texid = await _pixelFreePlugin.processWithImage(
             bytes.buffer.asUint8List(0), width, height);
-        setState(() => _currentTextureId = texid);
+        if (mounted) {
+          setState(() => _currentTextureId = texid);
+        }
         return;
       }
 
@@ -141,11 +150,16 @@ final handle = await _pixelFreePlugin.pixelFreeAddHLSFilter(params2);
       final image = await createImage(uint8List, width, height);
 
       if (_useTexture) return;
-      setState(() {
-        _processedImage = image; // No casting needed now
-      });
+      if (mounted) {
+        setState(() {
+          _processedImage?.dispose(); // Dispose old image
+          _processedImage = image;
+        });
+      }
     } catch (e, stackTrace) {
       print('Error in readerImageAsyncTask: $e\n$stackTrace');
+    } finally {
+      _isProcessing = false;
     }
   }
 
@@ -189,29 +203,86 @@ final handle = await _pixelFreePlugin.pixelFreeAddHLSFilter(params2);
     }
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
+  void _startImageProcessing() {
+    if (_isTimerActive) return;
+    _isTimerActive = true;
+    
+    // 使用更长的间隔时间，比如500ms
+    _timer = Timer.periodic(const Duration(milliseconds: 500), (_) async {
+      if (_rgba != null && !_isProcessing) {
+        await readerImageAsyncTask(_rgba!, w, h);
+      }
+    });
+  }
+
+  void _stopImageProcessing() {
+    _timer?.cancel();
+    _timer = null;
+    _isTimerActive = false;
+  }
+
   Future<void> initPlatformState() async {
     const imageProvider = AssetImage('assets/images/image_render.png');
     var stream = imageProvider.resolve(ImageConfiguration.empty);
 
-    // create a promise that will be resolved once the image is loaded
     final Completer<ImageInfo> completer = Completer<ImageInfo>();
     var listener = ImageStreamListener((ImageInfo info, bool _) {
       completer.complete(info);
     });
 
-    // listen to the image loaded event
     stream.addListener(listener);
-
-    // wait for the image to be loaded
     final imageInfo = await completer.future;
+    stream.removeListener(listener);
 
     _rgba = await imageInfo.image.toByteData(format: ImageByteFormat.rawRgba);
+    
+    // 启动定时处理
+    _startImageProcessing();
+  }
 
-    Timer.periodic(const Duration(milliseconds: 200), (_) async {
-      await readerImageAsyncTask(
-          _rgba!, imageInfo.image.width, imageInfo.image.height);
-    });
+  Future<void> _pickImage() async {
+    try {
+      // 暂停定时处理
+      _stopImageProcessing();
+      
+      final XFile? pickedFile = await _picker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 1080,
+        maxHeight: 1920,
+        imageQuality: 85,
+      );
+      
+      if (pickedFile != null) {
+        final bytes = await pickedFile.readAsBytes();
+        final codec = await ui.instantiateImageCodec(bytes);
+        final frame = await codec.getNextFrame();
+        final pickedImage = frame.image;
+        
+        if (mounted) {
+          setState(() {
+            w = pickedImage.width;
+            h = pickedImage.height;
+          });
+        }
+
+        _rgba = await pickedImage.toByteData(format: ImageByteFormat.rawRgba);
+        
+        // 处理新图片
+        await readerImageAsyncTask(_rgba!, pickedImage.width, pickedImage.height);
+        
+        // 重新启动定时处理
+        _startImageProcessing();
+        
+        pickedImage.dispose();
+      } else {
+        // 如果用户取消选择，重新启动定时处理
+        _startImageProcessing();
+      }
+    } catch (e) {
+      print('Error picking image: $e');
+      // 发生错误时也要重新启动定时处理
+      _startImageProcessing();
+    }
   }
 
   void _showBeautyDialog() {
@@ -243,6 +314,10 @@ final handle = await _pixelFreePlugin.pixelFreeAddHLSFilter(params2);
         appBar: AppBar(
           title: const Text('pixfree Plugin example app'),
           actions: [
+            IconButton(
+              icon: const Icon(Icons.photo_library),
+              onPressed: _pickImage,
+            ),
             Switch(
               value: _useTexture,
               onChanged: (value) {
@@ -293,7 +368,7 @@ final handle = await _pixelFreePlugin.pixelFreeAddHLSFilter(params2);
 
   @override
   void dispose() {
-    // 清理资源
+    _stopImageProcessing();
     _processedImage?.dispose();
     _rgba = null;
     super.dispose();
