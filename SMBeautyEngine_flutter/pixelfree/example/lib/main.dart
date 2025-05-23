@@ -54,15 +54,15 @@ class _MyAppState extends State<MyApp> {
 
 
 // 创建HLS滤镜参数
-// final params2 = PFHLSFilterParams(
-//   keyColor: [0.5, 0.5, 0.5], // RGB值范围0-1
-//   hue: 180.0, // 色相
-//   saturation: 0.5, // 饱和度 0-1
-//   brightness: 0.5, // 亮度 0-1
-//   similarity: 0.8, // 相似度 0-1
-// );
-// // 添加HLS滤镜
-// final handle = await _pixelFreePlugin.pixelFreeAddHLSFilter(params2);
+final params2 = PFHLSFilterParams(
+  keyColor: [0.5, 0.5, 0.5], // RGB值范围0-1
+  hue: 100.0, // 色相
+  saturation: 1.0, // 饱和度 0-1
+  brightness: 1.0, // 亮度 0-1
+  similarity: 0.8, // 相似度 0-1
+);
+// 添加HLS滤镜
+final handle = await _pixelFreePlugin.pixelFreeAddHLSFilter(params2);
 
 
 // // 删除HLS滤镜

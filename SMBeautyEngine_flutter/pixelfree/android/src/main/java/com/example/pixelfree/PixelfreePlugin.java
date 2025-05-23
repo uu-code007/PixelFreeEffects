@@ -51,9 +51,7 @@ import android.graphics.Bitmap;
 import java.nio.ByteBuffer;
 
 import java.util.List;
-
-import com.hapi.pixelfree.PFHLSFilterParams;
-import com.hapi.pixelfree.PFImageColorGrading;
+import java.util.Map;
 
 
 /**
@@ -187,71 +185,65 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
 
             case "pixelFreeAddHLSFilter": {
                 List<Double> keyColor = (List<Double>) call.argument("keyColor");
-                double hue = (double) call.argument("hue");
-                double saturation = (double) call.argument("saturation");
-                double brightness = (double) call.argument("brightness");
-                double similarity = (double) call.argument("similarity");
+                float[] keyColorArr = new float[] {
+                    keyColor.get(0).floatValue(),
+                    keyColor.get(1).floatValue(),
+                    keyColor.get(2).floatValue()
+                };
+                float hue = ((Double) call.argument("hue")).floatValue();
+                float saturation = ((Double) call.argument("saturation")).floatValue();
+                float brightness = ((Double) call.argument("brightness")).floatValue();
+                float similarity = ((Double) call.argument("similarity")).floatValue();
 
-                PFHLSFilterParams hlsParams = new PFHLSFilterParams();
-                hlsParams.key_color[0] = keyColor.get(0).floatValue();
-                hlsParams.key_color[1] = keyColor.get(1).floatValue();
-                hlsParams.key_color[2] = keyColor.get(2).floatValue();
-                hlsParams.hue = (float) hue;
-                hlsParams.saturation = (float) saturation;
-                hlsParams.brightness = (float) brightness;
-                hlsParams.similarity = (float) similarity;
-
-                int handle = mPixelFree.pixelFreeAddHLSFilter(hlsParams);
+                int handle = mPixelFree.addHLSFilter(keyColorArr, hue, saturation, brightness, similarity);
                 result.success(handle);
             }
             break;
 
             case "pixelFreeDeleteHLSFilter": {
                 int handle = (int) call.argument("handle");
-                mPixelFree.pixelFreeDeleteHLSFilter(handle);
+                mPixelFree.deleteHLSFilter(handle);
                 result.success(null);
             }
             break;
 
             case "pixelFreeChangeHLSFilter": {
-                int handle = (int) call.argument("handle");
                 List<Double> keyColor = (List<Double>) call.argument("keyColor");
-                double hue = (double) call.argument("hue");
-                double saturation = (double) call.argument("saturation");
-                double brightness = (double) call.argument("brightness");
-                double similarity = (double) call.argument("similarity");
+                float[] keyColorArr = new float[] {
+                    keyColor.get(0).floatValue(),
+                    keyColor.get(1).floatValue(),
+                    keyColor.get(2).floatValue()
+                };
+                float hue = ((Double) call.argument("hue")).floatValue();
+                float saturation = ((Double) call.argument("saturation")).floatValue();
+                float brightness = ((Double) call.argument("brightness")).floatValue();
+                float similarity = ((Double) call.argument("similarity")).floatValue();
 
-                PFHLSFilterParams hlsParams = new PFHLSFilterParams();
-                hlsParams.key_color[0] = keyColor.get(0).floatValue();
-                hlsParams.key_color[1] = keyColor.get(1).floatValue();
-                hlsParams.key_color[2] = keyColor.get(2).floatValue();
-                hlsParams.hue = (float) hue;
-                hlsParams.saturation = (float) saturation;
-                hlsParams.brightness = (float) brightness;
-                hlsParams.similarity = (float) similarity;
-
-                mPixelFree.pixelFreeChangeHLSFilter(handle, hlsParams);
+                int handle = (int) call.argument("handle");
+                mPixelFree.changeHLSFilter(handle, keyColorArr, hue, saturation, brightness, similarity);
                 result.success(null);
             }
             break;
 
             case "pixelFreeSetColorGrading": {
                 Map<String, Object> params = (Map<String, Object>) call.arguments;
-                PFImageColorGrading colorGrading = new PFImageColorGrading();
                 
-                colorGrading.isUse = (boolean) params.get("isUse");
-                colorGrading.brightness = ((Number) params.get("brightness")).floatValue();
-                colorGrading.contrast = ((Number) params.get("contrast")).floatValue();
-                colorGrading.exposure = ((Number) params.get("exposure")).floatValue();
-                colorGrading.highlights = ((Number) params.get("highlights")).floatValue();
-                colorGrading.shadows = ((Number) params.get("shadows")).floatValue();
-                colorGrading.saturation = ((Number) params.get("saturation")).floatValue();
-                colorGrading.temperature = ((Number) params.get("temperature")).floatValue();
-                colorGrading.tint = ((Number) params.get("tint")).floatValue();
-                colorGrading.hue = ((Number) params.get("hue")).floatValue();
-                
-                int result = mPixelFree.pixelFreeSetColorGrading(colorGrading);
-                result.success(result);
+                boolean isUse = (boolean) params.get("isUse");
+                float brightness = ((Number) params.get("brightness")).floatValue();
+                float contrast = ((Number) params.get("contrast")).floatValue();
+                float exposure = ((Number) params.get("exposure")).floatValue();
+                float highlights = ((Number) params.get("highlights")).floatValue();
+                float shadows = ((Number) params.get("shadows")).floatValue();
+                float saturation = ((Number) params.get("saturation")).floatValue();
+                float temperature = ((Number) params.get("temperature")).floatValue();
+                float tint = ((Number) params.get("tint")).floatValue();
+                float hue = ((Number) params.get("hue")).floatValue();
+
+                int ret = mPixelFree.setColorGrading(
+                    brightness, contrast, exposure, highlights, shadows, 
+                    saturation, temperature, tint, hue, isUse
+                );
+                result.success(ret);
             }
             break;
 
