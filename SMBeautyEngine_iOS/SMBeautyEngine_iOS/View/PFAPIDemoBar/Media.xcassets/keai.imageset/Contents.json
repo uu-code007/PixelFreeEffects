@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "demo_icon_peach1.png",
+      "filename" : "keai.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "demo_icon_peach1@2x.png",
+      "filename" : "keai@2X.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "demo_icon_peach1@3x.png",
+      "filename" : "keai@3X.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

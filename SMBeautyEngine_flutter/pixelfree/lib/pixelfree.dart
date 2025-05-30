@@ -109,7 +109,7 @@ class Pixelfree {
     return PixelfreePlatform.instance.pixelFreeDeleteHLSFilter(handle);
   }
 
-  Future<void> pixelFreeChangeHLSFilter(int handle, PFHLSFilterParams params) {
+  Future<int> pixelFreeChangeHLSFilter(int handle, PFHLSFilterParams params) {
     return PixelfreePlatform.instance.pixelFreeChangeHLSFilter(handle, params);
   }
 

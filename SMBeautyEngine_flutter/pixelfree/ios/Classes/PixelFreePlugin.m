@@ -232,8 +232,8 @@
     colorGrading.tint = [params[@"tint"] floatValue];
     colorGrading.hue = [params[@"hue"] floatValue];
     
-    [_mPixelFree pixelFreeSetColorGrading:&colorGrading];
-    result(NULL);
+    int ret = [_mPixelFree pixelFreeSetColorGrading:&colorGrading];
+    result(@(ret));
   } else {
     result(FlutterMethodNotImplemented);
   }

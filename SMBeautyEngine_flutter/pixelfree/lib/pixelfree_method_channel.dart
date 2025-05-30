@@ -141,11 +141,12 @@ Future<void> pixelFreeDeleteHLSFilter(int handle) async {
 }
 
 @override
-Future<void> pixelFreeChangeHLSFilter(int handle, PFHLSFilterParams params) async {
-  await methodChannel.invokeMethod('pixelFreeChangeHLSFilter', {
+Future<int> pixelFreeChangeHLSFilter(int handle, PFHLSFilterParams params) async {
+  final result = await methodChannel.invokeMethod('pixelFreeChangeHLSFilter', {
     'handle': handle,
     ...params.toMap(),
   });
+  return result as int;
 }
 
 @override

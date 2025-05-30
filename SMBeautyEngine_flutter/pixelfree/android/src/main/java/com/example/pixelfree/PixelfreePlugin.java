@@ -156,44 +156,86 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
             }
             break;
             case "pixelFreeSetBeautyExtend": {
-                int type = (int) call.argument("type");
-                mPixelFree.pixelFreeSetBeautyExtend(PFBeautyFiterType.values()[type], (String) call.argument("value"));
+                Object typeObj = call.argument("type");
+                Object valueObj = call.argument("value");
+                if (!(typeObj instanceof Number) || !(valueObj instanceof String)) {
+                    result.error("INVALID_ARGUMENT", "Invalid argument types", null);
+                    return;
+                }
+                int type = ((Number) typeObj).intValue();
+                String value = (String) valueObj;
+                mPixelFree.pixelFreeSetBeautyExtend(PFBeautyFiterType.values()[type], value);
                 result.success(null);
             }
             break;
             case "pixelFreeSetBeautyFilterParam": {
-                int type = (int) call.argument("type");
-                double value = (double) call.argument("value");
+                Object typeObj = call.argument("type");
+                Object valueObj = call.argument("value");
+                if (!(typeObj instanceof Number) || !(valueObj instanceof Number)) {
+                    result.error("INVALID_ARGUMENT", "Invalid argument types", null);
+                    return;
+                }
+                int type = ((Number) typeObj).intValue();
+                double value = ((Number) valueObj).doubleValue();
                 mPixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFiterType.values()[type], (float) value);
                 result.success(null);
             }
             break;
             case "pixelFreeSetFilterParam": {
-                double value = (double) call.argument("value");
-                mPixelFree.pixelFreeSetFiterParam((String) call.argument("filterName"), (float) value);
+                Object valueObj = call.argument("value");
+                Object filterNameObj = call.argument("filterName");
+                if (!(valueObj instanceof Number) || !(filterNameObj instanceof String)) {
+                    result.error("INVALID_ARGUMENT", "Invalid argument types", null);
+                    return;
+                }
+                double value = ((Number) valueObj).doubleValue();
+                String filterName = (String) filterNameObj;
+                mPixelFree.pixelFreeSetFiterParam(filterName, (float) value);
                 result.success(null);
             }
             break;
 
             case "pixelFreeSetBeautyTypeParam": {
-                int type = (int) call.argument("type");
-                int value = (int) call.argument("value");
-                mPixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFiterType.PFBeautyFiterTypeOneKey, (int) value);
+                Object typeObj = call.argument("type");
+                Object valueObj = call.argument("value");
+                if (!(typeObj instanceof Number) || !(valueObj instanceof Number)) {
+                    result.error("INVALID_ARGUMENT", "Invalid argument types", null);
+                    return;
+                }
+                int type = ((Number) typeObj).intValue();
+                int value = ((Number) valueObj).intValue();
+                mPixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFiterType.PFBeautyFiterTypeOneKey, value);
                 result.success(null);
             }
             break;
 
             case "pixelFreeAddHLSFilter": {
+                @SuppressWarnings("unchecked")
                 List<Double> keyColor = (List<Double>) call.argument("keyColor");
+                if (keyColor == null || keyColor.size() < 3) {
+                    result.error("INVALID_ARGUMENT", "keyColor must be a list of 3 numbers", null);
+                    return;
+                }
+                Object hueObj = call.argument("hue");
+                Object saturationObj = call.argument("saturation");
+                Object brightnessObj = call.argument("brightness");
+                Object similarityObj = call.argument("similarity");
+                
+                if (!(hueObj instanceof Number) || !(saturationObj instanceof Number) || 
+                    !(brightnessObj instanceof Number) || !(similarityObj instanceof Number)) {
+                    result.error("INVALID_ARGUMENT", "Invalid argument types", null);
+                    return;
+                }
+
                 float[] keyColorArr = new float[] {
                     keyColor.get(0).floatValue(),
                     keyColor.get(1).floatValue(),
                     keyColor.get(2).floatValue()
                 };
-                float hue = ((Double) call.argument("hue")).floatValue();
-                float saturation = ((Double) call.argument("saturation")).floatValue();
-                float brightness = ((Double) call.argument("brightness")).floatValue();
-                float similarity = ((Double) call.argument("similarity")).floatValue();
+                float hue = ((Number) hueObj).floatValue();
+                float saturation = ((Number) saturationObj).floatValue();
+                float brightness = ((Number) brightnessObj).floatValue();
+                float similarity = ((Number) similarityObj).floatValue();
 
                 int handle = mPixelFree.addHLSFilter(keyColorArr, hue, saturation, brightness, similarity);
                 result.success(handle);
@@ -201,49 +243,81 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
             break;
 
             case "pixelFreeDeleteHLSFilter": {
-                int handle = (int) call.argument("handle");
+                Object handleObj = call.argument("handle");
+                if (!(handleObj instanceof Number)) {
+                    result.error("INVALID_ARGUMENT", "handle must be a number", null);
+                    return;
+                }
+                int handle = ((Number) handleObj).intValue();
                 mPixelFree.deleteHLSFilter(handle);
                 result.success(null);
             }
             break;
 
             case "pixelFreeChangeHLSFilter": {
+                @SuppressWarnings("unchecked")
                 List<Double> keyColor = (List<Double>) call.argument("keyColor");
+                if (keyColor == null || keyColor.size() < 3) {
+                    result.error("INVALID_ARGUMENT", "keyColor must be a list of 3 numbers", null);
+                    return;
+                }
+                Object hueObj = call.argument("hue");
+                Object saturationObj = call.argument("saturation");
+                Object brightnessObj = call.argument("brightness");
+                Object similarityObj = call.argument("similarity");
+                Object handleObj = call.argument("handle");
+                
+                if (!(hueObj instanceof Number) || !(saturationObj instanceof Number) || 
+                    !(brightnessObj instanceof Number) || !(similarityObj instanceof Number) ||
+                    !(handleObj instanceof Number)) {
+                    result.error("INVALID_ARGUMENT", "Invalid argument types", null);
+                    return;
+                }
+
                 float[] keyColorArr = new float[] {
                     keyColor.get(0).floatValue(),
                     keyColor.get(1).floatValue(),
                     keyColor.get(2).floatValue()
                 };
-                float hue = ((Double) call.argument("hue")).floatValue();
-                float saturation = ((Double) call.argument("saturation")).floatValue();
-                float brightness = ((Double) call.argument("brightness")).floatValue();
-                float similarity = ((Double) call.argument("similarity")).floatValue();
+                float hue = ((Number) hueObj).floatValue();
+                float saturation = ((Number) saturationObj).floatValue();
+                float brightness = ((Number) brightnessObj).floatValue();
+                float similarity = ((Number) similarityObj).floatValue();
+                int handle = ((Number) handleObj).intValue();
 
-                int handle = (int) call.argument("handle");
-                mPixelFree.changeHLSFilter(handle, keyColorArr, hue, saturation, brightness, similarity);
-                result.success(null);
+                int ret = mPixelFree.changeHLSFilter(handle, keyColorArr, hue, saturation, brightness, similarity);
+                result.success(ret);
             }
             break;
 
             case "pixelFreeSetColorGrading": {
+                @SuppressWarnings("unchecked")
                 Map<String, Object> params = (Map<String, Object>) call.arguments;
+                if (params == null) {
+                    result.error("INVALID_ARGUMENT", "params cannot be null", null);
+                    return;
+                }
                 
-                boolean isUse = (boolean) params.get("isUse");
-                float brightness = ((Number) params.get("brightness")).floatValue();
-                float contrast = ((Number) params.get("contrast")).floatValue();
-                float exposure = ((Number) params.get("exposure")).floatValue();
-                float highlights = ((Number) params.get("highlights")).floatValue();
-                float shadows = ((Number) params.get("shadows")).floatValue();
-                float saturation = ((Number) params.get("saturation")).floatValue();
-                float temperature = ((Number) params.get("temperature")).floatValue();
-                float tint = ((Number) params.get("tint")).floatValue();
-                float hue = ((Number) params.get("hue")).floatValue();
+                try {
+                    boolean isUse = (boolean) params.get("isUse");
+                    float brightness = ((Number) params.get("brightness")).floatValue();
+                    float contrast = ((Number) params.get("contrast")).floatValue();
+                    float exposure = ((Number) params.get("exposure")).floatValue();
+                    float highlights = ((Number) params.get("highlights")).floatValue();
+                    float shadows = ((Number) params.get("shadows")).floatValue();
+                    float saturation = ((Number) params.get("saturation")).floatValue();
+                    float temperature = ((Number) params.get("temperature")).floatValue();
+                    float tint = ((Number) params.get("tint")).floatValue();
+                    float hue = ((Number) params.get("hue")).floatValue();
 
-                int ret = mPixelFree.setColorGrading(
-                    brightness, contrast, exposure, highlights, shadows, 
-                    saturation, temperature, tint, hue, isUse
-                );
-                result.success(ret);
+                    int ret = mPixelFree.setColorGrading(
+                        brightness, contrast, exposure, highlights, shadows, 
+                        saturation, temperature, tint, hue, isUse
+                    );
+                    result.success(ret);
+                } catch (ClassCastException e) {
+                    result.error("INVALID_ARGUMENT", "Invalid parameter types in color grading", null);
+                }
             }
             break;
 

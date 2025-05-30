@@ -85,7 +85,7 @@ abstract class PixelfreePlatform extends PlatformInterface {
     throw UnimplementedError('pixelFreeDeleteHLSFilter() has not been implemented.');
   }
 
-  Future<void> pixelFreeChangeHLSFilter(int handle, PFHLSFilterParams params) {
+  Future<int> pixelFreeChangeHLSFilter(int handle, PFHLSFilterParams params) {
     throw UnimplementedError('pixelFreeChangeHLSFilter() has not been implemented.');
   }
 

@@ -1,6 +1,6 @@
 name: pixelfree
-description: "A PixelFree image processing plugin.."
-version: 2.4.12
+description: "A Flutter plugin for image and video processing with beauty filters, color grading, and HLS filters."
+version: 2.4.14
 homepage: https://github.com/uu-code007/PixelFreeEffects # 项目主页
 repository: https://github.com/uu-code007/PixelFreeEffects # 代码仓库
 environment:
