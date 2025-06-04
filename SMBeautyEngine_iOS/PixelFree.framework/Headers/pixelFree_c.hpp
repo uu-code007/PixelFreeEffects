@@ -69,17 +69,17 @@ typedef struct {
     
   PFDetectFormat format;
   PFRotationMode rotationMode;
-} PFIamgeInput;
+} PFImageInput;
 
 typedef struct {
   char *imagePath;
-} PFFiter;
+} PFFilter;
 
 typedef struct {
     bool isOpenLvmu;//false
     bool isVideo;//false
     const char *bgSrcPath;
-} PFFiterLvmuSetting;
+} PFFilterLvmuSetting;
 
 typedef struct {
     bool isUse; //false
@@ -89,7 +89,7 @@ typedef struct {
     float w;  // 0-1.0
     float h;// 0-1.0
     bool isMirror; // false
-} PFFiterWatermark;
+} PFFilterWatermark;
 
 
 typedef struct {
@@ -116,66 +116,66 @@ typedef struct {
 } PFHLSFilterParams;
 
 /* 美颜类型 */
-typedef enum PFBeautyFiterType{
-    PFBeautyFiterTypeFace_EyeStrength = 0,
+typedef enum PFBeautyFilterType{
+    PFBeautyFilterTypeFace_EyeStrength = 0,
     //瘦脸
-    PFBeautyFiterTypeFace_thinning,
+    PFBeautyFilterTypeFace_thinning,
     //窄脸
-    PFBeautyFiterTypeFace_narrow,
+    PFBeautyFilterTypeFace_narrow,
     //下巴
-    PFBeautyFiterTypeFace_chin,
+    PFBeautyFilterTypeFace_chin,
     //v脸
-    PFBeautyFiterTypeFace_V,
+    PFBeautyFilterTypeFace_V,
     //small
-    PFBeautyFiterTypeFace_small,
+    PFBeautyFilterTypeFace_small,
     //瘦鼻
-    PFBeautyFiterTypeFace_nose,
+    PFBeautyFilterTypeFace_nose,
     //额头
-    PFBeautyFiterTypeFace_forehead,
+    PFBeautyFilterTypeFace_forehead,
     //嘴巴
-    PFBeautyFiterTypeFace_mouth,
+    PFBeautyFilterTypeFace_mouth,
     //人中
-    PFBeautyFiterTypeFace_philtrum,
+    PFBeautyFilterTypeFace_philtrum,
     //长鼻
-    PFBeautyFiterTypeFace_long_nose = 10,
+    PFBeautyFilterTypeFace_long_nose = 10,
     //眼距
-    PFBeautyFiterTypeFace_eye_space,
+    PFBeautyFilterTypeFace_eye_space,
     //微笑嘴角
-    PFBeautyFiterTypeFace_smile,
+    PFBeautyFilterTypeFace_smile,
     //旋转眼睛
-    PFBeautyFiterTypeFace_eye_rotate,
+    PFBeautyFilterTypeFace_eye_rotate,
     //开眼角
-    PFBeautyFiterTypeFace_canthus,
+    PFBeautyFilterTypeFace_canthus,
     //磨皮
-    PFBeautyFiterTypeFaceBlurStrength,
+    PFBeautyFilterTypeFaceBlurStrength,
     //美白
-    PFBeautyFiterTypeFaceWhitenStrength,
+    PFBeautyFilterTypeFaceWhitenStrength,
     //红润
-    PFBeautyFiterTypeFaceRuddyStrength,
+    PFBeautyFilterTypeFaceRuddyStrength,
     //锐化
-    PFBeautyFiterTypeFaceSharpenStrength,
+    PFBeautyFilterTypeFaceSharpenStrength,
     //新美白算法
-    PFBeautyFiterTypeFaceM_newWhitenStrength,
+    PFBeautyFilterTypeFaceM_newWhitenStrength,
     //画质增强
-    PFBeautyFiterTypeFaceH_qualityStrength,
+    PFBeautyFilterTypeFaceH_qualityStrength,
     //亮眼（0~1）
-    PFBeautyFiterTypeFaceEyeBrighten,
+    PFBeautyFilterTypeFaceEyeBrighten,
     //滤镜类型
-    PFBeautyFiterName,
+    PFBeautyFilterName,
     //滤镜强度
-    PFBeautyFiterStrength,
+    PFBeautyFilterStrength,
     //绿幕
-    PFBeautyFiterLvmu,
+    PFBeautyFilterLvmu,
     // 2D 贴纸
-    PFBeautyFiterSticker2DFilter,
+    PFBeautyFilterSticker2DFilter,
     // 一键美颜
-    PFBeautyFiterTypeOneKey = 26,
+    PFBeautyFilterTypeOneKey = 26,
     // 水印
-    PFBeautyFiterWatermark,
+    PFBeautyFilterWatermark,
     // 扩展字段
-    PFBeautyFiterExtend,
+    PFBeautyFilterExtend,
     
-} PFBeautyFiterType;
+} PFBeautyFilterType;
 
 /* 一键美颜类型 */
 typedef enum PFBeautyTypeOneKey{
@@ -204,9 +204,9 @@ PF_CAPI_EXPORT extern PFPixelFree* PF_NewPixelFree();
 PF_CAPI_EXPORT extern void PF_DeletePixelFree(PFPixelFree* pixelFree);
 
 //目前仅支持双输入。GPU 纹理由于渲染，cpu buffer 用检测
-PF_CAPI_EXPORT extern int PF_processWithBuffer(PFPixelFree* pixelFree,PFIamgeInput inputImage);
+PF_CAPI_EXPORT extern int PF_processWithBuffer(PFPixelFree* pixelFree,PFImageInput inputImage);
 
-PF_CAPI_EXPORT extern void PF_pixelFreeSetBeautyFiterParam(PFPixelFree* pixelFree, int key,void *value);
+PF_CAPI_EXPORT extern void PF_pixelFreeSetBeautyFilterParam(PFPixelFree* pixelFree, int key,void *value);
 PF_CAPI_EXPORT extern void PF_createBeautyItemFormBundle(PFPixelFree* pixelFree, void *data,int size,PFSrcType type);
 
 PF_CAPI_EXPORT extern void PF_pixelFreeGetFaceRect(PFPixelFree* pixelFree,float *faceRect);

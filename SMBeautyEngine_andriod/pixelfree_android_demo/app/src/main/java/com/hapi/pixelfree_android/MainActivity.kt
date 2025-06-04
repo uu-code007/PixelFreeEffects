@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onProcessFrame(frame: VideoFrame): VideoFrame {
                     if (mPixelFree.isCreate()) {
-                        val pxInput = PFIamgeInput().apply {
+                        val pxInput = PFImageInput().apply {
                             wigth = frame.width
                             height = frame.height
                             p_data0 = frame.data

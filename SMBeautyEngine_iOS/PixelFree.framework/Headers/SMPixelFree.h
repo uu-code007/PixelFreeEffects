@@ -33,7 +33,7 @@ __attribute__((visibility("default"))) @interface SMPixelFree : NSObject
  @param width 宽度
  @param height 高度
  */
-- (void)processWithTexture:(GLuint)texture width:(GLint)width height:(GLint)height;
+- (int)processWithTexture:(GLuint)texture width:(GLint)width height:(GLint)height rotation:(PFRotationMode)rotation;
 
 /**
 处理cpu数据
@@ -57,7 +57,7 @@ __attribute__((visibility("default"))) @interface SMPixelFree : NSObject
 - (UIImage *)processWithImage:(UIImage *)image rotationMode:(PFRotationMode)rotationMode;
 
 
-- (void)pixelFreeSetBeautyFiterParam:(int)key value:(void *)value;
+- (void)pixelFreeSetBeautyFilterParam:(int)key value:(void *)value;
 
 // 加载美颜bundle
 - (void)createBeautyItemFormBundle:(void*)data size:(int)sz;

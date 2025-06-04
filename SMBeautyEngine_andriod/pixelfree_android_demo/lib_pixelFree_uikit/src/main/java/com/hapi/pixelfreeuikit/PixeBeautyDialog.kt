@@ -17,7 +17,7 @@ import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
-import com.hapi.pixelfree.PFBeautyFiterType
+import com.hapi.pixelfree.PFBeautyFilterType
 import com.hapi.pixelfree.PFBeautyTypeOneKey
 import com.hapi.pixelfree.PixelFree
 import org.json.JSONArray
@@ -57,11 +57,11 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
         return BeautyView(requireContext()).apply {
             this.pixelFreeGetter = { mPixelFree }
             setList(ArrayList<BeautyItem>().apply {
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeOneKey, PFBeautyTypeOneKey.PFBeautyTypeOneKeyNormal, "origin", R.mipmap.filter_origin))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeOneKey, PFBeautyTypeOneKey.PFBeautyTypeOneKeyNatural, "自然", R.mipmap.face_ziran))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeOneKey, PFBeautyTypeOneKey.PFBeautyTypeOneKeyCute, "可爱", R.mipmap.face_keai))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeOneKey, PFBeautyTypeOneKey.PFBeautyTypeOneKeyGoddess, "女神", R.mipmap.face_nvsheng))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeOneKey, PFBeautyTypeOneKey.PFBeautyTypeOneKeyFair, "白净", R.mipmap.face_baijin))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeOneKey, PFBeautyTypeOneKey.PFBeautyTypeOneKeyNormal, "origin", R.mipmap.filter_origin))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeOneKey, PFBeautyTypeOneKey.PFBeautyTypeOneKeyNatural, "自然", R.mipmap.face_ziran))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeOneKey, PFBeautyTypeOneKey.PFBeautyTypeOneKeyCute, "可爱", R.mipmap.face_keai))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeOneKey, PFBeautyTypeOneKey.PFBeautyTypeOneKeyGoddess, "女神", R.mipmap.face_nvsheng))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeOneKey, PFBeautyTypeOneKey.PFBeautyTypeOneKeyFair, "白净", R.mipmap.face_baijin))
             })
         }
     }
@@ -70,12 +70,12 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
         return BeautyView(requireContext()).apply {
             this.pixelFreeGetter = { mPixelFree }
             setList(ArrayList<BeautyItem>().apply {
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeFaceWhitenStrength, 0.2f, "美白", R.mipmap.meibai))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeFaceRuddyStrength, 0.6f, "红润", R.mipmap.hongrun))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeFaceBlurStrength, 0.7f, "磨皮", R.mipmap.mopi))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeFaceEyeBrighten, 0.0f, "亮眼", R.mipmap.liangyan))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeFaceSharpenStrength, 0.0f, "锐化", R.mipmap.ruihua))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeFaceH_qualityStrength, 0.2f, "增强画质", R.mipmap.huazhizengqiang))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFaceWhitenStrength, 0.2f, "美白", R.mipmap.meibai))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFaceRuddyStrength, 0.6f, "红润", R.mipmap.hongrun))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFaceBlurStrength, 0.7f, "磨皮", R.mipmap.mopi))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFaceEyeBrighten, 0.0f, "亮眼", R.mipmap.liangyan))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFaceSharpenStrength, 0.0f, "锐化", R.mipmap.ruihua))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFaceH_qualityStrength, 0.2f, "增强画质", R.mipmap.huazhizengqiang))
             })
         }
     }
@@ -84,21 +84,21 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
         return BeautyView(requireContext()).apply {
             this.pixelFreeGetter = { mPixelFree }
             setList(ArrayList<BeautyItem>().apply {
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeFace_EyeStrength, 0.2f, "大眼", R.mipmap.dayan))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeFace_thinning, 0.2f, "瘦脸", R.mipmap.shoulian))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeFace_narrow, 0.2f, "瘦颧骨", R.mipmap.zhailian))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeFace_chin, 0.5f, "下巴", R.mipmap.xiaba))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeFace_V, 0.2f, "瘦下颔", R.mipmap.vlian))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeFace_small, 0.2f, "小脸", R.mipmap.xianlian))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeFace_nose, 0.2f, "鼻子", R.mipmap.bizhi))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeFace_forehead, 0.5f, "额头", R.mipmap.etou))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeFace_mouth, 0.5f, "嘴巴", R.mipmap.zuiba))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeFace_philtrum, 0.5f, "人中", R.mipmap.renzhong))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeFace_long_nose, 0.5f, "长鼻", R.mipmap.changbi))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeFace_eye_space, 0.5f, "眼距", R.mipmap.yanju))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeFace_smile, 0.0f, "微笑嘴角", R.mipmap.weixiaozuijiao))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeFace_eye_rotate, 0.5f, "旋转眼睛", R.mipmap.yanjingjiaodu))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterTypeFace_canthus, 0.0f, "开眼角", R.mipmap.kaiyanjiao))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_EyeStrength, 0.2f, "大眼", R.mipmap.dayan))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_thinning, 0.2f, "瘦脸", R.mipmap.shoulian))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_narrow, 0.2f, "瘦颧骨", R.mipmap.zhailian))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_chin, 0.5f, "下巴", R.mipmap.xiaba))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_V, 0.2f, "瘦下颔", R.mipmap.vlian))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_small, 0.2f, "小脸", R.mipmap.xianlian))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_nose, 0.2f, "鼻子", R.mipmap.bizhi))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_forehead, 0.5f, "额头", R.mipmap.etou))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_mouth, 0.5f, "嘴巴", R.mipmap.zuiba))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_philtrum, 0.5f, "人中", R.mipmap.renzhong))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_long_nose, 0.5f, "长鼻", R.mipmap.changbi))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_eye_space, 0.5f, "眼距", R.mipmap.yanju))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_smile, 0.0f, "微笑嘴角", R.mipmap.weixiaozuijiao))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_eye_rotate, 0.5f, "旋转眼睛", R.mipmap.yanjingjiaodu))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_canthus, 0.0f, "开眼角", R.mipmap.kaiyanjiao))
             })
         }
     }
@@ -107,19 +107,19 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
         return BeautyView(requireContext()).apply {
             this.pixelFreeGetter = { mPixelFree }
             setList(ArrayList<BeautyItem>().apply {
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.5f, "origin", R.mipmap.filter_origin))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.8f, "chulian", R.mipmap.chulian))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.8f, "chuxin", R.mipmap.chuxin))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.8f, "fennen", R.mipmap.f_fennen1))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.8f, "lengku", R.mipmap.lengku))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.8f, "meiwei", R.mipmap.meiwei))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.8f, "naicha", R.mipmap.naicha))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.8f, "pailide", R.mipmap.pailide))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterName, 0.5f, "origin", R.mipmap.filter_origin))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterName, 0.5f, "chulian", R.mipmap.chulian))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterName, 0.5f, "chuxin", R.mipmap.chuxin))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterName, 0.5f, "fennen", R.mipmap.f_fennen1))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterName, 0.5f, "lengku", R.mipmap.lengku))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterName, 0.5f, "meiwei", R.mipmap.meiwei))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterName, 0.5f, "naicha", R.mipmap.naicha))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterName, 0.5f, "pailide", R.mipmap.pailide))
 
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.8f, "qingxin", R.mipmap.qingxin))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.8f, "rixi", R.mipmap.rixi))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.8f, "riza", R.mipmap.riza))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterName, 0.8f, "weimei", R.mipmap.weimei))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterName, 0.5f, "qingxin", R.mipmap.qingxin))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterName, 0.5f, "rixi", R.mipmap.rixi))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterName, 0.5f, "riza", R.mipmap.riza))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterName, 0.5f, "weimei", R.mipmap.pailide))
             })
         }
     }
@@ -130,11 +130,11 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
 
             // Create the initial list with existing items
             val stickerList = ArrayList<BeautyItem>().apply {
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterSticker2DFilter, "origin", R.mipmap.filter_origin))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterSticker2DFilter, "flowers", R.mipmap.flowers))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterSticker2DFilter, "candy", R.mipmap.candy))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterSticker2DFilter, "maorong", R.mipmap.maorong))
-                add(BeautyItem(PFBeautyFiterType.PFBeautyFiterSticker2DFilter, "xiongerduo", R.mipmap.xiongerduo))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterSticker2DFilter, "origin", R.mipmap.filter_origin))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterSticker2DFilter, "flowers", R.mipmap.flowers))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterSticker2DFilter, "candy", R.mipmap.candy))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterSticker2DFilter, "maorong", R.mipmap.maorong))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterSticker2DFilter, "xiongerduo", R.mipmap.xiongerduo))
             }
 
             // Parse and add stickers from allStickers.json
@@ -161,7 +161,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                     }
 
                     stickerList.add(BeautyItem(
-                        PFBeautyFiterType.PFBeautyFiterSticker2DFilter,
+                        PFBeautyFilterType.PFBeautyFilterSticker2DFilter,
                         param,
                         resId
                     ))
@@ -231,7 +231,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                 page[0].apply {
                     mBeautyItemAdapter.selectedItem?.let { selectedItem ->
                         if (selectedItem.srcType != PFBeautyTypeOneKey.PFBeautyTypeOneKeyNormal) {
-                            mPixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFiterType.PFBeautyFiterTypeOneKey,PFBeautyTypeOneKey.PFBeautyTypeOneKeyNormal.ordinal)
+                            mPixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFilterType.PFBeautyFilterTypeOneKey,PFBeautyTypeOneKey.PFBeautyTypeOneKeyNormal.ordinal)
                             Log.d("PixelFree", "onViewCreated: 已关闭一键美颜");
                             showOneKeyBeautyToast()
                             mBeautyItemAdapter.updateSelectedItem(listOf(mBeautyItemAdapter).first().getItem(0));

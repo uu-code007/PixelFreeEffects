@@ -16,7 +16,7 @@ import com.hapi.avparam.ImgFmt
 import com.hapi.avparam.VideoFrame
 import com.hapi.avrender.HapiCapturePreView
 import com.hapi.pixelfree.PFDetectFormat
-import com.hapi.pixelfree.PFIamgeInput
+import com.hapi.pixelfree.PFImageInput
 import com.hapi.pixelfree.PFRotationMode
 import com.hapi.pixelfree.PFSrcType
 import com.hapi.pixelfree.PixelFree
@@ -25,6 +25,9 @@ import com.hapi.pixelfreeuikit.ColorGradingDialog
 import java.nio.ByteBuffer
 
 class ImageActivity: AppCompatActivity()  {
+
+    var isLongPress = false
+    lateinit var originBitmap: Bitmap;
 
     private val mPixelFree by lazy {
         PixelFree()
@@ -57,12 +60,12 @@ class ImageActivity: AppCompatActivity()  {
         options.inDensity = DisplayMetrics.DENSITY_DEFAULT // 设置输入密度为默认值
         options.inTargetDensity = resources.displayMetrics.densityDpi // 设置目标密度为设备屏幕密度
 
-        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.image_face, options)
+        originBitmap = BitmapFactory.decodeResource(resources, R.drawable.image_face, options)
 
-        w = bitmap.width;
-        h = bitmap.height;
-        rowBytes = bitmap.rowBytes
-        rgbaData = convertBitmapToRGBA(bitmap);
+        w = originBitmap.width;
+        h = originBitmap.height;
+        rowBytes = originBitmap.rowBytes
+        rgbaData = convertBitmapToRGBA(originBitmap);
 
         // 启动定时任务
         handler.postDelayed(updateImageRunnable, 1)
@@ -94,9 +97,11 @@ class ImageActivity: AppCompatActivity()  {
                 if (isPressed) {
                     Log.d("TAG", "长按按下")
                     // 执行长按逻辑（如显示提示、开始录制等）
+                    isLongPress = true;
                 } else {
                     Log.d("TAG", "松开")
                     // 执行松开逻辑（如结束录制）
+                    isLongPress = false;
                 }
             }
         })
@@ -117,7 +122,7 @@ class ImageActivity: AppCompatActivity()  {
             val startTime = System.currentTimeMillis() // 或者使用 System.nanoTime()
 
             if (mPixelFree.isCreate()) {
-                val pxInput = PFIamgeInput().apply {
+                val pxInput = PFImageInput().apply {
                     wigth = w
                     height = h
                     p_data0 = rgbaData;
@@ -150,6 +155,10 @@ class ImageActivity: AppCompatActivity()  {
 //                    mPixelFree.glThread.runOnGLThread {
 //                        textureIdToBitmap(pxInput.textureID,pxInput.wigth,pxInput.height);
 //                    }
+            //     }
+                if (isLongPress) {
+                    displayBitmap(originBitmap)
+                } else {
                     mPixelFree.textureIdToBitmap(pxInput.textureID, pxInput.wigth, pxInput.height) { bitmap ->
                         if (bitmap != null) {
                             println("[PixelFree] get image bitmap")
@@ -158,12 +167,7 @@ class ImageActivity: AppCompatActivity()  {
                             // Handle error case
                         }
                     }
-//                }
-
-                if (frame != null) {
-//                    hapiCapturePreView.onFrame(frame)
-//                    println("frame.textureID : ${frame.textureID}")
-                };
+                }
 
                 frameCount++
                 val endTime = System.currentTimeMillis()

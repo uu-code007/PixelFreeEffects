@@ -69,29 +69,29 @@
 -(void)aclick:(UIButton *)btn{
     btn.selected = !btn.selected;
     NSString *path = [[NSBundle mainBundle] pathForResource:@"image.jpeg" ofType:nil];
-    PFFiterLvmuSetting setting;
+    PFFilterLvmuSetting setting;
     setting.bgSrcPath = [path UTF8String];
     setting.isOpenLvmu = btn.selected;
     
-    [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterLvmu value:(void *)&setting];
+    [self.mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterLvmu value:(void *)&setting];
 }
 
 -(void)watermarkBtnClick:(UIButton *)btn{
     btn.selected = !btn.selected;
     if(btn.selected){
         NSString *path = [[NSBundle mainBundle] pathForResource:@"qiniu_logo.png" ofType:nil];
-        PFFiterWatermark setting;
+        PFFilterWatermark setting;
         setting.path = [path UTF8String];
         setting.positionX = 0.8;
         setting.positionY = 0.1;
         setting.w = 110.0/720 * 2;
         setting.h = 34.0/1280 * 2;
         setting.isUse = YES;
-        [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterWatermark value:(void *)&setting];
+        [self.mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterWatermark value:(void *)&setting];
     } else{
-        PFFiterWatermark setting;
+        PFFilterWatermark setting;
         setting.isUse = NO;
-        [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterWatermark value:(void *)&setting];
+        [self.mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterWatermark value:(void *)&setting];
     }
 }
 

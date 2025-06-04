@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.hapi.pixelfree.PFBeautyFiterType
+import com.hapi.pixelfree.PFBeautyFilterType
 import com.hapi.pixelfree.PFSrcType
 import com.hapi.pixelfree.PixelFree
 
@@ -40,10 +40,10 @@ class BeautyView : FrameLayout {
         seek.getSeekBar().progress = 20
         mBeautyItemAdapter.itemChangeCall = {
             seek.getSeekBar().progress = (it.progress * 100).toInt()
-            if (it.type == PFBeautyFiterType.PFBeautyFiterName) {
-                pixelFreeGetter.invoke().pixelFreeSetFiterParam(it.name, it.progress)
+            if (it.type == PFBeautyFilterType.PFBeautyFilterName) {
+                pixelFreeGetter.invoke().pixelFreeSetFilterParam(it.name, it.progress)
             }
-            if (it.type == PFBeautyFiterType.PFBeautyFiterSticker2DFilter) {
+            if (it.type == PFBeautyFilterType.PFBeautyFilterSticker2DFilter) {
                 if (it.name == "origin") {
                     val byteArray = ByteArray(0)
                     pixelFreeGetter.invoke().createBeautyItemFormBundle(
@@ -53,8 +53,8 @@ class BeautyView : FrameLayout {
                     )
                 } else {
                     // 前置是镜像横屏的数据
-                    pixelFreeGetter.invoke().pixelFreeSetBeautyExtend(PFBeautyFiterType.PFBeautyFiterExtend,"mirrorX_1");
-                    pixelFreeGetter.invoke().pixelFreeSetBeautyExtend(PFBeautyFiterType.PFBeautyFiterExtend,"rotation_90");
+                    pixelFreeGetter.invoke().pixelFreeSetBeautyExtend(PFBeautyFilterType.PFBeautyFilterExtend,"mirrorX_1");
+                    pixelFreeGetter.invoke().pixelFreeSetBeautyExtend(PFBeautyFilterType.PFBeautyFilterExtend,"rotation_90");
                     val sticker_bundle =
                         pixelFreeGetter.invoke().readBundleFile(context,it.name + ".bundle")
                     pixelFreeGetter.invoke().createBeautyItemFormBundle(
@@ -65,8 +65,8 @@ class BeautyView : FrameLayout {
                 }
             }
 
-            if (it.type == PFBeautyFiterType.PFBeautyFiterTypeOneKey) {
-                pixelFreeGetter.invoke().pixelFreeSetBeautyFiterParam(PFBeautyFiterType.PFBeautyFiterTypeOneKey,it.srcType.ordinal)
+            if (it.type == PFBeautyFilterType.PFBeautyFilterTypeOneKey) {
+                pixelFreeGetter.invoke().pixelFreeSetBeautyFiterParam(PFBeautyFilterType.PFBeautyFilterTypeOneKey,it.srcType.ordinal)
             }
         }
 
@@ -76,9 +76,9 @@ class BeautyView : FrameLayout {
                 if (p2) {
                     val select = mBeautyItemAdapter.selectedItem!!
                     select.progress = p1 / 100f
-                    if (select.type == PFBeautyFiterType.PFBeautyFiterName) {
+                    if (select.type == PFBeautyFilterType.PFBeautyFilterName) {
                         pixelFreeGetter.invoke()
-                            .pixelFreeSetFiterParam(select.name, select.progress)
+                            .pixelFreeSetFilterParam(select.name, select.progress)
                     } else {
                         pixelFreeGetter.invoke()
                             .pixelFreeSetBeautyFiterParam(select.type, select.progress)
@@ -101,7 +101,7 @@ class BeautyView : FrameLayout {
                 pixelFreeGetter.invoke()
                     .pixelFreeSetBeautyFiterParam(it.type, it.progress)
             }
-            if (it.type == PFBeautyFiterType.PFBeautyFiterSticker2DFilter || it.type == PFBeautyFiterType.PFBeautyFiterTypeOneKey) {
+            if (it.type == PFBeautyFilterType.PFBeautyFilterSticker2DFilter || it.type == PFBeautyFilterType.PFBeautyFilterTypeOneKey) {
                 seek!!.visibility = View.INVISIBLE
             }
         }

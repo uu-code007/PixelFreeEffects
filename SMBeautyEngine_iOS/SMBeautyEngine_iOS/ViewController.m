@@ -39,91 +39,91 @@
     if(param.type == FUDataTypeBeautify){
         if ([param.mParam isEqualToString:@"face_EyeStrength"]) {
 
-            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFace_EyeStrength value:&value];
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_EyeStrength value:&value];
           }
           if ([param.mParam isEqualToString:@"face_thinning"]) {
               float aa = param.mValue;
-              [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFace_thinning value:&value];
+              [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_thinning value:&value];
           }
           if ([param.mParam isEqualToString:@"face_narrow"]) {
-              [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFace_narrow value:&value];
+              [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_narrow value:&value];
           }
           if ([param.mParam isEqualToString:@"face_chin"]) {
-              [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFace_chin value:&value];
+              [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_chin value:&value];
           }
         if ([param.mParam isEqualToString:@"face_V"]) {
-            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFace_V value:&value];
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_V value:&value];
 
         }
         if ([param.mParam isEqualToString:@"face_small"]) {
-            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFace_small value:&value];
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_small value:&value];
         }
         if ([param.mParam isEqualToString:@"face_nose"]) {
-            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFace_nose value:&value];
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_nose value:&value];
         }
 
         if ([param.mParam isEqualToString:@"face_forehead"]) {
-            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFace_forehead value:&value];
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_forehead value:&value];
         }
         if ([param.mParam isEqualToString:@"face_mouth"]) {
-            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFace_mouth value:&value];
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_mouth value:&value];
         }
         if ([param.mParam isEqualToString:@"face_philtrum"]) {
-            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFace_philtrum value:&value];
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_philtrum value:&value];
         }
 
         if ([param.mParam isEqualToString:@"face_long_nose"]) {
-            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFace_long_nose value:&value];
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_long_nose value:&value];
         }
         if ([param.mParam isEqualToString:@"face_eye_space"]) {
-            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFace_eye_space value:&value];
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_eye_space value:&value];
         }
         
         if ([param.mParam isEqualToString:@"face_smile"]) {
-            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFace_smile value:&value];
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_smile value:&value];
         }
         if ([param.mParam isEqualToString:@"face_eye_rotate"]) {
-            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFace_eye_rotate value:&value];
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_eye_rotate value:&value];
         }
         if ([param.mParam isEqualToString:@"face_canthus"]) {
-            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFace_canthus value:&value];
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_canthus value:&value];
         }
 
 
           if ([param.mParam isEqualToString:@"runddy"]) {
-              [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFaceRuddyStrength value:&value];
+              [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFaceRuddyStrength value:&value];
           }
           if ([param.mParam isEqualToString:@"writen"]) {
-              [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFaceM_newWhitenStrength value:&value];
+              [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFaceM_newWhitenStrength value:&value];
           }
           if ([param.mParam isEqualToString:@"blur"]) {
-              [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFaceBlurStrength value:&value];
+              [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFaceBlurStrength value:&value];
           }
           if ([param.mParam isEqualToString:@"sharpen"]) {
-              [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFaceSharpenStrength value:&value];
+              [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFaceSharpenStrength value:&value];
           }
         if ([param.mParam isEqualToString:@"eye_b"]) {
-            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFaceEyeBrighten value:&value];
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFaceEyeBrighten value:&value];
         }
         
         if ([param.mParam isEqualToString:@"newWhitenStrength"]) {
-            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFaceM_newWhitenStrength value:&value];
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFaceM_newWhitenStrength value:&value];
         }
         if ([param.mParam isEqualToString:@"qualityStrength"]) {
-            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFaceH_qualityStrength value:&value];
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFaceH_qualityStrength value:&value];
         }
     }
 
     if (param.type == FUDataTypeFilter) {
 
        const char *aaa = [param.mParam UTF8String];
-        [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterName value:(void *)aaa];
-        [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterStrength value:&value];
+        [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterName value:(void *)aaa];
+        [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterStrength value:&value];
     }
 
     if (param.type == FUDataTypeStickers) {
         if([param.mParam isEqualToString:@"origin"]){
-            [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:NULL];
+            [self.mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterSticker2DFilter value:NULL];
         } else{
 //            NSString *path =  [[NSBundle mainBundle] pathForResource:@"pixelfree2D" ofType:nil];
 //            NSString *currentFolder = [path stringByAppendingPathComponent:param.mParam];
@@ -132,12 +132,12 @@
             
             NSString *name = [NSString stringWithFormat:@"%@.bundle",param.mParam];
             NSString *paths = [[NSBundle mainBundle] pathForResource:name ofType:nil];
-            [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)[paths UTF8String]];
+            [self.mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterSticker2DFilter value:(void *)[paths UTF8String]];
             
 //            NSString *path =  [[NSBundle mainBundle] pathForResource:@"effect" ofType:nil];
 //            NSString *currentFolder = [path stringByAppendingPathComponent:@"roseEyeMakeup"];
 //            const char *aaa = [currentFolder UTF8String];
-//            [self.mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterSticker2DFilter value:(void *)aaa];
+//            [self.mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterSticker2DFilter value:(void *)aaa];
             
             
         }
@@ -146,27 +146,27 @@
     if (param.type == FUDataTypeOneKey) {
         if ([param.mTitle isEqualToString:@"origin"]) {
             int value = PFBeautyTypeOneKeyNormal;
-            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeOneKey value:&value];
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeOneKey value:&value];
             
         }
         if ([param.mTitle isEqualToString:@"自然"]) {
             int value = PFBeautyTypeOneKeyNatural;
-            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeOneKey value:&value];
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeOneKey value:&value];
          
         }
         if ([param.mTitle isEqualToString:@"可爱"]) {
             int value = PFBeautyTypeOneKeyCute;
-            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeOneKey value:&value];
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeOneKey value:&value];
             
         }
         if ([param.mTitle isEqualToString:@"女神"]) {
             int value = PFBeautyTypeOneKeyGoddess;
-            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeOneKey value:&value];
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeOneKey value:&value];
             
         }
         if ([param.mTitle isEqualToString:@"白净"]) {
             int value = PFBeautyTypeOneKeyFair;
-            [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeOneKey value:&value];
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeOneKey value:&value];
            
         }
 
@@ -177,7 +177,7 @@
 -(void)bottomDidChange:(int)index{
     if (index != 0 && _beautyEditView.oneKeyType != PFBeautyTypeOneKeyNormal) {
         int value = PFBeautyTypeOneKeyNormal;
-        [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeOneKey value:&value];
+        [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeOneKey value:&value];
         [self showDelayedAlert];
         _beautyEditView.oneKeyType = PFBeautyTypeOneKeyNormal;
     }
