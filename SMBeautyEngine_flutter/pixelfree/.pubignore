@@ -1,0 +1,12 @@
+# 忽略示例项目中的资源文件
+example/ios/Runner/filter_model.bundle
+sdk-aar/build.gradle
+sdk-aar/lib_pixelFree.aar
+
+# 忽略其他不需要发布的文件
+.git/
+.gitignore
+.DS_Store
+*.iml
+.idea/
+.vscode/ 

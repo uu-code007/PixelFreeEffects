@@ -146,6 +146,9 @@ Future<int> pixelFreeChangeHLSFilter(int handle, PFHLSFilterParams params) async
     'handle': handle,
     ...params.toMap(),
   });
+  if (result == null) {
+    throw Exception('Failed to change HLS filter: null result received');
+  }
   return result as int;
 }
 

@@ -205,7 +205,7 @@
     hlsParams.similarity = [params[@"similarity"] floatValue];
     
     [_mPixelFree pixelFreeChangeHLSFilter:handle params:&hlsParams];
-    result(NULL);
+    result(@(handle));
   } else if ([@"pixelFreeSetColorGrading" isEqualToString:call.method]) {
     NSDictionary *params = dicArguments;
     PFImageColorGrading colorGrading = {
