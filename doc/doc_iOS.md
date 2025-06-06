@@ -115,6 +115,36 @@ typedef enum PFBeautyFiterType{
 } PFBeautyFiterType;
 ```
 
+## 💡 使用建议
+
+1. **性能优化**
+   - 建议在后台线程进行图像处理
+   - 适当调整美颜参数，避免过度处理
+   - 注意内存管理，及时释放资源
+
+2. **参数调节**
+   - 所有参数范围均为 0.0 ~ 1.0
+   - 建议从较小值开始调节
+   - 注意参数间的相互影响
+
+3. **常见问题**
+   - 确保授权文件正确配置
+   - 检查资源文件路径是否正确
+   - 注意内存使用和性能监控
+
+## 📝 注意事项
+
+1. 请确保正确配置授权文件
+2. 注意资源文件的正确引入
+3. 建议在真机上进行测试
+4. 注意内存管理和性能优化
+
+## 🔗 相关资源
+
+- [示例代码](https://github.com/uu-code007/PixelFreeEffects/tree/master/SMBeautyEngine_iOS)
+- [常见问题](./frequently_asked_questions.md)
+- [更新日志](./release_note.md)
+
 
 
 

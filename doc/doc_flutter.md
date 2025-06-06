@@ -4,7 +4,7 @@
 
 ```yaml
 dependencies:
-  pixelfree: ^2.4.10
+  pixelfree: ^2.4.15
 ```
 
 

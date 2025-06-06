@@ -134,27 +134,27 @@
       int textrueID = (int)dicArguments[@"textrueID"];
       int w = [dicArguments[@"width"] intValue];
       int h = [dicArguments[@"height"] intValue];
-      [_mPixelFree processWithTexture:textrueID width:w height:h];
+      [_mPixelFree processWithTexture:textrueID width:w height:h rotation:PFRotationMode0];
       result(@(textrueID));
   } else if ([@"pixelFreeSetBeautyExtend" isEqualToString:call.method]) {  // 更新 2.4.5 后
-    //        [_mPixelFree pixelFreeSetBeautyFiterParam:<#(int)#> value:<#(nonnull void *)#>]
+    //        [_mPixelFree pixelFreeSetBeautyFilterParam:<#(int)#> value:<#(nonnull void *)#>]
     //        _textureId = [_textures unregisterTexture:_glTexture];
     result(NULL);
   } else if ([@"pixelFreeSetBeautyFilterParam" isEqualToString:call.method]) {
     int type = [dicArguments[@"type"] intValue];  //
     float value = [dicArguments[@"value"] floatValue];
 
-    [_mPixelFree pixelFreeSetBeautyFiterParam:type value:&value];
+    [_mPixelFree pixelFreeSetBeautyFilterParam:type value:&value];
     result(NULL);
   } else if ([@"pixelFreeSetFilterParam" isEqualToString:call.method]) {
     float value = [dicArguments[@"value"] floatValue];
     const char *filterName = [dicArguments[@"filterName"] UTF8String];
-    [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterName value:(void *)filterName];
-    [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterStrength value:&value];
+    [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterName value:(void *)filterName];
+    [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterStrength value:&value];
     result(NULL);
   } else if ([@"pixelFreeSetBeautyTypeParam" isEqualToString:call.method]) {
       int value = [dicArguments[@"value"] intValue];
-      [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeOneKey value:&value];
+      [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeOneKey value:&value];
       result(NULL);
     } else if ([@"release" isEqualToString:call.method]) {
     [_textures unregisterTexture:_glTexture];
