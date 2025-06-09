@@ -71,7 +71,7 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
     private TextureRegistry.SurfaceTextureEntry textureEntry;
     private SurfaceTexture surfaceTexture;
 
-    private final PixelFree mPixelFree = new PixelFree();
+    private PixelFree mPixelFree;
 
     private byte[] pixels;
 
@@ -91,7 +91,7 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
 
     public int onPreProcessFrame(byte[] image, int w, int h) {
         PFIamgeInput pxInput = new PFIamgeInput();
-        if (mPixelFree.isCreate()) {
+        if (mPixelFree != null && mPixelFree.isCreate()) {
             pxInput.setWigth(w);
             pxInput.setHeight(h);
             pxInput.setStride_0(w * 4);
@@ -107,7 +107,7 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
 
     public int onPreProcessTexture(int textureid, int w, int h) {
         PFIamgeInput pxInput = new PFIamgeInput();
-        if (mPixelFree.isCreate()) {
+        if (mPixelFree != null && mPixelFree.isCreate()) {
             pxInput.setWigth(w);
             pxInput.setHeight(h);
             pxInput.setFormat(PFDetectFormat.PFFORMAT_IMAGE_TEXTURE);
@@ -124,10 +124,10 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
         String method = call.method;
         switch (method) {
             case "createWithLic": {
-                if (mPixelFree.isCreate()) return;
                 textureRegistry = flutterPluginBinding.getTextureRegistry();
                 textureEntry = flutterPluginBinding.getTextureRegistry().createSurfaceTexture();
                 surfaceTexture = textureEntry.surfaceTexture();
+                mPixelFree = new PixelFree();
                 mPixelFree.create();
                 String licPath = (String) call.argument("licPath");
 
@@ -151,11 +151,15 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
             }
             break;
             case "isCreate": {
-                boolean isCreate = mPixelFree.isCreate();
+                boolean isCreate = mPixelFree != null && mPixelFree.isCreate();
                 result.success(isCreate);
             }
             break;
             case "pixelFreeSetBeautyExtend": {
+                if (mPixelFree == null) {
+                    result.error("NOT_INITIALIZED", "PixelFree not initialized", null);
+                    return;
+                }
                 Object typeObj = call.argument("type");
                 Object valueObj = call.argument("value");
                 if (!(typeObj instanceof Number) || !(valueObj instanceof String)) {
@@ -169,6 +173,10 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
             }
             break;
             case "pixelFreeSetBeautyFilterParam": {
+                if (mPixelFree == null) {
+                    result.error("NOT_INITIALIZED", "PixelFree not initialized", null);
+                    return;
+                }
                 Object typeObj = call.argument("type");
                 Object valueObj = call.argument("value");
                 if (!(typeObj instanceof Number) || !(valueObj instanceof Number)) {
@@ -182,6 +190,10 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
             }
             break;
             case "pixelFreeSetFilterParam": {
+                if (mPixelFree == null) {
+                    result.error("NOT_INITIALIZED", "PixelFree not initialized", null);
+                    return;
+                }
                 Object valueObj = call.argument("value");
                 Object filterNameObj = call.argument("filterName");
                 if (!(valueObj instanceof Number) || !(filterNameObj instanceof String)) {
@@ -196,6 +208,10 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
             break;
 
             case "pixelFreeSetBeautyTypeParam": {
+                if (mPixelFree == null) {
+                    result.error("NOT_INITIALIZED", "PixelFree not initialized", null);
+                    return;
+                }
                 Object typeObj = call.argument("type");
                 Object valueObj = call.argument("value");
                 if (!(typeObj instanceof Number) || !(valueObj instanceof Number)) {
@@ -210,6 +226,10 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
             break;
 
             case "pixelFreeAddHLSFilter": {
+                if (mPixelFree == null) {
+                    result.error("NOT_INITIALIZED", "PixelFree not initialized", null);
+                    return;
+                }
                 @SuppressWarnings("unchecked")
                 List<Double> keyColor = (List<Double>) call.argument("keyColor");
                 if (keyColor == null || keyColor.size() < 3) {
@@ -243,6 +263,10 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
             break;
 
             case "pixelFreeDeleteHLSFilter": {
+                if (mPixelFree == null) {
+                    result.error("NOT_INITIALIZED", "PixelFree not initialized", null);
+                    return;
+                }
                 Object handleObj = call.argument("handle");
                 if (!(handleObj instanceof Number)) {
                     result.error("INVALID_ARGUMENT", "handle must be a number", null);
@@ -255,6 +279,10 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
             break;
 
             case "pixelFreeChangeHLSFilter": {
+                if (mPixelFree == null) {
+                    result.error("NOT_INITIALIZED", "PixelFree not initialized", null);
+                    return;
+                }
                 @SuppressWarnings("unchecked")
                 List<Double> keyColor = (List<Double>) call.argument("keyColor");
                 if (keyColor == null || keyColor.size() < 3) {
@@ -291,6 +319,10 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
             break;
 
             case "pixelFreeSetColorGrading": {
+                if (mPixelFree == null) {
+                    result.error("NOT_INITIALIZED", "PixelFree not initialized", null);
+                    return;
+                }
                 @SuppressWarnings("unchecked")
                 Map<String, Object> params = (Map<String, Object>) call.arguments;
                 if (params == null) {
@@ -345,6 +377,10 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
 //
 //        break;
             case "processWithImage": {
+                if (mPixelFree == null) {
+                    result.error("NOT_INITIALIZED", "PixelFree not initialized", null);
+                    return;
+                }
                 byte[] imageData = (byte[]) call.argument("imageData");
                 int w = (int) call.argument("w");
                 int h = (int) call.argument("h");
@@ -361,6 +397,10 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
             }
             break;
             case "processWithImageToByteData": {
+                if (mPixelFree == null) {
+                    result.error("NOT_INITIALIZED", "PixelFree not initialized", null);
+                    return;
+                }
                 byte[] imageData = (byte[]) call.argument("imageData");
                 int w = (int) call.argument("width");
                 int h = (int) call.argument("height");
@@ -402,6 +442,10 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
             break;
 
             case "processWithTextrueID": {
+                if (mPixelFree == null) {
+                    result.error("NOT_INITIALIZED", "PixelFree not initialized", null);
+                    return;
+                }
                 int inputTextureid = (int) call.argument("textrueID");
                 int w = (int) call.argument("width");
                 int h = (int) call.argument("height");
@@ -414,7 +458,10 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
             
 
             case "release": {
-                mPixelFree.release();
+                if (mPixelFree != null) {
+                    mPixelFree.release();
+                    mPixelFree = null;
+                }
                 result.success(null);
             }
             break;

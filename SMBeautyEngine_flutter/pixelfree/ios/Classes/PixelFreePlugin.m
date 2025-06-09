@@ -157,6 +157,7 @@
       [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeOneKey value:&value];
       result(NULL);
     } else if ([@"release" isEqualToString:call.method]) {
+      self.mPixelFree = nil;
     [_textures unregisterTexture:_glTexture];
     result(NULL);
   } else if ([@"pixelFreeAddHLSFilter" isEqualToString:call.method]) {
