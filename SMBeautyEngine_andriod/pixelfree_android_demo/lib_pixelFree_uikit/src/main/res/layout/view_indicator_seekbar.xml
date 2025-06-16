@@ -1,24 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/isb_progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="42.4dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:visibility="invisible"
-        android:textSize="11sp" />
+    android:layout_height="wrap_content">
 
     <SeekBar
         android:id="@+id/isb_seekbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_marginLeft="39.4dp"
         android:layout_marginRight="38.7dp"
         android:maxHeight="2dp"
@@ -29,4 +17,15 @@
         android:progressDrawable="@drawable/bg_seekbar_progressbar"
         android:thumb="@drawable/seekbar_thumb" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/isb_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="-6dp"
+        android:text="0"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp" />
+
+</FrameLayout>
