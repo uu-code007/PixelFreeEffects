@@ -163,18 +163,158 @@ Future<void> pixelFreeSetSticker2DFilter(String filterName)
 
 ### processWithBuffer()
 
-处理图像数据，支持实时预览。
+处理图像数据，支持实时预览。这是美颜SDK的核心处理方法，用于对输入图像进行美颜处理。
 
 ```dart
 Future<void> processWithBuffer(PFIamgeInput imageInput)
 ```
 
 **参数：**
-- `imageInput`: 图像输入数据，包含：
-  - 纹理 ID
-  - 图像数据
-  - 宽高信息
-  - 旋转方向等
+- `imageInput`: 图像输入数据，包含图像的所有必要信息
+
+#### PFIamgeInput 参数详解
+
+```dart
+class PFIamgeInput {
+  int textureID;        // OpenGL纹理ID，buffer模式下为0
+  int width;            // 图像宽度
+  int height;           // 图像高度
+  Uint8List? pData0;    // 主要数据通道（Y或RGBA）
+  Uint8List? pData1;    // 第二数据通道（UV或null）
+  Uint8List? pData2;    // 第三数据通道（通常为null）
+  int stride0;          // 第一通道行步长
+  int stride1;          // 第二通道行步长
+  int stride2;          // 第三通道行步长
+  PFDetectFormat format;        // 图像格式
+  PFRotationMode rotationMode;  // 图像旋转（用于人脸检测方向）
+}
+```
+
+#### 支持的图像格式
+
+```dart
+enum PFDetectFormat {
+  unknown,      // 未知格式
+  rgb,          // RGB格式
+  bgr,          // BGR格式
+  rgba,         // RGBA格式（推荐）
+  bgra,         // BGRA格式
+  argb,         // ARGB格式
+  abgr,         // ABGR格式
+  gray,         // 灰度图
+  yuvNv12,      // YUV NV12格式
+  yuvNv21,      // YUV NV21格式
+  yuvI420,      // YUV I420格式
+  texture,      // OpenGL纹理格式
+}
+```
+
+#### 旋转模式
+
+```dart
+enum PFRotationMode {
+  rotation0,    // 0度旋转
+  rotation90,   // 90度旋转
+  rotation180,  // 180度旋转
+  rotation270,  // 270度旋转
+}
+```
+
+#### 使用示例
+
+**1. RGBA格式图像处理（推荐）**
+
+```dart
+// 处理RGBA图像数据
+final imageInput = PFIamgeInput(
+  width: 720,
+  height: 1280,
+  pData0: rgbaData,        // RGBA字节数组
+  pData1: null,
+  pData2: null,
+  stride0: 720 * 4,        // 每行字节数 = width * 4
+  stride1: 0,
+  stride2: 0,
+  format: PFDetectFormat.rgba,
+  rotationMode: PFRotationMode.rotation90,
+  textureID: 0,
+);
+
+await pixelfree.processWithBuffer(imageInput);
+
+// 获取处理后的data，源数据会被覆盖
+final processedData = imageInput.pData0;
+```
+
+**2. 纹理模式处理**
+
+```dart
+// 处理OpenGL纹理
+final imageInput = PFIamgeInput(
+  width: 720,
+  height: 1280,
+  pData0: null,
+  pData1: null,
+  pData2: null,
+  stride0: 0,
+  stride1: 0,
+  stride2: 0,
+  format: PFDetectFormat.texture,
+  rotationMode: PFRotationMode.rotation0,
+  textureID: inputTextureID,  // 输入纹理ID
+);
+
+await pixelfree.processWithBuffer(imageInput);
+
+// 获取处理后的纹理ID
+final outputTextureID = imageInput.textureID;
+```
+
+**3. YUV格式处理**
+
+```dart
+// YUV NV21格式处理
+final ySize = width * height;
+final uvSize = width * height ~/ 2;
+
+final yData = Uint8List.fromList(yuvData.take(ySize).toList());
+final uvData = Uint8List.fromList(yuvData.skip(ySize).take(uvSize).toList());
+
+final imageInput = PFIamgeInput(
+  width: width,
+  height: height,
+  pData0: yData,
+  pData1: uvData,
+  pData2: null,
+  stride0: width,
+  stride1: width,
+  stride2: 0,
+  format: PFDetectFormat.yuvNv21,
+  rotationMode: PFRotationMode.rotation90,
+  textureID: 0,
+);
+
+await pixelfree.processWithBuffer(imageInput);
+
+// 获取处理后的data，源数据会被覆盖
+final processedYData = imageInput.pData0;
+final processedUvData = imageInput.pData1;
+```
+
+#### 注意事项
+
+1. **数据格式匹配**：确保 `format` 与实际的图像数据格式一致
+2. **内存管理**：处理过程中SDK会修改输入数据，注意数据备份
+3. **OpenGL上下文**：纹理模式需要在正确的OpenGL上下文中调用
+4. **性能优化**：建议在子线程中处理，避免阻塞UI线程
+5. **错误处理**：检查 `pixelfree.isCreate()` 确保SDK已正确初始化
+
+#### 返回值说明
+
+`processWithBuffer` 方法执行后，输入数据会被处理后的数据覆盖：
+- `imageInput.pData0`：处理后的主要数据通道
+- `imageInput.pData1`：处理后的第二数据通道（如果有）
+- `imageInput.textureID`：处理后的OpenGL纹理ID（纹理模式下）
 
 ### processWithImage()
 

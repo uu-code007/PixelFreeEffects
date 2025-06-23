@@ -14,13 +14,23 @@
 
 磨皮的同时，保留更多细节，美化与真实并存
 
-**演示1**  参数：美白（0.6），红润（0.6），磨皮（0.7），锐化（0.2），大眼（1.0），瘦脸（1.0），瘦下颔（1.0），下巴（1.0）
+**演示**  以下 pixelfree demo 中 一键美颜，美肤，美型，滤镜，贴纸，调色的效果演示
 
-![aaa](./res/comp_effectBeatu.png)
+[一键美颜 YouTuBe](https://youtube.com/shorts/DrH07vYCjxo?feature=share)
 
-**演示2**：动态贴纸
+[美肤 YouTuBe](https://youtube.com/shorts/HyrIGTSJ2zw)
 
-![dynamic_stickers](./res/dynamic_stickers.png)
+[美型 YouTuBe](https://youtube.com/shorts/LIqiX36eK5o)
+
+[滤镜YouTuBe](https://youtube.com/shorts/31kJmS0pXQo)
+
+[贴纸YouTuBe](https://youtube.com/shorts/7lc1k9PGsNA)
+
+[调色YouTuBe](https://youtube.com/shorts/JkV4KY5Qkbo)
+
+
+
+![output](./doc/output.gif)
 
 #### 美颜全开性能
 
@@ -35,6 +45,7 @@
 | Windows | >  10.0.0 |
 | harmonyOS | >  12.0  |
 | flutter |   >=3.3.0 |
+| Linux |  --- |
 
 #### 美颜功能列表
 
@@ -73,11 +84,10 @@
 
 
 ####  Android 体验 demo：https://www.pgyer.com/Cy9pG8
+
 ![android 体验](./res/qrcode_www.pgyer.com.png)
 
 ####  iOS 体验 demo ：https://testflight.apple.com/join/KWUMyqrh
-
-
 
 ![iOS 体验](./res/testflight_apple.png)
 

@@ -64,7 +64,7 @@ typedef enum PFBeautyFiterType{
     PFBeautyFiterTypeFace_thinning,
     //窄脸
     PFBeautyFiterTypeFace_narrow,
-    //下巴
+    //下巴 （默认0.5，两个方向调节）
     PFBeautyFiterTypeFace_chin,
     //v脸
     PFBeautyFiterTypeFace_V,
@@ -72,19 +72,19 @@ typedef enum PFBeautyFiterType{
     PFBeautyFiterTypeFace_small,
     //鼻子
     PFBeautyFiterTypeFace_nose,
-    //额头
+    //额头（默认0.5，两个方向调节）
     PFBeautyFiterTypeFace_forehead,
-    //嘴巴
+    //嘴巴（默认0.5，两个方向调节）
     PFBeautyFiterTypeFace_mouth,
-    //人中
+    //人中（默认0.5，两个方向调节）
     PFBeautyFiterTypeFace_philtrum,
-    //长鼻
+    //长鼻（默认0.5，两个方向调节）
     PFBeautyFiterTypeFace_long_nose = 10,
-    //眼距
+    //眼距（默认0.5，两个方向调节）
     PFBeautyFiterTypeFace_eye_space,
     //微笑嘴角
     PFBeautyFiterTypeFace_smile,
-    //旋转眼睛
+    //旋转眼睛（默认0.5，两个方向调节）
     PFBeautyFiterTypeFace_eye_rotate,
     //开眼角
     PFBeautyFiterTypeFace_canthus,
