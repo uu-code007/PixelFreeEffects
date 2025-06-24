@@ -1,0 +1,38 @@
+[
+  {
+    "app_bundle_id": "com.example.myapp",
+    "status": "active",
+    "expires_at": "2025-12-31T23:59:59Z",
+    "features": [
+      "beauty",
+      "filter",
+      "sticker"
+    ],
+    "version": "2.4.9",
+    "platform": "android",
+    "description": "Android应用许可证",
+    "license_file": "pixelfreeAuth.lic",
+    "created_by": "admin",
+    "updated_by": "system",
+    "created_at": "2025-06-24T03:38:56.100987Z",
+    "updated_at": "2025-06-24T05:06:59.202473Z"
+  },
+  {
+    "app_bundle_id": "com.example.myapp2",
+    "status": "active",
+    "expires_at": "2025-12-31T23:59:59Z",
+    "features": [
+      "beauty",
+      "filter",
+      "sticker"
+    ],
+    "version": "2.4.9",
+    "platform": "android",
+    "description": "Android应用许可证",
+    "license_file": "pixelfreeAuth.lic",
+    "created_by": "admin",
+    "updated_by": "system",
+    "created_at": "2025-06-24T05:13:50.682416Z",
+    "updated_at": "2025-06-24T05:15:48.793885Z"
+  }
+]

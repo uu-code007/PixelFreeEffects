@@ -1,0 +1,837 @@
+package main
+
+import (
+	"crypto"
+	"crypto/rand"
+	"crypto/rsa"
+	"crypto/sha256"
+	"crypto/x509"
+	"encoding/base64"
+	"encoding/json"
+	"encoding/pem"
+	"fmt"
+	"io"
+	"log"
+	"net/http"
+	"os"
+	"path/filepath"
+	"strconv"
+	"sync"
+	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
+)
+
+// 配置结构体
+type Config struct {
+	Port                string
+	LicenseDir          string  // 改为 data 目录
+	PrivateKeyPath      string
+	PublicKeyPath       string
+	LicenseValidityDays int
+	LogLevel            string
+	DownloadBaseURL     string
+	DataFile            string
+}
+
+// 许可证数据结构
+type LicenseData struct {
+	AppBundleID string    `json:"app_bundle_id"`
+	Features    []string  `json:"features"`
+	IssuedAt    time.Time `json:"issued_at"`
+	ExpiresAt   time.Time `json:"expires_at"`
+	Version     string    `json:"version"`
+	Platform    string    `json:"platform"`
+	Status      string    `json:"status"` // active, expired, disabled
+	Description string    `json:"description"`
+	CreatedBy   string    `json:"created_by"`
+	UpdatedBy   string    `json:"updated_by"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+}
+
+// 完整许可证结构
+type License struct {
+	Data      LicenseData `json:"data"`
+	Hash      string      `json:"hash"`
+	Signature string      `json:"signature"`
+}
+
+// 许可证配置记录
+type LicenseConfig struct {
+	AppBundleID string    `json:"app_bundle_id"`
+	Status      string    `json:"status"` // active, expired, disabled
+	ExpiresAt   time.Time `json:"expires_at"`
+	Features    []string  `json:"features"`
+	Version     string    `json:"version"`
+	Platform    string    `json:"platform"`
+	Description string    `json:"description"`
+	LicenseFile string    `json:"license_file"` // 对应的lic文件名
+	CreatedBy   string    `json:"created_by"`
+	UpdatedBy   string    `json:"updated_by"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+}
+
+// API响应结构
+type APIResponse struct {
+	Success bool        `json:"success"`
+	Data    interface{} `json:"data,omitempty"`
+	Error   string      `json:"error,omitempty"`
+	Message string      `json:"message,omitempty"`
+}
+
+// 证书健康检查响应
+type LicenseHealthResponse struct {
+	AppBundleID     string    `json:"app_bundle_id"`
+	NeedsUpdate     bool      `json:"needs_update"`
+	ExpiresAt       time.Time `json:"expires_at"`
+	DaysUntilExpiry int       `json:"days_until_expiry"`
+	DownloadURL     string    `json:"download_url,omitempty"`
+	Status          string    `json:"status"`
+	Message         string    `json:"message"`
+	Features        []string  `json:"features,omitempty"`
+	Version         string    `json:"version,omitempty"`
+}
+
+// 健康检查响应
+type HealthResponse struct {
+	Status    string    `json:"status"`
+	Timestamp time.Time `json:"timestamp"`
+	Version   string    `json:"version"`
+}
+
+// 请求结构体
+type CheckLicenseHealthRequest struct {
+	AppBundleID string `json:"app_bundle_id" binding:"required"`
+}
+
+type CreateLicenseConfigRequest struct {
+	AppBundleID string   `json:"app_bundle_id" binding:"required"`
+	Status      string   `json:"status" binding:"required"`
+	ExpiresAt   string   `json:"expires_at" binding:"required"`
+	Features    []string `json:"features"`
+	Version     string   `json:"version"`
+	Platform    string   `json:"platform"`
+	Description string   `json:"description"`
+	CreatedBy   string   `json:"created_by"`
+}
+
+type UpdateLicenseConfigRequest struct {
+	LicenseFile string   `json:"license_file"`
+	Status      string   `json:"status"`
+	ExpiresAt   string   `json:"expires_at"`
+	Features    []string `json:"features"`
+	Version     string   `json:"version"`
+	Platform    string   `json:"platform"`
+	Description string   `json:"description"`
+	UpdatedBy   string   `json:"updated_by"`
+}
+
+// 许可证管理器
+type LicenseManager struct {
+	config     *Config
+	privateKey *rsa.PrivateKey
+	publicKey  *rsa.PublicKey
+	logger     *logrus.Logger
+	configs    map[string]*LicenseConfig
+	mutex      sync.RWMutex
+}
+
+// 创建新的许可证管理器
+func NewLicenseManager(config *Config) (*LicenseManager, error) {
+	logger := logrus.New()
+	logger.SetFormatter(&logrus.JSONFormatter{})
+	
+	level, err := logrus.ParseLevel(config.LogLevel)
+	if err != nil {
+		level = logrus.InfoLevel
+	}
+	logger.SetLevel(level)
+
+	lm := &LicenseManager{
+		config:  config,
+		logger:  logger,
+		configs: make(map[string]*LicenseConfig),
+	}
+
+	// 确保目录存在
+	if err := os.MkdirAll(config.LicenseDir, 0755); err != nil {
+		return nil, fmt.Errorf("创建许可证目录失败: %v", err)
+	}
+	if err := os.MkdirAll(filepath.Dir(config.PrivateKeyPath), 0755); err != nil {
+		return nil, fmt.Errorf("创建密钥目录失败: %v", err)
+	}
+	if err := os.MkdirAll(filepath.Dir(config.DataFile), 0755); err != nil {
+		return nil, fmt.Errorf("创建数据目录失败: %v", err)
+	}
+
+	// 加载或生成密钥
+	if err := lm.loadOrGenerateKeys(); err != nil {
+		return nil, fmt.Errorf("加载密钥失败: %v", err)
+	}
+
+	// 加载配置数据
+	if err := lm.loadConfigs(); err != nil {
+		return nil, fmt.Errorf("加载配置失败: %v", err)
+	}
+
+	return lm, nil
+}
+
+// 加载或生成RSA密钥对
+func (lm *LicenseManager) loadOrGenerateKeys() error {
+	// 尝试加载现有私钥
+	if _, err := os.Stat(lm.config.PrivateKeyPath); err == nil {
+		// 私钥文件存在，加载它
+		privateKeyBytes, err := os.ReadFile(lm.config.PrivateKeyPath)
+		if err != nil {
+			return fmt.Errorf("读取私钥文件失败: %v", err)
+		}
+
+		block, _ := pem.Decode(privateKeyBytes)
+		if block == nil {
+			return fmt.Errorf("解析私钥PEM失败")
+		}
+
+		privateKey, err := x509.ParsePKCS8PrivateKey(block.Bytes)
+		if err != nil {
+			return fmt.Errorf("解析私钥失败: %v", err)
+		}
+
+		rsaPrivateKey, ok := privateKey.(*rsa.PrivateKey)
+		if !ok {
+			return fmt.Errorf("私钥类型错误")
+		}
+
+		lm.privateKey = rsaPrivateKey
+		lm.publicKey = &rsaPrivateKey.PublicKey
+		lm.logger.Info("已加载现有私钥")
+	} else {
+		// 生成新的密钥对
+		privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
+		if err != nil {
+			return fmt.Errorf("生成RSA密钥失败: %v", err)
+		}
+
+		// 保存私钥
+		privateKeyBytes := x509.MarshalPKCS1PrivateKey(privateKey)
+		privateKeyPEM := pem.EncodeToMemory(&pem.Block{
+			Type:  "RSA PRIVATE KEY",
+			Bytes: privateKeyBytes,
+		})
+
+		if err := os.WriteFile(lm.config.PrivateKeyPath, privateKeyPEM, 0600); err != nil {
+			return fmt.Errorf("保存私钥失败: %v", err)
+		}
+
+		lm.privateKey = privateKey
+		lm.publicKey = &privateKey.PublicKey
+		lm.logger.Info("已生成新的私钥")
+	}
+
+	// 保存公钥
+	publicKeyBytes := x509.MarshalPKCS1PublicKey(lm.publicKey)
+	publicKeyPEM := pem.EncodeToMemory(&pem.Block{
+		Type:  "RSA PUBLIC KEY",
+		Bytes: publicKeyBytes,
+	})
+
+	if err := os.WriteFile(lm.config.PublicKeyPath, publicKeyPEM, 0644); err != nil {
+		return fmt.Errorf("保存公钥失败: %v", err)
+	}
+
+	lm.logger.Info("已保存公钥")
+	return nil
+}
+
+// 加载配置数据
+func (lm *LicenseManager) loadConfigs() error {
+	if _, err := os.Stat(lm.config.DataFile); os.IsNotExist(err) {
+		// 配置文件不存在，创建空的配置文件
+		lm.logger.Info("配置文件不存在，创建新配置文件")
+		return lm.saveConfigs()
+	}
+
+	data, err := os.ReadFile(lm.config.DataFile)
+	if err != nil {
+		return fmt.Errorf("读取配置文件失败: %v", err)
+	}
+
+	var configs []*LicenseConfig
+	if err := json.Unmarshal(data, &configs); err != nil {
+		return fmt.Errorf("解析配置文件失败: %v", err)
+	}
+
+	lm.mutex.Lock()
+	defer lm.mutex.Unlock()
+
+	for _, config := range configs {
+		lm.configs[config.AppBundleID] = config
+	}
+
+	lm.logger.WithField("count", len(configs)).Info("已加载许可证配置")
+	return nil
+}
+
+// 保存配置数据
+func (lm *LicenseManager) saveConfigs() error {
+	// 注意：调用此函数时，调用者应该已经持有写锁
+	// 所以这里不需要再次加锁
+
+	var configs []*LicenseConfig
+	for _, config := range lm.configs {
+		configs = append(configs, config)
+	}
+
+	data, err := json.MarshalIndent(configs, "", "  ")
+	if err != nil {
+		return fmt.Errorf("序列化配置失败: %v", err)
+	}
+
+	if err := os.WriteFile(lm.config.DataFile, data, 0644); err != nil {
+		return fmt.Errorf("保存配置文件失败: %v", err)
+	}
+
+	lm.logger.WithField("count", len(configs)).Info("已保存许可证配置")
+	return nil
+}
+
+// 验证许可证
+func (lm *LicenseManager) VerifyLicense(license *License) bool {
+	// 检查必要字段
+	if license.Data.AppBundleID == "" || license.Hash == "" || license.Signature == "" {
+		return false
+	}
+
+	// 验证数据完整性
+	licenseJSON, err := json.Marshal(license.Data)
+	if err != nil {
+		lm.logger.Error("序列化许可证数据失败")
+		return false
+	}
+
+	hash := sha256.Sum256(licenseJSON)
+	expectedHash := fmt.Sprintf("%x", hash)
+
+	if expectedHash != license.Hash {
+		lm.logger.Warn("许可证哈希验证失败")
+		return false
+	}
+
+	// 验证签名
+	signature, err := base64.StdEncoding.DecodeString(license.Signature)
+	if err != nil {
+		lm.logger.Error("解码签名失败")
+		return false
+	}
+
+	err = rsa.VerifyPKCS1v15(lm.publicKey, crypto.SHA256, hash[:], signature)
+	if err != nil {
+		lm.logger.Error("签名验证失败")
+		return false
+	}
+
+	// 检查过期时间
+	if time.Now().UTC().After(license.Data.ExpiresAt) {
+		lm.logger.Warn("许可证已过期")
+		return false
+	}
+
+	return true
+}
+
+// 检查许可证健康状态
+func (lm *LicenseManager) CheckLicenseHealth(appBundleID string) *LicenseHealthResponse {
+	lm.mutex.RLock()
+	config, exists := lm.configs[appBundleID]
+	lm.mutex.RUnlock()
+
+	if !exists {
+		return &LicenseHealthResponse{
+			AppBundleID: appBundleID,
+			Status:      "not_found",
+			Message:     "未找到许可证配置",
+		}
+	}
+
+	// 检查状态
+	if config.Status == "disabled" {
+		return &LicenseHealthResponse{
+			AppBundleID: appBundleID,
+			Status:      "disabled",
+			Message:     "许可证已被禁用",
+		}
+	}
+
+	// 检查过期时间
+	daysUntilExpiry := int(time.Until(config.ExpiresAt).Hours() / 24)
+	needsUpdate := daysUntilExpiry <= 30 || daysUntilExpiry < 0
+
+	response := &LicenseHealthResponse{
+		AppBundleID:     appBundleID,
+		NeedsUpdate:     needsUpdate,
+		ExpiresAt:       config.ExpiresAt,
+		DaysUntilExpiry: daysUntilExpiry,
+		Status:          config.Status,
+		Message:         "许可证配置正常",
+		Features:        config.Features,
+		Version:         config.Version,
+	}
+
+	if needsUpdate {
+		response.DownloadURL = fmt.Sprintf("%s/api/license/download/%s", lm.config.DownloadBaseURL, appBundleID)
+		response.Status = "needs_update"
+		response.Message = "许可证需要更新"
+	}
+
+	return response
+}
+
+// 创建许可证配置
+func (lm *LicenseManager) CreateLicenseConfig(req *CreateLicenseConfigRequest) error {
+	// 解析过期时间
+	expiresAt, err := time.Parse("2006-01-02T15:04:05Z", req.ExpiresAt)
+	if err != nil {
+		return fmt.Errorf("解析过期时间失败: %v", err)
+	}
+
+	// 检查是否已存在
+	lm.mutex.Lock()
+	defer lm.mutex.Unlock()
+
+	if _, exists := lm.configs[req.AppBundleID]; exists {
+		return fmt.Errorf("许可证配置已存在")
+	}
+
+	config := &LicenseConfig{
+		AppBundleID: req.AppBundleID,
+		Status:      req.Status,
+		ExpiresAt:   expiresAt,
+		Features:    req.Features,
+		Version:     req.Version,
+		Platform:    req.Platform,
+		Description: req.Description,
+		CreatedBy:   req.CreatedBy,
+		UpdatedBy:   req.CreatedBy,
+		CreatedAt:   time.Now().UTC(),
+		UpdatedAt:   time.Now().UTC(),
+	}
+
+	lm.configs[req.AppBundleID] = config
+
+	// 保存配置
+	if err := lm.saveConfigs(); err != nil {
+		return err
+	}
+
+	lm.logger.WithField("app_bundle_id", req.AppBundleID).Info("已创建许可证配置")
+	return nil
+}
+
+// 更新许可证配置
+func (lm *LicenseManager) UpdateLicenseConfig(appBundleID string, req *UpdateLicenseConfigRequest) error {
+	lm.mutex.Lock()
+	defer lm.mutex.Unlock()
+
+	config, exists := lm.configs[appBundleID]
+	if !exists {
+		return fmt.Errorf("许可证配置不存在")
+	}
+
+	// 更新字段
+	if req.Status != "" {
+		config.Status = req.Status
+	}
+	if req.ExpiresAt != "" {
+		expiresAt, err := time.Parse("2006-01-02T15:04:05Z", req.ExpiresAt)
+		if err != nil {
+			return fmt.Errorf("解析过期时间失败: %v", err)
+		}
+		config.ExpiresAt = expiresAt
+	}
+	if req.Features != nil {
+		config.Features = req.Features
+	}
+	if req.Version != "" {
+		config.Version = req.Version
+	}
+	if req.Platform != "" {
+		config.Platform = req.Platform
+	}
+	if req.Description != "" {
+		config.Description = req.Description
+	}
+	if req.LicenseFile != "" {
+		config.LicenseFile = req.LicenseFile
+	}
+
+	config.UpdatedBy = req.UpdatedBy
+	config.UpdatedAt = time.Now().UTC()
+
+	// 保存配置
+	if err := lm.saveConfigs(); err != nil {
+		return err
+	}
+
+	lm.logger.WithField("app_bundle_id", appBundleID).Info("已更新许可证配置")
+	return nil
+}
+
+// 删除许可证配置
+func (lm *LicenseManager) DeleteLicenseConfig(appBundleID string) error {
+	lm.mutex.Lock()
+	defer lm.mutex.Unlock()
+
+	if _, exists := lm.configs[appBundleID]; !exists {
+		return fmt.Errorf("许可证配置不存在")
+	}
+
+	// 删除许可证文件和目录
+	bundleDir := filepath.Join(lm.config.LicenseDir, appBundleID)
+	if err := os.RemoveAll(bundleDir); err != nil {
+		lm.logger.WithField("app_bundle_id", appBundleID).Warn("删除许可证文件失败: %v", err)
+		// 继续删除配置，不因为文件删除失败而中断
+	}
+
+	delete(lm.configs, appBundleID)
+
+	// 保存配置
+	if err := lm.saveConfigs(); err != nil {
+		return err
+	}
+
+	lm.logger.WithField("app_bundle_id", appBundleID).Info("已删除许可证配置和文件")
+	return nil
+}
+
+// 获取许可证配置
+func (lm *LicenseManager) GetLicenseConfig(appBundleID string) (*LicenseConfig, error) {
+	lm.mutex.RLock()
+	defer lm.mutex.RUnlock()
+
+	config, exists := lm.configs[appBundleID]
+	if !exists {
+		return nil, fmt.Errorf("许可证配置不存在")
+	}
+
+	return config, nil
+}
+
+// 列出所有许可证配置
+func (lm *LicenseManager) ListLicenseConfigs() []*LicenseConfig {
+	lm.mutex.RLock()
+	defer lm.mutex.RUnlock()
+
+	var configs []*LicenseConfig
+	for _, config := range lm.configs {
+		configs = append(configs, config)
+	}
+
+	return configs
+}
+
+// 获取许可证文件路径
+func (lm *LicenseManager) GetLicenseFile(appBundleID string) (string, error) {
+	// 检查配置是否存在
+	_, err := lm.GetLicenseConfig(appBundleID)
+	if err != nil {
+		return "", err
+	}
+
+	// 每个bundleid对应一个独立的pixelfreeAuth.lic文件
+	filename := "pixelfreeAuth.lic"
+	filepath := filepath.Join(lm.config.LicenseDir, appBundleID, filename)
+	
+	if _, err := os.Stat(filepath); os.IsNotExist(err) {
+		return "", fmt.Errorf("许可证文件不存在: %s", filepath)
+	}
+
+	return filepath, nil
+}
+
+// 上传许可证文件
+func (lm *LicenseManager) UploadLicenseFile(appBundleID string, filename string, file io.Reader) error {
+	// 检查配置是否存在
+	_, err := lm.GetLicenseConfig(appBundleID)
+	if err != nil {
+		return err
+	}
+
+	// 为每个bundleid创建独立的目录
+	bundleDir := filepath.Join(lm.config.LicenseDir, appBundleID)
+	if err := os.MkdirAll(bundleDir, 0755); err != nil {
+		return fmt.Errorf("创建bundle目录失败: %v", err)
+	}
+
+	// 保存文件为pixelfreeAuth.lic
+	filepath := filepath.Join(bundleDir, "pixelfreeAuth.lic")
+	fileWriter, err := os.Create(filepath)
+	if err != nil {
+		return fmt.Errorf("创建文件失败: %v", err)
+	}
+	defer fileWriter.Close()
+
+	_, err = io.Copy(fileWriter, file)
+	if err != nil {
+		return fmt.Errorf("保存文件失败: %v", err)
+	}
+
+	// 更新配置，记录文件路径
+	updateReq := &UpdateLicenseConfigRequest{
+		LicenseFile: "pixelfreeAuth.lic",
+		UpdatedBy:   "system",
+	}
+
+	if err := lm.UpdateLicenseConfig(appBundleID, updateReq); err != nil {
+		// 删除已上传的文件
+		os.Remove(filepath)
+		return err
+	}
+
+	lm.logger.WithFields(logrus.Fields{
+		"app_bundle_id": appBundleID,
+		"filepath":      filepath,
+	}).Info("已上传许可证文件")
+
+	return nil
+}
+
+// 创建HTTP服务器
+func createServer(lm *LicenseManager) *gin.Engine {
+	gin.SetMode(gin.ReleaseMode)
+	r := gin.New()
+	r.Use(gin.Logger())
+	r.Use(gin.Recovery())
+
+	// 健康检查
+	r.GET("/health", func(c *gin.Context) {
+		c.JSON(http.StatusOK, HealthResponse{
+			Status:    "healthy",
+			Timestamp: time.Now().UTC(),
+			Version:   "1.0.0",
+		})
+	})
+
+	// API路由组
+	api := r.Group("/api")
+	{
+		// 证书健康检查
+		api.POST("/license/health", func(c *gin.Context) {
+			var req CheckLicenseHealthRequest
+			if err := c.ShouldBindJSON(&req); err != nil {
+				c.JSON(http.StatusBadRequest, APIResponse{
+					Success: false,
+					Error:   "缺少app_bundle_id参数",
+				})
+				return
+			}
+
+			health := lm.CheckLicenseHealth(req.AppBundleID)
+			c.JSON(http.StatusOK, APIResponse{
+				Success: true,
+				Data:    health,
+			})
+		})
+
+		// 下载许可证文件
+		api.GET("/license/download/:app_bundle_id", func(c *gin.Context) {
+			appBundleID := c.Param("app_bundle_id")
+			if appBundleID == "" {
+				c.JSON(http.StatusBadRequest, APIResponse{
+					Success: false,
+					Error:   "缺少app_bundle_id参数",
+				})
+				return
+			}
+
+			filepath, err := lm.GetLicenseFile(appBundleID)
+			if err != nil {
+				c.JSON(http.StatusNotFound, APIResponse{
+					Success: false,
+					Error:   err.Error(),
+				})
+				return
+			}
+
+			c.FileAttachment(filepath, "pixelfreeAuth.lic")
+		})
+
+		// 管理接口
+		admin := api.Group("/admin")
+		{
+			// 创建许可证配置
+			admin.POST("/license/config", func(c *gin.Context) {
+				var req CreateLicenseConfigRequest
+				if err := c.ShouldBindJSON(&req); err != nil {
+					c.JSON(http.StatusBadRequest, APIResponse{
+						Success: false,
+						Error:   "参数错误",
+					})
+					return
+				}
+
+				if err := lm.CreateLicenseConfig(&req); err != nil {
+					c.JSON(http.StatusInternalServerError, APIResponse{
+						Success: false,
+						Error:   err.Error(),
+					})
+					return
+				}
+
+				c.JSON(http.StatusOK, APIResponse{
+					Success: true,
+					Message: "许可证配置创建成功",
+				})
+			})
+
+			// 更新许可证配置
+			admin.PUT("/license/config/:app_bundle_id", func(c *gin.Context) {
+				appBundleID := c.Param("app_bundle_id")
+				var req UpdateLicenseConfigRequest
+				if err := c.ShouldBindJSON(&req); err != nil {
+					c.JSON(http.StatusBadRequest, APIResponse{
+						Success: false,
+						Error:   "参数错误",
+					})
+					return
+				}
+
+				if err := lm.UpdateLicenseConfig(appBundleID, &req); err != nil {
+					c.JSON(http.StatusInternalServerError, APIResponse{
+						Success: false,
+						Error:   err.Error(),
+					})
+					return
+				}
+
+				c.JSON(http.StatusOK, APIResponse{
+					Success: true,
+					Message: "许可证配置更新成功",
+				})
+			})
+
+			// 获取许可证配置
+			admin.GET("/license/config/:app_bundle_id", func(c *gin.Context) {
+				appBundleID := c.Param("app_bundle_id")
+				config, err := lm.GetLicenseConfig(appBundleID)
+				if err != nil {
+					c.JSON(http.StatusNotFound, APIResponse{
+						Success: false,
+						Error:   err.Error(),
+					})
+					return
+				}
+
+				c.JSON(http.StatusOK, APIResponse{
+					Success: true,
+					Data:    config,
+				})
+			})
+
+			// 列出所有许可证配置
+			admin.GET("/license/configs", func(c *gin.Context) {
+				configs := lm.ListLicenseConfigs()
+				c.JSON(http.StatusOK, APIResponse{
+					Success: true,
+					Data:    configs,
+				})
+			})
+
+			// 删除许可证配置
+			admin.DELETE("/license/config/:app_bundle_id", func(c *gin.Context) {
+				appBundleID := c.Param("app_bundle_id")
+				if err := lm.DeleteLicenseConfig(appBundleID); err != nil {
+					c.JSON(http.StatusInternalServerError, APIResponse{
+						Success: false,
+						Error:   err.Error(),
+					})
+					return
+				}
+
+				c.JSON(http.StatusOK, APIResponse{
+					Success: true,
+					Message: "许可证配置删除成功",
+				})
+			})
+
+			// 上传许可证文件
+			admin.POST("/license/upload/:app_bundle_id", func(c *gin.Context) {
+				appBundleID := c.Param("app_bundle_id")
+				file, header, err := c.Request.FormFile("license_file")
+				if err != nil {
+					c.JSON(http.StatusBadRequest, APIResponse{
+						Success: false,
+						Error:   "未找到许可证文件",
+					})
+					return
+				}
+				defer file.Close()
+
+				if err := lm.UploadLicenseFile(appBundleID, header.Filename, file); err != nil {
+					c.JSON(http.StatusInternalServerError, APIResponse{
+						Success: false,
+						Error:   err.Error(),
+					})
+					return
+				}
+
+				c.JSON(http.StatusOK, APIResponse{
+					Success: true,
+					Message: "许可证文件上传成功",
+				})
+			})
+		}
+	}
+
+	return r
+}
+
+func main() {
+	// 配置
+	config := &Config{
+		Port:                getEnv("PORT", "15000"),
+		LicenseDir:          getEnv("LICENSE_DIR", "data"),  // 改为data目录
+		PrivateKeyPath:      getEnv("PRIVATE_KEY_PATH", "keys/private_key.pem"),
+		PublicKeyPath:       getEnv("PUBLIC_KEY_PATH", "keys/public_key.pem"),
+		LicenseValidityDays: getEnvAsInt("LICENSE_VALIDITY_DAYS", 365),
+		LogLevel:            getEnv("LOG_LEVEL", "info"),
+		DownloadBaseURL:     getEnv("DOWNLOAD_BASE_URL", "http://localhost:15000"),
+		DataFile:            getEnv("DATA_FILE", "data/license_configs.json"),
+	}
+
+	// 创建许可证管理器
+	lm, err := NewLicenseManager(config)
+	if err != nil {
+		log.Fatalf("创建许可证管理器失败: %v", err)
+	}
+
+	// 创建HTTP服务器
+	r := createServer(lm)
+
+	// 启动服务器
+	addr := ":" + config.Port
+	lm.logger.WithField("port", config.Port).Info("启动许可证健康检查API服务")
+	
+	if err := r.Run(addr); err != nil {
+		log.Fatalf("启动服务器失败: %v", err)
+	}
+}
+
+// 辅助函数
+func getEnv(key, defaultValue string) string {
+	if value := os.Getenv(key); value != "" {
+		return value
+	}
+	return defaultValue
+}
+
+func getEnvAsInt(key string, defaultValue int) int {
+	if value := os.Getenv(key); value != "" {
+		if intValue, err := strconv.Atoi(value); err == nil {
+			return intValue
+		}
+	}
+	return defaultValue
+} 
