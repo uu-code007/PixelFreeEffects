@@ -5,20 +5,27 @@ services:
     build: .
     container_name: smbeautyengine-license-api
     ports:
-      - "5000:5000"
+      - "1880:1880"
+      - "2443:2443"
     environment:
-      - PORT=5000
+      - ENABLE_HTTPS=true
+      - SSL_CERT_PATH=/app/certs/cert.pem
+      - SSL_KEY_PATH=/app/certs/key.pem
+      - HTTP_PORT=1880
+      - HTTPS_PORT=2443
       - LICENSE_DIR=/app/licenses
       - PRIVATE_KEY_PATH=/app/keys/private_key.pem
       - PUBLIC_KEY_PATH=/app/keys/public_key.pem
       - LICENSE_VALIDITY_DAYS=365
       - LOG_LEVEL=info
+      - DOWNLOAD_BASE_URL=https://localhost:2443
     volumes:
       - license_data:/app/licenses
       - key_data:/app/keys
+      - cert_data:/app/certs
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:5000/health"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "--no-check-certificate", "https://localhost:2443/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -58,6 +65,8 @@ volumes:
   license_data:
     driver: local
   key_data:
+    driver: local
+  cert_data:
     driver: local
   # redis_data:
   #   driver: local

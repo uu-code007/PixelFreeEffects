@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -47,10 +48,16 @@ type CheckLicenseHealthRequest struct {
 
 // 创建新的客户端
 func NewLicenseClient(baseURL string) *LicenseClient {
+	// 创建支持自签名证书的 HTTP 客户端
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+
 	return &LicenseClient{
 		BaseURL: baseURL,
 		HTTPClient: &http.Client{
-			Timeout: 30 * time.Second,
+			Timeout:   30 * time.Second,
+			Transport: tr,
 		},
 	}
 }
@@ -132,7 +139,7 @@ func main() {
 	fmt.Println("=== SMBeautyEngine License Health Check Client ===\n")
 
 	// 初始化客户端
-	client := NewLicenseClient("http://localhost:5000")
+	client := NewLicenseClient("https://localhost:2443")
 
 	// 1. 健康检查
 	fmt.Println("1. 服务健康检查:")
@@ -152,14 +159,14 @@ func main() {
 		fmt.Printf("证书健康检查失败: %v\n", err)
 	} else {
 		printJSON(healthResult)
-		
+
 		// 如果需要更新，尝试下载许可证
 		if healthResult.Success {
 			if data, ok := healthResult.Data.(map[string]interface{}); ok {
 				if needsUpdate, ok := data["needs_update"].(bool); ok && needsUpdate {
 					if downloadURL, ok := data["download_url"].(string); ok && downloadURL != "" {
 						fmt.Printf("\n需要更新许可证，下载URL: %s\n", downloadURL)
-						
+
 						// 尝试下载许可证
 						err := client.DownloadLicense(testAppBundleID, "")
 						if err != nil {
@@ -189,7 +196,7 @@ func demoMultipleApps(client *LicenseClient) {
 
 	for _, appBundleID := range apps {
 		fmt.Printf("检查应用: %s\n", appBundleID)
-		
+
 		healthResult, err := client.CheckLicenseHealth(appBundleID)
 		if err != nil {
 			fmt.Printf("  - 检查失败: %v\n", err)
@@ -201,19 +208,19 @@ func demoMultipleApps(client *LicenseClient) {
 				status := data["status"].(string)
 				message := data["message"].(string)
 				needsUpdate := data["needs_update"].(bool)
-				
+
 				fmt.Printf("  - 状态: %s\n", status)
 				fmt.Printf("  - 消息: %s\n", message)
 				fmt.Printf("  - 需要更新: %t\n", needsUpdate)
-				
+
 				if expiresAt, ok := data["expires_at"].(string); ok {
 					fmt.Printf("  - 过期时间: %s\n", expiresAt)
 				}
-				
+
 				if daysUntilExpiry, ok := data["days_until_expiry"].(float64); ok {
 					fmt.Printf("  - 剩余天数: %.0f\n", daysUntilExpiry)
 				}
-				
+
 				if needsUpdate {
 					if downloadURL, ok := data["download_url"].(string); ok {
 						fmt.Printf("  - 下载URL: %s\n", downloadURL)
@@ -225,4 +232,4 @@ func demoMultipleApps(client *LicenseClient) {
 		}
 		fmt.Println()
 	}
-} 
+}

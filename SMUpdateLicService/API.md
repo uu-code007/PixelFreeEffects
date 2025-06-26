@@ -4,7 +4,7 @@
 
 SMBeautyEngine License API 提供许可证健康检查和管理功能，支持基于数据表的配置管理和文件上传下载。
 
-**基础URL**: `http://localhost:15000`  
+**基础URL**: `https://localhost:2443`  
 **API版本**: v1.0  
 **内容类型**: `application/json`
 
@@ -68,6 +68,11 @@ SMBeautyEngine License API 提供许可证健康检查和管理功能，支持�
 - `version`: API版本
 - `uptime`: 服务运行时间
 
+**cURL 示例**:
+```bash
+curl -k https://localhost:2443/health
+```
+
 ## 2. 许可证健康检查
 
 ### POST /api/license/health
@@ -112,7 +117,7 @@ SMBeautyEngine License API 提供许可证健康检查和管理功能，支持�
     "needs_update": true,
     "expires_at": "2024-02-15T10:30:00Z",
     "days_until_expiry": 15,
-    "download_url": "http://localhost:15000/api/license/download/com.example.myapp",
+    "download_url": "https://localhost:2443/api/license/download/com.example.myapp",
     "status": "needs_update",
     "message": "许可证需要更新",
     "features": ["beauty", "filter", "sticker"],
@@ -144,6 +149,13 @@ SMBeautyEngine License API 提供许可证健康检查和管理功能，支持�
 - `license_file`: 许可证文件名
 - `download_url`: 下载URL（仅在需要更新时提供）
 
+**cURL 示例**:
+```bash
+curl -k -X POST https://localhost:2443/api/license/health \
+  -H "Content-Type: application/json" \
+  -d '{"app_bundle_id": "com.example.myapp"}'
+```
+
 ## 3. 下载许可证文件
 
 ### GET /api/license/download/{app_bundle_id}
@@ -166,6 +178,11 @@ SMBeautyEngine License API 提供许可证健康检查和管理功能，支持�
   "error": "许可证文件不存在",
   "code": "FILE_NOT_FOUND"
 }
+```
+
+**cURL 示例**:
+```bash
+curl -k -O https://localhost:2443/api/license/download/com.example.myapp
 ```
 
 ## 管理接口
@@ -433,15 +450,15 @@ SMBeautyEngine License API 提供许可证健康检查和管理功能，支持�
 
 ```bash
 # 健康检查
-curl http://localhost:15000/health
+curl -k https://localhost:2443/health
 
 # 许可证健康检查
-curl -X POST http://localhost:15000/api/license/health \
+curl -k -X POST https://localhost:2443/api/license/health \
   -H "Content-Type: application/json" \
   -d '{"app_bundle_id": "com.example.myapp"}'
 
 # 创建许可证配置
-curl -X POST http://localhost:15000/api/admin/license/config \
+curl -X POST https://localhost:2443/api/admin/license/config \
   -H "Content-Type: application/json" \
   -d '{
     "app_bundle_id": "com.example.myapp",
@@ -455,116 +472,16 @@ curl -X POST http://localhost:15000/api/admin/license/config \
   }'
 
 # 上传许可证文件
-curl -X POST http://localhost:15000/api/admin/license/upload/com.example.myapp \
+curl -X POST https://localhost:2443/api/admin/license/upload/com.example.myapp \
   -F "license_file=@pixelfreeAuth.lic"
 
 # 下载许可证文件
-curl -O http://localhost:15000/api/license/download/com.example.myapp
+curl -k -O https://localhost:2443/api/license/download/com.example.myapp
 
 # 获取所有配置
-curl http://localhost:15000/api/admin/license/configs
+curl https://localhost:2443/api/admin/license/configs
 ```
 
 ### JavaScript 示例
 
-```javascript
-// 健康检查
-async function checkHealth() {
-    const response = await fetch('http://localhost:15000/health');
-    const data = await response.json();
-    console.log('服务状态:', data.status);
-}
-
-// 许可证健康检查
-async function checkLicenseHealth(appBundleId) {
-    const response = await fetch('http://localhost:15000/api/license/health', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ app_bundle_id: appBundleId })
-    });
-    const result = await response.json();
-    
-    if (result.success) {
-        const data = result.data;
-        if (data.needs_update) {
-            console.log('需要更新许可证:', data.download_url);
-        } else {
-            console.log('许可证状态正常');
-        }
-    }
-}
-
-// 下载许可证文件
-async function downloadLicense(appBundleId) {
-    const response = await fetch(`http://localhost:15000/api/license/download/${appBundleId}`);
-    if (response.ok) {
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'pixelfreeAuth.lic';
-        a.click();
-    }
-}
 ```
-
-### Python 示例
-
-```python
-import requests
-import json
-
-# 健康检查
-def check_health():
-    response = requests.get('http://localhost:15000/health')
-    data = response.json()
-    print(f"服务状态: {data['status']}")
-
-# 许可证健康检查
-def check_license_health(app_bundle_id):
-    response = requests.post(
-        'http://localhost:15000/api/license/health',
-        json={'app_bundle_id': app_bundle_id}
-    )
-    result = response.json()
-    
-    if result['success']:
-        data = result['data']
-        if data['needs_update']:
-            print(f"需要更新许可证: {data['download_url']}")
-        else:
-            print("许可证状态正常")
-    else:
-        print(f"检查失败: {result['error']}")
-
-# 下载许可证文件
-def download_license(app_bundle_id):
-    response = requests.get(f'http://localhost:15000/api/license/download/{app_bundle_id}')
-    if response.status_code == 200:
-        with open('pixelfreeAuth.lic', 'wb') as f:
-            f.write(response.content)
-        print("许可证文件下载成功")
-    else:
-        print("下载失败")
-
-# 使用示例
-check_health()
-check_license_health('com.example.myapp')
-download_license('com.example.myapp')
-```
-
-## 注意事项
-
-1. **文件上传限制**: 许可证文件大小限制为 10MB
-2. **时间格式**: 所有时间字段使用 ISO 8601 格式 (YYYY-MM-DDTHH:mm:ssZ)
-3. **字符编码**: 所有文本字段使用 UTF-8 编码
-4. **并发限制**: 建议并发请求数不超过 100
-5. **缓存策略**: 客户端建议缓存健康检查结果，避免频繁请求
-
-## 版本历史
-
-| 版本 | 日期 | 变更说明 |
-|------|------|----------|
-| v1.0 | 2024-01-15 | 初始版本，支持基础健康检查和配置管理 | 

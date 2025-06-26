@@ -8,7 +8,7 @@
 
 - Go 1.19+ 或 Docker
 - 基本的命令行操作知识
-- 一个可用的端口（默认15000）
+- 一个可用的端口（默认2443）
 
 ## 方式一：使用 Go 运行（推荐开发环境）
 
@@ -25,20 +25,27 @@ cd SMBeautyEngine/SMUpdateCertificate
 go mod download
 ```
 
-### 3. 启动服务
+### 3. 生成 SSL 证书
 
 ```bash
-# 使用启动脚本（自动选择可用端口）
-./start.sh
-
-# 或指定端口启动
-PORT=15000 go run main.go
+# 生成自签名 SSL 证书
+./generate_cert.sh
 ```
 
-### 4. 验证服务
+### 4. 启动服务
 
 ```bash
-curl http://localhost:15000/health
+# 使用启动脚本（推荐）
+./start_https.sh
+
+# 或手动启动 HTTPS
+ENABLE_HTTPS=true SSL_CERT_PATH=certs/cert.pem SSL_KEY_PATH=certs/key.pem HTTP_PORT=1880 HTTPS_PORT=2443 go run main.go
+```
+
+### 5. 验证服务
+
+```bash
+curl -k https://localhost:2443/health
 ```
 
 应该看到类似输出：
@@ -63,17 +70,23 @@ docker build -t smbeauty-license-api .
 ```bash
 docker run -d \
   --name smbeauty-api \
-  -p 15000:15000 \
-  -e PORT=15000 \
+  -p 1880:1880 -p 2443:2443 \
+  -e ENABLE_HTTPS=true \
+  -e SSL_CERT_PATH=/app/certs/cert.pem \
+  -e SSL_KEY_PATH=/app/certs/key.pem \
+  -e HTTP_PORT=1880 \
+  -e HTTPS_PORT=2443 \
+  -e DOWNLOAD_BASE_URL=https://localhost:2443 \
   -v $(pwd)/data:/app/data \
   -v $(pwd)/licenses:/app/licenses \
+  -v $(pwd)/certs:/app/certs \
   smbeauty-license-api
 ```
 
 ### 3. 验证服务
 
 ```bash
-curl http://localhost:15000/health
+curl -k https://localhost:2443/health
 ```
 
 ## 🎯 基本使用流程
@@ -81,7 +94,7 @@ curl http://localhost:15000/health
 ### 步骤1：创建许可证配置
 
 ```bash
-curl -X POST http://localhost:15000/api/admin/license/config \
+curl -k -X POST https://localhost:2443/api/admin/license/config \
   -H "Content-Type: application/json" \
   -d '{
     "app_bundle_id": "com.example.myapp",
@@ -98,14 +111,14 @@ curl -X POST http://localhost:15000/api/admin/license/config \
 ### 步骤2：上传许可证文件
 
 ```bash
-curl -X POST http://localhost:15000/api/admin/license/upload/com.example.myapp \
+curl -k -X POST https://localhost:2443/api/admin/license/upload/com.example.myapp \
   -F "license_file=@licenses/pixelfreeAuth.lic"
 ```
 
 ### 步骤3：检查许可证状态
 
 ```bash
-curl -X POST http://localhost:15000/api/license/health \
+curl -k -X POST https://localhost:2443/api/license/health \
   -H "Content-Type: application/json" \
   -d '{"app_bundle_id": "com.example.myapp"}'
 ```
@@ -113,7 +126,7 @@ curl -X POST http://localhost:15000/api/license/health \
 ### 步骤4：下载许可证文件（如果需要）
 
 ```bash
-curl -O http://localhost:15000/api/license/download/com.example.myapp
+curl -k -O https://localhost:2443/api/license/download/com.example.myapp
 ```
 
 ## 📋 完整演示
@@ -121,7 +134,7 @@ curl -O http://localhost:15000/api/license/download/com.example.myapp
 运行完整演示脚本：
 
 ```bash
-./demo.sh --url http://localhost:15000
+./demo.sh --url https://localhost:2443
 ```
 
 这个脚本会自动执行以下操作：
@@ -138,7 +151,7 @@ curl -O http://localhost:15000/api/license/download/com.example.myapp
 
 ```bash
 # 启动服务
-./start.sh
+./start_https.sh
 
 # 停止服务（如果使用Docker）
 docker stop smbeauty-api
@@ -154,25 +167,25 @@ docker restart smbeauty-api
 
 ```bash
 # 健康检查
-curl http://localhost:15000/health
+curl -k https://localhost:2443/health
 
 # 许可证健康检查
-curl -X POST http://localhost:15000/api/license/health \
+curl -k -X POST https://localhost:2443/api/license/health \
   -H "Content-Type: application/json" \
   -d '{"app_bundle_id": "com.example.myapp"}'
 
 # 查看所有配置
-curl http://localhost:15000/api/admin/license/configs
+curl -k https://localhost:2443/api/admin/license/configs
 
 # 查看特定配置
-curl http://localhost:15000/api/admin/license/config/com.example.myapp
+curl -k https://localhost:2443/api/admin/license/config/com.example.myapp
 ```
 
 ### 管理操作
 
 ```bash
 # 创建配置
-curl -X POST http://localhost:15000/api/admin/license/config \
+curl -k -X POST https://localhost:2443/api/admin/license/config \
   -H "Content-Type: application/json" \
   -d '{
     "app_bundle_id": "com.example.myapp",
@@ -186,7 +199,7 @@ curl -X POST http://localhost:15000/api/admin/license/config \
   }'
 
 # 更新配置
-curl -X PUT http://localhost:15000/api/admin/license/config/com.example.myapp \
+curl -k -X PUT https://localhost:2443/api/admin/license/config/com.example.myapp \
   -H "Content-Type: application/json" \
   -d '{
     "status": "active",

@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -65,10 +66,16 @@ type UpdateLicenseConfigRequest struct {
 
 // 创建新的管理客户端
 func NewAdminClient(baseURL string) *AdminClient {
+	// 创建支持自签名证书的 HTTP 客户端
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+
 	return &AdminClient{
 		BaseURL: baseURL,
 		HTTPClient: &http.Client{
-			Timeout: 30 * time.Second,
+			Timeout:   30 * time.Second,
+			Transport: tr,
 		},
 	}
 }
@@ -80,7 +87,7 @@ func (c *AdminClient) CreateLicenseConfig(req *CreateLicenseConfigRequest) error
 		return fmt.Errorf("序列化请求失败: %v", err)
 	}
 
-	resp, err := c.HTTPClient.Post(c.BaseURL+"/api/admin/license/config", 
+	resp, err := c.HTTPClient.Post(c.BaseURL+"/api/admin/license/config",
 		"application/json", bytes.NewBuffer(reqBody))
 	if err != nil {
 		return fmt.Errorf("创建许可证配置请求失败: %v", err)
@@ -106,8 +113,8 @@ func (c *AdminClient) UpdateLicenseConfig(appBundleID string, req *UpdateLicense
 		return fmt.Errorf("序列化请求失败: %v", err)
 	}
 
-	httpReq, err := http.NewRequest("PUT", 
-		fmt.Sprintf("%s/api/admin/license/config/%s", c.BaseURL, appBundleID), 
+	httpReq, err := http.NewRequest("PUT",
+		fmt.Sprintf("%s/api/admin/license/config/%s", c.BaseURL, appBundleID),
 		bytes.NewBuffer(reqBody))
 	if err != nil {
 		return fmt.Errorf("创建请求失败: %v", err)
@@ -196,7 +203,7 @@ func (c *AdminClient) ListLicenseConfigs() ([]*LicenseConfig, error) {
 
 // 删除许可证配置
 func (c *AdminClient) DeleteLicenseConfig(appBundleID string) error {
-	httpReq, err := http.NewRequest("DELETE", 
+	httpReq, err := http.NewRequest("DELETE",
 		fmt.Sprintf("%s/api/admin/license/config/%s", c.BaseURL, appBundleID), nil)
 	if err != nil {
 		return fmt.Errorf("创建请求失败: %v", err)
@@ -231,7 +238,7 @@ func (c *AdminClient) UploadLicenseFile(appBundleID, filepath string) error {
 	// 创建multipart表单
 	var buf bytes.Buffer
 	writer := multipart.NewWriter(&buf)
-	
+
 	part, err := writer.CreateFormFile("license_file", filepath)
 	if err != nil {
 		return fmt.Errorf("创建表单文件失败: %v", err)
@@ -280,7 +287,7 @@ func main() {
 	fmt.Println("=== SMBeautyEngine License Admin Client ===\n")
 
 	// 初始化管理客户端
-	client := NewAdminClient("http://localhost:5000")
+	client := NewAdminClient("https://localhost:2443")
 
 	// 演示许可证配置管理
 	demoLicenseManagement(client)
@@ -351,7 +358,7 @@ func demoLicenseManagement(client *AdminClient) {
 	} else {
 		fmt.Printf("找到 %d 个配置:\n", len(configsList))
 		for _, config := range configsList {
-			fmt.Printf("  - %s: %s (过期时间: %s)\n", 
+			fmt.Printf("  - %s: %s (过期时间: %s)\n",
 				config.AppBundleID, config.Status, config.ExpiresAt.Format("2006-01-02"))
 		}
 	}
@@ -422,9 +429,9 @@ func demoLicenseManagement(client *AdminClient) {
 	} else {
 		fmt.Printf("最终配置数量: %d\n", len(finalConfigs))
 		for _, config := range finalConfigs {
-			fmt.Printf("  - %s: %s (过期时间: %s, 文件: %s)\n", 
-				config.AppBundleID, config.Status, 
-				config.ExpiresAt.Format("2006-01-02"), 
+			fmt.Printf("  - %s: %s (过期时间: %s, 文件: %s)\n",
+				config.AppBundleID, config.Status,
+				config.ExpiresAt.Format("2006-01-02"),
 				config.LicenseFile)
 		}
 	}
@@ -434,14 +441,14 @@ func demoLicenseManagement(client *AdminClient) {
 	fmt.Println("9. 演示删除许可证配置:")
 	// 注释掉删除操作，避免误删
 	/*
-	if err := client.DeleteLicenseConfig("com.example.flutterapp"); err != nil {
-		fmt.Printf("删除失败: %v\n", err)
-	} else {
-		fmt.Println("✅ 许可证配置删除成功")
-	}
+		if err := client.DeleteLicenseConfig("com.example.flutterapp"); err != nil {
+			fmt.Printf("删除失败: %v\n", err)
+		} else {
+			fmt.Println("✅ 许可证配置删除成功")
+		}
 	*/
 	fmt.Println("跳过删除演示（已注释）")
 	fmt.Println()
 
 	fmt.Println("=== 许可证配置管理演示完成 ===")
-} 
+}

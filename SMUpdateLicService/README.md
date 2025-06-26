@@ -12,6 +12,7 @@ SMBeautyEngine 许可证健康检查 API 服务，基于数据表配置管理，
 - ✅ **RSA 数字签名** - 确保证书安全性和完整性
 - ✅ **多平台支持** - 支持 Android、iOS、Flutter 等平台
 - ✅ **状态管理** - 支持 active、expired、disabled 状态
+- ✅ **HTTPS 支持** - 支持 SSL/TLS 加密连接
 
 ## 系统架构
 
@@ -44,37 +45,53 @@ SMBeautyEngine 许可证健康检查 API 服务，基于数据表配置管理，
 go mod download
 ```
 
-### 2. 启动服务
+### 2. 生成 SSL 证书
 
 ```bash
-# 开发模式
-go run main.go
+# 生成自签名 SSL 证书（开发环境）
+./generate_cert.sh
 
-# 或使用启动脚本（自动选择可用端口）
-./start.sh
+# 生成生产环境 SSL 证书（需要域名）
+./generate_production_cert.sh --domain api.example.com --email admin@example.com
+```
+
+### 3. 启动服务
+
+```bash
+# 使用启动脚本（推荐）
+./start_https.sh
+
+# 或手动启动 HTTPS
+ENABLE_HTTPS=true SSL_CERT_PATH=certs/cert.pem SSL_KEY_PATH=certs/key.pem HTTP_PORT=1880 HTTPS_PORT=2443 DOWNLOAD_BASE_URL=https://localhost:2443 go run main.go
 
 # 或指定端口启动
-PORT=15000 go run main.go
-
-# 或使用编译后的二进制文件
-PORT=15000 ./smbeauty-license-api
+ENABLE_HTTPS=true HTTPS_PORT=2443 go run main.go
 ```
 
-### 3. 测试服务
+### 4. 测试服务
 
 ```bash
-# 使用测试脚本
-./test_api.sh --url http://localhost:15000
-
-# 或使用 Go 客户端示例
-go run client_example.go
-
-# 或使用管理客户端
-go run admin_client.go
-
-# 或使用完整演示
-./demo.sh --url http://localhost:15000
+# 使用完整演示
+./demo.sh 
 ```
+
+### 5. 编译&启动
+
+```bash
+# 基本编译
+go build -o smbeauty-license-api main.go
+
+# 优化编译（去除调试信息）
+go build -ldflags="-s -w" -o smbeauty-license-api main.go
+
+# 交叉编译到 Linux
+GOOS=linux GOARCH=amd64 go build -o smbeauty-license-api main.go
+
+# 启动编译后的二进制文件
+ENABLE_HTTPS=true SSL_CERT_PATH=certs/cert.pem SSL_KEY_PATH=certs/key.pem HTTP_PORT=1880 HTTPS_PORT=2443 DOWNLOAD_BASE_URL=https://localhost:2443 ./smbeauty-license-api
+```
+
+
 
 ## API 接口
 
@@ -132,7 +149,7 @@ go run admin_client.go
     "needs_update": true,
     "expires_at": "2024-02-15T10:30:00Z",
     "days_until_expiry": 15,
-    "download_url": "http://localhost:15000/api/license/download/com.example.myapp",
+    "download_url": "https://localhost:2443/api/license/download/com.example.myapp",
     "status": "needs_update",
     "message": "许可证需要更新"
   }
@@ -283,10 +300,10 @@ go run admin_client.go
 
 ```bash
 # 1. 启动服务
-PORT=15000 go run main.go
+./start_https.sh
 
 # 2. 创建许可证配置
-curl -X POST http://localhost:15000/api/admin/license/config \
+curl -k -X POST https://localhost:2443/api/admin/license/config \
   -H "Content-Type: application/json" \
   -d '{
     "app_bundle_id": "com.example.myapp",
@@ -300,37 +317,37 @@ curl -X POST http://localhost:15000/api/admin/license/config \
   }'
 
 # 3. 上传许可证文件
-curl -X POST http://localhost:15000/api/admin/license/upload/com.example.myapp \
+curl -k -X POST https://localhost:2443/api/admin/license/upload/com.example.myapp \
   -F "license_file=@licenses/pixelfreeAuth.lic"
 
 # 4. 检查许可证状态
-curl -X POST http://localhost:15000/api/license/health \
+curl -k -X POST https://localhost:2443/api/license/health \
   -H "Content-Type: application/json" \
   -d '{"app_bundle_id": "com.example.myapp"}'
 
 # 5. 下载许可证文件
-curl http://localhost:15000/api/license/download/com.example.myapp
+curl -k -O https://localhost:2443/api/license/download/com.example.myapp
 
 # 6. 查看所有配置
-curl http://localhost:15000/api/admin/license/configs
+curl -k https://localhost:2443/api/admin/license/configs
 ```
 
 ### cURL 示例
 
 ```bash
 # 健康检查
-curl http://localhost:15000/health
+curl -k https://localhost:2443/health
 
 # 证书健康检查
-curl -X POST http://localhost:15000/api/license/health \
+curl -k -X POST https://localhost:2443/api/license/health \
   -H "Content-Type: application/json" \
   -d '{"app_bundle_id": "com.example.myapp"}'
 
 # 下载证书文件
-curl -O http://localhost:15000/api/license/download/com.example.myapp
+curl -k -O https://localhost:2443/api/license/download/com.example.myapp
 
 # 创建许可证配置
-curl -X POST http://localhost:15000/api/admin/license/config \
+curl -k -X POST https://localhost:2443/api/admin/license/config \
   -H "Content-Type: application/json" \
   -d '{
     "app_bundle_id": "com.example.myapp",
@@ -344,7 +361,7 @@ curl -X POST http://localhost:15000/api/admin/license/config \
   }'
 
 # 上传许可证文件
-curl -X POST http://localhost:15000/api/admin/license/upload/com.example.myapp \
+curl -k -X POST https://localhost:2443/api/admin/license/upload/com.example.myapp \
   -F "license_file=@pixelfreeAuth.lic"
 ```
 
@@ -352,7 +369,7 @@ curl -X POST http://localhost:15000/api/admin/license/upload/com.example.myapp \
 
 ```javascript
 class LicenseClient {
-    constructor(baseURL = 'http://localhost:15000') {
+    constructor(baseURL = 'https://localhost:2443') {
         this.baseURL = baseURL;
     }
 
@@ -400,26 +417,37 @@ client.checkLicenseHealth('com.example.myapp').then(result => {
 
 | 变量名 | 默认值 | 说明 |
 |--------|--------|------|
-| `PORT` | `5000` | 服务端口 |
-| `LICENSE_DIR` | `licenses` | 证书文件存储目录 |
-| `PRIVATE_KEY_PATH` | `keys/private_key.pem` | 私钥文件路径 |
-| `PUBLIC_KEY_PATH` | `keys/public_key.pem` | 公钥文件路径 |
+| `HTTPS_PORT` | `2443` | HTTPS 服务端口 |
+| `HTTP_PORT` | `1880` | HTTP 重定向端口 |
+| `LICENSE_DIR` | `data` | 证书文件存储目录 |
+| `PRIVATE_KEY_PATH` | `keys/private_key.pem` | RSA私钥文件路径 |
+| `PUBLIC_KEY_PATH` | `keys/public_key.pem` | RSA公钥文件路径 |
 | `LICENSE_VALIDITY_DAYS` | `365` | 证书有效期（天） |
 | `LOG_LEVEL` | `info` | 日志级别 |
-| `DOWNLOAD_BASE_URL` | `http://localhost:5000` | 下载URL基础地址 |
+| `DOWNLOAD_BASE_URL` | `https://localhost:2443` | 下载URL基础地址 |
 | `DATA_FILE` | `data/license_configs.json` | 配置数据文件路径 |
+| `ENABLE_HTTPS` | `true` | 是否启用 HTTPS |
+| `SSL_CERT_PATH` | `certs/cert.pem` | SSL 证书文件路径 |
+| `SSL_KEY_PATH` | `certs/key.pem` | SSL 私钥文件路径 |
 
 ### 配置文件
 
 创建 `.env` 文件进行配置：
 
 ```env
-PORT=15000
-LICENSE_DIR=licenses
+# HTTPS 配置
+HTTPS_PORT=2443
+HTTP_PORT=1880
+LICENSE_DIR=data
 LICENSE_VALIDITY_DAYS=365
 LOG_LEVEL=info
-DOWNLOAD_BASE_URL=http://localhost:15000
+DOWNLOAD_BASE_URL=https://localhost:2443
 DATA_FILE=data/license_configs.json
+
+# SSL 配置
+ENABLE_HTTPS=true
+SSL_CERT_PATH=certs/cert.pem
+SSL_KEY_PATH=certs/key.pem
 ```
 
 ## 数据表结构
@@ -467,16 +495,19 @@ DATA_FILE=data/license_configs.json
 ### Docker 部署
 
 ```bash
-# 构建镜像
+# HTTPS 模式
 docker build -t smbeauty-license-api .
 
-# 运行容器
-docker run -d -p 15000:15000 \
-  -e PORT=15000 \
-  -e LICENSE_VALIDITY_DAYS=365 \
-  -e DOWNLOAD_BASE_URL=http://localhost:15000 \
+docker run -d -p 1880:1880 -p 2443:2443 \
+  -e ENABLE_HTTPS=true \
+  -e SSL_CERT_PATH=/app/certs/cert.pem \
+  -e SSL_KEY_PATH=/app/certs/key.pem \
+  -e HTTP_PORT=1880 \
+  -e HTTPS_PORT=2443 \
+  -e DOWNLOAD_BASE_URL=https://localhost:2443 \
   -v $(pwd)/data:/app/data \
   -v $(pwd)/licenses:/app/licenses \
+  -v $(pwd)/certs:/app/certs \
   smbeauty-license-api
 ```
 
@@ -496,11 +527,9 @@ docker-compose down
 ### 生产环境部署
 
 ```bash
-# 编译
+# HTTPS 模式
 make build
-
-# 运行
-PORT=15000 ./smbeauty-license-api
+ENABLE_HTTPS=true SSL_CERT_PATH=/path/to/cert.pem SSL_KEY_PATH=/path/to/key.pem ./smbeauty-license-api
 ```
 
 ## 开发
@@ -512,8 +541,9 @@ SMUpdateCertificate/
 ├── main.go              # 主程序
 ├── client_example.go    # 客户端示例
 ├── admin_client.go      # 管理客户端示例
-├── test_api.sh          # API测试脚本
 ├── demo.sh              # 完整演示脚本
+├── start_https.sh       # HTTPS启动脚本
+├── generate_cert.sh     # SSL证书生成脚本
 ├── Dockerfile           # Docker配置
 ├── docker-compose.yml   # Docker Compose配置
 ├── Makefile             # 构建脚本
@@ -525,6 +555,9 @@ SMUpdateCertificate/
 ├── keys/                # RSA密钥目录
 │   ├── private_key.pem  # 私钥
 │   └── public_key.pem   # 公钥
+├── certs/               # SSL证书目录
+│   ├── cert.pem         # SSL证书
+│   └── key.pem          # SSL私钥
 └── README.md            # 文档
 ```
 
@@ -546,6 +579,11 @@ make build
 # 运行
 make run
 
+# HTTPS 相关
+make generate-cert    # 生成 SSL 证书
+make start-https      # 启动 HTTPS 服务
+make test-https       # 测试 HTTPS 服务
+
 # Docker构建
 make docker-build
 
@@ -556,7 +594,7 @@ make docker-run
 go run admin_client.go
 
 # 完整演示
-./demo.sh --url http://localhost:15000
+./demo.sh --url https://localhost:2443
 ```
 
 ## 工作流程
@@ -593,6 +631,9 @@ graph TD
 - 私钥文件权限设置为 600
 - 支持证书过期时间验证
 - 管理接口建议在生产环境中添加认证
+- 支持 HTTPS SSL/TLS 加密传输
+- 自动 HTTP 到 HTTPS 重定向
+- SSL 证书文件权限保护
 
 ## 故障排除
 
@@ -601,10 +642,11 @@ graph TD
 1. **服务启动失败**
    ```bash
    # 检查端口是否被占用
-   lsof -i :15000
+   lsof -i :2443
+   lsof -i :1880
    
    # 检查权限
-   chmod +x start.sh
+   chmod +x start_https.sh
    ```
 
 2. **配置加载失败**
@@ -629,6 +671,15 @@ graph TD
    ```bash
    # 删除旧密钥，重新生成
    rm -rf keys/private_key.pem keys/public_key.pem
+   ```
+
+5. **SSL 证书问题**
+   ```bash
+   # 重新生成 SSL 证书
+   ./generate_cert.sh
+   
+   # 检查证书文件权限
+   ls -la certs/
    ```
 
 ### 日志查看

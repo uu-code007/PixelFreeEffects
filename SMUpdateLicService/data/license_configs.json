@@ -1,38 +1,75 @@
 [
   {
-    "app_bundle_id": "com.example.myapp",
+    "app_bundle_id": "com.example.demoapp",
     "status": "active",
-    "expires_at": "2025-12-31T23:59:59Z",
+    "expires_at": "2023-07-30T23:59:59Z",
     "features": [
       "beauty",
       "filter",
-      "sticker"
+      "sticker",
+      "background"
     ],
-    "version": "2.4.9",
+    "version": "2.5.0",
     "platform": "android",
-    "description": "Android应用许可证",
+    "description": "更新后的演示应用许可证",
     "license_file": "pixelfreeAuth.lic",
     "created_by": "admin",
-    "updated_by": "system",
-    "created_at": "2025-06-24T03:38:56.100987Z",
-    "updated_at": "2025-06-24T05:06:59.202473Z"
+    "updated_by": "admin",
+    "created_at": "2025-06-26T06:23:23.056616Z",
+    "updated_at": "2025-06-26T06:29:41.053478Z"
   },
   {
-    "app_bundle_id": "com.example.myapp2",
+    "app_bundle_id": "com.example.androidapp",
     "status": "active",
-    "expires_at": "2025-12-31T23:59:59Z",
+    "expires_at": "2026-12-31T23:59:59Z",
+    "features": [
+      "beauty",
+      "filter",
+      "sticker",
+      "background"
+    ],
+    "version": "2.5.0",
+    "platform": "android",
+    "description": "更新后的Android应用许可证",
+    "license_file": "pixelfreeAuth.lic",
+    "created_by": "admin",
+    "updated_by": "system",
+    "created_at": "2025-06-26T06:35:15.652827Z",
+    "updated_at": "2025-06-26T06:36:56.250895Z"
+  },
+  {
+    "app_bundle_id": "com.example.iosapp",
+    "status": "active",
+    "expires_at": "2025-06-30T23:59:59Z",
+    "features": [
+      "beauty",
+      "filter"
+    ],
+    "version": "2.4.9",
+    "platform": "ios",
+    "description": "iOS应用许可证",
+    "license_file": "",
+    "created_by": "admin",
+    "updated_by": "admin",
+    "created_at": "2025-06-26T06:35:15.654765Z",
+    "updated_at": "2025-06-26T06:35:15.654765Z"
+  },
+  {
+    "app_bundle_id": "com.example.flutterapp",
+    "status": "disabled",
+    "expires_at": "2025-03-31T23:59:59Z",
     "features": [
       "beauty",
       "filter",
       "sticker"
     ],
     "version": "2.4.9",
-    "platform": "android",
-    "description": "Android应用许可证",
-    "license_file": "pixelfreeAuth.lic",
+    "platform": "flutter",
+    "description": "Flutter应用许可证",
+    "license_file": "",
     "created_by": "admin",
-    "updated_by": "system",
-    "created_at": "2025-06-24T05:13:50.682416Z",
-    "updated_at": "2025-06-24T05:15:48.793885Z"
+    "updated_by": "admin",
+    "created_at": "2025-06-26T06:35:15.655424Z",
+    "updated_at": "2025-06-26T06:36:56.251218Z"
   }
 ]

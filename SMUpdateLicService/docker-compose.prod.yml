@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  smbeauty-api:
+    build: .
+    container_name: smbeauty-license-api
+    restart: unless-stopped
+    ports:
+      - "80:80"      # HTTP 重定向端口
+      - "443:443"    # HTTPS 端口
+    environment:
+      - ENABLE_HTTPS=true
+      - SSL_CERT_PATH=/app/certs/cert.pem
+      - SSL_KEY_PATH=/app/certs/key.pem
+      - HTTP_PORT=80
+      - HTTPS_PORT=443
+      - DOWNLOAD_BASE_URL=https://api.example.com  # 请替换为你的域名
+      - LOG_LEVEL=info
+      - LICENSE_VALIDITY_DAYS=365
+    volumes:
+      - ./data:/app/data
+      - ./licenses:/app/licenses
+      - ./certs:/app/certs
+      - ./logs:/app/logs
+    networks:
+      - smbeauty-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://localhost:443/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # 可选：Nginx 反向代理
+  nginx:
+    image: nginx:alpine
+    container_name: smbeauty-nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"    # 外部访问端口
+      - "8443:443"   # 外部 HTTPS 端口
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+    depends_on:
+      - smbeauty-api
+    networks:
+      - smbeauty-network
+    profiles:
+      - nginx
+
+  # 可选：Redis 缓存（如果需要）
+  redis:
+    image: redis:alpine
+    container_name: smbeauty-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - smbeauty-network
+    profiles:
+      - cache
+
+networks:
+  smbeauty-network:
+    driver: bridge
+
+volumes:
+  redis-data:
+    driver: local 

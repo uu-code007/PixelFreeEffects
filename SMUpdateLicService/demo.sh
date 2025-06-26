@@ -14,7 +14,7 @@ CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
 # 配置
-API_BASE_URL="http://localhost:5000"
+API_BASE_URL="https://localhost:2443"
 DEMO_APP_BUNDLE_ID="com.example.demoapp"
 
 # 打印带颜色的消息
@@ -45,7 +45,7 @@ print_demo() {
 # 检查服务状态
 check_service() {
     print_info "检查服务状态..."
-    if curl -s -f "$API_BASE_URL/health" > /dev/null; then
+    if curl -s -f -k "$API_BASE_URL/health" > /dev/null; then
         print_success "✅ 服务正在运行"
         return 0
     else
@@ -67,7 +67,7 @@ demo_health_check() {
     print_step "1. 服务健康检查演示"
     print_demo "检查API服务是否正常运行"
     
-    response=$(curl -s "$API_BASE_URL/health")
+    response=$(curl -s -k "$API_BASE_URL/health")
     echo "健康检查响应:"
     echo "$response" | jq '.' 2>/dev/null || echo "$response"
     
@@ -93,7 +93,7 @@ demo_create_config() {
     echo "创建配置请求:"
     echo "$create_data" | jq '.'
     
-    response=$(curl -s -X POST "$API_BASE_URL/api/admin/license/config" \
+    response=$(curl -s -k -X POST "$API_BASE_URL/api/admin/license/config" \
         -H "Content-Type: application/json" \
         -d "$create_data")
     
@@ -135,7 +135,7 @@ EOF
     
     echo "上传许可证文件: test_license.lic"
     
-    response=$(curl -s -X POST "$API_BASE_URL/api/admin/license/upload/$DEMO_APP_BUNDLE_ID" \
+    response=$(curl -s -k -X POST "$API_BASE_URL/api/admin/license/upload/$DEMO_APP_BUNDLE_ID" \
         -F "license_file=@test_license.lic")
     
     echo "上传文件响应:"
@@ -160,7 +160,7 @@ demo_client_check() {
     echo "检查许可证请求:"
     echo "$check_data" | jq '.'
     
-    response=$(curl -s -X POST "$API_BASE_URL/api/license/health" \
+    response=$(curl -s -k -X POST "$API_BASE_URL/api/license/health" \
         -H "Content-Type: application/json" \
         -d "$check_data")
     
@@ -194,7 +194,7 @@ demo_download_file() {
     
     echo "下载许可证文件..."
     
-    if curl -s -f -o "downloaded_license.lic" "$API_BASE_URL/api/license/download/$DEMO_APP_BUNDLE_ID"; then
+    if curl -s -f -k -o "downloaded_license.lic" "$API_BASE_URL/api/license/download/$DEMO_APP_BUNDLE_ID"; then
         print_success "✅ 许可证文件下载成功"
         
         if [ -f "downloaded_license.lic" ]; then
@@ -218,7 +218,7 @@ demo_update_config() {
     
     update_data='{
         "status": "active",
-        "expires_at": "2026-06-30T23:59:59Z",
+        "expires_at": "2023-07-30T23:59:59Z",
         "features": ["beauty", "filter", "sticker", "background"],
         "version": "2.5.0",
         "description": "更新后的演示应用许可证",
@@ -228,7 +228,7 @@ demo_update_config() {
     echo "更新配置请求:"
     echo "$update_data" | jq '.'
     
-    response=$(curl -s -X PUT "$API_BASE_URL/api/admin/license/config/$DEMO_APP_BUNDLE_ID" \
+    response=$(curl -s -k -X PUT "$API_BASE_URL/api/admin/license/config/$DEMO_APP_BUNDLE_ID" \
         -H "Content-Type: application/json" \
         -d "$update_data")
     
@@ -249,7 +249,7 @@ demo_list_configs() {
     print_step "7. 查看许可证配置列表演示"
     print_demo "管理员查看所有许可证配置"
     
-    response=$(curl -s "$API_BASE_URL/api/admin/license/configs")
+    response=$(curl -s -k "$API_BASE_URL/api/admin/license/configs")
     
     echo "配置列表响应:"
     echo "$response" | jq '.' 2>/dev/null || echo "$response"
@@ -279,7 +279,7 @@ demo_multiple_apps() {
     for app in "${apps[@]}"; do
         print_info "检查应用: $app"
         
-        response=$(curl -s -X POST "$API_BASE_URL/api/license/health" \
+        response=$(curl -s -k -X POST "$API_BASE_URL/api/license/health" \
             -H "Content-Type: application/json" \
             -d "{\"app_bundle_id\": \"$app\"}")
         
@@ -303,7 +303,7 @@ demo_status_management() {
     print_info "禁用许可证..."
     disable_data='{"status": "disabled", "updated_by": "admin"}'
     
-    response=$(curl -s -X PUT "$API_BASE_URL/api/admin/license/config/$DEMO_APP_BUNDLE_ID" \
+    response=$(curl -s -k -X PUT "$API_BASE_URL/api/admin/license/config/$DEMO_APP_BUNDLE_ID" \
         -H "Content-Type: application/json" \
         -d "$disable_data")
     
@@ -315,7 +315,7 @@ demo_status_management() {
     
     # 检查禁用状态
     print_info "检查禁用状态..."
-    check_response=$(curl -s -X POST "$API_BASE_URL/api/license/health" \
+    check_response=$(curl -s -k -X POST "$API_BASE_URL/api/license/health" \
         -H "Content-Type: application/json" \
         -d "{\"app_bundle_id\": \"$DEMO_APP_BUNDLE_ID\"}")
     
@@ -326,7 +326,7 @@ demo_status_management() {
     print_info "重新启用许可证..."
     enable_data='{"status": "active", "updated_by": "admin"}'
     
-    response=$(curl -s -X PUT "$API_BASE_URL/api/admin/license/config/$DEMO_APP_BUNDLE_ID" \
+    response=$(curl -s -k -X PUT "$API_BASE_URL/api/admin/license/config/$DEMO_APP_BUNDLE_ID" \
         -H "Content-Type: application/json" \
         -d "$enable_data")
     
@@ -408,13 +408,13 @@ show_help() {
     echo "用法: $0 [选项]"
     echo ""
     echo "选项:"
-    echo "  --url URL          指定API地址 (默认: http://localhost:5000)"
+    echo "  --url URL          指定API地址 (默认: https://localhost:2443)"
     echo "  --app-bundle ID    指定演示应用Bundle ID (默认: com.example.demoapp)"
     echo "  --help             显示此帮助信息"
     echo ""
     echo "示例:"
     echo "  $0                                    # 使用默认配置演示"
-    echo "  $0 --url http://api.example.com       # 指定API地址"
+    echo "  $0 --url https://api.example.com       # 指定API地址"
     echo "  $0 --app-bundle com.myapp.demo        # 指定应用Bundle ID"
 }
 

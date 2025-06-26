@@ -26,8 +26,14 @@ help: ## 显示帮助信息
 
 # 开发相关命令
 .PHONY: run
-run: ## 运行开发服务器
-	@echo "启动开发服务器..."
+run: ## 运行 HTTPS 开发服务器
+	@echo "启动 HTTPS 开发服务器..."
+	@chmod +x start_https.sh
+	./start_https.sh
+
+.PHONY: run-http
+run-http: ## 运行 HTTP 开发服务器（仅开发环境）
+	@echo "启动 HTTP 开发服务器..."
 	$(GOCMD) run main.go
 
 .PHONY: build
@@ -52,10 +58,10 @@ test: ## 运行测试
 .PHONY: test-api
 test-api: ## 运行API测试脚本
 	@echo "运行API测试..."
-	@if [ -f test_api.sh ]; then \
-		chmod +x test_api.sh && ./test_api.sh; \
+	@if [ -f demo.sh ]; then \
+		chmod +x demo.sh && ./demo.sh; \
 	else \
-		echo "测试脚本不存在"; \
+		echo "演示脚本不存在"; \
 	fi
 
 .PHONY: fmt
@@ -88,7 +94,14 @@ docker-build: ## 构建Docker镜像
 .PHONY: docker-run
 docker-run: ## 运行Docker容器
 	@echo "运行Docker容器..."
-	docker run -d -p 5000:5000 --name $(BINARY_NAME) $(DOCKER_IMAGE):latest
+	docker run -d -p 1880:1880 -p 2443:2443 --name $(BINARY_NAME) \
+		-e ENABLE_HTTPS=true \
+		-e SSL_CERT_PATH=/app/certs/cert.pem \
+		-e SSL_KEY_PATH=/app/certs/key.pem \
+		-e HTTP_PORT=1880 \
+		-e HTTPS_PORT=2443 \
+		-v $(PWD)/certs:/app/certs \
+		$(DOCKER_IMAGE):latest
 
 .PHONY: docker-stop
 docker-stop: ## 停止Docker容器
@@ -145,7 +158,7 @@ setup: ## 设置开发环境
 .PHONY: init-dirs
 init-dirs: ## 初始化目录结构
 	@echo "初始化目录结构..."
-	mkdir -p licenses keys logs
+	mkdir -p licenses keys logs certs
 	@echo "目录结构初始化完成"
 
 # 版本管理
@@ -158,15 +171,15 @@ version: ## 显示版本信息
 .PHONY: status
 status: ## 检查服务状态
 	@echo "检查服务状态..."
-	@if curl -s -f http://localhost:5000/health > /dev/null; then \
-		echo "✅ 服务正在运行"; \
+	@if curl -s -f -k https://localhost:2443/health > /dev/null; then \
+		echo "✅ HTTPS 服务正在运行"; \
 	else \
-		echo "❌ 服务未运行"; \
+		echo "❌ HTTPS 服务未运行"; \
 	fi
 
 # 一键启动（开发模式）
 .PHONY: dev
-dev: setup init-dirs ## 一键启动开发环境
+dev: setup init-dirs generate-cert ## 一键启动开发环境
 	@echo "启动开发环境..."
 	$(MAKE) run
 
@@ -179,4 +192,23 @@ deploy: build docker-build ## 一键部署
 # 清理所有
 .PHONY: clean-all
 clean-all: clean docker-clean compose-down ## 清理所有文件
-	@echo "清理所有文件完成" 
+	@echo "清理所有文件完成"
+
+# HTTPS 相关命令
+.PHONY: generate-cert
+generate-cert: ## 生成 SSL 证书
+	@echo "生成 SSL 证书..."
+	@chmod +x generate_cert.sh
+	./generate_cert.sh
+
+.PHONY: start-https
+start-https: ## 运行 HTTPS 服务
+	@echo "启动 HTTPS 服务..."
+	@chmod +x start_https.sh
+	./start_https.sh
+
+.PHONY: test-https
+test-https: ## 测试 HTTPS 服务
+	@echo "测试 HTTPS 服务..."
+	@chmod +x demo.sh
+	./demo.sh 

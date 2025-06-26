@@ -16,6 +16,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 
@@ -26,13 +27,19 @@ import (
 // 配置结构体
 type Config struct {
 	Port                string
-	LicenseDir          string  // 改为 data 目录
+	LicenseDir          string // 改为 data 目录
 	PrivateKeyPath      string
 	PublicKeyPath       string
 	LicenseValidityDays int
 	LogLevel            string
 	DownloadBaseURL     string
 	DataFile            string
+	// HTTPS 配置
+	EnableHTTPS bool
+	SSLCertPath string
+	SSLKeyPath  string
+	HTTPPort    string
+	HTTPSPort   string
 }
 
 // 许可证数据结构
@@ -143,7 +150,7 @@ type LicenseManager struct {
 func NewLicenseManager(config *Config) (*LicenseManager, error) {
 	logger := logrus.New()
 	logger.SetFormatter(&logrus.JSONFormatter{})
-	
+
 	level, err := logrus.ParseLevel(config.LogLevel)
 	if err != nil {
 		level = logrus.InfoLevel
@@ -225,9 +232,9 @@ func (lm *LicenseManager) loadOrGenerateKeys() error {
 		if err != nil {
 			return fmt.Errorf("序列化私钥失败: %v", err)
 		}
-		
+
 		privateKeyPEM := pem.EncodeToMemory(&pem.Block{
-			Type:  "PRIVATE KEY",  // PKCS8格式的PEM类型
+			Type:  "PRIVATE KEY", // PKCS8格式的PEM类型
 			Bytes: privateKeyBytes,
 		})
 
@@ -552,7 +559,7 @@ func (lm *LicenseManager) GetLicenseFile(appBundleID string) (string, error) {
 	// 每个bundleid对应一个独立的pixelfreeAuth.lic文件
 	filename := "pixelfreeAuth.lic"
 	filepath := filepath.Join(lm.config.LicenseDir, appBundleID, filename)
-	
+
 	if _, err := os.Stat(filepath); os.IsNotExist(err) {
 		return "", fmt.Errorf("许可证文件不存在: %s", filepath)
 	}
@@ -800,14 +807,20 @@ func createServer(lm *LicenseManager) *gin.Engine {
 func main() {
 	// 配置
 	config := &Config{
-		Port:                getEnv("PORT", "15000"),
-		LicenseDir:          getEnv("LICENSE_DIR", "data"),  // 改为data目录
+		Port:                getEnv("PORT", "2443"),
+		LicenseDir:          getEnv("LICENSE_DIR", "data"), // 改为data目录
 		PrivateKeyPath:      getEnv("PRIVATE_KEY_PATH", "keys/private_key.pem"),
 		PublicKeyPath:       getEnv("PUBLIC_KEY_PATH", "keys/public_key.pem"),
 		LicenseValidityDays: getEnvAsInt("LICENSE_VALIDITY_DAYS", 365),
 		LogLevel:            getEnv("LOG_LEVEL", "info"),
-		DownloadBaseURL:     getEnv("DOWNLOAD_BASE_URL", "http://localhost:15000"),
+		DownloadBaseURL:     getEnv("DOWNLOAD_BASE_URL", "http://localhost:2443"),
 		DataFile:            getEnv("DATA_FILE", "data/license_configs.json"),
+		// HTTPS 配置
+		EnableHTTPS: getEnvAsBool("ENABLE_HTTPS", false),
+		SSLCertPath: getEnv("SSL_CERT_PATH", "certs/cert.pem"),
+		SSLKeyPath:  getEnv("SSL_KEY_PATH", "certs/key.pem"),
+		HTTPPort:    getEnv("HTTP_PORT", "1880"),
+		HTTPSPort:   getEnv("HTTPS_PORT", "2443"),
 	}
 
 	// 创建许可证管理器
@@ -820,11 +833,61 @@ func main() {
 	r := createServer(lm)
 
 	// 启动服务器
-	addr := ":" + config.Port
-	lm.logger.WithField("port", config.Port).Info("启动许可证健康检查API服务")
-	
-	if err := r.Run(addr); err != nil {
-		log.Fatalf("启动服务器失败: %v", err)
+	if config.EnableHTTPS {
+		// 检查SSL证书文件是否存在
+		if _, err := os.Stat(config.SSLCertPath); os.IsNotExist(err) {
+			lm.logger.Fatalf("SSL证书文件不存在: %s", config.SSLCertPath)
+		}
+		if _, err := os.Stat(config.SSLKeyPath); os.IsNotExist(err) {
+			lm.logger.Fatalf("SSL私钥文件不存在: %s", config.SSLKeyPath)
+		}
+
+		// 启动HTTPS服务器
+		httpsAddr := ":" + config.HTTPSPort
+		lm.logger.WithFields(logrus.Fields{
+			"port": config.HTTPSPort,
+			"cert": config.SSLCertPath,
+			"key":  config.SSLKeyPath,
+		}).Info("启动HTTPS服务器")
+
+		// 如果配置了HTTP端口，同时启动HTTP服务器用于重定向
+		if config.HTTPPort != "" && config.HTTPPort != config.HTTPSPort {
+			go func() {
+				httpAddr := ":" + config.HTTPPort
+				lm.logger.WithField("port", config.HTTPPort).Info("启动HTTP重定向服务器")
+
+				// 创建HTTP重定向服务器
+				httpServer := &http.Server{
+					Addr: httpAddr,
+					Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+						// 重定向到HTTPS，使用正确的端口
+						host := r.Host
+						if strings.Contains(host, ":") {
+							host = strings.Split(host, ":")[0]
+						}
+						httpsURL := "https://" + host + ":" + config.HTTPSPort + r.RequestURI
+						http.Redirect(w, r, httpsURL, http.StatusMovedPermanently)
+					}),
+				}
+
+				if err := httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+					lm.logger.WithError(err).Error("HTTP重定向服务器启动失败")
+				}
+			}()
+		}
+
+		// 启动HTTPS服务器
+		if err := r.RunTLS(httpsAddr, config.SSLCertPath, config.SSLKeyPath); err != nil {
+			log.Fatalf("启动HTTPS服务器失败: %v", err)
+		}
+	} else {
+		// 启动HTTP服务器
+		addr := ":" + config.Port
+		lm.logger.WithField("port", config.Port).Info("启动HTTP服务器")
+
+		if err := r.Run(addr); err != nil {
+			log.Fatalf("启动HTTP服务器失败: %v", err)
+		}
 	}
 }
 
@@ -843,4 +906,13 @@ func getEnvAsInt(key string, defaultValue int) int {
 		}
 	}
 	return defaultValue
-} 
+}
+
+func getEnvAsBool(key string, defaultValue bool) bool {
+	if value := os.Getenv(key); value != "" {
+		if boolValue, err := strconv.ParseBool(value); err == nil {
+			return boolValue
+		}
+	}
+	return defaultValue
+}
