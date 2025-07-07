@@ -3,16 +3,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.hapi.pixelfreeuikit.IndicatorSeekBar
-        android:id="@+id/seekbarProgress"
+    <LinearLayout
+        android:id="@+id/seekbarContainer"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_gravity="top"
-        android:visibility="visible" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:visibility="visible">
+
+        <com.hapi.pixelfreeuikit.IndicatorSeekBar
+            android:id="@+id/seekbarProgress"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/seekbarValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:minWidth="40dp"
+            android:gravity="center"
+            android:background="@drawable/label_background"
+            android:padding="4dp"
+            android:text="0" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/centerSeekBarContainer"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="top"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:visibility="gone">
+
+        <com.hapi.pixelfreeuikit.CenterSeekBar
+            android:id="@+id/centerSeekBar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingRight="16dp" />
+
+        <TextView
+            android:id="@+id/centerSeekBarValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:minWidth="40dp"
+            android:gravity="center"
+            android:background="@drawable/label_background"
+            android:padding="4dp"
+            android:text="0" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reycBeautyItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:layout_marginTop="25px" />
+
 </FrameLayout>

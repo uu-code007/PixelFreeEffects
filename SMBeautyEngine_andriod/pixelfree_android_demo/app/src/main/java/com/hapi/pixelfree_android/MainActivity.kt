@@ -1,5 +1,6 @@
 package com.hapi.pixelfree_android
 
+import android.opengl.GLES20
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -53,7 +54,6 @@ class MainActivity : AppCompatActivity() {
                         val endTime = System.currentTimeMillis()
                         val timeCost = endTime - startTime
 //                        println("processWithBuffer 耗时：$timeCost 毫秒")
-
                         frame.textureID = if (isLongPress) 0 else pxInput.textureID;
                     }
                     return super.onProcessFrame(frame)

@@ -40,7 +40,25 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
     lateinit var mPixelFree:PixelFree;
     private val page by lazy {
         mPixelFree = pixelFree;
-        loadSavedSettings() ?: createDefaultPages()
+        
+        // Temporarily force default settings to bypass any JSON loading issues
+        Log.d("PixeBeautyDialog", "Loading beauty settings...")
+        // 打开注释，加载历史保存的 UI 配置
+//        val loadedSettings = loadSavedSettings()
+//        if (loadedSettings != null) {
+//            Log.d("PixeBeautyDialog", "Loaded ${loadedSettings.size} pages from saved settings")
+//            // Check if loaded items have correct state support
+//            loadedSettings.forEach { beautyView ->
+//                beautyView.mBeautyItemAdapter.data.forEach { item ->
+//                    Log.d("PixeBeautyDialog", "Loaded item: ${item.name}, supportsStateIcons: ${item.supportsStateIcons}, iconBaseName: ${item.iconBaseName}")
+//                }
+//            }
+//        } else {
+//            Log.d("PixeBeautyDialog", "No saved settings found, using default pages")
+//        }
+        
+        // For now, always use default pages to ensure correct setup
+        createDefaultPages()
     }
 
     private fun createDefaultPages(): List<BeautyView> {
@@ -69,37 +87,53 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
     private fun createBaseBeautyPage(): BeautyView {
         return BeautyView(requireContext()).apply {
             this.pixelFreeGetter = { mPixelFree }
-            setList(ArrayList<BeautyItem>().apply {
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFaceWhitenStrength, 0.2f, "美白", R.mipmap.meibai))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFaceRuddyStrength, 0.6f, "红润", R.mipmap.hongrun))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFaceBlurStrength, 0.7f, "磨皮", R.mipmap.mopi))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFaceEyeBrighten, 0.0f, "亮眼", R.mipmap.liangyan))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFaceSharpenStrength, 0.0f, "锐化", R.mipmap.ruihua))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFaceH_qualityStrength, 0.2f, "增强画质", R.mipmap.huazhizengqiang))
-            })
+            val beautyItems = ArrayList<BeautyItem>().apply {
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFaceM_newWhitenStrength, 0.2f, "美白", "meibai"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFaceRuddyStrength, 0.6f, "红润", "hongrun"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFaceBlurStrength, 0.7f, "磨皮", "mopi"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFaceEyeBrighten, 0.0f, "亮眼", "liangyan"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFaceSharpenStrength, 0.2f, "锐化", "ruihua"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFaceH_qualityStrength, 0.2f, "增强画质", "huazhizengqiang"))
+            }
+            
+            // Debug logging
+            Log.d("PixeBeautyDialog", "Creating base beauty page with ${beautyItems.size} items:")
+            beautyItems.forEach { item ->
+                Log.d("PixeBeautyDialog", "Created item: ${item.name}, supportsStateIcons: ${item.supportsStateIcons}, iconBaseName: ${item.iconBaseName}")
+            }
+            
+            setList(beautyItems)
         }
     }
 
     private fun createShapeBeautyPage(): BeautyView {
         return BeautyView(requireContext()).apply {
             this.pixelFreeGetter = { mPixelFree }
-            setList(ArrayList<BeautyItem>().apply {
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_EyeStrength, 0.2f, "大眼", R.mipmap.dayan))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_thinning, 0.2f, "瘦脸", R.mipmap.shoulian))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_narrow, 0.2f, "瘦颧骨", R.mipmap.zhailian))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_chin, 0.5f, "下巴", R.mipmap.xiaba))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_V, 0.2f, "瘦下颔", R.mipmap.vlian))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_small, 0.2f, "小脸", R.mipmap.xianlian))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_nose, 0.2f, "鼻子", R.mipmap.bizhi))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_forehead, 0.5f, "额头", R.mipmap.etou))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_mouth, 0.5f, "嘴巴", R.mipmap.zuiba))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_philtrum, 0.5f, "人中", R.mipmap.renzhong))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_long_nose, 0.5f, "长鼻", R.mipmap.changbi))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_eye_space, 0.5f, "眼距", R.mipmap.yanju))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_smile, 0.0f, "微笑嘴角", R.mipmap.weixiaozuijiao))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_eye_rotate, 0.5f, "旋转眼睛", R.mipmap.yanjingjiaodu))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_canthus, 0.0f, "开眼角", R.mipmap.kaiyanjiao))
-            })
+            val beautyItems = ArrayList<BeautyItem>().apply {
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_EyeStrength, 0.2f, "大眼", "dayan"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_thinning, 0.2f, "瘦脸", "shoulian"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_narrow, 0.2f, "瘦颧骨", "zhailian"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_chin, 0.5f, "下巴", "xiaba"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_V, 0.2f, "瘦下颔", "vlian"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_small, 0.2f, "小脸", "xianlian"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_nose, 0.2f, "鼻子", "bizhi"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_forehead, 0.5f, "额头", "etou"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_mouth, 0.5f, "嘴巴", "zuiba"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_philtrum, 0.5f, "人中", "renzhong"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_long_nose, 0.5f, "长鼻", "changbi"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_eye_space, 0.5f, "眼距", "yanju"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_smile, 0.0f, "微笑嘴角", "weixiaozuijiao"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_eye_rotate, 0.5f, "旋转眼睛", "yanjingjiaodu"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_canthus, 0.0f, "开眼角", "kaiyanjiao"))
+            }
+            
+            // Debug logging
+            Log.d("PixeBeautyDialog", "Creating shape beauty page with ${beautyItems.size} items:")
+            beautyItems.forEach { item ->
+                Log.d("PixeBeautyDialog", "Created item: ${item.name}, supportsStateIcons: ${item.supportsStateIcons}, iconBaseName: ${item.iconBaseName}")
+            }
+            
+            setList(beautyItems)
         }
     }
 
@@ -178,6 +212,9 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPreferences = requireContext().getSharedPreferences("BeautySettings", Context.MODE_PRIVATE)
+        
+        // Clear old cached settings to ensure we use the new format
+        clearOldSettings()
     }
 
     override fun onCreateView(
@@ -375,5 +412,10 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
             this.pixelFreeGetter = { mPixelFree }
             setList(ArrayList(items))
         }
+    }
+
+    private fun clearOldSettings() {
+        Log.d("PixeBeautyDialog", "Clearing old cached settings to ensure fresh start")
+        sharedPreferences.edit().remove(BEAUTY_SETTINGS_KEY).apply()
     }
 }

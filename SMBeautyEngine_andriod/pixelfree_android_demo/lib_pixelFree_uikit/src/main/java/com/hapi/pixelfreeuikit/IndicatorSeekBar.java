@@ -13,8 +13,8 @@ import androidx.annotation.Nullable;
 
 public class IndicatorSeekBar extends LinearLayout {
 
-    private TextView textView;
-    private SeekBar seekBar;
+    TextView textView;
+    SeekBar seekBar;
     TextPaint paint;
     int mTextWidth;
     int seekBarLeftMargin;
@@ -36,36 +36,21 @@ public class IndicatorSeekBar extends LinearLayout {
     private void initView(Context context){
         final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.view_indicator_seekbar, this);
-        
         textView = findViewById(R.id.isb_progress);
         seekBar = findViewById(R.id.isb_seekbar);
-        
-        // Set initial text and make sure it's visible
-        textView.setText("0");
-        textView.setVisibility(VISIBLE);
-        
-        // Add default listener to update text when sliding
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                updateTextView(progress);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-        });
+        LayoutParams lp = (LayoutParams) textView.getLayoutParams();
+        seekBarLeftMargin = lp.leftMargin;
+        paint = textView.getPaint();
     }
 
     public void updateTextView(int progress){
-        if (textView != null) {
-            textView.setText(String.valueOf(progress));
-            textView.setVisibility(VISIBLE);
-        }
+        Rect bounds = seekBar.getProgressDrawable().getBounds();
+        LayoutParams lp = (LayoutParams) textView.getLayoutParams();
+        textView.setText(progress + "");
+        paint.getTextBounds("0", 0, 1, textBounds);
+        mTextWidth = textBounds.width();
+        lp.leftMargin = (bounds.width() * seekBar.getProgress() / seekBar.getMax()) + seekBarLeftMargin + mTextWidth;
+        textView.setLayoutParams(lp);
     }
 
     public void setOnSeekBarChangeListener(SeekBar.OnSeekBarChangeListener listener){

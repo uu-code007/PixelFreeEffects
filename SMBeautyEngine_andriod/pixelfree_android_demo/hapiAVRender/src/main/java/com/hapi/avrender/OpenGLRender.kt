@@ -94,7 +94,6 @@ class OpenGLRender : GLSurfaceView.Renderer, VideoRender {
     }
 
     override fun onFrame(frame: VideoFrame) {
-        Log.d("hapiplayer"," onFrame(frame: VideoFrame) ${frame.textureID}" )
         native_onFrame(
             renderHandler,
             frame.textureID,
