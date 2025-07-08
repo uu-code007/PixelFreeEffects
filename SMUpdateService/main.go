@@ -112,6 +112,8 @@ type HealthResponse struct {
 // 请求结构体
 type CheckLicenseHealthRequest struct {
 	AppBundleID string `json:"app_bundle_id" binding:"required"`
+	Version     string `json:"version,omitempty"`     // 客户端当前版本
+	LastUpdate  string `json:"last_update,omitempty"` // 客户端最后更新时间
 }
 
 type CreateLicenseConfigRequest struct {
@@ -359,7 +361,7 @@ func (lm *LicenseManager) VerifyLicense(license *License) bool {
 }
 
 // 检查许可证健康状态
-func (lm *LicenseManager) CheckLicenseHealth(appBundleID string) *LicenseHealthResponse {
+func (lm *LicenseManager) CheckLicenseHealth(appBundleID string, clientVersion string, lastUpdate string) *LicenseHealthResponse {
 	lm.mutex.RLock()
 	config, exists := lm.configs[appBundleID]
 	lm.mutex.RUnlock()
@@ -383,7 +385,27 @@ func (lm *LicenseManager) CheckLicenseHealth(appBundleID string) *LicenseHealthR
 
 	// 检查过期时间
 	daysUntilExpiry := int(time.Until(config.ExpiresAt).Hours() / 24)
-	needsUpdate := daysUntilExpiry <= 30 || daysUntilExpiry < 0
+	expiryNeedsUpdate := daysUntilExpiry <= 30 || daysUntilExpiry < 0
+
+	// 检查版本是否需要更新
+	versionNeedsUpdate := false
+	if clientVersion != "" && config.Version != "" && clientVersion != config.Version {
+		versionNeedsUpdate = true
+	}
+
+	// 检查配置更新时间
+	configNeedsUpdate := false
+	if lastUpdate != "" {
+		if lastUpdateTime, err := time.Parse(time.RFC3339, lastUpdate); err == nil {
+			// 如果客户端最后更新时间早于服务端配置更新时间，则需要更新
+			if lastUpdateTime.Before(config.UpdatedAt) {
+				configNeedsUpdate = true
+			}
+		}
+	}
+
+	// 综合判断是否需要更新
+	needsUpdate := expiryNeedsUpdate || versionNeedsUpdate || configNeedsUpdate
 
 	response := &LicenseHealthResponse{
 		AppBundleID:     appBundleID,
@@ -399,7 +421,15 @@ func (lm *LicenseManager) CheckLicenseHealth(appBundleID string) *LicenseHealthR
 	if needsUpdate {
 		response.DownloadURL = fmt.Sprintf("%s/api/license/download/%s", lm.config.DownloadBaseURL, appBundleID)
 		response.Status = "needs_update"
-		response.Message = "许可证需要更新"
+
+		// 根据不同的更新原因设置不同的消息
+		if expiryNeedsUpdate {
+			response.Message = "许可证即将过期或已过期，需要更新"
+		} else if versionNeedsUpdate {
+			response.Message = fmt.Sprintf("版本不匹配，服务端版本: %s，客户端版本: %s", config.Version, clientVersion)
+		} else if configNeedsUpdate {
+			response.Message = "服务端配置已更新，需要同步最新配置"
+		}
 	}
 
 	return response
@@ -644,7 +674,7 @@ func createServer(lm *LicenseManager) *gin.Engine {
 				return
 			}
 
-			health := lm.CheckLicenseHealth(req.AppBundleID)
+			health := lm.CheckLicenseHealth(req.AppBundleID, req.Version, req.LastUpdate)
 			c.JSON(http.StatusOK, APIResponse{
 				Success: true,
 				Data:    health,

@@ -24,14 +24,14 @@ type APIResponse struct {
 }
 
 // 健康检查响应
-type HealthResponse struct {
+type ClientHealthResponse struct {
 	Status    string    `json:"status"`
 	Timestamp time.Time `json:"timestamp"`
 	Version   string    `json:"version"`
 }
 
 // 证书健康检查响应
-type LicenseHealthResponse struct {
+type ClientLicenseHealthResponse struct {
 	AppBundleID     string    `json:"app_bundle_id"`
 	NeedsUpdate     bool      `json:"needs_update"`
 	ExpiresAt       time.Time `json:"expires_at"`
@@ -42,8 +42,10 @@ type LicenseHealthResponse struct {
 }
 
 // 请求结构体
-type CheckLicenseHealthRequest struct {
+type ClientCheckLicenseHealthRequest struct {
 	AppBundleID string `json:"app_bundle_id"`
+	Version     string `json:"version,omitempty"`     // 客户端当前版本
+	LastUpdate  string `json:"last_update,omitempty"` // 客户端最后更新时间
 }
 
 // 创建新的客户端
@@ -63,7 +65,7 @@ func NewLicenseClient(baseURL string) *LicenseClient {
 }
 
 // 健康检查
-func (c *LicenseClient) HealthCheck() (*HealthResponse, error) {
+func (c *LicenseClient) HealthCheck() (*ClientHealthResponse, error) {
 	resp, err := c.HTTPClient.Get(c.BaseURL + "/health")
 	if err != nil {
 		return nil, fmt.Errorf("健康检查请求失败: %v", err)
@@ -74,7 +76,7 @@ func (c *LicenseClient) HealthCheck() (*HealthResponse, error) {
 		return nil, fmt.Errorf("健康检查失败，状态码: %d", resp.StatusCode)
 	}
 
-	var health HealthResponse
+	var health ClientHealthResponse
 	if err := json.NewDecoder(resp.Body).Decode(&health); err != nil {
 		return nil, fmt.Errorf("解析健康检查响应失败: %v", err)
 	}
@@ -83,8 +85,12 @@ func (c *LicenseClient) HealthCheck() (*HealthResponse, error) {
 }
 
 // 检查证书健康状态
-func (c *LicenseClient) CheckLicenseHealth(appBundleID string) (*APIResponse, error) {
-	req := CheckLicenseHealthRequest{AppBundleID: appBundleID}
+func (c *LicenseClient) CheckLicenseHealth(appBundleID string, version string, lastUpdate string) (*APIResponse, error) {
+	req := ClientCheckLicenseHealthRequest{
+		AppBundleID: appBundleID,
+		Version:     version,
+		LastUpdate:  lastUpdate,
+	}
 	reqBody, err := json.Marshal(req)
 	if err != nil {
 		return nil, fmt.Errorf("序列化请求失败: %v", err)
@@ -126,7 +132,7 @@ func (c *LicenseClient) DownloadLicense(appBundleID, savePath string) error {
 }
 
 // 打印JSON响应
-func printJSON(data interface{}) {
+func printClientJSON(data interface{}) {
 	jsonData, err := json.MarshalIndent(data, "", "  ")
 	if err != nil {
 		fmt.Printf("序列化JSON失败: %v\n", err)
@@ -135,7 +141,7 @@ func printJSON(data interface{}) {
 	fmt.Println(string(jsonData))
 }
 
-func main() {
+func runClientExample() {
 	fmt.Println("=== SMBeautyEngine License Health Check Client ===\n")
 
 	// 初始化客户端
@@ -147,18 +153,18 @@ func main() {
 	if err != nil {
 		fmt.Printf("健康检查失败: %v\n", err)
 	} else {
-		printJSON(health)
+		printClientJSON(health)
 	}
 	fmt.Println()
 
 	// 2. 证书健康检查
 	testAppBundleID := "com.example.testapp"
 	fmt.Printf("2. 证书健康检查 (app_bundle_id: %s):\n", testAppBundleID)
-	healthResult, err := client.CheckLicenseHealth(testAppBundleID)
+	healthResult, err := client.CheckLicenseHealth(testAppBundleID, "2.4.0", "2025-01-01T00:00:00Z")
 	if err != nil {
 		fmt.Printf("证书健康检查失败: %v\n", err)
 	} else {
-		printJSON(healthResult)
+		printClientJSON(healthResult)
 
 		// 如果需要更新，尝试下载许可证
 		if healthResult.Success {
@@ -197,7 +203,7 @@ func demoMultipleApps(client *LicenseClient) {
 	for _, appBundleID := range apps {
 		fmt.Printf("检查应用: %s\n", appBundleID)
 
-		healthResult, err := client.CheckLicenseHealth(appBundleID)
+		healthResult, err := client.CheckLicenseHealth(appBundleID, "2.4.0", "2025-01-01T00:00:00Z")
 		if err != nil {
 			fmt.Printf("  - 检查失败: %v\n", err)
 			continue
