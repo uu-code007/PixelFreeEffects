@@ -685,3 +685,279 @@ handleLicenseUpdate('com.example.myapp');
 chmod +x test_update_mechanism.sh
 ./test_update_mechanism.sh
 ```
+
+## 贴纸管理接口
+
+## 10. 获取所有贴纸列表
+
+### GET /api/stickers
+
+获取所有可用的贴纸列表，包含贴纸名称、icon下载路径和bundle下载路径。
+
+**请求参数**: 无
+
+**成功响应**:
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "name": "baixiaomao",
+      "icon_url": "https://localhost:2443/api/stickers/icon/baixiaomao.png",
+      "bundle_url": "https://localhost:2443/api/stickers/bundle/baixiaomao.bundle"
+    },
+    {
+      "name": "bear_headgear",
+      "icon_url": "https://localhost:2443/api/stickers/icon/bear_headgear.png",
+      "bundle_url": "https://localhost:2443/api/stickers/bundle/bear_headgear.bundle"
+    },
+    {
+      "name": "big_eyes",
+      "icon_url": "https://localhost:2443/api/stickers/icon/big_eyes.png",
+      "bundle_url": "https://localhost:2443/api/stickers/bundle/big_eyes.bundle"
+    }
+  ]
+}
+```
+
+**错误响应**:
+```json
+{
+  "success": false,
+  "error": "stickers目录不存在"
+}
+```
+
+**响应字段说明**:
+- `name`: 贴纸名称（去掉.bundle后缀）
+- `icon_url`: icon图片的下载URL
+- `bundle_url`: bundle文件的下载URL
+
+**cURL 示例**:
+```bash
+curl -k https://localhost:2443/api/stickers
+```
+
+## 11. 获取单个贴纸信息
+
+### GET /api/stickers/{name}
+
+获取指定贴纸的详细信息。
+
+**路径参数**:
+- `name` (string): 贴纸名称（不包含.bundle后缀）
+
+**请求参数**: 无
+
+**成功响应**:
+```json
+{
+  "success": true,
+  "data": {
+    "name": "baixiaomao",
+    "icon_url": "https://localhost:2443/api/stickers/icon/baixiaomao.png",
+    "bundle_url": "https://localhost:2443/api/stickers/bundle/baixiaomao.bundle"
+  }
+}
+```
+
+**错误响应**:
+```json
+{
+  "success": false,
+  "error": "贴纸bundle文件不存在: baixiaomao.bundle"
+}
+```
+
+**cURL 示例**:
+```bash
+curl -k https://localhost:2443/api/stickers/baixiaomao
+```
+
+## 12. 下载贴纸Icon
+
+### GET /api/stickers/icon/{name}.png
+
+下载指定贴纸的icon图片文件。
+
+**路径参数**:
+- `name` (string): 贴纸名称（不包含.png后缀）
+
+**请求参数**: 无
+
+**成功响应**:
+- Content-Type: `image/png`
+- 文件内容: PNG格式的icon图片
+
+**错误响应**:
+```json
+{
+  "success": false,
+  "error": "贴纸icon文件不存在: baixiaomao.png"
+}
+```
+
+**cURL 示例**:
+```bash
+curl -k -O https://localhost:2443/api/stickers/icon/baixiaomao.png
+```
+
+## 13. 下载贴纸Bundle
+
+### GET /api/stickers/bundle/{filename}
+
+下载指定贴纸的bundle文件。
+
+**路径参数**:
+- `filename` (string): bundle文件名（必须包含.bundle后缀）
+
+**请求参数**: 无
+
+**成功响应**:
+- Content-Type: `application/octet-stream`
+- 文件内容: bundle文件内容
+
+**错误响应**:
+```json
+{
+  "success": false,
+  "error": "文件名必须以.bundle结尾"
+}
+```
+
+**cURL 示例**:
+```bash
+curl -k -O https://localhost:2443/api/stickers/bundle/baixiaomao.bundle
+```
+
+## 贴纸API使用示例
+
+### JavaScript 示例
+
+```javascript
+// 获取所有贴纸列表
+async function getStickersList() {
+  const response = await fetch('/api/stickers');
+  const result = await response.json();
+  
+  if (result.success) {
+    console.log('可用贴纸列表:', result.data);
+    return result.data;
+  } else {
+    console.error('获取贴纸列表失败:', result.error);
+    return [];
+  }
+}
+
+// 获取单个贴纸信息
+async function getStickerInfo(name) {
+  const response = await fetch(`/api/stickers/${name}`);
+  const result = await response.json();
+  
+  if (result.success) {
+    console.log('贴纸信息:', result.data);
+    return result.data;
+  } else {
+    console.error('获取贴纸信息失败:', result.error);
+    return null;
+  }
+}
+
+// 下载贴纸icon
+async function downloadStickerIcon(name) {
+  const response = await fetch(`/api/stickers/icon/${name}.png`);
+  if (response.ok) {
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    
+    // 创建下载链接
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${name}.png`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+}
+
+// 下载贴纸bundle
+async function downloadStickerBundle(filename) {
+  const response = await fetch(`/api/stickers/bundle/${filename}`);
+  if (response.ok) {
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    
+    // 创建下载链接
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+}
+
+// 使用示例
+async function loadStickers() {
+  // 获取所有贴纸
+  const stickers = await getStickersList();
+  
+  // 显示贴纸列表
+  stickers.forEach(sticker => {
+    console.log(`贴纸: ${sticker.name}`);
+    console.log(`  Icon: ${sticker.icon_url}`);
+    console.log(`  Bundle: ${sticker.bundle_url}`);
+  });
+  
+  // 获取特定贴纸信息
+  const stickerInfo = await getStickerInfo('baixiaomao');
+  if (stickerInfo) {
+    // 下载icon和bundle
+    await downloadStickerIcon('baixiaomao');
+    await downloadStickerBundle('baixiaomao.bundle');
+  }
+}
+
+// 执行
+loadStickers();
+```
+
+### 贴纸文件结构说明
+
+贴纸文件按照以下结构组织：
+
+```
+Stickers/
+├── baixiaomao.bundle          # 贴纸bundle文件
+├── bear_headgear.bundle
+├── big_eyes.bundle
+├── ...
+└── icon/
+    ├── baixiaomao.png         # 对应的icon图片
+    ├── bear_headgear.png
+    ├── big_eyes.png
+    └── ...
+```
+
+**注意事项**:
+1. 每个贴纸必须同时存在 `.bundle` 文件和对应的 `.png` icon文件
+2. icon文件名必须与bundle文件名（去掉.bundle后缀）完全匹配
+3. 如果某个贴纸缺少对应的icon文件，该贴纸将不会出现在列表中
+4. 所有文件名支持中文和英文，但建议使用英文命名以避免编码问题
+
+### 错误处理
+
+贴纸API可能返回的错误类型：
+
+| 错误信息 | 说明 | 解决方案 |
+|----------|------|----------|
+| `stickers目录不存在` | Stickers目录未找到 | 检查项目根目录下是否存在Stickers文件夹 |
+| `stickers/icon目录不存在` | icon目录未找到 | 检查Stickers目录下是否存在icon子目录 |
+| `贴纸bundle文件不存在` | 指定的bundle文件未找到 | 检查贴纸名称是否正确，文件是否存在 |
+| `贴纸icon文件不存在` | 指定的icon文件未找到 | 检查对应的png文件是否存在 |
+| `文件名必须以.bundle结尾` | bundle下载时文件名格式错误 | 确保文件名包含.bundle后缀 |
+
+### 性能优化建议
+
+1. **缓存策略**: 客户端可以缓存贴纸列表，定期更新
+2. **批量下载**: 可以预先下载常用的贴纸文件
+3. **CDN加速**: 生产环境建议使用CDN加速文件下载
+4. **压缩传输**: 可以考虑对bundle文件进行压缩传输

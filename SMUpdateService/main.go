@@ -138,6 +138,15 @@ type UpdateLicenseConfigRequest struct {
 	UpdatedBy   string   `json:"updated_by"`
 }
 
+// 贴纸项目结构体
+type StickerItem struct {
+	Name       string `json:"name"`       // 贴纸名称（去掉.bundle后缀）
+	IconURL    string `json:"icon_url"`   // icon下载路径
+	BundleURL  string `json:"bundle_url"` // bundle下载路径
+	IconPath   string `json:"-"`          // 内部使用的icon文件路径
+	BundlePath string `json:"-"`          // 内部使用的bundle文件路径
+}
+
 // 许可证管理器
 type LicenseManager struct {
 	config     *Config
@@ -644,6 +653,103 @@ func (lm *LicenseManager) UploadLicenseFile(appBundleID string, filename string,
 	return nil
 }
 
+// 获取所有贴纸列表
+func (lm *LicenseManager) GetStickersList() ([]*StickerItem, error) {
+	stickersDir := "Stickers"
+	iconDir := filepath.Join(stickersDir, "icon")
+
+	// 检查目录是否存在
+	if _, err := os.Stat(stickersDir); os.IsNotExist(err) {
+		return nil, fmt.Errorf("stickers目录不存在")
+	}
+
+	if _, err := os.Stat(iconDir); os.IsNotExist(err) {
+		return nil, fmt.Errorf("stickers/icon目录不存在")
+	}
+
+	var stickers []*StickerItem
+
+	// 读取stickers目录中的所有.bundle文件
+	entries, err := os.ReadDir(stickersDir)
+	if err != nil {
+		return nil, fmt.Errorf("读取stickers目录失败: %v", err)
+	}
+
+	for _, entry := range entries {
+		if entry.IsDir() || !strings.HasSuffix(entry.Name(), ".bundle") {
+			continue
+		}
+
+		// 获取贴纸名称（去掉.bundle后缀）
+		name := strings.TrimSuffix(entry.Name(), ".bundle")
+
+		// 构建文件路径
+		bundlePath := filepath.Join(stickersDir, entry.Name())
+		iconPath := filepath.Join(iconDir, name+".png")
+
+		// 检查对应的icon文件是否存在
+		if _, err := os.Stat(iconPath); os.IsNotExist(err) {
+			lm.logger.Warnf("贴纸 %s 对应的icon文件不存在: %s", name, iconPath)
+			continue
+		}
+
+		// 构建下载URL
+		baseURL := lm.config.DownloadBaseURL
+		if !strings.HasSuffix(baseURL, "/") {
+			baseURL += "/"
+		}
+
+		iconURL := baseURL + "api/stickers/icon/" + name + ".png"
+		bundleURL := baseURL + "api/stickers/bundle/" + entry.Name()
+
+		stickers = append(stickers, &StickerItem{
+			Name:       name,
+			IconURL:    iconURL,
+			BundleURL:  bundleURL,
+			IconPath:   iconPath,
+			BundlePath: bundlePath,
+		})
+	}
+
+	return stickers, nil
+}
+
+// 获取单个贴纸信息
+func (lm *LicenseManager) GetStickerInfo(name string) (*StickerItem, error) {
+	stickersDir := "Stickers"
+	iconDir := filepath.Join(stickersDir, "icon")
+
+	bundlePath := filepath.Join(stickersDir, name+".bundle")
+	iconPath := filepath.Join(iconDir, name+".png")
+
+	// 检查bundle文件是否存在
+	if _, err := os.Stat(bundlePath); os.IsNotExist(err) {
+		return nil, fmt.Errorf("贴纸bundle文件不存在: %s", name+".bundle")
+	}
+
+	// 检查icon文件是否存在
+	if _, err := os.Stat(iconPath); os.IsNotExist(err) {
+		return nil, fmt.Errorf("贴纸icon文件不存在: %s", name+".png")
+	}
+
+	// 构建下载URL
+	baseURL := lm.config.DownloadBaseURL
+	if !strings.HasSuffix(baseURL, "/") {
+		baseURL += "/"
+	}
+
+	iconURL := baseURL + "api/stickers/icon/" + name + ".png"
+	bundleURL := baseURL + "api/stickers/bundle/" + name + ".bundle"
+
+	return &StickerItem{
+		Name:       name,
+		IconURL:    iconURL,
+		BundleURL:  bundleURL,
+		IconPath:   iconPath,
+		BundlePath: bundlePath,
+	}, nil
+}
+
 // 创建HTTP服务器
 func createServer(lm *LicenseManager) *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
@@ -702,6 +808,108 @@ func createServer(lm *LicenseManager) *gin.Engine {
 			}
 
 			c.FileAttachment(filepath, "pixelfreeAuth.lic")
+		})
+
+		// 贴纸相关接口
+		// 获取所有贴纸列表
+		api.GET("/stickers", func(c *gin.Context) {
+			stickers, err := lm.GetStickersList()
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, APIResponse{
+					Success: false,
+					Error:   err.Error(),
+				})
+				return
+			}
+
+			c.JSON(http.StatusOK, APIResponse{
+				Success: true,
+				Data:    stickers,
+			})
+		})
+
+		// 获取单个贴纸信息
+		api.GET("/stickers/:name", func(c *gin.Context) {
+			name := c.Param("name")
+			if name == "" {
+				c.JSON(http.StatusBadRequest, APIResponse{
+					Success: false,
+					Error:   "缺少贴纸名称参数",
+				})
+				return
+			}
+
+			sticker, err := lm.GetStickerInfo(name)
+			if err != nil {
+				c.JSON(http.StatusNotFound, APIResponse{
+					Success: false,
+					Error:   err.Error(),
+				})
+				return
+			}
+
+			c.JSON(http.StatusOK, APIResponse{
+				Success: true,
+				Data:    sticker,
+			})
+		})
+
+		// 下载贴纸icon
+		api.GET("/stickers/icon/:name.png", func(c *gin.Context) {
+			name := c.Param("name")
+			if name == "" {
+				c.JSON(http.StatusBadRequest, APIResponse{
+					Success: false,
+					Error:   "缺少贴纸名称参数",
+				})
+				return
+			}
+
+			sticker, err := lm.GetStickerInfo(name)
+			if err != nil {
+				c.JSON(http.StatusNotFound, APIResponse{
+					Success: false,
+					Error:   err.Error(),
+				})
+				return
+			}
+
+			c.FileAttachment(sticker.IconPath, name+".png")
+		})
+
+		// 下载贴纸bundle
+		api.GET("/stickers/bundle/:filename", func(c *gin.Context) {
+			filename := c.Param("filename")
+			if filename == "" {
+				c.JSON(http.StatusBadRequest, APIResponse{
+					Success: false,
+					Error:   "缺少文件名参数",
+				})
+				return
+			}
+
+			// 检查文件名是否以.bundle结尾
+			if !strings.HasSuffix(filename, ".bundle") {
+				c.JSON(http.StatusBadRequest, APIResponse{
+					Success: false,
+					Error:   "文件名必须以.bundle结尾",
+				})
+				return
+			}
+
+			// 获取贴纸名称（去掉.bundle后缀）
+			name := strings.TrimSuffix(filename, ".bundle")
+
+			sticker, err := lm.GetStickerInfo(name)
+			if err != nil {
+				c.JSON(http.StatusNotFound, APIResponse{
+					Success: false,
+					Error:   err.Error(),
+				})
+				return
+			}
+
+			c.FileAttachment(sticker.BundlePath, filename)
 		})
 
 		// 管理接口
