@@ -1,4 +1,4 @@
-# pixelFree 商业级美颜SDK
+# pixelFree 商业级美颜SDK （全平台支持）
 
 [English Version](./README_en.md)
 
