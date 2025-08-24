@@ -89,7 +89,6 @@
             [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_canthus value:&value];
         }
 
-
           if ([param.mParam isEqualToString:@"runddy"]) {
               [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFaceRuddyStrength value:&value];
           }
@@ -111,6 +110,13 @@
         }
         if ([param.mParam isEqualToString:@"qualityStrength"]) {
             [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFaceH_qualityStrength value:&value];
+        }
+        
+        if ([param.mParam isEqualToString:@"nasolabialStrength"]) {
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterNasolabial value:&value];
+        }
+        if ([param.mParam isEqualToString:@"blackEyeStrength"]) {
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterBlackEye value:&value];
         }
     }
 

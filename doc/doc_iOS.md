@@ -112,6 +112,10 @@ typedef enum PFBeautyFiterType{
     PFBeautyFiterTypeOneKey,
     // 扩展字段
     PFBeautyFiterExtend,
+    // 祛法令纹
+    PFBeautyFilterNasolabial,
+    // 祛黑眼圈
+    PFBeautyFilterBlackEye,
 } PFBeautyFiterType;
 ```
 

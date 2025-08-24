@@ -293,6 +293,8 @@ class BeautyView : FrameLayout {
                 item.type == PFBeautyFilterType.PFBeautyFilterTypeFaceEyeBrighten ||
                 item.type == PFBeautyFilterType.PFBeautyFilterTypeFaceSharpenStrength ||
                 item.type == PFBeautyFilterType.PFBeautyFilterTypeFaceH_qualityStrength ||
+                item.type == PFBeautyFilterType.PFBeautyFilterNasolabial ||
+                item.type == PFBeautyFilterType.PFBeautyFilterBlackEye ||
                 // Shape beauty types (美型)
                 item.type == PFBeautyFilterType.PFBeautyFilterTypeFace_EyeStrength ||
                 item.type == PFBeautyFilterType.PFBeautyFilterTypeFace_thinning ||

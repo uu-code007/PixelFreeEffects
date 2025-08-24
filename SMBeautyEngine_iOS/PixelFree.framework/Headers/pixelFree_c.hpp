@@ -148,13 +148,13 @@ typedef enum PFBeautyFilterType{
     PFBeautyFilterTypeFace_canthus,
     //磨皮
     PFBeautyFilterTypeFaceBlurStrength,
-    //美白
+    //美白 (粉嫩美白)
     PFBeautyFilterTypeFaceWhitenStrength,
     //红润
     PFBeautyFilterTypeFaceRuddyStrength,
     //锐化
     PFBeautyFilterTypeFaceSharpenStrength,
-    //新美白算法
+    //新美白算法 （基于阴影保护美白）
     PFBeautyFilterTypeFaceM_newWhitenStrength,
     //画质增强
     PFBeautyFilterTypeFaceH_qualityStrength,
@@ -174,6 +174,11 @@ typedef enum PFBeautyFilterType{
     PFBeautyFilterWatermark,
     // 扩展字段
     PFBeautyFilterExtend,
+    
+    // 祛法令纹
+    PFBeautyFilterNasolabial,
+    // 祛黑眼圈
+    PFBeautyFilterBlackEye,
     
 } PFBeautyFilterType;
 

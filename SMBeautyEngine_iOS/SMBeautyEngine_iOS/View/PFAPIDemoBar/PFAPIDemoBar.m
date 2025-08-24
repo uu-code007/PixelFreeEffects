@@ -89,6 +89,8 @@
     [self.skinBtn setTitle:NSLocalizedString(@"美肤", nil) forState:UIControlStateNormal];
     [self.shapeBtn setTitle:NSLocalizedString(@"美型", nil) forState:UIControlStateNormal];
     [self.beautyFilterBtn setTitle:NSLocalizedString(@"滤镜", nil) forState:UIControlStateNormal];
+    [self.faceTypeBtn setTitle:NSLocalizedString(@"一键美颜", nil) forState:UIControlStateNormal];
+    [self.stickersBtn setTitle:NSLocalizedString(@"贴纸", nil) forState:UIControlStateNormal];
     
     self.faceTypeBtn.tag = 101;
     self.skinBtn.tag = 102;

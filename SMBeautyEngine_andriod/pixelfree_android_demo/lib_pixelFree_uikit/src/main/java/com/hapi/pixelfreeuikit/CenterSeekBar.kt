@@ -64,7 +64,6 @@ class CenterSeekBar @JvmOverloads constructor(
                 val x = event.x.coerceIn(left, right)
                 progress = ((x - left) / usableWidth) * 2f - 1f
                 val callbackValue = (progress + 1) / 2f
-                Log.d("CenterSeekBar", "x=$x, left=$left, right=$right, usableWidth=$usableWidth, progress=$progress, callback=$callbackValue")
                 onValueChanged?.invoke(callbackValue)
                 invalidate()
                 return true
