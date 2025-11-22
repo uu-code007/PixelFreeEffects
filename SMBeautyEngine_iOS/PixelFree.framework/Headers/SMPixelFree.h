@@ -60,7 +60,7 @@ __attribute__((visibility("default"))) @interface SMPixelFree : NSObject
 - (void)pixelFreeSetBeautyFilterParam:(int)key value:(void *)value;
 
 // 加载美颜bundle
-- (void)createBeautyItemFormBundle:(void*)data size:(int)sz;
+- (void)createBeautyItemFormBundleKey:(int)key data:(void*)data size:(int)sz;
 
 - (void)pixelFreeGetFaceRect:(float *)faceRect;
 
@@ -76,6 +76,12 @@ __attribute__((visibility("default"))) @interface SMPixelFree : NSObject
 
 // 自定义贴纸专属
 - (void)pixelFreeSetFiterStickerWithPath:(NSString *)path;
+
+- (int)pixelFreeSetMakeupWithJsonPath:(NSString *)jsonPath;
+- (int)clearMakeup;
+
+// 设置美妆部位程度（与配置叠乘）
+- (void)pixelFreeSetMakeupPart:(int)part degree:(float)degree;
 
 @end
 

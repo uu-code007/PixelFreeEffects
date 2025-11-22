@@ -49,6 +49,7 @@ typedef enum PFSrcType{
     PFSrcTypeFilter = 0,
     PFSrcTypeAuthFile = 2,
     PFSrcTypeStickerFile = 3,
+    PFSrcTypeMakeup = 4,
 } PFSrcType;
 
 typedef struct {
@@ -69,17 +70,17 @@ typedef struct {
     
   PFDetectFormat format;
   PFRotationMode rotationMode;
-} PFIamgeInput;
+} PFImageInput;
 
 typedef struct {
   char *imagePath;
-} PFFiter;
+} PFFilter;
 
 typedef struct {
     bool isOpenLvmu;//false
     bool isVideo;//false
     const char *bgSrcPath;
-} PFFiterLvmuSetting;
+} PFFilterLvmuSetting;
 
 typedef struct {
     bool isUse; //false
@@ -89,67 +90,98 @@ typedef struct {
     float w;  // 0-1.0
     float h;// 0-1.0
     bool isMirror; // false
-} PFFiterWatermark;
+} PFFilterWatermark;
+
+
+typedef struct {
+    bool isUse; //false
+    float brightness;// -1.0 to 1.0
+    float contrast; // Contrast ranges from 0.0 to 4.0 (max contrast), with 1.0 as the normal level
+    float exposure; // Exposure ranges from -10.0 to 10.0, with 0.0 as the normal level
+    float highlights; //0 - 1, increase to lighten shadows.
+    float shadows;  //0 - 1, decrease to darken highlights.
+    float saturation; //Saturation ranges from 0.0 (fully desaturated) to 2.0 (max saturation), with 1.0 as the normal level
+    float temperature;//choose color temperature, in degrees Kelvin  default 5000.0
+    float tint;       //adjust tint to compensate
+    float hue;       //0-360
+    
+} PFImageColorGrading;
+
+
+typedef struct {
+    float key_color[3]; // 0~1
+    float hue;
+    float saturation;// 0-1.0
+    float brightness;  // 0-1.0
+    float similarity; //相似度
+} PFHLSFilterParams;
 
 /* 美颜类型 */
-typedef enum PFBeautyFiterType{
-    PFBeautyFiterTypeFace_EyeStrength = 0,
+typedef enum PFBeautyFilterType{
+    PFBeautyFilterTypeFace_EyeStrength = 0,
     //瘦脸
-    PFBeautyFiterTypeFace_thinning,
+    PFBeautyFilterTypeFace_thinning,
     //窄脸
-    PFBeautyFiterTypeFace_narrow,
+    PFBeautyFilterTypeFace_narrow,
     //下巴
-    PFBeautyFiterTypeFace_chin,
+    PFBeautyFilterTypeFace_chin,
     //v脸
-    PFBeautyFiterTypeFace_V,
+    PFBeautyFilterTypeFace_V,
     //small
-    PFBeautyFiterTypeFace_small,
-    //鼻子
-    PFBeautyFiterTypeFace_nose,
+    PFBeautyFilterTypeFace_small,
+    //瘦鼻
+    PFBeautyFilterTypeFace_nose,
     //额头
-    PFBeautyFiterTypeFace_forehead,
+    PFBeautyFilterTypeFace_forehead,
     //嘴巴
-    PFBeautyFiterTypeFace_mouth,
+    PFBeautyFilterTypeFace_mouth,
     //人中
-    PFBeautyFiterTypeFace_philtrum,
+    PFBeautyFilterTypeFace_philtrum,
     //长鼻
-    PFBeautyFiterTypeFace_long_nose = 10,
+    PFBeautyFilterTypeFace_long_nose = 10,
     //眼距
-    PFBeautyFiterTypeFace_eye_space,
+    PFBeautyFilterTypeFace_eye_space,
     //微笑嘴角
-    PFBeautyFiterTypeFace_smile,
+    PFBeautyFilterTypeFace_smile,
     //旋转眼睛
-    PFBeautyFiterTypeFace_eye_rotate,
+    PFBeautyFilterTypeFace_eye_rotate,
     //开眼角
-    PFBeautyFiterTypeFace_canthus,
+    PFBeautyFilterTypeFace_canthus,
     //磨皮
-    PFBeautyFiterTypeFaceBlurStrength,
-    //美白
-    PFBeautyFiterTypeFaceWhitenStrength,
+    PFBeautyFilterTypeFaceBlurStrength,
+    //美白 (粉嫩美白)
+    PFBeautyFilterTypeFaceWhitenStrength,
     //红润
-    PFBeautyFiterTypeFaceRuddyStrength,
+    PFBeautyFilterTypeFaceRuddyStrength,
     //锐化
-    PFBeautyFiterTypeFaceSharpenStrength,
-    //新美白算法
-    PFBeautyFiterTypeFaceM_newWhitenStrength,
+    PFBeautyFilterTypeFaceSharpenStrength,
+    //新美白算法 （基于阴影保护美白）
+    PFBeautyFilterTypeFaceM_newWhitenStrength,
     //画质增强
-    PFBeautyFiterTypeFaceH_qualityStrength,
+    PFBeautyFilterTypeFaceH_qualityStrength,
+    //亮眼（0~1）
+    PFBeautyFilterTypeFaceEyeBrighten,
     //滤镜类型
-    PFBeautyFiterName,
+    PFBeautyFilterName,
     //滤镜强度
-    PFBeautyFiterStrength,
+    PFBeautyFilterStrength,
     //绿幕
-    PFBeautyFiterLvmu,
+    PFBeautyFilterLvmu,
     // 2D 贴纸
-    PFBeautyFiterSticker2DFilter,
+    PFBeautyFilterSticker2DFilter,
     // 一键美颜
-    PFBeautyFiterTypeOneKey = 25,
+    PFBeautyFilterTypeOneKey = 26,
     // 水印
-    PFBeautyFiterWatermark,
+    PFBeautyFilterWatermark,
     // 扩展字段
-    PFBeautyFiterExtend,
+    PFBeautyFilterExtend,
     
-} PFBeautyFiterType;
+    // 祛法令纹
+    PFBeautyFilterNasolabial,
+    // 祛黑眼圈
+    PFBeautyFilterBlackEye,
+    
+} PFBeautyFilterType;
 
 /* 一键美颜类型 */
 typedef enum PFBeautyTypeOneKey{
@@ -178,14 +210,37 @@ PF_CAPI_EXPORT extern PFPixelFree* PF_NewPixelFree();
 PF_CAPI_EXPORT extern void PF_DeletePixelFree(PFPixelFree* pixelFree);
 
 //目前仅支持双输入。GPU 纹理由于渲染，cpu buffer 用检测
-PF_CAPI_EXPORT extern int PF_processWithBuffer(PFPixelFree* pixelFree,PFIamgeInput inputImage);
+PF_CAPI_EXPORT extern int PF_processWithBuffer(PFPixelFree* pixelFree,PFImageInput inputImage);
 
-PF_CAPI_EXPORT extern void PF_pixelFreeSetBeautyFiterParam(PFPixelFree* pixelFree, int key,void *value);
+PF_CAPI_EXPORT extern void PF_pixelFreeSetBeautyFilterParam(PFPixelFree* pixelFree, int key,void *value);
 PF_CAPI_EXPORT extern void PF_createBeautyItemFormBundle(PFPixelFree* pixelFree, void *data,int size,PFSrcType type);
 
 PF_CAPI_EXPORT extern void PF_pixelFreeGetFaceRect(PFPixelFree* pixelFree,float *faceRect);
 
 PF_CAPI_EXPORT extern int PF_pixelFreeHaveFaceSize(PFPixelFree* pixelFree);
+
+PF_CAPI_EXPORT extern int PF_pixelFreeColorGrading(PFPixelFree* pixelFree,PFImageColorGrading* ImageColorGrading);
+PF_CAPI_EXPORT extern int PF_pixelFreeAddHLSFilter(PFPixelFree* pixelFree,PFHLSFilterParams* HLSFilterParams);
+PF_CAPI_EXPORT extern int PF_pixelFreeDeleteHLSFilter(PFPixelFree* pixelFree,int handle);
+PF_CAPI_EXPORT extern int PF_pixelFreeChangeHLSFilter(PFPixelFree* pixelFree,int handle,PFHLSFilterParams* HLSFilterParams);
+// 独立美妆：传入 makeup.json 路径
+PF_CAPI_EXPORT extern int PF_pixelFreeSetMakeupPath(PFPixelFree* pixelFree, const char* makeupJsonPath);
+PF_CAPI_EXPORT extern int PF_pixelFreeClearMakeup(PFPixelFree* pixelFree);
+
+// 美妆部位
+typedef enum PFMakeupPart {
+    PFMakeupPartBrow = 0,
+    PFMakeupPartBlusher = 1,
+    PFMakeupPartEyeShadow = 2,
+    PFMakeupPartEyeLiner = 3,
+    PFMakeupPartEyeLash = 4,
+    PFMakeupPartLip = 5,
+    PFMakeupPartHighlight = 6,
+    PFMakeupPartShadow = 7
+} PFMakeupPart;
+
+// 设置美妆各部位程度值（与配置叠乘）
+PF_CAPI_EXPORT extern int PF_pixelFreeSetMakeupPartDegree(PFPixelFree* pixelFree, int part, float degree);
 #ifdef __cplusplus
 }
 #endif

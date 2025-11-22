@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -301,6 +301,10 @@
 		E3BD4591274752E900CB44C9 /* CoreML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreML.framework; path = System/Library/Frameworks/CoreML.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		C9C05E952ED2021D003FF5B2 /* makeup */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = makeup; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		E3BD453027474A4E00CB44C9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -477,6 +481,7 @@
 		E3BD455227474A9400CB44C9 /* res */ = {
 			isa = PBXGroup;
 			children = (
+				C9C05E952ED2021D003FF5B2 /* makeup */,
 				C90C3D4B2DB8C79F00A1C13B /* baixiaomaohuxu */,
 				C95AB86F2D93961900F59BD5 /* 2631742911906.png */,
 				C9BB18222D858830002AF75D /* face2.png */,
@@ -574,6 +579,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				C9C05E952ED2021D003FF5B2 /* makeup */,
 			);
 			name = SMBeautyEngine_iOS;
 			productName = SMBeautyEngine_iOS;

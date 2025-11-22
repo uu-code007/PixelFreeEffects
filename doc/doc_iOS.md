@@ -119,6 +119,38 @@ typedef enum PFBeautyFiterType{
 } PFBeautyFiterType;
 ```
 
+## 💄 美妆功能说明
+
+### 美妆部位类型
+
+美妆支持以下部位，可通过 `pixelFreeSetMakeupPart:degree:` 方法单独调节：
+
+- **眉毛** (`PFMakeupPartBrow`): 调节眉毛颜色和形状
+- **腮红** (`PFMakeupPartBlusher`): 调节腮红颜色和强度
+- **眼影** (`PFMakeupPartEyeShadow`): 调节眼影颜色和效果
+- **眼线** (`PFMakeupPartEyeLiner`): 调节眼线粗细和颜色
+- **睫毛** (`PFMakeupPartEyeLash`): 调节睫毛长度和浓密程度
+- **唇彩** (`PFMakeupPartLip`): 调节唇色和光泽度
+- **高光** (`PFMakeupPartHighlight`): 调节高光位置和强度
+- **阴影** (`PFMakeupPartShadow`): 调节阴影位置和强度
+- **粉底** (`PFMakeupPartFoundation`): 调节粉底颜色和遮瑕度
+
+### 美妆加载方式
+
+1. **Bundle 方式**：推荐使用，性能更好
+   - 将美妆资源打包为 `.bundle` 文件
+   - 使用 `createBeautyItemFormBundleKey:data:size:` 加载
+
+2. **JSON 配置方式**：适合动态配置
+   - 使用 JSON 文件配置美妆参数
+   - 使用 `pixelFreeSetMakeupWithJsonPath:` 加载
+
+### 美妆程度调节
+
+- 程度值范围：0.0 ~ 1.0
+- 与配置中的程度值叠乘，例如：配置中为 0.5，设置 degree 为 0.8，最终效果为 0.5 × 0.8 = 0.4
+- 可在加载美妆后随时调节各部位程度
+
 ## 💡 使用建议
 
 1. **性能优化**
@@ -131,7 +163,12 @@ typedef enum PFBeautyFiterType{
    - 建议从较小值开始调节
    - 注意参数间的相互影响
 
-3. **常见问题**
+3. **美妆使用**
+   - 建议使用 bundle 方式加载美妆，性能更优
+   - 美妆资源文件较大，注意内存管理
+   - 切换美妆前建议先调用 `clearMakeup` 清除之前的美妆效果
+
+4. **常见问题**
    - 确保授权文件正确配置
    - 检查资源文件路径是否正确
    - 注意内存使用和性能监控

@@ -216,4 +216,92 @@ OpenGL ES 上下文。
 ```
 
 **参数：**
-- `path`: 贴纸资源路径 
+- `path`: 贴纸资源路径
+
+## 美妆功能
+
+### createBeautyItemFormBundleKey:data:size:
+
+加载美妆资源包。
+
+```objective-c
+- (void)createBeautyItemFormBundleKey:(int)key data:(void*)data size:(int)sz;
+```
+
+**参数：**
+- `key`: 资源类型，美妆使用 `PFSrcTypeMakeup` (值为 4)
+- `data`: 美妆 bundle 文件的字节数据
+- `sz`: 数据大小（字节数）
+
+**使用示例：**
+```objective-c
+// 读取美妆 bundle 文件
+NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"makeup_name" ofType:@"bundle"];
+NSData *bundleData = [NSData dataWithContentsOfFile:bundlePath];
+
+// 加载美妆
+[self.mPixelFree createBeautyItemFormBundleKey:PFSrcTypeMakeup 
+                                           data:(void *)bundleData.bytes 
+                                           size:(int)bundleData.length];
+```
+
+### pixelFreeSetMakeupWithJsonPath:
+
+通过 JSON 配置文件设置美妆。
+
+```objective-c
+- (int)pixelFreeSetMakeupWithJsonPath:(NSString *)jsonPath;
+```
+
+**参数：**
+- `jsonPath`: 美妆配置 JSON 文件路径
+
+**返回值：**
+- 操作结果状态码
+
+### clearMakeup
+
+清除当前美妆效果。
+
+```objective-c
+- (int)clearMakeup;
+```
+
+**返回值：**
+- 操作结果状态码
+
+**使用示例：**
+```objective-c
+// 清除美妆
+[self.mPixelFree clearMakeup];
+```
+
+### pixelFreeSetMakeupPart:degree:
+
+设置美妆部位程度（与配置叠乘）。
+
+```objective-c
+- (void)pixelFreeSetMakeupPart:(int)part degree:(float)degree;
+```
+
+**参数：**
+- `part`: 美妆部位类型，使用 `PFMakeupPart` 枚举值：
+  - `PFMakeupPartBrow` (0): 眉毛
+  - `PFMakeupPartBlusher` (1): 腮红
+  - `PFMakeupPartEyeShadow` (2): 眼影
+  - `PFMakeupPartEyeLiner` (3): 眼线
+  - `PFMakeupPartEyeLash` (4): 睫毛
+  - `PFMakeupPartLip` (5): 唇彩
+  - `PFMakeupPartHighlight` (6): 高光
+  - `PFMakeupPartShadow` (7): 阴影
+  - `PFMakeupPartFoundation` (8): 粉底
+- `degree`: 程度值，范围 0.0 ~ 1.0，与配置中的程度值叠乘
+
+**使用示例：**
+```objective-c
+// 设置唇彩程度为 0.8
+[self.mPixelFree pixelFreeSetMakeupPart:PFMakeupPartLip degree:0.8f];
+
+// 设置眼影程度为 0.5
+[self.mPixelFree pixelFreeSetMakeupPart:PFMakeupPartEyeShadow degree:0.5f];
+```

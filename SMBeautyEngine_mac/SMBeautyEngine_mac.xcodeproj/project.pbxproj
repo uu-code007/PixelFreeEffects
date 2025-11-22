@@ -66,6 +66,7 @@
 		C9897C082D13F78E00162B8F /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		C9897C092D13F78E00162B8F /* stb_image_resize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image_resize.h; sourceTree = "<group>"; };
 		C9897C0A2D13F78E00162B8F /* stb_image_write.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image_write.h; sourceTree = "<group>"; };
+		C9DF2E1F2ECDF861001F22FA /* 大气.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = "大气.bundle"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -134,6 +135,7 @@
 		C93C321B2D3A383800C48E02 /* Res */ = {
 			isa = PBXGroup;
 			children = (
+				C9DF2E1F2ECDF861001F22FA /* 大气.bundle */,
 				C93C321D2D3A38B900C48E02 /* filter_model.bundle */,
 				C93C321C2D3A389700C48E02 /* pixelfreeAuth.lic */,
 			);
@@ -358,7 +360,7 @@
 				);
 				OTHER_CFLAGS = "";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mumu.SMBeautyEngine.cn;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixelFree.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WARNING_CFLAGS = "-Wdeprecated-declarations";
 			};
@@ -392,7 +394,7 @@
 				);
 				OTHER_CFLAGS = "";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mumu.SMBeautyEngine.cn;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixelFree.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WARNING_CFLAGS = "-Wdeprecated-declarations";
 			};

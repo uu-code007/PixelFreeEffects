@@ -49,6 +49,7 @@ typedef enum PFSrcType{
     PFSrcTypeFilter = 0,
     PFSrcTypeAuthFile = 2,
     PFSrcTypeStickerFile = 3,
+    PFSrcTypeMakeup = 4,
 } PFSrcType;
 
 typedef struct {
@@ -222,6 +223,25 @@ PF_CAPI_EXPORT extern int PF_pixelFreeColorGrading(PFPixelFree* pixelFree,PFImag
 PF_CAPI_EXPORT extern int PF_pixelFreeAddHLSFilter(PFPixelFree* pixelFree,PFHLSFilterParams* HLSFilterParams);
 PF_CAPI_EXPORT extern int PF_pixelFreeDeleteHLSFilter(PFPixelFree* pixelFree,int handle);
 PF_CAPI_EXPORT extern int PF_pixelFreeChangeHLSFilter(PFPixelFree* pixelFree,int handle,PFHLSFilterParams* HLSFilterParams);
+// 独立美妆：传入 makeup.json 路径
+PF_CAPI_EXPORT extern int PF_pixelFreeSetMakeupPath(PFPixelFree* pixelFree, const char* makeupJsonPath);
+PF_CAPI_EXPORT extern int PF_pixelFreeClearMakeup(PFPixelFree* pixelFree);
+
+// 美妆部位
+typedef enum PFMakeupPart {
+    PFMakeupPartBrow = 0,
+    PFMakeupPartBlusher = 1,
+    PFMakeupPartEyeShadow = 2,
+    PFMakeupPartEyeLiner = 3,
+    PFMakeupPartEyeLash = 4,
+    PFMakeupPartLip = 5,
+    PFMakeupPartHighlight = 6,
+    PFMakeupPartShadow = 7,
+    PFMakeupPartFoundation = 8
+} PFMakeupPart;
+
+// 设置美妆各部位程度值（与配置叠乘）
+PF_CAPI_EXPORT extern int PF_pixelFreeSetMakeupPartDegree(PFPixelFree* pixelFree, int part, float degree);
 #ifdef __cplusplus
 }
 #endif

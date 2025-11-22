@@ -146,7 +146,9 @@ int main() {
     
     // 设置一个窄脸，并将程度设置成最大
     float aa = 1.0;
-    PF_pixelFreeSetBeautyFiterParam(handle, PFBeautyFiterTypeFace_narrow, &aa);
+    PF_pixelFreeSetBeautyFilterParam(handle, PFBeautyFilterTypeFace_narrow, &aa);
+    
+
     
     // TODO: 替换本地绝对路径
     std::ifstream file2("/Users/keyes/Desktop/mumuFU/push_github/SMBeautyEngine/SMBeautyEngine_mac/Res/filter_model.bundle", std::ios::binary);
@@ -161,6 +163,8 @@ int main() {
         std::cout << "成功读取 " << size << " 字节." << std::endl;
     }
     PF_createBeautyItemFormBundle(handle, filterBuffer.data(), (int)size, PFSrcTypeFilter);
+    
+    
     
     
     glfwSetKeyCallback(window, keyCallback);
@@ -203,7 +207,7 @@ int main() {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, flippedData);
         glBindTexture(GL_TEXTURE_2D, 0);
         
-        PFIamgeInput image;
+        PFImageInput image;
         image.textureID = texture_id;
         image.p_data0 = data;
         image.wigth = width;
@@ -217,6 +221,26 @@ int main() {
         render_screen.ActiveProgram();
         render_screen.ProcessImage(texture_id);
         glfwSwapBuffers(window);
+        
+        
+        // 需要第一帧后调用，懒加载的美妆实例
+        static bool loadMake = true;
+        if (loadMake) {
+            loadMake = false;
+            std::ifstream file3("/Users/keyes/Desktop/mumuFU/push_github/SMBeautyEngine/SMBeautyEngine_mac/Res/大气.bundle", std::ios::binary);
+            // 获取文件大小
+            file3.seekg(0, std::ios::end);
+            size = file3.tellg();
+            file3.seekg(0, std::ios::beg);
+
+            // 读取文件内容到缓冲区
+            std::vector<char> makupBuffer(size);
+            if (file3.read(makupBuffer.data(), size)) {
+                std::cout << "成功读取 " << size << " 字节." << std::endl;
+            }
+            PF_createBeautyItemFormBundle(handle, makupBuffer.data(), (int)size, PFSrcTypeMakeup);
+        }
+        
         usleep(30 * 1000);
     }
     
