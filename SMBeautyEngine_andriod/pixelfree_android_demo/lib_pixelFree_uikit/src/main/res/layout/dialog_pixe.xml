@@ -101,6 +101,16 @@
                 android:text="贴纸"
                 android:textColor="@drawable/color_pixe_op" />
 
+            <RadioButton
+                android:id="@+id/rbMakeup"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:text="美妆"
+                android:textColor="@drawable/color_pixe_op" />
+
         </RadioGroup>
 
     </FrameLayout>

@@ -103,11 +103,17 @@ fun createBeautyItemFormBundle(data: ByteArray, size: Int, type: PFSrcType)
   - `PFSrcType.PFSrcTypeFilter`: 滤镜资源
   - `PFSrcType.PFSrcTypeAuthFile`: 授权文件
   - `PFSrcType.PFSrcTypeStickerFile`: 贴纸资源
+  - `PFSrcType.PFSrcTypeMakeup`: 美妆资源
 
 **示例：**
 ```kotlin
+// 加载滤镜资源
 val filterData = pixelFree.readBundleFile(context, "filter_model.bundle")
 pixelFree.createBeautyItemFormBundle(filterData, filterData.size, PFSrcType.PFSrcTypeFilter)
+
+// 加载美妆资源
+val makeupData = pixelFree.readBundleFile(context, "makeup_name.bundle")
+pixelFree.createBeautyItemFormBundle(makeupData, makeupData.size, PFSrcType.PFSrcTypeMakeup)
 ```
 
 ### readBundleFile()
@@ -460,6 +466,103 @@ fun pixelFreeChangeHLSFilter(handle: Int, params: PFHLSFilterParams): Int
 
 **返回值：**
 - 操作结果状态码
+
+## 美妆功能
+
+### setMakeupPath() （废弃）
+
+通过 JSON 配置文件设置美妆。
+
+```kotlin
+fun setMakeupPath(makeupJsonPath: String): Int
+```
+
+**参数：**
+- `makeupJsonPath`: 美妆配置 JSON 文件路径
+
+**返回值：**
+- 操作结果状态码，成功返回 0
+
+**使用示例：**
+```kotlin
+// 从 assets 读取美妆 JSON 配置文件
+val makeupJsonPath = "makeup/makeup_config.json"
+val result = pixelFree.setMakeupPath(makeupJsonPath)
+if (result == 0) {
+    Log.d("PixelFree", "美妆加载成功")
+}
+```
+
+### clearMakeup()
+
+清除当前美妆效果。
+
+```kotlin
+fun clearMakeup(): Int
+```
+
+**返回值：**
+- 操作结果状态码，成功返回 0
+
+**使用示例：**
+```kotlin
+// 清除美妆
+val result = pixelFree.clearMakeup()
+if (result == 0) {
+    Log.d("PixelFree", "美妆已清除")
+}
+```
+
+### setMakeupPartDegree()
+
+设置美妆部位程度值（与配置叠乘）。
+
+```kotlin
+fun setMakeupPartDegree(part: PFMakeupPart, degree: Float): Int
+```
+
+**参数：**
+- `part`: 美妆部位类型，使用 `PFMakeupPart` 枚举值：
+  - `PFMakeupPart.PFMakeupPartBrow` (0): 眉毛
+  - `PFMakeupPart.PFMakeupPartBlusher` (1): 腮红
+  - `PFMakeupPart.PFMakeupPartEyeShadow` (2): 眼影
+  - `PFMakeupPart.PFMakeupPartEyeLiner` (3): 眼线
+  - `PFMakeupPart.PFMakeupPartEyeLash` (4): 睫毛
+  - `PFMakeupPart.PFMakeupPartLip` (5): 唇彩
+  - `PFMakeupPart.PFMakeupPartHighlight` (6): 高光
+  - `PFMakeupPart.PFMakeupPartShadow` (7): 阴影
+  - `PFMakeupPart.PFMakeupPartFoundation` (8): 粉底
+- `degree`: 程度值，范围 0.0 ~ 1.0，与配置中的程度值叠乘
+
+**返回值：**
+- 操作结果状态码，成功返回 0
+
+**使用示例：**
+```kotlin
+// 设置唇彩程度为 0.8
+pixelFree.setMakeupPartDegree(PFMakeupPart.PFMakeupPartLip, 0.8f)
+
+// 设置眼影程度为 0.5
+pixelFree.setMakeupPartDegree(PFMakeupPart.PFMakeupPartEyeShadow, 0.5f)
+
+// 设置所有美妆部位程度
+PFMakeupPart.values().forEach { part ->
+    pixelFree.setMakeupPartDegree(part, 0.8f)
+}
+```
+
+**美妆加载方式：**
+
+1. **Bundle 方式**（推荐）：使用 `createBeautyItemFormBundle` 加载美妆 bundle
+   ```kotlin
+   val makeupData = pixelFree.readBundleFile(context, "makeup/makeup_name.bundle")
+   pixelFree.createBeautyItemFormBundle(makeupData, makeupData.size, PFSrcType.PFSrcTypeMakeup)
+   ```
+
+2. **JSON 配置方式**：使用 `setMakeupPath` 通过 JSON 配置文件加载 （废弃）
+   ```kotlin
+   pixelFree.setMakeupPath("makeup/makeup_config.json")
+   ```
 
 ## 工具方法
 

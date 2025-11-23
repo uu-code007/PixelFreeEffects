@@ -67,7 +67,8 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
             createBaseBeautyPage(),
             createShapeBeautyPage(),
             createFilterPage(),
-            createStickerPage()
+            createStickerPage(),
+            createMakeupPage()
         )
     }
 
@@ -211,6 +212,29 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
         }
     }
 
+    private fun createMakeupPage(): BeautyView {
+        return BeautyView(requireContext()).apply {
+            this.pixelFreeGetter = { mPixelFree }
+
+            // Create the initial list with existing items
+            val makeupList = ArrayList<BeautyItem>().apply {
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterMakeup, 1.0f,"关闭", R.mipmap.filter_origin))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterMakeup,1.0f, "大气", R.mipmap.makeup_elegant))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterMakeup,1.0f, "撩人", R.mipmap.makeup_seductive))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterMakeup,1.0f, "清新", R.mipmap.makeup_fresh))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterMakeup,1.0f, "唯美", R.mipmap.makeup_beautiful))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterMakeup,1.0f, "温柔", R.mipmap.makeup_gentle))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterMakeup,1.0f, "氧气", R.mipmap.makeup_oxygen))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterMakeup,1.0f, "妖媚", R.mipmap.makeup_charming))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterMakeup,1.0f, "夜魅", R.mipmap.makeup_night_charm))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterMakeup,1.0f,"御姐", R.mipmap.makeup_mature))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterMakeup,1.0f, "知性", R.mipmap.makeup_intelligent))
+            }
+
+            setList(makeupList)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPreferences = requireContext().getSharedPreferences("BeautySettings", Context.MODE_PRIVATE)
@@ -263,6 +287,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                 R.id.rbShapeBeauty -> 2
                 R.id.rbFilter -> 3
                 R.id.rbSticker -> 4
+                R.id.rbMakeup -> 5
                 else -> 0
             }
             if (vp.currentItem == 0 && vp.currentItem != index) {
@@ -305,7 +330,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
 
     private fun saveCurrentSettings() {
         val jsonArray = JSONArray()
-        val pageTitles = listOf("一键美颜", "美肤", "美形", "滤镜", "贴纸")
+        val pageTitles = listOf("一键美颜", "美肤", "美形", "滤镜", "贴纸", "美妆")
         
         page.forEachIndexed { index, beautyView ->
             val pageJson = JSONObject().apply {
@@ -376,7 +401,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
             }
             
             // Ensure we have all required pages
-            while (beautyViews.size < 5) {
+            while (beautyViews.size < 6) {
                 beautyViews.add(createDefaultBeautyView(beautyViews.size))
             }
             
@@ -394,6 +419,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
             2 -> createShapeBeautyPage().mBeautyItemAdapter.data
             3 -> createFilterPage().mBeautyItemAdapter.data
             4 -> createStickerPage().mBeautyItemAdapter.data
+            5 -> createMakeupPage().mBeautyItemAdapter.data
             else -> emptyList()
         }
     }
@@ -405,6 +431,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
             2 -> createShapeBeautyPage()
             3 -> createFilterPage()
             4 -> createStickerPage()
+            5 -> createMakeupPage()
             else -> createOneKeyPage()
         }
     }

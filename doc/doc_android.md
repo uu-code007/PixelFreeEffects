@@ -1,6 +1,6 @@
 # pixelFree 美颜SDK使用文档 
 
-#### iOS 接入方式
+#### adroid 接入方式
 
 1. 手动接入
 
@@ -55,6 +55,23 @@
    ```kotlin
    // pixbuffer 视频数据
    mPixelFree.processWithBuffer(pxInput)
+   ```
+
+5. 美妆功能使用（可选）
+
+   ```kotlin
+   // 方式一：通过 bundle 文件加载美妆（推荐）
+   val makeupData = mPixelFree.readBundleFile(this@MainActivity, "makeup/makeup_name.bundle")
+   mPixelFree.createBeautyItemFormBundle(makeupData, makeupData.size, PFSrcType.PFSrcTypeMakeup)
+   
+   // 方式二：通过 JSON 配置文件加载美妆 （废弃）
+   mPixelFree.setMakeupPath("makeup/makeup_config.json")
+   
+   // 设置美妆部位程度（可选，与配置叠乘）
+   mPixelFree.setMakeupPartDegree(PFMakeupPart.PFMakeupPartLip, 0.8f)
+   
+   // 清除美妆
+   mPixelFree.clearMakeup()
    ```
 
 #### processWithBuffer 详细使用说明
@@ -301,6 +318,53 @@ enum class PFBeautyFiterType(val intType: Int) {
 }
 ```
 
+## 💄 美妆功能说明
+
+### 美妆部位类型
+
+美妆支持以下部位，可通过 `setMakeupPartDegree` 方法单独调节：
+
+- **眉毛** (`PFMakeupPart.PFMakeupPartBrow`): 调节眉毛颜色和形状
+- **腮红** (`PFMakeupPart.PFMakeupPartBlusher`): 调节腮红颜色和强度
+- **眼影** (`PFMakeupPart.PFMakeupPartEyeShadow`): 调节眼影颜色和效果
+- **眼线** (`PFMakeupPart.PFMakeupPartEyeLiner`): 调节眼线粗细和颜色
+- **睫毛** (`PFMakeupPart.PFMakeupPartEyeLash`): 调节睫毛长度和浓密程度
+- **唇彩** (`PFMakeupPart.PFMakeupPartLip`): 调节唇色和光泽度
+- **高光** (`PFMakeupPart.PFMakeupPartHighlight`): 调节高光位置和强度
+- **阴影** (`PFMakeupPart.PFMakeupPartShadow`): 调节阴影位置和强度
+- **粉底** (`PFMakeupPart.PFMakeupPartFoundation`): 调节粉底颜色和遮瑕度
+
+### 美妆加载方式
+
+1. **Bundle 方式**：推荐使用，性能更好
+   - 将美妆资源打包为 `.bundle` 文件
+   - 使用 `createBeautyItemFormBundle` 加载，类型为 `PFSrcType.PFSrcTypeMakeup`
+
+2. **JSON 配置方式**：适合动态配置
+   - 使用 JSON 文件配置美妆参数
+   - 使用 `setMakeupPath` 加载
+
+### 美妆程度调节
+
+- 程度值范围：0.0 ~ 1.0
+- 与配置中的程度值叠乘，例如：配置中为 0.5，设置 degree 为 0.8，最终效果为 0.5 × 0.8 = 0.4
+- 可在加载美妆后随时调节各部位程度
+- 支持批量设置所有部位程度
+
+### 使用建议
+
+1. **性能优化**
+   - 建议使用 bundle 方式加载美妆，性能更优
+   - 美妆资源文件较大，注意内存管理
+   - 切换美妆前建议先调用 `clearMakeup` 清除之前的美妆效果
+
+2. **资源管理**
+   - 美妆 bundle 文件通常较大，建议按需加载
+   - 及时释放不需要的美妆资源
+
+3. **用户体验**
+   - 提供美妆预览功能，让用户选择合适的美妆效果
+   - 支持美妆部位独立调节，提供更灵活的个性化选项
 
 
 

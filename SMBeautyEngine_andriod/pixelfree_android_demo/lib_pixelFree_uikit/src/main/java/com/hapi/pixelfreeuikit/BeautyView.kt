@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.hapi.pixelfree.PFBeautyFilterType
+import com.hapi.pixelfree.PFMakeupPart
 import com.hapi.pixelfree.PFSrcType
 import com.hapi.pixelfree.PixelFree
 
@@ -101,11 +102,40 @@ class BeautyView : FrameLayout {
                     pixelFreeGetter.invoke().pixelFreeSetBeautyExtend(PFBeautyFilterType.PFBeautyFilterExtend,"rotation_90");
                     val sticker_bundle =
                         pixelFreeGetter.invoke().readBundleFile(context,it.name + ".bundle")
-                    pixelFreeGetter.invoke().createBeautyItemFormBundle(
-                        sticker_bundle,
-                        sticker_bundle.size,
-                        PFSrcType.PFSrcTypeStickerFile
-                    )
+                    if (sticker_bundle != null && sticker_bundle.isNotEmpty()) {
+                        pixelFreeGetter.invoke().createBeautyItemFormBundle(
+                            sticker_bundle,
+                            sticker_bundle.size,
+                            PFSrcType.PFSrcTypeStickerFile
+                        )
+                    }
+                }
+            }
+
+            if (it.type == PFBeautyFilterType.PFBeautyFilterMakeup) {
+                if (it.name == "关闭") {
+                    pixelFreeGetter.invoke().clearMakeup()
+                    setMakeupDegreeForAll(0f)
+                } else {
+                    try {
+                        val bundlePath = "makeup/${it.name}.bundle"
+                        android.util.Log.d("BeautyView", "Loading makeup bundle from: $bundlePath")
+                        val makeup_bundle = pixelFreeGetter.invoke().readBundleFile(context, bundlePath)
+                        if (makeup_bundle != null && makeup_bundle.isNotEmpty()) {
+                            android.util.Log.d("BeautyView", "Makeup bundle loaded successfully, size: ${makeup_bundle.size}")
+                            pixelFreeGetter.invoke().createBeautyItemFormBundle(
+                                makeup_bundle,
+                                makeup_bundle.size,
+                                PFSrcType.PFSrcTypeMakeup
+                            )
+                            val degree = if (it.progress > 0f) it.progress else 1f
+                            setMakeupDegreeForAll(degree)
+                        } else {
+                            android.util.Log.e("BeautyView", "Makeup bundle is null or empty for: $bundlePath")
+                        }
+                    } catch (e: Exception) {
+                        android.util.Log.e("BeautyView", "Error loading makeup bundle: ${e.message}", e)
+                    }
                 }
             }
 
@@ -147,6 +177,8 @@ class BeautyView : FrameLayout {
                     if (select.type == PFBeautyFilterType.PFBeautyFilterName) {
                         pixelFreeGetter.invoke()
                             .pixelFreeSetFilterParam(select.name, select.progress)
+                    } else if (select.type == PFBeautyFilterType.PFBeautyFilterMakeup){
+                        setMakeupDegreeForAll(select.progress)
                     } else {
                         pixelFreeGetter.invoke()
                             .pixelFreeSetBeautyFiterParam(select.type, select.progress)
@@ -195,6 +227,13 @@ class BeautyView : FrameLayout {
         centerSeekBarValue.text = displayValue.toString()
     }
 
+    private fun setMakeupDegreeForAll(degree: Float) {
+        val px = pixelFreeGetter.invoke()
+        PFMakeupPart.values().forEach { part ->
+            px.setMakeupPartDegree(part, degree)
+        }
+    }
+
     fun setList(list: MutableList<BeautyItem>) {
         mBeautyItemAdapter.setList(list)
         
@@ -214,7 +253,9 @@ class BeautyView : FrameLayout {
         // Set initial seekbar visibility based on first item
         if (list.isNotEmpty()) {
             val firstItem = list[0]
-            if (firstItem.type == PFBeautyFilterType.PFBeautyFilterSticker2DFilter || firstItem.type == PFBeautyFilterType.PFBeautyFilterTypeOneKey) {
+            if (firstItem.type == PFBeautyFilterType.PFBeautyFilterSticker2DFilter || 
+                firstItem.type == PFBeautyFilterType.PFBeautyFilterTypeOneKey ||
+                firstItem.type == PFBeautyFilterType.PFBeautyFilterMakeup) {
                 seekbarContainer.visibility = View.INVISIBLE
             } else {
                 seekbarContainer.visibility = View.VISIBLE

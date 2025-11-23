@@ -76,14 +76,18 @@ class ImageActivity: AppCompatActivity()  {
             //在绑定上下文后初始化
             mPixelFree.create()
             val authData = mPixelFree.readBundleFile(this@ImageActivity, "pixelfreeAuth.lic")
-            mPixelFree.auth(this.applicationContext, authData, authData.size)
+            if (authData != null) {
+                mPixelFree.auth(this.applicationContext, authData, authData.size)
+            }
             val face_fiter =
                 mPixelFree.readBundleFile(this@ImageActivity, "filter_model.bundle")
-            mPixelFree.createBeautyItemFormBundle(
-                face_fiter,
-                face_fiter.size,
-                PFSrcType.PFSrcTypeFilter
-            )
+            if (face_fiter != null) {
+                mPixelFree.createBeautyItemFormBundle(
+                    face_fiter,
+                    face_fiter.size,
+                    PFSrcType.PFSrcTypeFilter
+                )
+            }
 
             mPixeBeautyDialog.show(supportFragmentManager, "")
 //        }
