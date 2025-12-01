@@ -16,7 +16,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  pixelfree: ^2.4.14
+  pixelfree: ^2.4.18
 ```
 
 ## Usage
@@ -151,7 +151,7 @@ enum PFBeautyFiterType {
 
 ## Dependencies
 
-- Android: lib_pixelFree 2.4.11
+- Android: lib_pixelFree 2.4.18
 - iOS: PixelFree.framework
 
 ## License
@@ -159,6 +159,22 @@ enum PFBeautyFiterType {
 This plugin is proprietary software. All rights reserved.
 
 ## Version History
+
+### 2.4.18
+- Android SDK updated to v2.4.18
+- Added makeup functionality support
+  - Set makeup path (`setMakeupPath`)
+  - Clear makeup (`clearMakeup`)
+  - Set makeup part degree (`setMakeupPartDegree`)
+- Added face detection related APIs
+  - Get face rectangle (`getFaceRect`)
+  - Get face count (`getFaceSize`)
+  - Set detect mode (`setDetectMode`)
+  - Check if has face (`hasFace`)
+- Added version query API (`getVersion`)
+- Added log level setting API (`setVLogLevel`)
+- Fixed Android API compatibility issues
+- Completed Flutter wrappers for all C APIs
 
 ### 2.4.14
 - Fixed type conversion warnings in Android implementation
