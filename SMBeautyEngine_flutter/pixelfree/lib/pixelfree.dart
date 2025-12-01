@@ -3,6 +3,8 @@ import 'dart:typed_data';
 
 import 'pixelfree_platform_interface.dart';
 
+export 'pixelfree_platform_interface.dart' show PFFaceDetectMode, PFMakeupPart, PFBeautyTypeOneKey;
+
 class Pixelfree {
   Future<String?> getPlatformVersion() {
     return PixelfreePlatform.instance.getPlatformVersion();
@@ -116,5 +118,50 @@ class Pixelfree {
   // Color grading operation
   Future<int> pixelFreeSetColorGrading(PFImageColorGrading params) {
     return PixelfreePlatform.instance.pixelFreeSetColorGrading(params);
+  }
+
+  // Get version
+  Future<String?> getVersion() {
+    return PixelfreePlatform.instance.getVersion();
+  }
+
+  // Set log level
+  Future<void> setVLogLevel(int level, String? path) {
+    return PixelfreePlatform.instance.setVLogLevel(level, path);
+  }
+
+  // Get face rectangle
+  Future<List<double>> getFaceRect() {
+    return PixelfreePlatform.instance.getFaceRect();
+  }
+
+  // Get face count
+  Future<int> getFaceSize() {
+    return PixelfreePlatform.instance.getFaceSize();
+  }
+
+  // Set detect mode
+  Future<void> setDetectMode(PFFaceDetectMode mode) {
+    return PixelfreePlatform.instance.setDetectMode(mode);
+  }
+
+  // Check if has face
+  Future<bool> hasFace() {
+    return PixelfreePlatform.instance.hasFace();
+  }
+
+  // Set makeup path
+  Future<int> setMakeupPath(String makeupJsonPath) {
+    return PixelfreePlatform.instance.setMakeupPath(makeupJsonPath);
+  }
+
+  // Clear makeup
+  Future<int> clearMakeup() {
+    return PixelfreePlatform.instance.clearMakeup();
+  }
+
+  // Set makeup part degree
+  Future<int> setMakeupPartDegree(PFMakeupPart part, double degree) {
+    return PixelfreePlatform.instance.setMakeupPartDegree(part, degree);
   }
 }

@@ -45,10 +45,16 @@ typedef enum PFRotationMode{
   PFRotationMode270 = 3,
 } PFRotationMode;
 
+typedef enum PFFaceDetectMode {
+  PF_FACE_DETECT_MODE_IMAGE = 0,
+  PF_FACE_DETECT_MODE_VIDEO = 1,
+} PFFaceDetectMode;
+
 typedef enum PFSrcType{
     PFSrcTypeFilter = 0,
     PFSrcTypeAuthFile = 2,
     PFSrcTypeStickerFile = 3,
+    PFSrcTypeMakeup = 4,
 } PFSrcType;
 
 typedef struct {
@@ -148,13 +154,13 @@ typedef enum PFBeautyFilterType{
     PFBeautyFilterTypeFace_canthus,
     //磨皮
     PFBeautyFilterTypeFaceBlurStrength,
-    //美白
+    //美白 (粉嫩美白)
     PFBeautyFilterTypeFaceWhitenStrength,
     //红润
     PFBeautyFilterTypeFaceRuddyStrength,
     //锐化
     PFBeautyFilterTypeFaceSharpenStrength,
-    //新美白算法
+    //新美白算法 （基于阴影保护美白）
     PFBeautyFilterTypeFaceM_newWhitenStrength,
     //画质增强
     PFBeautyFilterTypeFaceH_qualityStrength,
@@ -174,6 +180,11 @@ typedef enum PFBeautyFilterType{
     PFBeautyFilterWatermark,
     // 扩展字段
     PFBeautyFilterExtend,
+    
+    // 祛法令纹
+    PFBeautyFilterNasolabial,
+    // 祛黑眼圈
+    PFBeautyFilterBlackEye,
     
 } PFBeautyFilterType;
 
@@ -213,10 +224,33 @@ PF_CAPI_EXPORT extern void PF_pixelFreeGetFaceRect(PFPixelFree* pixelFree,float 
 
 PF_CAPI_EXPORT extern int PF_pixelFreeHaveFaceSize(PFPixelFree* pixelFree);
 
+PF_CAPI_EXPORT extern void PF_pixelFreeSetDetectMode(PFPixelFree* pixelFree, PFFaceDetectMode mode);
+
+PF_CAPI_EXPORT extern int PF_pixelFreeHasFace(PFPixelFree* pixelFree);
+
 PF_CAPI_EXPORT extern int PF_pixelFreeColorGrading(PFPixelFree* pixelFree,PFImageColorGrading* ImageColorGrading);
 PF_CAPI_EXPORT extern int PF_pixelFreeAddHLSFilter(PFPixelFree* pixelFree,PFHLSFilterParams* HLSFilterParams);
 PF_CAPI_EXPORT extern int PF_pixelFreeDeleteHLSFilter(PFPixelFree* pixelFree,int handle);
 PF_CAPI_EXPORT extern int PF_pixelFreeChangeHLSFilter(PFPixelFree* pixelFree,int handle,PFHLSFilterParams* HLSFilterParams);
+// 独立美妆：传入 makeup.json 路径
+PF_CAPI_EXPORT extern int PF_pixelFreeSetMakeupPath(PFPixelFree* pixelFree, const char* makeupJsonPath);
+PF_CAPI_EXPORT extern int PF_pixelFreeClearMakeup(PFPixelFree* pixelFree);
+
+// 美妆部位
+typedef enum PFMakeupPart {
+    PFMakeupPartBrow = 0,
+    PFMakeupPartBlusher = 1,
+    PFMakeupPartEyeShadow = 2,
+    PFMakeupPartEyeLiner = 3,
+    PFMakeupPartEyeLash = 4,
+    PFMakeupPartLip = 5,
+    PFMakeupPartHighlight = 6,
+    PFMakeupPartShadow = 7,
+    PFMakeupPartFoundation = 8
+} PFMakeupPart;
+
+// 设置美妆各部位程度值（与配置叠乘）
+PF_CAPI_EXPORT extern int PF_pixelFreeSetMakeupPartDegree(PFPixelFree* pixelFree, int part, float degree);
 #ifdef __cplusplus
 }
 #endif

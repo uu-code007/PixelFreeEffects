@@ -235,6 +235,97 @@
     
     int ret = [_mPixelFree pixelFreeSetColorGrading:&colorGrading];
     result(@(ret));
+  } else if ([@"getVersion" isEqualToString:call.method]) {
+//    if (!_mPixelFree) {
+//      result([FlutterError errorWithCode:@"NOT_INITIALIZED" message:@"PixelFree not initialized" details:nil]);
+//      return;
+//    }
+//    const char *version = [_mPixelFree getVersion];
+//    if (version) {
+//      result([NSString stringWithUTF8String:version]);
+//    } else {
+//      result(nil);
+//    }
+      result(NULL);
+  } else if ([@"setVLogLevel" isEqualToString:call.method]) {
+//    if (!_mPixelFree) {
+//      result([FlutterError errorWithCode:@"NOT_INITIALIZED" message:@"PixelFree not initialized" details:nil]);
+//      return;
+//    }
+//    int level = [dicArguments[@"level"] intValue];
+//    NSString *path = dicArguments[@"path"];
+//    [_mPixelFree setVLogLevel:level path:path ? [path UTF8String] : NULL];
+    result(NULL);
+  } else if ([@"getFaceRect" isEqualToString:call.method]) {
+//    if (!_mPixelFree) {
+//      result([FlutterError errorWithCode:@"NOT_INITIALIZED" message:@"PixelFree not initialized" details:nil]);
+//      return;
+//    }
+//    float *faceRect = [_mPixelFree getFaceRect];
+//    if (faceRect) {
+//      NSMutableArray *faceRectArray = [NSMutableArray array];
+//      // Assuming faceRect is an array of floats (typically 4 values: x, y, width, height)
+//      for (int i = 0; i < 4; i++) {
+//        [faceRectArray addObject:@(faceRect[i])];
+//      }
+//      result(faceRectArray);
+//    } else {
+//      result(@[]);
+//    }
+      result(NULL);
+  } else if ([@"getFaceSize" isEqualToString:call.method]) {
+//    if (!_mPixelFree) {
+//      result([FlutterError errorWithCode:@"NOT_INITIALIZED" message:@"PixelFree not initialized" details:nil]);
+//      return;
+//    }
+//    int faceSize = [_mPixelFree getFaceSize];
+//    result(@(faceSize));
+      result(NULL);
+  } else if ([@"setDetectMode" isEqualToString:call.method]) {
+    if (!_mPixelFree) {
+      result([FlutterError errorWithCode:@"NOT_INITIALIZED" message:@"PixelFree not initialized" details:nil]);
+      return;
+    }
+    int mode = [dicArguments[@"mode"] intValue];
+    // mode: 0 = IMAGE, 1 = VIDEO
+    [_mPixelFree setDetectMode:mode];
+    result(NULL);
+  } else if ([@"hasFace" isEqualToString:call.method]) {
+    if (!_mPixelFree) {
+      result([FlutterError errorWithCode:@"NOT_INITIALIZED" message:@"PixelFree not initialized" details:nil]);
+      return;
+    }
+    BOOL hasFace = [_mPixelFree hasFace];
+    result(@(hasFace));
+  } else if ([@"setMakeupPath" isEqualToString:call.method]) {
+//    if (!_mPixelFree) {
+//      result([FlutterError errorWithCode:@"NOT_INITIALIZED" message:@"PixelFree not initialized" details:nil]);
+//      return;
+//    }
+//    NSString *makeupJsonPath = dicArguments[@"makeupJsonPath"];
+//    if (!makeupJsonPath) {
+//      result([FlutterError errorWithCode:@"INVALID_ARGUMENT" message:@"makeupJsonPath must be a string" details:nil]);
+//      return;
+//    }
+//    int ret = [_mPixelFree setMakeupPath:[makeupJsonPath UTF8String]];
+//    result(@(ret));
+    result(NULL);
+  } else if ([@"clearMakeup" isEqualToString:call.method]) {
+    if (!_mPixelFree) {
+      result([FlutterError errorWithCode:@"NOT_INITIALIZED" message:@"PixelFree not initialized" details:nil]);
+      return;
+    }
+    int ret = [_mPixelFree clearMakeup];
+    result(@(ret));
+  } else if ([@"setMakeupPartDegree" isEqualToString:call.method]) {
+    if (!_mPixelFree) {
+      result([FlutterError errorWithCode:@"NOT_INITIALIZED" message:@"PixelFree not initialized" details:nil]);
+      return;
+    }
+    int part = [dicArguments[@"part"] intValue];
+    float degree = [dicArguments[@"degree"] floatValue];
+    [_mPixelFree pixelFreeSetMakeupPart:part degree:degree];
+    result(@(0));
   } else {
     result(FlutterMethodNotImplemented);
   }

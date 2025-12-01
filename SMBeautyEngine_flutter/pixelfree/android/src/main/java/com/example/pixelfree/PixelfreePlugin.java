@@ -24,12 +24,14 @@ import androidx.annotation.NonNull;
 import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.view.TextureRegistry;
 
-import com.hapi.pixelfree.PFBeautyFiterType;
+import com.hapi.pixelfree.PFBeautyFilterType;
 import com.hapi.pixelfree.PFSrcType;
 import com.hapi.pixelfree.PixelFree;
-import com.hapi.pixelfree.PFIamgeInput;
+import com.hapi.pixelfree.PFImageInput;
 import com.hapi.pixelfree.PFRotationMode;
 import com.hapi.pixelfree.PFDetectFormat;
+import com.hapi.pixelfree.PFFaceDetectMode;
+import com.hapi.pixelfree.PFMakeupPart;
 
 import android.opengl.*;
 import android.util.Log;
@@ -50,6 +52,7 @@ import android.graphics.Bitmap;
 
 import java.nio.ByteBuffer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -90,7 +93,7 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
     }
 
     public int onPreProcessFrame(byte[] image, int w, int h) {
-        PFIamgeInput pxInput = new PFIamgeInput();
+        PFImageInput pxInput = new PFImageInput();
         if (mPixelFree != null && mPixelFree.isCreate()) {
             pxInput.setWigth(w);
             pxInput.setHeight(h);
@@ -106,7 +109,7 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
     }
 
     public int onPreProcessTexture(int textureid, int w, int h) {
-        PFIamgeInput pxInput = new PFIamgeInput();
+        PFImageInput pxInput = new PFImageInput();
         if (mPixelFree != null && mPixelFree.isCreate()) {
             pxInput.setWigth(w);
             pxInput.setHeight(h);
@@ -168,7 +171,7 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
                 }
                 int type = ((Number) typeObj).intValue();
                 String value = (String) valueObj;
-                mPixelFree.pixelFreeSetBeautyExtend(PFBeautyFiterType.values()[type], value);
+                mPixelFree.pixelFreeSetBeautyExtend(PFBeautyFilterType.values()[type], value);
                 result.success(null);
             }
             break;
@@ -185,7 +188,8 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
                 }
                 int type = ((Number) typeObj).intValue();
                 double value = ((Number) valueObj).doubleValue();
-                mPixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFiterType.values()[type], (float) value);
+                float floatValue = (float) value;
+                mPixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFilterType.values()[type], floatValue);
                 result.success(null);
             }
             break;
@@ -200,9 +204,9 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
                     result.error("INVALID_ARGUMENT", "Invalid argument types", null);
                     return;
                 }
-                double value = ((Number) valueObj).doubleValue();
+                float value = ((Number) valueObj).floatValue();
                 String filterName = (String) filterNameObj;
-                mPixelFree.pixelFreeSetFiterParam(filterName, (float) value);
+                mPixelFree.pixelFreeSetFilterParam(filterName, value);
                 result.success(null);
             }
             break;
@@ -220,7 +224,8 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
                 }
                 int type = ((Number) typeObj).intValue();
                 int value = ((Number) valueObj).intValue();
-                mPixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFiterType.PFBeautyFiterTypeOneKey, value);
+                // PFBeautyFilterTypeOneKey = 26
+                mPixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFilterType.PFBeautyFilterTypeOneKey, value);
                 result.success(null);
             }
             break;
@@ -463,6 +468,135 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
                     mPixelFree = null;
                 }
                 result.success(null);
+            }
+            break;
+
+            case "getVersion": {
+                if (mPixelFree == null) {
+                    result.error("NOT_INITIALIZED", "PixelFree not initialized", null);
+                    return;
+                }
+                String version = mPixelFree.getVersion();
+                result.success(version);
+            }
+            break;
+
+            case "setVLogLevel": {
+                if (mPixelFree == null) {
+                    result.error("NOT_INITIALIZED", "PixelFree not initialized", null);
+                    return;
+                }
+                Object levelObj = call.argument("level");
+                Object pathObj = call.argument("path");
+                if (!(levelObj instanceof Number)) {
+                    result.error("INVALID_ARGUMENT", "level must be a number", null);
+                    return;
+                }
+                int level = ((Number) levelObj).intValue();
+                String path = pathObj instanceof String ? (String) pathObj : "";
+                mPixelFree.setLogLevel(level, path);
+                result.success(null);
+            }
+            break;
+
+            case "getFaceRect": {
+                if (mPixelFree == null) {
+                    result.error("NOT_INITIALIZED", "PixelFree not initialized", null);
+                    return;
+                }
+                float[] faceRect = mPixelFree.getFaceRect();
+                if (faceRect == null) {
+                    result.success(new ArrayList<>());
+                } else {
+                    List<Double> faceRectList = new ArrayList<>();
+                    for (float f : faceRect) {
+                        faceRectList.add((double) f);
+                    }
+                    result.success(faceRectList);
+                }
+            }
+            break;
+
+            case "getFaceSize": {
+                if (mPixelFree == null) {
+                    result.error("NOT_INITIALIZED", "PixelFree not initialized", null);
+                    return;
+                }
+                int faceSize = mPixelFree.getFaceCount();
+                result.success(faceSize);
+            }
+            break;
+
+            case "setDetectMode": {
+                if (mPixelFree == null) {
+                    result.error("NOT_INITIALIZED", "PixelFree not initialized", null);
+                    return;
+                }
+                Object modeObj = call.argument("mode");
+                if (!(modeObj instanceof Number)) {
+                    result.error("INVALID_ARGUMENT", "mode must be a number", null);
+                    return;
+                }
+                int modeIndex = ((Number) modeObj).intValue();
+                // mode: 0 = IMAGE, 1 = VIDEO
+                PFFaceDetectMode mode = modeIndex == 0 ? PFFaceDetectMode.PF_FACE_DETECT_MODE_IMAGE : PFFaceDetectMode.PF_FACE_DETECT_MODE_VIDEO;
+                mPixelFree.setDetectMode(mode);
+                result.success(null);
+            }
+            break;
+
+            case "hasFace": {
+                if (mPixelFree == null) {
+                    result.error("NOT_INITIALIZED", "PixelFree not initialized", null);
+                    return;
+                }
+                int hasFace = mPixelFree.hasFace();
+                result.success(hasFace != 0);
+            }
+            break;
+
+            case "setMakeupPath": {
+                if (mPixelFree == null) {
+                    result.error("NOT_INITIALIZED", "PixelFree not initialized", null);
+                    return;
+                }
+                Object pathObj = call.argument("makeupJsonPath");
+                if (!(pathObj instanceof String)) {
+                    result.error("INVALID_ARGUMENT", "makeupJsonPath must be a string", null);
+                    return;
+                }
+                String makeupJsonPath = (String) pathObj;
+                int ret = mPixelFree.setMakeupPath(makeupJsonPath);
+                result.success(ret);
+            }
+            break;
+
+            case "clearMakeup": {
+                if (mPixelFree == null) {
+                    result.error("NOT_INITIALIZED", "PixelFree not initialized", null);
+                    return;
+                }
+                int ret = mPixelFree.clearMakeup();
+                result.success(ret);
+            }
+            break;
+
+            case "setMakeupPartDegree": {
+                if (mPixelFree == null) {
+                    result.error("NOT_INITIALIZED", "PixelFree not initialized", null);
+                    return;
+                }
+                Object partObj = call.argument("part");
+                Object degreeObj = call.argument("degree");
+                if (!(partObj instanceof Number) || !(degreeObj instanceof Number)) {
+                    result.error("INVALID_ARGUMENT", "part and degree must be numbers", null);
+                    return;
+                }
+                int partIndex = ((Number) partObj).intValue();
+                double degree = ((Number) degreeObj).doubleValue();
+                PFMakeupPart part = PFMakeupPart.values()[partIndex];
+                int ret = mPixelFree.setMakeupPartDegree(part, (float) degree);
+                result.success(ret);
             }
             break;
 

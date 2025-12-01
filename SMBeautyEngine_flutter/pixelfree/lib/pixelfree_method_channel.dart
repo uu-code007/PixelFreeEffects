@@ -102,6 +102,7 @@ Future<ByteData?> processWithImageToByteData(Uint8List imageData, int width, int
 }
 
 
+@override
 Future<int?> processWithTextrueID(int textrueID, int w, int h) async {
       final textureid = await methodChannel.invokeMethod<int>('processWithTextrueID', {
             'textrueID': textrueID,
@@ -156,6 +157,67 @@ Future<int> pixelFreeChangeHLSFilter(int handle, PFHLSFilterParams params) async
 Future<int> pixelFreeSetColorGrading(PFImageColorGrading params) async {
   final result = await methodChannel.invokeMethod('pixelFreeSetColorGrading', params.toMap());
   return result as int;
+}
+
+@override
+Future<String?> getVersion() async {
+  final result = await methodChannel.invokeMethod<String>('getVersion');
+  return result;
+}
+
+@override
+Future<void> setVLogLevel(int level, String? path) async {
+  await methodChannel.invokeMethod('setVLogLevel', {
+    'level': level,
+    'path': path,
+  });
+}
+
+@override
+Future<List<double>> getFaceRect() async {
+  final result = await methodChannel.invokeMethod('getFaceRect');
+  if (result == null) {
+    return [];
+  }
+  return List<double>.from(result as List);
+}
+
+@override
+Future<int> getFaceSize() async {
+  final result = await methodChannel.invokeMethod('getFaceSize');
+  return result as int? ?? 0;
+}
+
+@override
+Future<void> setDetectMode(PFFaceDetectMode mode) async {
+  await methodChannel.invokeMethod('setDetectMode', {'mode': mode.index});
+}
+
+@override
+Future<bool> hasFace() async {
+  final result = await methodChannel.invokeMethod('hasFace');
+  return result as bool? ?? false;
+}
+
+@override
+Future<int> setMakeupPath(String makeupJsonPath) async {
+  final result = await methodChannel.invokeMethod('setMakeupPath', {'makeupJsonPath': makeupJsonPath});
+  return result as int? ?? -1;
+}
+
+@override
+Future<int> clearMakeup() async {
+  final result = await methodChannel.invokeMethod('clearMakeup');
+  return result as int? ?? -1;
+}
+
+@override
+Future<int> setMakeupPartDegree(PFMakeupPart part, double degree) async {
+  final result = await methodChannel.invokeMethod('setMakeupPartDegree', {
+    'part': part.index,
+    'degree': degree,
+  });
+  return result as int? ?? -1;
 }
 
 }

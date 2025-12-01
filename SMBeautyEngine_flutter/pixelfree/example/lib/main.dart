@@ -55,6 +55,10 @@ class _MyAppState extends State<MyApp> {
     try {
       final licPath = await _extractAssetToTemp(_licenseAssetPath);
       await _pixelFreePlugin.createWithLic(licPath);
+      
+      // 设置成图片处理模式
+      await _pixelFreePlugin.setDetectMode(PFFaceDetectMode.image);
+      
       await initPlatformState();
 
 

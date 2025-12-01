@@ -93,12 +93,85 @@ abstract class PixelfreePlatform extends PlatformInterface {
     throw UnimplementedError('pixelFreeSetColorGrading() has not been implemented.');
   }
 
+  // Get version
+  Future<String?> getVersion() {
+    throw UnimplementedError('getVersion() has not been implemented.');
+  }
+
+  // Set log level
+  Future<void> setVLogLevel(int level, String? path) {
+    throw UnimplementedError('setVLogLevel() has not been implemented.');
+  }
+
+  // Get face rectangle
+  Future<List<double>> getFaceRect() {
+    throw UnimplementedError('getFaceRect() has not been implemented.');
+  }
+
+  // Get face count
+  Future<int> getFaceSize() {
+    throw UnimplementedError('getFaceSize() has not been implemented.');
+  }
+
+  // Set detect mode
+  Future<void> setDetectMode(PFFaceDetectMode mode) {
+    throw UnimplementedError('setDetectMode() has not been implemented.');
+  }
+
+  // Check if has face
+  Future<bool> hasFace() {
+    throw UnimplementedError('hasFace() has not been implemented.');
+  }
+
+  // Set makeup path
+  Future<int> setMakeupPath(String makeupJsonPath) {
+    throw UnimplementedError('setMakeupPath() has not been implemented.');
+  }
+
+  // Clear makeup
+  Future<int> clearMakeup() {
+    throw UnimplementedError('clearMakeup() has not been implemented.');
+  }
+
+  // Set makeup part degree
+  Future<int> setMakeupPartDegree(PFMakeupPart part, double degree) {
+    throw UnimplementedError('setMakeupPartDegree() has not been implemented.');
+  }
+
   Map<String, dynamic> jsonStringToMap(String jsonString) {
     throw UnimplementedError('not been implemented');
   }
 }
 
 enum PFSrcType { local, network, base64 }
+
+// Face detection mode
+enum PFFaceDetectMode {
+  image, // PF_FACE_DETECT_MODE_IMAGE = 0
+  video, // PF_FACE_DETECT_MODE_VIDEO = 1
+}
+
+// Makeup part
+enum PFMakeupPart {
+  brow, // PFMakeupPartBrow = 0
+  blusher, // PFMakeupPartBlusher = 1
+  eyeShadow, // PFMakeupPartEyeShadow = 2
+  eyeLiner, // PFMakeupPartEyeLiner = 3
+  eyeLash, // PFMakeupPartEyeLash = 4
+  lip, // PFMakeupPartLip = 5
+  highlight, // PFMakeupPartHighlight = 6
+  shadow, // PFMakeupPartShadow = 7
+  foundation, // PFMakeupPartFoundation = 8
+}
+
+// One-key beauty type
+enum PFBeautyTypeOneKey {
+  normal, // PFBeautyTypeOneKeyNormal = 0
+  natural, // PFBeautyTypeOneKeyNatural = 1
+  cute, // PFBeautyTypeOneKeyCute = 2
+  goddess, // PFBeautyTypeOneKeyGoddess = 3
+  fair, // PFBeautyTypeOneKeyFair = 4
+}
 
 enum PFBeautyFiterType {
   // 大眼
