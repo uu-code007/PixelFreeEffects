@@ -43,8 +43,6 @@
 @property (nonatomic, strong) UIGestureRecognizer *panGesture;
 @property (nonatomic, strong) UIGestureRecognizer *pinchGesture;
 
-@property (nonatomic, strong) PFFilterView *makeupListView;
-@property (nonatomic, strong) NSArray<PFBeautyParam *> *makeupParams;
 
 
 @end
@@ -76,9 +74,9 @@
     
     
     _imageView = [[UIImageView alloc] init];
-        _image = [UIImage imageNamed:@"IMG_2406"];
+//        _image = [UIImage imageNamed:@"IMG_2406"];
 //    _image = [UIImage imageNamed:@"2631742911906_.pic_hd.jpg"];
-//    _image = [UIImage imageNamed:@"diamge"];
+    _image = [UIImage imageNamed:@"IMG_2406"];
     _imageView.image = _image;
     
     float x = 0;
@@ -127,7 +125,7 @@
     [self.view addSubview:_hlsToolView];
     
     
-    _mSegm = [[UISegmentedControl alloc] initWithItems:@[@"美颜",@"调色", @"全局 HLS 调节", @"美妆"]];
+    _mSegm = [[UISegmentedControl alloc] initWithItems:@[@"美颜",@"调色", @"全局 HLS 调节"]];
     _mSegm.selectedSegmentIndex = 1; // 默认选中第一个选项
     [_mSegm addTarget:self action:@selector(segmentChanged:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:_mSegm];
@@ -146,8 +144,6 @@
                               );
     
     // 创建美妆列表视图
-    [self setupMakeupListView];
-    
     
     PFImageColorGrading ColorGrading = {
         .isUse = false,
@@ -176,6 +172,9 @@
     mHLSFilterParams = HLSFilterParams;
     
     handle = [self.mPixelFree pixelFreeAddHLSFilter:&mHLSFilterParams];
+    
+    // 设置图片检测模式
+    [self.mPixelFree setDetectMode:0]; // 0 = PF_FACE_DETECT_MODE_IMAGE
 }
 
 -(void)segmentChanged:(UISegmentedControl *)seg {
@@ -183,22 +182,18 @@
         self.beautyEditView.hidden = NO;
         _toolUI.hidden = YES;
         _hlsToolView.hidden = YES;
-        _makeupListView.hidden = YES;
     } else if (seg.selectedSegmentIndex == 1) {
         self.beautyEditView.hidden = YES;
         _toolUI.hidden = NO;
         _hlsToolView.hidden = YES;
-        _makeupListView.hidden = YES;
     } else if (seg.selectedSegmentIndex == 2)  {
         self.beautyEditView.hidden = YES;
         _toolUI.hidden = YES;
         _hlsToolView.hidden = NO;
-        _makeupListView.hidden = YES;
     } else if (seg.selectedSegmentIndex == 3) {
         self.beautyEditView.hidden = YES;
         _toolUI.hidden = YES;
         _hlsToolView.hidden = YES;
-        _makeupListView.hidden = NO;
     }
 }
 
@@ -382,70 +377,6 @@
     
 }
 
-#pragma mark - 美妆相关
-
-- (void)setupMakeupListView {
-    // 创建美妆参数数组
-    NSArray *makeupNames = @[@"关闭", @"大气", @"撩人", @"清新", @"唯美", @"温柔", @"氧气", @"妖媚", @"夜魅", @"御姐", @"知性"];
-    NSArray *makeupFolders = @[@"", @"大气", @"撩人", @"清新", @"唯美", @"温柔", @"氧气", @"妖媚", @"夜魅", @"御姐", @"知性"];
-    
-    NSMutableArray *makeupParamsArray = [NSMutableArray array];
-    for (int i = 0; i < makeupNames.count; i++) {
-        PFBeautyParam *param = [[PFBeautyParam alloc] init];
-        param.mTitle = makeupNames[i];
-        param.mParam = makeupFolders[i];
-        param.type = FUDataTypeStickers; // 使用贴纸类型
-        param.mValue = 0.0;
-        [makeupParamsArray addObject:param];
-    }
-    _makeupParams = [makeupParamsArray copy];
-    
-    // 创建美妆列表视图（单行平铺）
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    layout.minimumInteritemSpacing = 12;
-    layout.minimumLineSpacing = 12;
-    layout.sectionInset = UIEdgeInsetsMake(8, 12, 8, 12);
-    layout.itemSize = CGSizeMake(70, 90); // 固定item尺寸
-    
-    CGFloat listHeight = 108.0; // 单行高度
-    _makeupListView = [[PFFilterView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - listHeight - 20.0, self.view.bounds.size.width, listHeight) collectionViewLayout:layout];
-    
-    // 手动设置 delegate 和 dataSource（因为不是从 xib 加载，awakeFromNib 不会被调用）
-    _makeupListView.delegate = _makeupListView;
-    _makeupListView.dataSource = _makeupListView;
-    
-    // 注册 cell 类
-    [_makeupListView registerClass:[FUFilterCell class] forCellWithReuseIdentifier:@"FUFilterCell"];
-    
-    // 设置自定义 delegate（用于回调选中事件）
-    _makeupListView.mDelegate = self;
-    
-    // 确保用户交互已启用
-    _makeupListView.userInteractionEnabled = YES;
-    _makeupListView.allowsSelection = YES;
-    _makeupListView.allowsMultipleSelection = NO;
-    
-    // 单行平铺表现
-    _makeupListView.alwaysBounceHorizontal = YES;
-    _makeupListView.showsHorizontalScrollIndicator = NO;
-    _makeupListView.showsVerticalScrollIndicator = NO;
-    _makeupListView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    
-    // 设置数据
-    _makeupListView.filters = _makeupParams;
-    _makeupListView.selectedIndex = 0;
-    _makeupListView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.8];
-    _makeupListView.hidden = YES;
-    
-    [self.view addSubview:_makeupListView];
-    
-    // 设置默认选中
-    [_makeupListView setDefaultFilter:_makeupParams[0]];
-    [_makeupListView reloadData];
-    
-    NSLog(@"[Makeup] 美妆列表视图创建完成，共 %lu 个选项", (unsigned long)_makeupParams.count);
-}
 
 #pragma mark - PFFilterViewDelegate
 

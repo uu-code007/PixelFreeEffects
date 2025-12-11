@@ -45,6 +45,11 @@ typedef enum PFRotationMode{
   PFRotationMode270 = 3,
 } PFRotationMode;
 
+typedef enum PFFaceDetectMode {
+  PF_FACE_DETECT_MODE_IMAGE = 0,
+  PF_FACE_DETECT_MODE_VIDEO = 1,
+} PFFaceDetectMode;
+
 typedef enum PFSrcType{
     PFSrcTypeFilter = 0,
     PFSrcTypeAuthFile = 2,
@@ -158,6 +163,7 @@ typedef enum PFBeautyFilterType{
     //新美白算法 （基于阴影保护美白）
     PFBeautyFilterTypeFaceM_newWhitenStrength,
     //画质增强
+    // @deprecated v2.5.01 已废弃，请使用 PFBeautyFilterTypeFaceSharpenStrength
     PFBeautyFilterTypeFaceH_qualityStrength,
     //亮眼（0~1）
     PFBeautyFilterTypeFaceEyeBrighten,
@@ -218,6 +224,10 @@ PF_CAPI_EXPORT extern void PF_createBeautyItemFormBundle(PFPixelFree* pixelFree,
 PF_CAPI_EXPORT extern void PF_pixelFreeGetFaceRect(PFPixelFree* pixelFree,float *faceRect);
 
 PF_CAPI_EXPORT extern int PF_pixelFreeHaveFaceSize(PFPixelFree* pixelFree);
+
+PF_CAPI_EXPORT extern void PF_pixelFreeSetDetectMode(PFPixelFree* pixelFree, PFFaceDetectMode mode);
+
+PF_CAPI_EXPORT extern int PF_pixelFreeHasFace(PFPixelFree* pixelFree);
 
 PF_CAPI_EXPORT extern int PF_pixelFreeColorGrading(PFPixelFree* pixelFree,PFImageColorGrading* ImageColorGrading);
 PF_CAPI_EXPORT extern int PF_pixelFreeAddHLSFilter(PFPixelFree* pixelFree,PFHLSFilterParams* HLSFilterParams);

@@ -7,13 +7,13 @@
 
 #import <UIKit/UIKit.h>
 #include <PixelFree/SMPixelFree.h>
-#import "PFAPIDemoBar.h"
+#import "PFBeautyEditView.h"
 
 @interface ViewController : UIViewController
 
 @property (nonatomic,strong) SMPixelFree *mPixelFree;
 
-@property(nonatomic, strong) PFAPIDemoBar *beautyEditView;
+@property(nonatomic, strong) PFBeautyEditView *beautyEditView;
 
 @property (nonatomic,assign)BOOL clickCompare;
 

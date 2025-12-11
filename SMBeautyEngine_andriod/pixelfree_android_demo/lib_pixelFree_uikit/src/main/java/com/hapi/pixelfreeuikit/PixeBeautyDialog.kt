@@ -94,7 +94,6 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                 add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFaceBlurStrength, 0.7f, "磨皮", "mopi"))
                 add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFaceEyeBrighten, 0.0f, "亮眼", "liangyan"))
                 add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFaceSharpenStrength, 0.2f, "锐化", "ruihua"))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFaceH_qualityStrength, 0.2f, "增强画质", "huazhizengqiang"))
                 add(BeautyItem(PFBeautyFilterType.PFBeautyFilterNasolabial, 0.0f, "祛法令纹", "falingwen"))
                 add(BeautyItem(PFBeautyFilterType.PFBeautyFilterBlackEye, 0.0f, "祛黑眼圈", "heiyanquan"))
             }

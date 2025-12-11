@@ -66,6 +66,12 @@ __attribute__((visibility("default"))) @interface SMPixelFree : NSObject
 
 - (int)getPixelFreeFaceNum;
 
+// 设置图片检测模式
+- (void)setDetectMode:(int)mode;
+
+// 获取是否检测到人脸
+- (int)hasFace;
+
 // 图片调色设置
 - (int)pixelFreeSetColorGrading:(PFImageColorGrading *)imageColorGrading;
 

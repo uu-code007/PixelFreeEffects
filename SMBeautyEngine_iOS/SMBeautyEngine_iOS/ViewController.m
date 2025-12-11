@@ -8,17 +8,18 @@
 #import "ViewController.h"
 #import "PFDateHandle.h"
 
-@interface ViewController ()<PFAPIDemoBarDelegate>
+@interface ViewController ()<PFBeautyEditViewDelegate>
 
 @property (nonatomic, strong) NSUserDefaults *def;
+@property (nonatomic, copy) NSString *currentMakeupKey;
 @end
 
 @implementation ViewController
 
 
--(PFAPIDemoBar *)beautyEditView {
+-(PFBeautyEditView *)beautyEditView {
     if (!_beautyEditView) {
-        _beautyEditView = [[PFAPIDemoBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 280, self.view.frame.size.width, 280)];
+        _beautyEditView = [[PFBeautyEditView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 280, self.view.frame.size.width, 280)];
         
         _beautyEditView.mDelegate = self;
     }
@@ -149,6 +150,35 @@
         }
     }
     
+    if (param.type == FUDataTypeMakeup) {
+        if (param.mParam.length == 0 || [param.mParam isEqualToString:@"origin"]) {
+            [self.mPixelFree clearMakeup];
+            self.currentMakeupKey = nil;
+            return;
+        }
+        if (![param.mParam isEqualToString:self.currentMakeupKey]) {
+            NSString *makeupRoot = [[NSBundle mainBundle] pathForResource:@"makeup" ofType:nil];
+            if (!makeupRoot) {
+                NSLog(@"[Makeup] makeup folder missing");
+                return;
+            }
+            NSString *bundleName = [NSString stringWithFormat:@"%@.bundle", param.mParam];
+            NSString *bundlePath = [makeupRoot stringByAppendingPathComponent:bundleName];
+            NSData *bundleData = [NSData dataWithContentsOfFile:bundlePath];
+            if (!bundleData) {
+                NSLog(@"[Makeup] bundle not found at %@", bundlePath);
+                return;
+            }
+            [self.mPixelFree createBeautyItemFormBundleKey:PFSrcTypeMakeup data:(void *)bundleData.bytes size:(int)bundleData.length];
+            self.currentMakeupKey = param.mParam;
+        }
+        float degree = fmaxf(0.0f, fminf(param.mValue, 1.0f));
+        for (int part = PFMakeupPartBrow; part <= PFMakeupPartFoundation; part++) {
+            [self.mPixelFree pixelFreeSetMakeupPart:part degree:degree];
+        }
+        return;
+    }
+    
     if (param.type == FUDataTypeOneKey) {
         if ([param.mTitle isEqualToString:@"origin"]) {
             int value = PFBeautyTypeOneKeyNormal;
@@ -218,13 +248,13 @@
 //    NSData *shapeParamsData = [NSKeyedArchiver archivedDataWithRootObject:_beautyEditView.shapeParams];
 //    NSData *skinParamsData = [NSKeyedArchiver archivedDataWithRootObject:_beautyEditView.skinParams];
 //    NSData *stickerseData = [NSKeyedArchiver archivedDataWithRootObject:_beautyEditView.stickersParams];
-//    
+//
 //    NSUserDefaults*userDefaults = [NSUserDefaults standardUserDefaults];
 //    [userDefaults setInteger:_beautyEditView.oneKeyType forKey:@"oneKeyType"];
 //    [userDefaults setInteger:_beautyEditView.filterIndex forKey:@"filtersUseIndex"];
 //    [userDefaults setInteger:_beautyEditView.stickersIndex forKey:@"stickerUseIndex"];
 //    [userDefaults synchronize];
-//    
+//
 //    // 写本地
 //    [self writeData:shapeParamsData fileName:@"shapeParamsData"];
 //    [self writeData:skinParamsData fileName:@"skinParamsData"];
@@ -244,6 +274,8 @@
     
 //    NSLog(@"mPixelFree retain  count = %ld\n",CFGetRetainCount((__bridge  CFTypeRef)(self.mPixelFree)));
 
+
+    
     CFAbsoluteTime endTime = (CFAbsoluteTimeGetCurrent() - startTime);
 
     [self.view addSubview:self.beautyEditView];
@@ -359,9 +391,39 @@
 }
 
 
--(void)dealloc{
-    NSLog(@"aaaa");
-}
+//-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+//    NSString *path = [[NSBundle mainBundle] pathForResource:@"makeup" ofType:nil];
+//    if (!path) {
+//        NSLog(@"[Makeup] 错误: 找不到 makeup 资源文件夹");
+//        return;
+//    }
+//
+//    NSString *currentFolder = [path stringByAppendingPathComponent:@"大气"];
+//    NSLog(@"[Makeup] 美妆路径: %@", currentFolder);
+//
+//    // 检查文件夹是否存在
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    BOOL isDirectory = NO;
+//    BOOL exists = [fileManager fileExistsAtPath:currentFolder isDirectory:&isDirectory];
+//
+//    if (exists && isDirectory) {
+//        NSLog(@"[Makeup] 文件夹存在，应用美妆");
+////            int ret = [self.mPixelFree pixelFreeSetMakeupWithJsonPath:currentFolder];
+//
+//        NSString *name = [NSString stringWithFormat:@"%@.bundle",@"大气"];
+//        NSString *currentBundle = [path stringByAppendingPathComponent:name];
+//        NSData *date = [NSData dataWithContentsOfFile:currentBundle];
+//
+//        [self.mPixelFree createBeautyItemFormBundleKey:PFSrcTypeMakeup data:(void *)date.bytes size:date.length];
+////            NSLog(@"[Makeup] 应用美妆返回值: %d", ret);
+//    } else {
+//        NSLog(@"[Makeup] 错误: 美妆文件夹不存在: %@", currentFolder);
+//    }
+//
+//}
 
+-(void)dealloc{
+//    NSLog(@"aaaa");
+}
 
 @end

@@ -160,6 +160,11 @@ This plugin is proprietary software. All rights reserved.
 
 ## Version History
 
+### 2.5.01
+- 更新了磨皮锐化算法
+- 移除了画质增强，改用锐化
+- 增加日志，修复低端 Android 偶现花屏问题
+
 ### 2.4.18
 - Android SDK updated to v2.4.18
 - Added makeup functionality support
