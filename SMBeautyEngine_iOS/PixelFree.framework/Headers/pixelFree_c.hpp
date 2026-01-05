@@ -186,6 +186,8 @@ typedef enum PFBeautyFilterType{
     PFBeautyFilterNasolabial,
     // 祛黑眼圈
     PFBeautyFilterBlackEye,
+    // 白牙
+    PFBeautyFilterWhitenTeeth,
     
 } PFBeautyFilterType;
 
@@ -252,6 +254,10 @@ typedef enum PFMakeupPart {
 
 // 设置美妆各部位程度值（与配置叠乘）
 PF_CAPI_EXPORT extern int PF_pixelFreeSetMakeupPartDegree(PFPixelFree* pixelFree, int part, float degree);
+
+// 获取停止渲染标志（黑名单检查结果）
+PF_CAPI_EXPORT extern int PF_pixelFreeGetStopRender(PFPixelFree* pixelFree);
+
 #ifdef __cplusplus
 }
 #endif

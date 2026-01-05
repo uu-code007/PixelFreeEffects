@@ -96,6 +96,7 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
                 add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFaceSharpenStrength, 0.2f, "锐化", "ruihua"))
                 add(BeautyItem(PFBeautyFilterType.PFBeautyFilterNasolabial, 0.0f, "祛法令纹", "falingwen"))
                 add(BeautyItem(PFBeautyFilterType.PFBeautyFilterBlackEye, 0.0f, "祛黑眼圈", "heiyanquan"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterWhitenTeeth, 0.0f, "美牙", "meiya"))
             }
             
             // Debug logging

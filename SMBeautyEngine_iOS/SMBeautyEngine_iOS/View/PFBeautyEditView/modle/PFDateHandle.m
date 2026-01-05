@@ -36,7 +36,7 @@
         PFBeautyParam *modle = [[PFBeautyParam alloc] init];
         modle.mParam = str;
         modle.mTitle = [titelDic valueForKey:str];
-        modle.mValue = 0.8;
+        modle.mValue = 0.5;
         modle.type = FUDataTypeFilter;
         [array addObject:modle];
     }
@@ -45,9 +45,9 @@
 }
 
 +(NSArray<PFBeautyParam *>*)setupSkinData{
-    NSArray *prams = @[@"writen",@"runddy",@"blur",@"sharpen",@"eye_b",@"nasolabialStrength",@"blackEyeStrength"];//
-    NSDictionary *titelDic = @{@"writen":@"美白",@"runddy":@"红润",@"blur":@"磨皮",@"sharpen":@"锐化",@"newWhitenStrength":@"新美白",@"eye_b":@"亮眼",@"qualityStrength":@"增强画质",@"nasolabialStrength":@"祛法令纹",@"blackEyeStrength":@"祛黑眼圈"};
-    NSDictionary *defaultValueDic = @{@"runddy":@(0.6),@"writen":@(0.6),@"blur":@(0.7),@"sharpen":@(0.3),@"eye_b":@(0.0),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.2),@"nasolabialStrength":@(0.0),@"blackEyeStrength":@(0.0)};
+    NSArray *prams = @[@"writen",@"runddy",@"blur",@"sharpen",@"eye_b",@"nasolabialStrength",@"blackEyeStrength",@"teethStrength"];//
+    NSDictionary *titelDic = @{@"writen":@"美白",@"runddy":@"红润",@"blur":@"磨皮",@"sharpen":@"锐化",@"newWhitenStrength":@"新美白",@"eye_b":@"亮眼",@"qualityStrength":@"增强画质",@"nasolabialStrength":@"祛法令纹",@"blackEyeStrength":@"祛黑眼圈",@"teethStrength":@"白牙"};
+    NSDictionary *defaultValueDic = @{@"runddy":@(0.6),@"writen":@(0.6),@"blur":@(0.7),@"sharpen":@(0.3),@"eye_b":@(0.0),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.2),@"nasolabialStrength":@(0.0),@"blackEyeStrength":@(0.0),@"teethStrength":@(0.0)};
     
     NSMutableArray *array = [[NSMutableArray alloc] init];
 

@@ -119,6 +119,11 @@
         if ([param.mParam isEqualToString:@"blackEyeStrength"]) {
             [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterBlackEye value:&value];
         }
+        
+        if ([param.mParam isEqualToString:@"teethStrength"]) {
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterWhitenTeeth value:&value];
+        }
+        
     }
 
     if (param.type == FUDataTypeFilter) {
@@ -248,13 +253,13 @@
 //    NSData *shapeParamsData = [NSKeyedArchiver archivedDataWithRootObject:_beautyEditView.shapeParams];
 //    NSData *skinParamsData = [NSKeyedArchiver archivedDataWithRootObject:_beautyEditView.skinParams];
 //    NSData *stickerseData = [NSKeyedArchiver archivedDataWithRootObject:_beautyEditView.stickersParams];
-//
+//    
 //    NSUserDefaults*userDefaults = [NSUserDefaults standardUserDefaults];
 //    [userDefaults setInteger:_beautyEditView.oneKeyType forKey:@"oneKeyType"];
 //    [userDefaults setInteger:_beautyEditView.filterIndex forKey:@"filtersUseIndex"];
 //    [userDefaults setInteger:_beautyEditView.stickersIndex forKey:@"stickerUseIndex"];
 //    [userDefaults synchronize];
-//
+//    
 //    // 写本地
 //    [self writeData:shapeParamsData fileName:@"shapeParamsData"];
 //    [self writeData:skinParamsData fileName:@"skinParamsData"];
@@ -397,23 +402,23 @@
 //        NSLog(@"[Makeup] 错误: 找不到 makeup 资源文件夹");
 //        return;
 //    }
-//
+//    
 //    NSString *currentFolder = [path stringByAppendingPathComponent:@"大气"];
 //    NSLog(@"[Makeup] 美妆路径: %@", currentFolder);
-//
+//    
 //    // 检查文件夹是否存在
 //    NSFileManager *fileManager = [NSFileManager defaultManager];
 //    BOOL isDirectory = NO;
 //    BOOL exists = [fileManager fileExistsAtPath:currentFolder isDirectory:&isDirectory];
-//
+//    
 //    if (exists && isDirectory) {
 //        NSLog(@"[Makeup] 文件夹存在，应用美妆");
 ////            int ret = [self.mPixelFree pixelFreeSetMakeupWithJsonPath:currentFolder];
-//
+//        
 //        NSString *name = [NSString stringWithFormat:@"%@.bundle",@"大气"];
 //        NSString *currentBundle = [path stringByAppendingPathComponent:name];
 //        NSData *date = [NSData dataWithContentsOfFile:currentBundle];
-//
+//        
 //        [self.mPixelFree createBeautyItemFormBundleKey:PFSrcTypeMakeup data:(void *)date.bytes size:date.length];
 ////            NSLog(@"[Makeup] 应用美妆返回值: %d", ret);
 //    } else {
@@ -423,7 +428,12 @@
 //}
 
 -(void)dealloc{
-//    NSLog(@"aaaa");
+    // 清理 mPixelFree，确保资源释放
+    if (_mPixelFree) {
+        // SMPixelFree 的 dealloc 会调用 destroy 方法清理资源
+        _mPixelFree = nil;
+    }
+    NSLog(@"ViewController dealloc");
 }
 
 @end

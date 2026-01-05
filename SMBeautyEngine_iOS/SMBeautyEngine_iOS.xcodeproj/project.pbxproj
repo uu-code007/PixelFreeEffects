@@ -986,10 +986,10 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Thirdparty\"",
 				);
-				MARKETING_VERSION = 2.5.01;
+				MARKETING_VERSION = 2.5.02;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.pixelFree.demo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixelFree.demo0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -1040,10 +1040,10 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Thirdparty\"",
 				);
-				MARKETING_VERSION = 2.5.01;
+				MARKETING_VERSION = 2.5.02;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.pixelFree.demo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixelFree.demo0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIP_INSTALLED_PRODUCT = NO;
