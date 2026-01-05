@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		702B75B22313E40B0089082D /* main.cc in Sources */ = {isa = PBXBuildFile; fileRef = 702B75B12313E40B0089082D /* main.cc */; };
 		707F78F0246ED70600245905 /* libpng16.16.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 707F78EF246ED70600245905 /* libpng16.16.dylib */; };
+		C91A9E7B2F0B9445002B44DE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C91A9E7A2F0B9445002B44DE /* SystemConfiguration.framework */; };
 		C93C32172D3A320400C48E02 /* opengl.cc in Sources */ = {isa = PBXBuildFile; fileRef = C93C32152D3A320400C48E02 /* opengl.cc */; };
 		C93C32202D3A3DE400C48E02 /* CoreML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C93C321F2D3A3DE400C48E02 /* CoreML.framework */; };
 		C93C323E2D3A8B7400C48E02 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C93C323D2D3A8B7400C48E02 /* CoreFoundation.framework */; };
@@ -49,6 +50,7 @@
 		702B75C22314005D0089082D /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		702B75C4231400770089082D /* libglfw.3.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.2.dylib; path = ../../../../../../../../usr/local/Cellar/glfw/3.2.1/lib/libglfw.3.2.dylib; sourceTree = "<group>"; };
 		707F78EF246ED70600245905 /* libpng16.16.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpng16.16.dylib; path = ../../../../../../../../usr/local/Cellar/libpng/1.6.37/lib/libpng16.16.dylib; sourceTree = "<group>"; };
+		C91A9E7A2F0B9445002B44DE /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C92E75492D5B29FC00AA3CDA /* libDetectFace.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libDetectFace.a; path = "../../../../Library/Developer/Xcode/DerivedData/SMBeautyEngine_mac-gubvzqxvndfbmhbildbrhceqcpjy/Build/Products/Debug-maccatalyst/libDetectFace.a"; sourceTree = "<group>"; };
 		C92E754A2D5B2A0200AA3CDA /* libPixelFree.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPixelFree.a; path = "../../../../Library/Developer/Xcode/DerivedData/SMBeautyEngine_mac-gubvzqxvndfbmhbildbrhceqcpjy/Build/Products/Release-maccatalyst/libPixelFree.a"; sourceTree = "<group>"; };
 		C92E75512D5B2BED00AA3CDA /* libDetectFace.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libDetectFace.a; path = "../../../../Library/Developer/Xcode/DerivedData/SMBeautyEngine_mac-gubvzqxvndfbmhbildbrhceqcpjy/Build/Products/Debug/libDetectFace.a"; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C91A9E7B2F0B9445002B44DE /* SystemConfiguration.framework in Frameworks */,
 				C94F96B32D081CE4007359E0 /* libpng16.16.dylib in Frameworks */,
 				C93C323E2D3A8B7400C48E02 /* CoreFoundation.framework in Frameworks */,
 				C9897C1C2D224C8C00162B8F /* OpenGL.framework in Frameworks */,
@@ -118,6 +121,7 @@
 		702B75C12314005D0089082D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C91A9E7A2F0B9445002B44DE /* SystemConfiguration.framework */,
 				C92E75512D5B2BED00AA3CDA /* libDetectFace.a */,
 				C92E754A2D5B2A0200AA3CDA /* libPixelFree.a */,
 				C92E75492D5B29FC00AA3CDA /* libDetectFace.a */,

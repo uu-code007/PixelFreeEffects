@@ -45,6 +45,11 @@ typedef enum PFRotationMode{
   PFRotationMode270 = 3,
 } PFRotationMode;
 
+typedef enum PFFaceDetectMode {
+  PF_FACE_DETECT_MODE_IMAGE = 0,
+  PF_FACE_DETECT_MODE_VIDEO = 1,
+} PFFaceDetectMode;
+
 typedef enum PFSrcType{
     PFSrcTypeFilter = 0,
     PFSrcTypeAuthFile = 2,
@@ -158,6 +163,7 @@ typedef enum PFBeautyFilterType{
     //新美白算法 （基于阴影保护美白）
     PFBeautyFilterTypeFaceM_newWhitenStrength,
     //画质增强
+    // @deprecated v2.5.01 已废弃，请使用 PFBeautyFilterTypeFaceSharpenStrength
     PFBeautyFilterTypeFaceH_qualityStrength,
     //亮眼（0~1）
     PFBeautyFilterTypeFaceEyeBrighten,
@@ -180,6 +186,8 @@ typedef enum PFBeautyFilterType{
     PFBeautyFilterNasolabial,
     // 祛黑眼圈
     PFBeautyFilterBlackEye,
+    // 白牙
+    PFBeautyFilterWhitenTeeth,
     
 } PFBeautyFilterType;
 
@@ -219,6 +227,10 @@ PF_CAPI_EXPORT extern void PF_pixelFreeGetFaceRect(PFPixelFree* pixelFree,float 
 
 PF_CAPI_EXPORT extern int PF_pixelFreeHaveFaceSize(PFPixelFree* pixelFree);
 
+PF_CAPI_EXPORT extern void PF_pixelFreeSetDetectMode(PFPixelFree* pixelFree, PFFaceDetectMode mode);
+
+PF_CAPI_EXPORT extern int PF_pixelFreeHasFace(PFPixelFree* pixelFree);
+
 PF_CAPI_EXPORT extern int PF_pixelFreeColorGrading(PFPixelFree* pixelFree,PFImageColorGrading* ImageColorGrading);
 PF_CAPI_EXPORT extern int PF_pixelFreeAddHLSFilter(PFPixelFree* pixelFree,PFHLSFilterParams* HLSFilterParams);
 PF_CAPI_EXPORT extern int PF_pixelFreeDeleteHLSFilter(PFPixelFree* pixelFree,int handle);
@@ -236,11 +248,16 @@ typedef enum PFMakeupPart {
     PFMakeupPartEyeLash = 4,
     PFMakeupPartLip = 5,
     PFMakeupPartHighlight = 6,
-    PFMakeupPartShadow = 7
+    PFMakeupPartShadow = 7,
+    PFMakeupPartFoundation = 8
 } PFMakeupPart;
 
 // 设置美妆各部位程度值（与配置叠乘）
 PF_CAPI_EXPORT extern int PF_pixelFreeSetMakeupPartDegree(PFPixelFree* pixelFree, int part, float degree);
+
+// 获取停止渲染标志（黑名单检查结果）
+PF_CAPI_EXPORT extern int PF_pixelFreeGetStopRender(PFPixelFree* pixelFree);
+
 #ifdef __cplusplus
 }
 #endif

@@ -148,8 +148,6 @@ int main() {
     float aa = 1.0;
     PF_pixelFreeSetBeautyFilterParam(handle, PFBeautyFilterTypeFace_narrow, &aa);
     
-
-    
     // TODO: 替换本地绝对路径
     std::ifstream file2("/Users/keyes/Desktop/mumuFU/push_github/SMBeautyEngine/SMBeautyEngine_mac/Res/filter_model.bundle", std::ios::binary);
     // 获取文件大小
