@@ -51,14 +51,13 @@ private:
     GLuint m_VaoId{};
     GLuint m_VboIds[3]{};
     volatile NativeImage *m_RenderImage = nullptr;
-    std::mutex m_RenderImageMutex;
     glm::mat4 m_MVPMatrix;
 
     int m_FrameIndex{};
     vec2 m_TouchXY;
     vec2 m_ScreenSize;
 
-    bool mUseTexture = false;
+    bool  mUseTexture;
 };
 
 

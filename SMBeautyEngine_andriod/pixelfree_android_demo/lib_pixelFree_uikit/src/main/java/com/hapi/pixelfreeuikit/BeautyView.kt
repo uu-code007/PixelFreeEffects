@@ -31,15 +31,31 @@ class BeautyView : FrameLayout {
     lateinit var centerSeekBarContainer: LinearLayout
     lateinit var centerSeekBarValue: TextView
 
-    // 双向调节类型（用intType判断，避免enum引用不一致问题）
-    private val twoWayTypeInts = setOf(
-        PFBeautyFilterType.PFBeautyFilterTypeFace_chin.intType,
-        PFBeautyFilterType.PFBeautyFilterTypeFace_forehead.intType,
-        PFBeautyFilterType.PFBeautyFilterTypeFace_mouth.intType,
-        PFBeautyFilterType.PFBeautyFilterTypeFace_philtrum.intType,
-        PFBeautyFilterType.PFBeautyFilterTypeFace_long_nose.intType,
-        PFBeautyFilterType.PFBeautyFilterTypeFace_eye_space.intType,
-        PFBeautyFilterType.PFBeautyFilterTypeFace_eye_rotate.intType
+    // 双向调节类型（按枚举类型判断，避免同 intType 冲突）
+    private val twoWayTypes = setOf(
+        PFBeautyFilterType.PFBeautyFilterTypeFace_chin,
+        PFBeautyFilterType.PFBeautyFilterTypeFace_forehead,
+        PFBeautyFilterType.PFBeautyFilterTypeFace_mouth,
+        PFBeautyFilterType.PFBeautyFilterTypeFace_philtrum,
+        PFBeautyFilterType.PFBeautyFilterTypeFace_long_nose,
+        PFBeautyFilterType.PFBeautyFilterTypeFace_eye_space,
+        PFBeautyFilterType.PFBeautyFilterTypeFace_eye_rotate,
+        PFBeautyFilterType.PFBeautyFilterTypeFace_eye_y,
+        PFBeautyFilterType.PFBeautyFilterTypeFace_eye_height,
+        PFBeautyFilterType.PFBeautyFilterTypeFace_nose_size,
+        PFBeautyFilterType.PFBeautyFilterTypeFace_nose_height,
+        PFBeautyFilterType.PFBeautyFilterTypeFace_nose_y,
+        PFBeautyFilterType.PFBeautyFilterTypeFace_nose_tip,
+        PFBeautyFilterType.PFBeautyFilterTypeFace_nose_bridge,
+        PFBeautyFilterType.PFBeautyFilterTypeFace_brow_thickness,
+        PFBeautyFilterType.PFBeautyFilterTypeFace_brow_length,
+        PFBeautyFilterType.PFBeautyFilterTypeFace_brow_lift,
+        PFBeautyFilterType.PFBeautyFilterTypeFace_brow_distance,
+        PFBeautyFilterType.PFBeautyFilterTypeFace_brow_tilt,
+        PFBeautyFilterType.PFBeautyFilterTypeFace_upper_lip_thickness,
+        PFBeautyFilterType.PFBeautyFilterTypeFace_lower_lip_thickness,
+        PFBeautyFilterType.PFBeautyFilterTypeFace_lip_fullness,
+        PFBeautyFilterType.PFBeautyFilterTypeFace_mouth_width
     )
 
     constructor(context: Context) : this(context, null)
@@ -65,7 +81,7 @@ class BeautyView : FrameLayout {
         mBeautyItemAdapter.itemChangeCall = {
             Log.d("BeautyView", "itemChangeCall called, item=${it.name}, type=${it.type}, intType=${it.type.intType}, centerSeekBar=$centerSeekBar")
             // 判断是否为双向调节类型
-            if (twoWayTypeInts.contains(it.type.intType)) {
+            if (twoWayTypes.contains(it.type)) {
                 Log.d("BeautyView", "准备显示CenterSeekBar, 当前progress=${it.progress}, centerSeekBar=$centerSeekBar")
                 centerSeekBarContainer.visibility = View.VISIBLE
                 seekbarContainer.visibility = View.GONE
@@ -148,7 +164,7 @@ class BeautyView : FrameLayout {
         centerSeekBar.onValueChanged = { value ->
             // value: 0~1, progress: 0~1
             val select = mBeautyItemAdapter.selectedItem
-            if (select != null && twoWayTypeInts.contains(select.type.intType)) {
+            if (select != null && twoWayTypes.contains(select.type)) {
                 select.progress = value
                 updateCenterSeekBarValue(value)
                 // 更新icon
@@ -244,7 +260,14 @@ class BeautyView : FrameLayout {
         }
         
         list.forEach() {
-            if (it.type.intType < 21) {
+            if (it.type != PFBeautyFilterType.PFBeautyFilterName &&
+                it.type != PFBeautyFilterType.PFBeautyFilterStrength &&
+                it.type != PFBeautyFilterType.PFBeautyFilterLvmu &&
+                it.type != PFBeautyFilterType.PFBeautyFilterSticker2DFilter &&
+                it.type != PFBeautyFilterType.PFBeautyFilterTypeOneKey &&
+                it.type != PFBeautyFilterType.PFBeautyFilterWatermark &&
+                it.type != PFBeautyFilterType.PFBeautyFilterExtend &&
+                it.type != PFBeautyFilterType.PFBeautyFilterMakeup) {
                 pixelFreeGetter.invoke()
                     .pixelFreeSetBeautyFiterParam(it.type, it.progress)
             }
@@ -351,7 +374,23 @@ class BeautyView : FrameLayout {
                 item.type == PFBeautyFilterType.PFBeautyFilterTypeFace_eye_space ||
                 item.type == PFBeautyFilterType.PFBeautyFilterTypeFace_smile ||
                 item.type == PFBeautyFilterType.PFBeautyFilterTypeFace_eye_rotate ||
-                item.type == PFBeautyFilterType.PFBeautyFilterTypeFace_canthus) {
+                item.type == PFBeautyFilterType.PFBeautyFilterTypeFace_canthus ||
+                item.type == PFBeautyFilterType.PFBeautyFilterTypeFace_eye_y ||
+                item.type == PFBeautyFilterType.PFBeautyFilterTypeFace_eye_height ||
+                item.type == PFBeautyFilterType.PFBeautyFilterTypeFace_nose_size ||
+                item.type == PFBeautyFilterType.PFBeautyFilterTypeFace_nose_height ||
+                item.type == PFBeautyFilterType.PFBeautyFilterTypeFace_nose_y ||
+                item.type == PFBeautyFilterType.PFBeautyFilterTypeFace_nose_tip ||
+                item.type == PFBeautyFilterType.PFBeautyFilterTypeFace_nose_bridge ||
+                item.type == PFBeautyFilterType.PFBeautyFilterTypeFace_brow_thickness ||
+                item.type == PFBeautyFilterType.PFBeautyFilterTypeFace_brow_length ||
+                item.type == PFBeautyFilterType.PFBeautyFilterTypeFace_brow_lift ||
+                item.type == PFBeautyFilterType.PFBeautyFilterTypeFace_brow_distance ||
+                item.type == PFBeautyFilterType.PFBeautyFilterTypeFace_brow_tilt ||
+                item.type == PFBeautyFilterType.PFBeautyFilterTypeFace_upper_lip_thickness ||
+                item.type == PFBeautyFilterType.PFBeautyFilterTypeFace_lower_lip_thickness ||
+                item.type == PFBeautyFilterType.PFBeautyFilterTypeFace_lip_fullness ||
+                item.type == PFBeautyFilterType.PFBeautyFilterTypeFace_mouth_width) {
                 imageView.setBackgroundResource(R.drawable.bg_icon_rounded)
                 imageView.clipToOutline = true
                 imageView.scaleType = android.widget.ImageView.ScaleType.CENTER_CROP

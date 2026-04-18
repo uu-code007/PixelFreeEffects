@@ -103,6 +103,11 @@ abstract class PixelfreePlatform extends PlatformInterface {
     throw UnimplementedError('setVLogLevel() has not been implemented.');
   }
 
+  /// Enable or disable console log output (does not affect file logging).
+  Future<void> setConsoleLogEnabled(bool enabled) {
+    throw UnimplementedError('setConsoleLogEnabled() has not been implemented.');
+  }
+
   // Get face rectangle
   Future<List<double>> getFaceRect() {
     throw UnimplementedError('getFaceRect() has not been implemented.');

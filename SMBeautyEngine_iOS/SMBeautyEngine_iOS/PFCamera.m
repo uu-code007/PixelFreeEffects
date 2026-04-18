@@ -681,6 +681,13 @@ typedef void(^PFCameraRecordVidepCompleted)(NSString *videoPath);
 
 
 - (void)dealloc{
+    // 确保停止采集，释放AVCaptureSession资源
+    [self stopCapture];
+    
+    // 清理delegate，避免野指针
+    self.delegate = nil;
+    self.dataSource = nil;
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     NSLog(@"camera dealloc");

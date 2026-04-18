@@ -1,4 +1,18 @@
 <resources>
-    <string name="app_name">望图美颜体验版</string>
+    <string name="app_name">望图美颜 SDK</string>
     <string name="fps_30">fps: 30</string>
+    
+    <!-- Main Activity Strings -->
+    <string name="app_title">望图美颜 SDK</string>
+    <string name="app_subtitle">专业级美颜处理解决方案</string>
+    <string name="feature_smart_beauty">智能美颜</string>
+    <string name="feature_one_click">一键美化</string>
+    <string name="feature_filter">滤镜特效</string>
+    <string name="feature_makeup">美妆</string>
+    <string name="camera_preview">相机预览</string>
+    <string name="camera_subtitle">实时美颜拍摄</string>
+    <string name="image_process">图片处理</string>
+    <string name="image_subtitle">照片美化编辑</string>
+    <string name="sdk_ready">SDK 已就绪</string>
+    <string name="version">v2.5.05</string>
 </resources>

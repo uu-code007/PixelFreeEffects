@@ -1,5 +1,5 @@
 group = "com.example.pixelfree"
-version = "2.5.3"
+version = "2.5.6"
 
 buildscript {
     repositories {
@@ -37,7 +37,7 @@ android {
 
 
     dependencies {
-        implementation 'io.github.uu-code007:lib_pixelFree:2.5.03'
+        implementation 'io.github.uu-code007:lib_pixelFree:2.5.06'
         testImplementation("junit:junit:4.13.2")
         testImplementation("org.mockito:mockito-core:5.0.0")
     }

@@ -113,21 +113,41 @@ class PixeBeautyDialog(pixelFree: PixelFree) : BeautyDialog() {
         return BeautyView(requireContext()).apply {
             this.pixelFreeGetter = { mPixelFree }
             val beautyItems = ArrayList<BeautyItem>().apply {
+                // 眼部
                 add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_EyeStrength, 0.2f, "大眼", "dayan"))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_thinning, 0.2f, "瘦脸", "shoulian"))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_narrow, 0.2f, "瘦颧骨", "zhailian"))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_chin, 0.5f, "下巴", "xiaba"))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_V, 0.2f, "瘦下颔", "vlian"))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_small, 0.2f, "小脸", "xianlian"))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_nose, 0.2f, "鼻子", "bizhi"))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_forehead, 0.5f, "额头", "etou"))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_mouth, 0.5f, "嘴巴", "zuiba"))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_philtrum, 0.5f, "人中", "renzhong"))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_long_nose, 0.5f, "长鼻", "changbi"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_eye_height, 0.5f, "眼高低", "eye_height"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_eye_y, 0.5f, "眼睛上下", "eye_y"))
                 add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_eye_space, 0.5f, "眼距", "yanju"))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_smile, 0.0f, "微笑嘴角", "weixiaozuijiao"))
-                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_eye_rotate, 0.5f, "旋转眼睛", "yanjingjiaodu"))
                 add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_canthus, 0.0f, "开眼角", "kaiyanjiao"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_eye_rotate, 0.5f, "眼倾斜", "eye_tilt"))
+                // 面部
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_small, 0.0f, "小头", "head_small"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_forehead, 0.5f, "额头", "etou"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_narrow, 0.2f, "瘦颧骨", "zhailian"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_V, 0.2f, "瘦下颔", "vlian"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_thinning, 0.2f, "瘦脸", "shoulian"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_chin, 0.5f, "下巴长短", "chin_length"))
+                // 鼻部
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_nose, 0.2f, "鼻翼", "nose_wing"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_nose_size, 0.5f, "鼻子大小", "nose_size"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_nose_height, 0.5f, "鼻子高低", "nose_height"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_nose_y, 0.5f, "鼻子上下", "nose_y"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_nose_tip, 0.5f, "鼻尖", "nose_tip"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_nose_bridge, 0.5f, "鼻梁", "nose_bridge"))
+                // 眉部
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_brow_thickness, 0.5f, "眉粗细", "brow_thickness"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_brow_length, 0.5f, "眉长短", "brow_length"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_brow_lift, 0.5f, "眉提升", "brow_lift"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_brow_distance, 0.5f, "眉距离", "brow_distance"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_brow_tilt, 0.5f, "眉倾斜", "brow_tilt"))
+                // 嘴部
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_mouth, 0.5f, "嘴巴大小", "mouth_size"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_philtrum, 0.5f, "嘴唇上下", "philtrum"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_smile, 0.0f, "微笑", "weixiaozuijiao"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_upper_lip_thickness, 0.5f, "上唇厚度", "upper_lip_thickness"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_lower_lip_thickness, 0.5f, "下唇厚度", "lower_lip_thickness"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_lip_fullness, 0.5f, "丰唇", "lip_fullness"))
+                add(BeautyItem(PFBeautyFilterType.PFBeautyFilterTypeFace_mouth_width, 0.5f, "嘴唇宽度", "mouth_width"))
             }
             
             // Debug logging

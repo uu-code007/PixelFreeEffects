@@ -14,25 +14,23 @@ tools:context=".StartActivity">
         android:layout_marginTop="10dp"
         android:text="@string/fps_30"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-/>
+        app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <com.hapi.avrender.HapiCapturePreView-->
-<!--        android:id="@+id/preview"-->
-<!--        android:layout_width="300dp"-->
-<!--        android:layout_height="400dp"-->
-<!--        android:layout_marginTop="50dp"-->
-<!--        android:text="@string/fps_30"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.5"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-    <ImageView
-        android:id="@+id/imageView"
+    <Button
+        android:id="@+id/btnAlbum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="6dp"
+        android:text="相册"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.hapi.avrender.HapiCapturePreView
+        android:id="@+id/preview"
         android:layout_width="300dp"
         android:layout_height="400dp"
         android:layout_marginTop="50dp"
-        android:text="@string/fps_30"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

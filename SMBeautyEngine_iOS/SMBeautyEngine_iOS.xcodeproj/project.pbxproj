@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -82,10 +82,10 @@
 		C958A31D2D9004E20019ED6F /* ToolUI.m in Sources */ = {isa = PBXBuildFile; fileRef = C958A31C2D9004E20019ED6F /* ToolUI.m */; };
 		C958A3302D91867D0019ED6F /* Pods_SMBeautyEngine_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C958A32D2D9186710019ED6F /* Pods_SMBeautyEngine_iOS.framework */; };
 		C95AB8702D93961900F59BD5 /* 2631742911906.png in Resources */ = {isa = PBXBuildFile; fileRef = C95AB86F2D93961900F59BD5 /* 2631742911906.png */; };
-		C98CA1672DCAEB4B00DF3619 /* PixelFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C98CA1652DCAEB3B00DF3619 /* PixelFree.framework */; };
-		C98CA1682DCAEB4B00DF3619 /* PixelFree.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C98CA1652DCAEB3B00DF3619 /* PixelFree.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C99D8B6D2D7E8FAB00DC5D41 /* face_mask.png in Resources */ = {isa = PBXBuildFile; fileRef = C99D8B6C2D7E8FAB00DC5D41 /* face_mask.png */; };
 		C9AFDF0D2BC92ED9009C38CD /* qiniu_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C9AFDF0C2BC92ED9009C38CD /* qiniu_logo.png */; };
+		C9B609BA2F72DDBE0010C9BE /* PixelFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9B609B82F72DDB50010C9BE /* PixelFree.framework */; };
+		C9B609BB2F72DDBE0010C9BE /* PixelFree.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C9B609B82F72DDB50010C9BE /* PixelFree.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C9BB18232D858830002AF75D /* face2.png in Resources */ = {isa = PBXBuildFile; fileRef = C9BB18222D858830002AF75D /* face2.png */; };
 		C9C0EC062D9688D200BE1D3A /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C9C0EC052D96887B00BE1D3A /* libz.tbd */; };
 		C9CF037B2A8670FC00B2C394 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9CF03782A8670FB00B2C394 /* Accelerate.framework */; };
@@ -97,19 +97,10 @@
 		C9FCFEAB2C85BE9D002E1906 /* maorong.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C9FCFEA22C85BE9D002E1906 /* maorong.bundle */; };
 		C9FCFEAC2C85BE9D002E1906 /* xiantiaoxiongmao.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C9FCFEA32C85BE9D002E1906 /* xiantiaoxiongmao.bundle */; };
 		C9FCFEAD2C85BE9D002E1906 /* xiongerduo.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C9FCFEA42C85BE9D002E1906 /* xiongerduo.bundle */; };
-		CE8A101F2EEAE49700F6AD13 /* PFBottomColletionView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8A100D2EEAE49700F6AD13 /* PFBottomColletionView.m */; };
-		CE8A10202EEAE49700F6AD13 /* PFBeautyView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8A100B2EEAE49700F6AD13 /* PFBeautyView.m */; };
-		CE8A10212EEAE49700F6AD13 /* PFFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8A10102EEAE49700F6AD13 /* PFFilterView.m */; };
-		CE8A10222EEAE49700F6AD13 /* PFDateHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8A101C2EEAE49700F6AD13 /* PFDateHandle.m */; };
-		CE8A10232EEAE49700F6AD13 /* PFSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8A10122EEAE49700F6AD13 /* PFSlider.m */; };
-		CE8A10242EEAE49700F6AD13 /* UIColor+PFBeautyEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8A10072EEAE49700F6AD13 /* UIColor+PFBeautyEditView.m */; };
-		CE8A10252EEAE49700F6AD13 /* PFBeautyEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8A10052EEAE49700F6AD13 /* PFBeautyEditView.m */; };
-		CE8A10262EEAE49700F6AD13 /* UIImage+demobar.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8A10142EEAE49700F6AD13 /* UIImage+demobar.m */; };
-		CE8A10272EEAE49700F6AD13 /* PFBeautyParam.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8A10092EEAE49700F6AD13 /* PFBeautyParam.m */; };
-		CE8A10282EEAE49700F6AD13 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE8A10032EEAE49700F6AD13 /* Media.xcassets */; };
-		CE8A10292EEAE49700F6AD13 /* PFDemoBar.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE8A10172EEAE49700F6AD13 /* PFDemoBar.strings */; };
-		CE8A102A2EEAE49700F6AD13 /* PFAPIDemoBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE8A10022EEAE49700F6AD13 /* PFAPIDemoBar.xib */; };
-		CE8A102B2EEAE49700F6AD13 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE8A101A2EEAE49700F6AD13 /* Localizable.strings */; };
+		CE0C25E32EA0D2350079CB44 /* makeup in Resources */ = {isa = PBXBuildFile; fileRef = CE0C25E22EA0D22B0079CB44 /* makeup */; };
+		CE1493652ED87A88003C5D4D /* PFBeautyEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1493642ED87A88003C5D4D /* PFBeautyEditView.m */; };
+		CE14936C2ED87A94003C5D4D /* UIColor+PFBeautyEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE14936B2ED87A94003C5D4D /* UIColor+PFBeautyEditView.m */; };
+		CE14937A2ED88293003C5D4D /* PFAPIDemoBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE1493792ED88292003C5D4D /* PFAPIDemoBar.xib */; };
 		E31A9AC02903913400AF311C /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E31A9ABD2903913400AF311C /* CoreImage.framework */; };
 		E32C9FE028E69A3300FB225E /* pixelfreeAuth.lic in Resources */ = {isa = PBXBuildFile; fileRef = E32C9FDF28E69A3300FB225E /* pixelfreeAuth.lic */; };
 		E335682728E5883C00551FB3 /* PFImageController.m in Sources */ = {isa = PBXBuildFile; fileRef = E335682628E5883C00551FB3 /* PFImageController.m */; };
@@ -124,18 +115,28 @@
 		E3BD454327474A5300CB44C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3BD454227474A5300CB44C9 /* Assets.xcassets */; };
 		E3BD454627474A5300CB44C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3BD454427474A5300CB44C9 /* LaunchScreen.storyboard */; };
 		E3BD454927474A5300CB44C9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD454827474A5300CB44C9 /* main.m */; };
+		E3BD457F27474A9800CB44C9 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3BD455B27474A9600CB44C9 /* Media.xcassets */; };
+		E3BD458227474A9800CB44C9 /* PFBeautyParam.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD456127474A9600CB44C9 /* PFBeautyParam.m */; };
+		E3BD458327474A9800CB44C9 /* PFBeautyView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD456327474A9600CB44C9 /* PFBeautyView.m */; };
+		E3BD458427474A9800CB44C9 /* PFBottomColletionView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD456527474A9600CB44C9 /* PFBottomColletionView.m */; };
+		E3BD458527474A9800CB44C9 /* PFFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD456827474A9600CB44C9 /* PFFilterView.m */; };
+		E3BD458627474A9800CB44C9 /* PFSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD456A27474A9600CB44C9 /* PFSlider.m */; };
+		E3BD458827474A9800CB44C9 /* UIImage+demobar.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD456E27474A9600CB44C9 /* UIImage+demobar.m */; };
+		E3BD458927474A9800CB44C9 /* PFDemoBar.strings in Resources */ = {isa = PBXBuildFile; fileRef = E3BD456F27474A9600CB44C9 /* PFDemoBar.strings */; };
+		E3BD458A27474A9800CB44C9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E3BD457127474A9600CB44C9 /* Localizable.strings */; };
+		E3BD458B27474A9800CB44C9 /* PFDateHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD457527474A9600CB44C9 /* PFDateHandle.m */; };
 		E3BD458D27474A9800CB44C9 /* PFCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD457927474A9600CB44C9 /* PFCamera.m */; };
 		E3BD4590274752DC00CB44C9 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E3BD458F274752D700CB44C9 /* libc++.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		C98CA1692DCAEB4B00DF3619 /* Embed Frameworks */ = {
+		C9B609BC2F72DDBE0010C9BE /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C98CA1682DCAEB4B00DF3619 /* PixelFree.framework in Embed Frameworks */,
+				C9B609BB2F72DDBE0010C9BE /* PixelFree.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -213,6 +214,7 @@
 		C90C3D082DB8B31600A1C13B /* xingxing.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = xingxing.bundle; sourceTree = "<group>"; };
 		C90C3D492DB8B95500A1C13B /* allStickers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = allStickers.json; sourceTree = "<group>"; };
 		C90C3D4B2DB8C79F00A1C13B /* baixiaomaohuxu */ = {isa = PBXFileReference; lastKnownFileType = folder; path = baixiaomaohuxu; sourceTree = "<group>"; };
+		C91A9EA32F0BC3E9002B44DE /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../PixelFreeCxx/PixelFree/Thirdparty/libcurl/iOS/lib/libcurl.a; sourceTree = "<group>"; };
 		C958A3022D90019C0019ED6F /* AdjustmentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdjustmentCell.h; sourceTree = "<group>"; };
 		C958A3032D90019C0019ED6F /* AdjustmentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AdjustmentCell.m; sourceTree = "<group>"; };
 		C958A3042D90019C0019ED6F /* AdjustmentItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdjustmentItem.h; sourceTree = "<group>"; };
@@ -227,9 +229,9 @@
 		C958A31C2D9004E20019ED6F /* ToolUI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToolUI.m; sourceTree = "<group>"; };
 		C958A32D2D9186710019ED6F /* Pods_SMBeautyEngine_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_SMBeautyEngine_iOS.framework; path = "../../../../Library/Developer/Xcode/DerivedData/SMBeautyEngine_iOS-fzdtawbuxtsbdeaqkxzxbdrevrwh/Build/Products/Debug-iphoneos/Pods_SMBeautyEngine_iOS.framework"; sourceTree = "<group>"; };
 		C95AB86F2D93961900F59BD5 /* 2631742911906.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2631742911906.png; sourceTree = "<group>"; };
-		C98CA1652DCAEB3B00DF3619 /* PixelFree.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PixelFree.framework; sourceTree = "<group>"; };
 		C99D8B6C2D7E8FAB00DC5D41 /* face_mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face_mask.png; sourceTree = "<group>"; };
 		C9AFDF0C2BC92ED9009C38CD /* qiniu_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qiniu_logo.png; sourceTree = "<group>"; };
+		C9B609B82F72DDB50010C9BE /* PixelFree.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PixelFree.framework; sourceTree = "<group>"; };
 		C9BB18222D858830002AF75D /* face2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face2.png; sourceTree = "<group>"; };
 		C9C0EC022D9686A000BE1D3A /* libpng-universal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libpng-universal.a"; path = "../PixelFreeCxx/PixelFree/Thirdparty/libpng-universal.a"; sourceTree = "<group>"; };
 		C9C0EC052D96887B00BE1D3A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -242,31 +244,12 @@
 		C9FCFEA22C85BE9D002E1906 /* maorong.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = maorong.bundle; sourceTree = "<group>"; };
 		C9FCFEA32C85BE9D002E1906 /* xiantiaoxiongmao.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = xiantiaoxiongmao.bundle; sourceTree = "<group>"; };
 		C9FCFEA42C85BE9D002E1906 /* xiongerduo.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = xiongerduo.bundle; sourceTree = "<group>"; };
-		CE8A10022EEAE49700F6AD13 /* PFAPIDemoBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PFAPIDemoBar.xib; sourceTree = "<group>"; };
-		CE8A10032EEAE49700F6AD13 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
-		CE8A10042EEAE49700F6AD13 /* PFBeautyEditView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFBeautyEditView.h; sourceTree = "<group>"; };
-		CE8A10052EEAE49700F6AD13 /* PFBeautyEditView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PFBeautyEditView.m; sourceTree = "<group>"; };
-		CE8A10062EEAE49700F6AD13 /* UIColor+PFBeautyEditView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+PFBeautyEditView.h"; sourceTree = "<group>"; };
-		CE8A10072EEAE49700F6AD13 /* UIColor+PFBeautyEditView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+PFBeautyEditView.m"; sourceTree = "<group>"; };
-		CE8A10082EEAE49700F6AD13 /* PFBeautyParam.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFBeautyParam.h; sourceTree = "<group>"; };
-		CE8A10092EEAE49700F6AD13 /* PFBeautyParam.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PFBeautyParam.m; sourceTree = "<group>"; };
-		CE8A100A2EEAE49700F6AD13 /* PFBeautyView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFBeautyView.h; sourceTree = "<group>"; };
-		CE8A100B2EEAE49700F6AD13 /* PFBeautyView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PFBeautyView.m; sourceTree = "<group>"; };
-		CE8A100C2EEAE49700F6AD13 /* PFBottomColletionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFBottomColletionView.h; sourceTree = "<group>"; };
-		CE8A100D2EEAE49700F6AD13 /* PFBottomColletionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PFBottomColletionView.m; sourceTree = "<group>"; };
-		CE8A100E2EEAE49700F6AD13 /* PFDemoBarDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFDemoBarDefine.h; sourceTree = "<group>"; };
-		CE8A100F2EEAE49700F6AD13 /* PFFilterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFFilterView.h; sourceTree = "<group>"; };
-		CE8A10102EEAE49700F6AD13 /* PFFilterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PFFilterView.m; sourceTree = "<group>"; };
-		CE8A10112EEAE49700F6AD13 /* PFSlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFSlider.h; sourceTree = "<group>"; };
-		CE8A10122EEAE49700F6AD13 /* PFSlider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PFSlider.m; sourceTree = "<group>"; };
-		CE8A10132EEAE49700F6AD13 /* UIImage+demobar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+demobar.h"; sourceTree = "<group>"; };
-		CE8A10142EEAE49700F6AD13 /* UIImage+demobar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+demobar.m"; sourceTree = "<group>"; };
-		CE8A10152EEAE49700F6AD13 /* PFDemoBar.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = PFDemoBar.strings; path = en.lproj/PFDemoBar.strings; sourceTree = "<group>"; };
-		CE8A10162EEAE49700F6AD13 /* PFDemoBar.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = PFDemoBar.strings; path = "zh-Hans.lproj/PFDemoBar.strings"; sourceTree = "<group>"; };
-		CE8A10182EEAE49700F6AD13 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		CE8A10192EEAE49700F6AD13 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		CE8A101B2EEAE49700F6AD13 /* PFDateHandle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFDateHandle.h; sourceTree = "<group>"; };
-		CE8A101C2EEAE49700F6AD13 /* PFDateHandle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PFDateHandle.m; sourceTree = "<group>"; };
+		CE0C25E22EA0D22B0079CB44 /* makeup */ = {isa = PBXFileReference; lastKnownFileType = folder; path = makeup; sourceTree = "<group>"; };
+		CE1493632ED87A88003C5D4D /* PFBeautyEditView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFBeautyEditView.h; sourceTree = "<group>"; };
+		CE1493642ED87A88003C5D4D /* PFBeautyEditView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PFBeautyEditView.m; sourceTree = "<group>"; };
+		CE14936A2ED87A94003C5D4D /* UIColor+PFBeautyEditView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+PFBeautyEditView.h"; sourceTree = "<group>"; };
+		CE14936B2ED87A94003C5D4D /* UIColor+PFBeautyEditView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+PFBeautyEditView.m"; sourceTree = "<group>"; };
+		CE1493792ED88292003C5D4D /* PFAPIDemoBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PFAPIDemoBar.xib; sourceTree = "<group>"; };
 		E31A9ABD2903913400AF311C /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		E32C9FDF28E69A3300FB225E /* pixelfreeAuth.lic */ = {isa = PBXFileReference; lastKnownFileType = file; path = pixelfreeAuth.lic; sourceTree = "<group>"; };
 		E335682528E5883C00551FB3 /* PFImageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFImageController.h; sourceTree = "<group>"; };
@@ -290,16 +273,31 @@
 		E3BD454527474A5300CB44C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E3BD454727474A5300CB44C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E3BD454827474A5300CB44C9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E3BD455B27474A9600CB44C9 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		E3BD456027474A9600CB44C9 /* PFBeautyParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFBeautyParam.h; sourceTree = "<group>"; };
+		E3BD456127474A9600CB44C9 /* PFBeautyParam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFBeautyParam.m; sourceTree = "<group>"; };
+		E3BD456227474A9600CB44C9 /* PFBeautyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFBeautyView.h; sourceTree = "<group>"; };
+		E3BD456327474A9600CB44C9 /* PFBeautyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFBeautyView.m; sourceTree = "<group>"; };
+		E3BD456427474A9600CB44C9 /* PFBottomColletionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFBottomColletionView.h; sourceTree = "<group>"; };
+		E3BD456527474A9600CB44C9 /* PFBottomColletionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFBottomColletionView.m; sourceTree = "<group>"; };
+		E3BD456627474A9600CB44C9 /* PFDemoBarDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFDemoBarDefine.h; sourceTree = "<group>"; };
+		E3BD456727474A9600CB44C9 /* PFFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFFilterView.h; sourceTree = "<group>"; };
+		E3BD456827474A9600CB44C9 /* PFFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFFilterView.m; sourceTree = "<group>"; };
+		E3BD456927474A9600CB44C9 /* PFSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFSlider.h; sourceTree = "<group>"; };
+		E3BD456A27474A9600CB44C9 /* PFSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFSlider.m; sourceTree = "<group>"; };
+		E3BD456D27474A9600CB44C9 /* UIImage+demobar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+demobar.h"; sourceTree = "<group>"; };
+		E3BD456E27474A9600CB44C9 /* UIImage+demobar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+demobar.m"; sourceTree = "<group>"; };
+		E3BD457027474A9600CB44C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PFDemoBar.strings; sourceTree = "<group>"; };
+		E3BD457227474A9600CB44C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E3BD457427474A9600CB44C9 /* PFDateHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFDateHandle.h; sourceTree = "<group>"; };
+		E3BD457527474A9600CB44C9 /* PFDateHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFDateHandle.m; sourceTree = "<group>"; };
+		E3BD457627474A9600CB44C9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/PFDemoBar.strings"; sourceTree = "<group>"; };
+		E3BD457727474A9600CB44C9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E3BD457927474A9600CB44C9 /* PFCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFCamera.m; sourceTree = "<group>"; };
 		E3BD457A27474A9600CB44C9 /* PFCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFCamera.h; sourceTree = "<group>"; };
 		E3BD458F274752D700CB44C9 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		E3BD4591274752E900CB44C9 /* CoreML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreML.framework; path = System/Library/Frameworks/CoreML.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		C901556B2F39BA5400D31A54 /* dayanyanzhao */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = dayanyanzhao; sourceTree = "<group>"; };
-		C9C05E952ED2021D003FF5B2 /* makeup */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = makeup; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		E3BD453027474A4E00CB44C9 /* Frameworks */ = {
@@ -308,9 +306,9 @@
 			files = (
 				C958A3302D91867D0019ED6F /* Pods_SMBeautyEngine_iOS.framework in Frameworks */,
 				C9CF08542AA9E83800B2C394 /* CoreML.framework in Frameworks */,
-				C98CA1672DCAEB4B00DF3619 /* PixelFree.framework in Frameworks */,
 				E31A9AC02903913400AF311C /* CoreImage.framework in Frameworks */,
 				C9CF037B2A8670FC00B2C394 /* Accelerate.framework in Frameworks */,
+				C9B609BA2F72DDBE0010C9BE /* PixelFree.framework in Frameworks */,
 				C9C0EC062D9688D200BE1D3A /* libz.tbd in Frameworks */,
 				E3BD4590274752DC00CB44C9 /* libc++.tbd in Frameworks */,
 			);
@@ -425,48 +423,10 @@
 			path = Stickers;
 			sourceTree = "<group>";
 		};
-		CE8A101D2EEAE49700F6AD13 /* modle */ = {
-			isa = PBXGroup;
-			children = (
-				CE8A101B2EEAE49700F6AD13 /* PFDateHandle.h */,
-				CE8A101C2EEAE49700F6AD13 /* PFDateHandle.m */,
-			);
-			path = modle;
-			sourceTree = "<group>";
-		};
-		CE8A101E2EEAE49700F6AD13 /* PFBeautyEditView */ = {
-			isa = PBXGroup;
-			children = (
-				CE8A10022EEAE49700F6AD13 /* PFAPIDemoBar.xib */,
-				CE8A10032EEAE49700F6AD13 /* Media.xcassets */,
-				CE8A10042EEAE49700F6AD13 /* PFBeautyEditView.h */,
-				CE8A10052EEAE49700F6AD13 /* PFBeautyEditView.m */,
-				CE8A10062EEAE49700F6AD13 /* UIColor+PFBeautyEditView.h */,
-				CE8A10072EEAE49700F6AD13 /* UIColor+PFBeautyEditView.m */,
-				CE8A10082EEAE49700F6AD13 /* PFBeautyParam.h */,
-				CE8A10092EEAE49700F6AD13 /* PFBeautyParam.m */,
-				CE8A100A2EEAE49700F6AD13 /* PFBeautyView.h */,
-				CE8A100B2EEAE49700F6AD13 /* PFBeautyView.m */,
-				CE8A100C2EEAE49700F6AD13 /* PFBottomColletionView.h */,
-				CE8A100D2EEAE49700F6AD13 /* PFBottomColletionView.m */,
-				CE8A100E2EEAE49700F6AD13 /* PFDemoBarDefine.h */,
-				CE8A100F2EEAE49700F6AD13 /* PFFilterView.h */,
-				CE8A10102EEAE49700F6AD13 /* PFFilterView.m */,
-				CE8A10112EEAE49700F6AD13 /* PFSlider.h */,
-				CE8A10122EEAE49700F6AD13 /* PFSlider.m */,
-				CE8A10132EEAE49700F6AD13 /* UIImage+demobar.h */,
-				CE8A10142EEAE49700F6AD13 /* UIImage+demobar.m */,
-				CE8A10172EEAE49700F6AD13 /* PFDemoBar.strings */,
-				CE8A101A2EEAE49700F6AD13 /* Localizable.strings */,
-				CE8A101D2EEAE49700F6AD13 /* modle */,
-			);
-			path = PFBeautyEditView;
-			sourceTree = "<group>";
-		};
 		E3BD452A27474A4E00CB44C9 = {
 			isa = PBXGroup;
 			children = (
-				C98CA1652DCAEB3B00DF3619 /* PixelFree.framework */,
+				C9B609B82F72DDB50010C9BE /* PixelFree.framework */,
 				E3BD453527474A4E00CB44C9 /* SMBeautyEngine_iOS */,
 				E3BD453427474A4E00CB44C9 /* Products */,
 				E3BD458E274752D600CB44C9 /* Frameworks */,
@@ -515,7 +475,7 @@
 		E3BD455227474A9400CB44C9 /* res */ = {
 			isa = PBXGroup;
 			children = (
-				C9C05E952ED2021D003FF5B2 /* makeup */,
+				CE0C25E22EA0D22B0079CB44 /* makeup */,
 				C90C3D4B2DB8C79F00A1C13B /* baixiaomaohuxu */,
 				C95AB86F2D93961900F59BD5 /* 2631742911906.png */,
 				C9BB18222D858830002AF75D /* face2.png */,
@@ -526,7 +486,6 @@
 				E32C9FDF28E69A3300FB225E /* pixelfreeAuth.lic */,
 				C99D8B6C2D7E8FAB00DC5D41 /* face_mask.png */,
 				C90C3D492DB8B95500A1C13B /* allStickers.json */,
-				C901556B2F39BA5400D31A54 /* dayanyanzhao */,
 			);
 			path = res;
 			sourceTree = "<group>";
@@ -534,15 +493,54 @@
 		E3BD455727474A9600CB44C9 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				CE8A101E2EEAE49700F6AD13 /* PFBeautyEditView */,
+				E3BD455827474A9600CB44C9 /* PFBeautyEditView */,
 				C958A30F2D90019C0019ED6F /* ColorGradingView */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
+		E3BD455827474A9600CB44C9 /* PFBeautyEditView */ = {
+			isa = PBXGroup;
+			children = (
+				CE1493792ED88292003C5D4D /* PFAPIDemoBar.xib */,
+				E3BD455B27474A9600CB44C9 /* Media.xcassets */,
+				CE1493632ED87A88003C5D4D /* PFBeautyEditView.h */,
+				CE1493642ED87A88003C5D4D /* PFBeautyEditView.m */,
+				CE14936A2ED87A94003C5D4D /* UIColor+PFBeautyEditView.h */,
+				CE14936B2ED87A94003C5D4D /* UIColor+PFBeautyEditView.m */,
+				E3BD456027474A9600CB44C9 /* PFBeautyParam.h */,
+				E3BD456127474A9600CB44C9 /* PFBeautyParam.m */,
+				E3BD456227474A9600CB44C9 /* PFBeautyView.h */,
+				E3BD456327474A9600CB44C9 /* PFBeautyView.m */,
+				E3BD456427474A9600CB44C9 /* PFBottomColletionView.h */,
+				E3BD456527474A9600CB44C9 /* PFBottomColletionView.m */,
+				E3BD456627474A9600CB44C9 /* PFDemoBarDefine.h */,
+				E3BD456727474A9600CB44C9 /* PFFilterView.h */,
+				E3BD456827474A9600CB44C9 /* PFFilterView.m */,
+				E3BD456927474A9600CB44C9 /* PFSlider.h */,
+				E3BD456A27474A9600CB44C9 /* PFSlider.m */,
+				E3BD456D27474A9600CB44C9 /* UIImage+demobar.h */,
+				E3BD456E27474A9600CB44C9 /* UIImage+demobar.m */,
+				E3BD456F27474A9600CB44C9 /* PFDemoBar.strings */,
+				E3BD457127474A9600CB44C9 /* Localizable.strings */,
+				E3BD457327474A9600CB44C9 /* modle */,
+			);
+			path = PFBeautyEditView;
+			sourceTree = "<group>";
+		};
+		E3BD457327474A9600CB44C9 /* modle */ = {
+			isa = PBXGroup;
+			children = (
+				E3BD457427474A9600CB44C9 /* PFDateHandle.h */,
+				E3BD457527474A9600CB44C9 /* PFDateHandle.m */,
+			);
+			path = modle;
+			sourceTree = "<group>";
+		};
 		E3BD458E274752D600CB44C9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C91A9EA32F0BC3E9002B44DE /* libcurl.a */,
 				C9C0EC052D96887B00BE1D3A /* libz.tbd */,
 				C9C0EC022D9686A000BE1D3A /* libpng-universal.a */,
 				C958A32D2D9186710019ED6F /* Pods_SMBeautyEngine_iOS.framework */,
@@ -568,15 +566,11 @@
 				E3BD453027474A4E00CB44C9 /* Frameworks */,
 				E3BD453127474A4E00CB44C9 /* Resources */,
 				52EBBC8AC168428F0F72EE10 /* [CP] Embed Pods Frameworks */,
-				C98CA1692DCAEB4B00DF3619 /* Embed Frameworks */,
+				C9B609BC2F72DDBE0010C9BE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				C901556B2F39BA5400D31A54 /* dayanyanzhao */,
-				C9C05E952ED2021D003FF5B2 /* makeup */,
 			);
 			name = SMBeautyEngine_iOS;
 			productName = SMBeautyEngine_iOS;
@@ -632,10 +626,6 @@
 				C90C3D102DB8B31600A1C13B /* love_gestures.bundle in Resources */,
 				C90C3D112DB8B31600A1C13B /* long_ear_dog.bundle in Resources */,
 				C90C3D122DB8B31600A1C13B /* pop_glasses.bundle in Resources */,
-				CE8A10282EEAE49700F6AD13 /* Media.xcassets in Resources */,
-				CE8A10292EEAE49700F6AD13 /* PFDemoBar.strings in Resources */,
-				CE8A102A2EEAE49700F6AD13 /* PFAPIDemoBar.xib in Resources */,
-				CE8A102B2EEAE49700F6AD13 /* Localizable.strings in Resources */,
 				C90C3D132DB8B31600A1C13B /* jiandanzhuangshi.bundle in Resources */,
 				C90C3D142DB8B31600A1C13B /* goux.bundle in Resources */,
 				C90C3D152DB8B31600A1C13B /* laser.bundle in Resources */,
@@ -660,6 +650,7 @@
 				C90C3D282DB8B31600A1C13B /* rabbit_holding_face.bundle in Resources */,
 				C90C3D292DB8B31600A1C13B /* toy_rabbit_ear_tie.bundle in Resources */,
 				C90C3D2A2DB8B31600A1C13B /* prison.bundle in Resources */,
+				CE0C25E32EA0D2350079CB44 /* makeup in Resources */,
 				C90C3D2B2DB8B31600A1C13B /* touhua.bundle in Resources */,
 				C90C3D2C2DB8B31600A1C13B /* red_glasses.bundle in Resources */,
 				C90C3D2D2DB8B31600A1C13B /* noodles.bundle in Resources */,
@@ -692,6 +683,7 @@
 				C90C3D462DB8B31600A1C13B /* qifei.bundle in Resources */,
 				C90C3D472DB8B31600A1C13B /* damengyanjing.bundle in Resources */,
 				C90C3D482DB8B31600A1C13B /* cream_cake.bundle in Resources */,
+				E3BD457F27474A9800CB44C9 /* Media.xcassets in Resources */,
 				C9FCFEAD2C85BE9D002E1906 /* xiongerduo.bundle in Resources */,
 				C95AB8702D93961900F59BD5 /* 2631742911906.png in Resources */,
 				C9FCFEAA2C85BE9D002E1906 /* flowers.bundle in Resources */,
@@ -706,6 +698,9 @@
 				C90C3CC82DB883B300A1C13B /* sunflower_glasses.bundle in Resources */,
 				C9FCFEA92C85BE9D002E1906 /* candy.bundle in Resources */,
 				C99D8B6D2D7E8FAB00DC5D41 /* face_mask.png in Resources */,
+				E3BD458A27474A9800CB44C9 /* Localizable.strings in Resources */,
+				CE14937A2ED88293003C5D4D /* PFAPIDemoBar.xib in Resources */,
+				E3BD458927474A9800CB44C9 /* PFDemoBar.strings in Resources */,
 				E3BD454127474A4E00CB44C9 /* Main.storyboard in Resources */,
 				E3B90822298E6E1A00B96ADF /* image.jpeg in Resources */,
 			);
@@ -765,28 +760,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				E3BD453E27474A4E00CB44C9 /* ViewController.m in Sources */,
+				E3BD458227474A9800CB44C9 /* PFBeautyParam.m in Sources */,
 				E3BD453827474A4E00CB44C9 /* AppDelegate.m in Sources */,
 				E335683028E5897600551FB3 /* PFVideoController.m in Sources */,
 				C958A3102D90019C0019ED6F /* AdjustmentItem.m in Sources */,
 				C958A3122D90019C0019ED6F /* AdjustmentCell.m in Sources */,
-				CE8A101F2EEAE49700F6AD13 /* PFBottomColletionView.m in Sources */,
-				CE8A10202EEAE49700F6AD13 /* PFBeautyView.m in Sources */,
-				CE8A10212EEAE49700F6AD13 /* PFFilterView.m in Sources */,
-				CE8A10222EEAE49700F6AD13 /* PFDateHandle.m in Sources */,
-				CE8A10232EEAE49700F6AD13 /* PFSlider.m in Sources */,
-				CE8A10242EEAE49700F6AD13 /* UIColor+PFBeautyEditView.m in Sources */,
-				CE8A10252EEAE49700F6AD13 /* PFBeautyEditView.m in Sources */,
-				CE8A10262EEAE49700F6AD13 /* UIImage+demobar.m in Sources */,
-				CE8A10272EEAE49700F6AD13 /* PFBeautyParam.m in Sources */,
 				C958A3132D90019C0019ED6F /* PFTakeColorView.m in Sources */,
+				CE1493652ED87A88003C5D4D /* PFBeautyEditView.m in Sources */,
 				C958A3142D90019C0019ED6F /* PFImageHelper.m in Sources */,
+				CE14936C2ED87A94003C5D4D /* UIColor+PFBeautyEditView.m in Sources */,
 				C958A3152D90019C0019ED6F /* PFHLSToolView.m in Sources */,
 				C9CF03812A87685100B2C394 /* PFOpenGLView.m in Sources */,
 				C958A31D2D9004E20019ED6F /* ToolUI.m in Sources */,
+				E3BD458627474A9800CB44C9 /* PFSlider.m in Sources */,
+				E3BD458B27474A9800CB44C9 /* PFDateHandle.m in Sources */,
+				E3BD458427474A9800CB44C9 /* PFBottomColletionView.m in Sources */,
 				E3BBBA04295C274A00306BD9 /* PFMainViewController.m in Sources */,
+				E3BD458327474A9800CB44C9 /* PFBeautyView.m in Sources */,
 				E3BD458D27474A9800CB44C9 /* PFCamera.m in Sources */,
+				E3BD458527474A9800CB44C9 /* PFFilterView.m in Sources */,
 				E335682728E5883C00551FB3 /* PFImageController.m in Sources */,
 				E3BD454927474A5300CB44C9 /* main.m in Sources */,
+				E3BD458827474A9800CB44C9 /* UIImage+demobar.m in Sources */,
 				E3BD453B27474A4E00CB44C9 /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -794,24 +789,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		CE8A10172EEAE49700F6AD13 /* PFDemoBar.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE8A10152EEAE49700F6AD13 /* PFDemoBar.strings */,
-				CE8A10162EEAE49700F6AD13 /* PFDemoBar.strings */,
-			);
-			name = PFDemoBar.strings;
-			sourceTree = "<group>";
-		};
-		CE8A101A2EEAE49700F6AD13 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE8A10182EEAE49700F6AD13 /* Localizable.strings */,
-				CE8A10192EEAE49700F6AD13 /* Localizable.strings */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
 		E3BD453F27474A4E00CB44C9 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -826,6 +803,24 @@
 				E3BD454527474A5300CB44C9 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		E3BD456F27474A9600CB44C9 /* PFDemoBar.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E3BD457027474A9600CB44C9 /* en */,
+				E3BD457627474A9600CB44C9 /* zh-Hans */,
+			);
+			name = PFDemoBar.strings;
+			sourceTree = "<group>";
+		};
+		E3BD457127474A9600CB44C9 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E3BD457227474A9600CB44C9 /* en */,
+				E3BD457727474A9600CB44C9 /* zh-Hans */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -966,6 +961,7 @@
 					"\"$(SRCROOT)/../PixelFreeCxx/Include\"",
 					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Include\"",
 					"\"$(SRCROOT)/../PixelFreeCxx/DetectFace/c\"",
+					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Thirdparty/png\"",
 				);
 				INFOPLIST_FILE = SMBeautyEngine_iOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "望图美颜SDK";
@@ -976,7 +972,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -985,7 +981,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Thirdparty\"",
 				);
-				MARKETING_VERSION = 2.5.02;
+				MARKETING_VERSION = 2.5.05;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pixelFree.demo0;
@@ -1020,6 +1016,7 @@
 					"\"$(SRCROOT)/../PixelFreeCxx/Include\"",
 					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Include\"",
 					"\"$(SRCROOT)/../PixelFreeCxx/DetectFace/c\"",
+					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Thirdparty/png\"",
 				);
 				INFOPLIST_FILE = SMBeautyEngine_iOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "望图美颜SDK";
@@ -1030,7 +1027,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1039,7 +1036,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../PixelFreeCxx/PixelFree/Thirdparty\"",
 				);
-				MARKETING_VERSION = 2.5.02;
+				MARKETING_VERSION = 2.5.05;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pixelFree.demo0;

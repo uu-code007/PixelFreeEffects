@@ -7,4 +7,15 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    
+    <!-- Main UI Colors -->
+    <color name="system_blue">#007AFF</color>
+    <color name="system_pink">#FF2D55</color>
+    <color name="system_purple">#AF52DE</color>
+    <color name="system_green">#34C759</color>
+    <color name="system_background">#FFFFFF</color>
+    <color name="system_background_dark">#F2F2F7</color>
+    <color name="label_color">#000000</color>
+    <color name="secondary_label_color">#8E8E93</color>
+    <color name="shadow_color">#40000000</color>
 </resources>

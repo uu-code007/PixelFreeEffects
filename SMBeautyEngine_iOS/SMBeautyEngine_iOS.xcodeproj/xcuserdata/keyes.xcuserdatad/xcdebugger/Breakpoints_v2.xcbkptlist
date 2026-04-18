@@ -27,8 +27,8 @@
             filePath = "SMBeautyEngine_iOS/View/PFAPIDemoBar/PFAPIDemoBar.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "322"
-            endingLineNumber = "322"
+            startingLineNumber = "324"
+            endingLineNumber = "324"
             landmarkName = "-viewControllerFromView:"
             landmarkType = "7">
          </BreakpointContent>

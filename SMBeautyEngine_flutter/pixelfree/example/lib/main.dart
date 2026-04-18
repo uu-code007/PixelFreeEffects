@@ -58,6 +58,7 @@ class _MyAppState extends State<MyApp> {
       
       // 设置成图片处理模式
       await _pixelFreePlugin.setDetectMode(PFFaceDetectMode.image);
+      await _pixelFreePlugin.setConsoleLogEnabled(false);
       
       await initPlatformState();
 

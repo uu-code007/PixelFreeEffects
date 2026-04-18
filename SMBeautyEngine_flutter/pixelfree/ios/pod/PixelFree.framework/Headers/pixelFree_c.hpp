@@ -163,6 +163,7 @@ typedef enum PFBeautyFilterType{
     //新美白算法 （基于阴影保护美白）
     PFBeautyFilterTypeFaceM_newWhitenStrength,
     //画质增强
+    // @deprecated v2.5.01 已废弃，请使用 PFBeautyFilterTypeFaceSharpenStrength
     PFBeautyFilterTypeFaceH_qualityStrength,
     //亮眼（0~1）
     PFBeautyFilterTypeFaceEyeBrighten,
@@ -185,6 +186,8 @@ typedef enum PFBeautyFilterType{
     PFBeautyFilterNasolabial,
     // 祛黑眼圈
     PFBeautyFilterBlackEye,
+    // 白牙
+    PFBeautyFilterWhitenTeeth,
     
 } PFBeautyFilterType;
 
@@ -251,6 +254,10 @@ typedef enum PFMakeupPart {
 
 // 设置美妆各部位程度值（与配置叠乘）
 PF_CAPI_EXPORT extern int PF_pixelFreeSetMakeupPartDegree(PFPixelFree* pixelFree, int part, float degree);
+
+// 设置是否开启皮肤分割（Skin Mask），enable != 0 表示开启
+PF_CAPI_EXPORT extern void PF_pixelFreeSetSkinMask(PFPixelFree* pixelFree, int enable);
+
 #ifdef __cplusplus
 }
 #endif

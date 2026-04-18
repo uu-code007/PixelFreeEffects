@@ -23,33 +23,22 @@ Java_com_hapi_avrender_OpenGLRender_native_1onFrame(JNIEnv *env, jobject thiz,
                                                     jint pixel_stride,
                                                     jint row_padding) {
     auto *videoGlRender = reinterpret_cast<VideoGLRender *>(render_handler);
-    if (videoGlRender == nullptr) return;
 
+    jbyte *c_array = env->GetByteArrayElements(data, 0);
+    int len_arr = env->GetArrayLength(data);
     NativeImage videoFrame;
     videoFrame.textureID = textureID;
     videoFrame.rotationDegrees = rotation_degrees;
     videoFrame.width = width;
     videoFrame.height = height;
     videoFrame.format = format;
+    videoFrame.ppPlane[0] = reinterpret_cast<uint8_t *>(c_array);
+    videoFrame.pLineSize[0] = len_arr;
     videoFrame.pixelStride = pixel_stride;
     videoFrame.rowPadding = row_padding;
+    videoGlRender->RenderVideoFrame(&videoFrame);
     videoFrame.ppPlane[0] = nullptr;
-    videoFrame.pLineSize[0] = 0;
-
-    if (textureID <= 0) {
-        if (data == nullptr) return;
-        jsize len_arr = env->GetArrayLength(data);
-        if (len_arr <= 0) return;
-        jbyte *c_array = env->GetByteArrayElements(data, nullptr);
-        if (c_array == nullptr) return;
-        videoFrame.ppPlane[0] = reinterpret_cast<uint8_t *>(c_array);
-        videoFrame.pLineSize[0] = len_arr;
-        videoGlRender->RenderVideoFrame(&videoFrame);
-        videoFrame.ppPlane[0] = nullptr;
-        env->ReleaseByteArrayElements(data, c_array, 0);
-    } else {
-        videoGlRender->RenderVideoFrame(&videoFrame);
-    }
+    env->ReleaseByteArrayElements(data, c_array, 0);
 }
 
 extern "C"

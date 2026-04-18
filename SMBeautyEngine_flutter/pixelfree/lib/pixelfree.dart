@@ -130,6 +130,11 @@ class Pixelfree {
     return PixelfreePlatform.instance.setVLogLevel(level, path);
   }
 
+  /// 开关控制台日志输出（不影响写入文件的日志）
+  Future<void> setConsoleLogEnabled(bool enabled) {
+    return PixelfreePlatform.instance.setConsoleLogEnabled(enabled);
+  }
+
   // Get face rectangle
   Future<List<double>> getFaceRect() {
     return PixelfreePlatform.instance.getFaceRect();

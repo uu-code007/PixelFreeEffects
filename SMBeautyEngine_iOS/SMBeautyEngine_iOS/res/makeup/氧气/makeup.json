@@ -1,0 +1,68 @@
+{
+	"tex_brow": "mu_style_eyebrow_01.png",
+	"tex_eye": "mu_style_eyeshadow1_02.png",
+	"tex_eye2": "mu_style_eyeshadow2_02.png",
+	"tex_eye3": "eye3.png",
+	"tex_pupil": "mu_style_eyepupil_01.png",
+	"tex_eyeLash": "mu_style_eyelash_01.png",
+	"tex_eyeLiner": "mu_style_eyeliner_06.png",
+	"tex_blusher": "mu_style_blush_01.png",
+	"tex_foundation": "mu_style_foundation_01.png",
+	"tex_highlight": "zhuangrong_gg.png",
+	"tex_shadow": "zhuangrong_yy.png",
+    "tex_lip": "lip.png",
+    "tex_blend_weight_and_level_map":"tex_blend_weight_and_level_map.png",
+	"makeup_lip_color": [
+		0.84,0.26,0.16,1.0
+	],
+	"makeup_lip_color2": [
+		1.0,0.66,0.55,1.0
+	],
+	"is_two_color":0,
+	"lip_type":1,
+	"brow_warp":1,
+	"brow_warp_type":1,
+	"makeup_eye_color":
+	[
+		0.97,0.70,0.36,1.0,
+		0.70,0.31,0.17,1.0,
+		0.98,0.8,0.76,0.0
+	],
+	"makeup_eyeLiner_color":[
+		0.28,0.16,0.08,1.0
+	],
+	"makeup_eyelash_color":[
+		0.28,0.16,0.08,1.0
+	],
+	"makeup_blusher_color":[
+		0.89,0.26,0.28,1.0
+	],
+	"makeup_foundation_color":[
+		0.91,0.81,0.74,1.0
+	],
+	"makeup_highlight_color":[
+		1.0,0.97,0.93,1.0
+	],
+	"makeup_shadow_color":[
+		0.41,0.22,0.15,1.0
+	],
+	"makeup_eyeBrow_color":[
+		0.28,0.16,0.08,1.0
+	],
+	"makeup_pupil_color":[
+		0.73,0.51,0.11,1.0
+	],
+	"makeup_intensity":1.0,
+	"makeup_intensity_lip":0.6,
+	"makeup_intensity_pupil":0.5,
+	"makeup_intensity_eye":0.7,
+	"makeup_intensity_eyeLiner":0.7,
+	"makeup_intensity_eyelash":0.7,
+	"makeup_intensity_eyeBrow":0.2,
+	"makeup_intensity_blusher":1.0,
+	"makeup_intensity_foundation":1.0,
+	"makeup_intensity_highlight":0.0,
+	"makeup_intensity_shadow":0.0
+	
+	
+}

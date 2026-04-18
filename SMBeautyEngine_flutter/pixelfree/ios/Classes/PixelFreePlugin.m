@@ -256,6 +256,14 @@
 //    NSString *path = dicArguments[@"path"];
 //    [_mPixelFree setVLogLevel:level path:path ? [path UTF8String] : NULL];
     result(NULL);
+  } else if ([@"setConsoleLogEnabled" isEqualToString:call.method]) {
+    if (!_mPixelFree) {
+      result([FlutterError errorWithCode:@"NOT_INITIALIZED" message:@"PixelFree not initialized" details:nil]);
+      return;
+    }
+    BOOL enabled = [dicArguments[@"enabled"] boolValue];
+    [_mPixelFree setConsoleLogEnabled:enabled];
+    result(NULL);
   } else if ([@"getFaceRect" isEqualToString:call.method]) {
 //    if (!_mPixelFree) {
 //      result([FlutterError errorWithCode:@"NOT_INITIALIZED" message:@"PixelFree not initialized" details:nil]);

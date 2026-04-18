@@ -162,8 +162,6 @@ VideoGLRender::VideoGLRender() {
 
 
 void VideoGLRender::RenderVideoFrame(NativeImage *image) {
-    if (image == nullptr) return;
-
     int width = image->width;
     int height = image->height;
     int pixel_stride = image->pixelStride;
@@ -171,8 +169,6 @@ void VideoGLRender::RenderVideoFrame(NativeImage *image) {
     int rotation_degrees = image->rotationDegrees;
     int dataLen = image->pLineSize[0];
     int format = image->format;
-
-    std::lock_guard<std::mutex> lock(m_RenderImageMutex);
 
     if (m_RenderImage != nullptr) {
         if (width != m_RenderImage->width
@@ -185,16 +181,12 @@ void VideoGLRender::RenderVideoFrame(NativeImage *image) {
     }
 
     if (image->textureID <= 0) {
-        if (image->ppPlane[0] == nullptr && dataLen > 0) return;
-
         switch (format) {
             case IMAGE_FORMAT_I420:
                 if (m_RenderImage == nullptr) {
                     m_RenderImage = new NativeImage();
                     m_RenderImage->pLineSize[0] = dataLen;
-                    uint8_t *buf = static_cast<uint8_t *>(malloc(dataLen));
-                    if (!buf) return;
-                    m_RenderImage->ppPlane[0] = buf;
+                    m_RenderImage->ppPlane[0] = static_cast<uint8_t *>(malloc(dataLen));
                 }
                 memcpy(m_RenderImage->ppPlane[0], image->ppPlane[0], dataLen);
                 m_RenderImage->ppPlane[1] = m_RenderImage->ppPlane[0] + width * height;
@@ -205,48 +197,36 @@ void VideoGLRender::RenderVideoFrame(NativeImage *image) {
                 if (m_RenderImage == nullptr) {
                     m_RenderImage = new NativeImage();
                     m_RenderImage->pLineSize[0] = dataLen;
-                    uint8_t *buf = static_cast<uint8_t *>(malloc(dataLen));
-                    if (!buf) return;
-                    m_RenderImage->ppPlane[0] = buf;
+                    m_RenderImage->ppPlane[0] = static_cast<uint8_t *>(malloc(dataLen));
                 }
                 memcpy(m_RenderImage->ppPlane[0], image->ppPlane[0], dataLen);
                 m_RenderImage->ppPlane[1] = m_RenderImage->ppPlane[0] + width * height;
                 break;
             default:
                 //rgba
-                int effective_stride = (pixel_stride > 0) ? pixel_stride : 4;
-                int lenNew = width * height * effective_stride;
-                if (lenNew <= 0) return;
-
+                int lenNew = width * height * pixel_stride;
                 if (m_RenderImage == nullptr || mUseTexture) {
                     mUseTexture = false;
                     m_RenderImage = new NativeImage();
                     m_RenderImage->pLineSize[0] = lenNew;
-                    uint8_t *buf = static_cast<uint8_t *>(malloc(lenNew));
-                    if (!buf) return;
-                    m_RenderImage->ppPlane[0] = buf;
+                    m_RenderImage->ppPlane[0] = static_cast<uint8_t *>(malloc(lenNew));
                 }
 
                 if (m_RenderImage->pLineSize[0] != lenNew) {
                     m_RenderImage->pLineSize[0] = lenNew;
                     free(m_RenderImage->ppPlane[0]);
-                    uint8_t *buf = static_cast<uint8_t *>(malloc(lenNew));
-                    if (!buf) return;
-                    m_RenderImage->ppPlane[0] = buf;
+                    m_RenderImage->ppPlane[0] = static_cast<uint8_t *>(malloc(lenNew));
                 }
                 if (row_padding > 0) {
                     int row = height;
-                    int srcStride = width * (pixel_stride > 0 ? pixel_stride : effective_stride) + row_padding;
-                    int line = width * effective_stride;
-                    if (line > srcStride) line = srcStride;
+                    int line = width * pixel_stride;
                     for (int i = 0; i < row; i++) {
-                        int start = (width * effective_stride) * i;
-                        int start2 = srcStride * i;
-                        memcpy(m_RenderImage->ppPlane[0] + start, image->ppPlane[0] + start2, (size_t)line);
+                        int start = line * i;
+                        int start2 = (width * pixel_stride + row_padding) * i;
+                        memcpy(m_RenderImage->ppPlane[0] + start, image->ppPlane[0] + start2, line);
                     }
                 } else {
-                    size_t copyLen = (size_t)(dataLen < lenNew ? dataLen : lenNew);
-                    memcpy(m_RenderImage->ppPlane[0], image->ppPlane[0], copyLen);
+                    memcpy(m_RenderImage->ppPlane[0], image->ppPlane[0], dataLen);
                 }
                 break;
         }
@@ -264,10 +244,8 @@ void VideoGLRender::RenderVideoFrame(NativeImage *image) {
 }
 
 void VideoGLRender::UnInit() {
-    std::lock_guard<std::mutex> lock(m_RenderImageMutex);
     if (m_RenderImage != nullptr) {
         delete m_RenderImage;
-        m_RenderImage = nullptr;
     }
 }
 
@@ -439,93 +417,71 @@ void VideoGLRender::OnSurfaceChanged(int w, int h) {
 void VideoGLRender::OnDrawFrame() {
     glClear(GL_COLOR_BUFFER_BIT);
 
-    // Copy necessary data under lock to minimize lock duration
-    int textureID = -1000;
-    int format = 0;
-    int width = 0;
-    int height = 0;
-    int rotationDegrees = 0;
-    uint8_t *ppPlane[3] = {nullptr, nullptr, nullptr};
-    GLuint textureIds[TEXTURE_NUM];
-    for (int i = 0; i < TEXTURE_NUM; ++i) {
-        textureIds[i] = m_TextureIds[i];
-    }
+    bool isRend = m_RenderImage==nullptr;
 
-    {
-        std::lock_guard<std::mutex> lock(m_RenderImageMutex);
-        if (m_RenderImage == nullptr) {
-            return;
-        }
-        m_FrameIndex++;
-        textureID = m_RenderImage->textureID;
-        format = m_RenderImage->format;
-        width = m_RenderImage->width;
-        height = m_RenderImage->height;
-        rotationDegrees = m_RenderImage->rotationDegrees;
-        if (textureID <= 0) {
-            ppPlane[0] = m_RenderImage->ppPlane[0];
-            ppPlane[1] = m_RenderImage->ppPlane[1];
-            ppPlane[2] = m_RenderImage->ppPlane[2];
-        } else {
-            textureIds[0] = m_RenderImage->textureID;
-        }
+//    LOGCATE("VideoGLRender::OnDrawFrame ->textureID!=-1000 %d]", isRend);
+    if (m_RenderImage == nullptr) {
+        return;
     }
-
-    // Perform GL operations outside the lock
-    if (textureID > 0) {
-        m_TextureIds[0] = textureIds[0];
+//    LOGCATE("VideoGLRender::OnDrawFrame ->textureID!=-1000 %d]", m_RenderImage->textureID);
+   // if (m_ProgramObj == GL_NONE || m_RenderImage->ppPlane[0] == nullptr) return;
+    m_FrameIndex++;
+    if (m_RenderImage->textureID > 0) {
+        m_TextureIds[0] = m_RenderImage->textureID;
+//        LOGCATE("VideoGLRender::OnDrawFrame ->textureID!=-1000 %d]", m_RenderImage->textureID);
     } else {
-        switch (format) {
+        switch (m_RenderImage->format) {
             case IMAGE_FORMAT_RGBA:
-                if (ppPlane[0] != nullptr) {
-                    glActiveTexture(GL_TEXTURE0);
-                    glBindTexture(GL_TEXTURE_2D, m_TextureIds[0]);
-                    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height,
-                                 0, GL_RGBA, GL_UNSIGNED_BYTE, ppPlane[0]);
-                    glBindTexture(GL_TEXTURE_2D, GL_NONE);
-                }
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, m_TextureIds[0]);
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_RenderImage->width, m_RenderImage->height,
+                             0,
+                             GL_RGBA,
+                             GL_UNSIGNED_BYTE, m_RenderImage->ppPlane[0]);
+                glBindTexture(GL_TEXTURE_2D, GL_NONE);
                 break;
             case IMAGE_FORMAT_NV21:
             case IMAGE_FORMAT_NV12:
-                if (ppPlane[0] != nullptr && ppPlane[1] != nullptr) {
-                    //upload Y plane data
-                    glActiveTexture(GL_TEXTURE0);
-                    glBindTexture(GL_TEXTURE_2D, m_TextureIds[0]);
-                    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, width, height,
-                                 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, ppPlane[0]);
-                    glBindTexture(GL_TEXTURE_2D, GL_NONE);
+                //upload Y plane data
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, m_TextureIds[0]);
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_RenderImage->width,
+                             m_RenderImage->height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE,
+                             m_RenderImage->ppPlane[0]);
+                glBindTexture(GL_TEXTURE_2D, GL_NONE);
 
-                    //update UV plane data
-                    glActiveTexture(GL_TEXTURE1);
-                    glBindTexture(GL_TEXTURE_2D, m_TextureIds[1]);
-                    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, width >> 1,
-                                 height >> 1, 0, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, ppPlane[1]);
-                    glBindTexture(GL_TEXTURE_2D, GL_NONE);
-                }
+                //update UV plane data
+                glActiveTexture(GL_TEXTURE1);
+                glBindTexture(GL_TEXTURE_2D, m_TextureIds[1]);
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, m_RenderImage->width >> 1,
+                             m_RenderImage->height >> 1, 0, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE,
+                             m_RenderImage->ppPlane[1]);
+                glBindTexture(GL_TEXTURE_2D, GL_NONE);
                 break;
             case IMAGE_FORMAT_I420:
-                if (ppPlane[0] != nullptr && ppPlane[1] != nullptr && ppPlane[2] != nullptr) {
-                    //upload Y plane data
-                    glActiveTexture(GL_TEXTURE0);
-                    glBindTexture(GL_TEXTURE_2D, m_TextureIds[0]);
-                    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, width, height,
-                                 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, ppPlane[0]);
-                    glBindTexture(GL_TEXTURE_2D, GL_NONE);
+                //upload Y plane data
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, m_TextureIds[0]);
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_RenderImage->width,
+                             m_RenderImage->height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE,
+                             m_RenderImage->ppPlane[0]);
+                glBindTexture(GL_TEXTURE_2D, GL_NONE);
 
-                    //update U plane data
-                    glActiveTexture(GL_TEXTURE1);
-                    glBindTexture(GL_TEXTURE_2D, m_TextureIds[1]);
-                    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, width >> 1,
-                                 height >> 1, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, ppPlane[1]);
-                    glBindTexture(GL_TEXTURE_2D, GL_NONE);
+                //update U plane data
+                glActiveTexture(GL_TEXTURE1);
+                glBindTexture(GL_TEXTURE_2D, m_TextureIds[1]);
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_RenderImage->width >> 1,
+                             m_RenderImage->height >> 1, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE,
+                             m_RenderImage->ppPlane[1]);
+                glBindTexture(GL_TEXTURE_2D, GL_NONE);
 
-                    //update V plane data
-                    glActiveTexture(GL_TEXTURE2);
-                    glBindTexture(GL_TEXTURE_2D, m_TextureIds[2]);
-                    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, width >> 1,
-                                 height >> 1, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, ppPlane[2]);
-                    glBindTexture(GL_TEXTURE_2D, GL_NONE);
-                }
+                //update V plane data
+                glActiveTexture(GL_TEXTURE2);
+                glBindTexture(GL_TEXTURE_2D, m_TextureIds[2]);
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_RenderImage->width >> 1,
+                             m_RenderImage->height >> 1, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE,
+                             m_RenderImage->ppPlane[2]);
+                glBindTexture(GL_TEXTURE_2D, GL_NONE);
                 break;
             default:
                 break;
@@ -535,7 +491,7 @@ void VideoGLRender::OnDrawFrame() {
     glUseProgram(m_ProgramObj);
     glBindVertexArray(m_VaoId);
     glm::mat4 Model = glm::mat4(1.0f);
-    auto radiansZ = -static_cast<float>(MATH_PI / 180.0f * rotationDegrees);
+    auto radiansZ = -static_cast<float>(MATH_PI / 180.0f * m_RenderImage->rotationDegrees);
     Model = glm::rotate(Model, radiansZ, glm::vec3(0.0f, 0.0f, 1.0f));
     GLUtils::setMat4(m_ProgramObj, "u_MVPMatrix", m_MVPMatrix * Model);
 
@@ -549,8 +505,8 @@ void VideoGLRender::OnDrawFrame() {
 
     float offset = (sin(m_FrameIndex * MATH_PI / 40) + 1.0) / 2.0f;
     GLUtils::setFloat(m_ProgramObj, "u_Offset", offset);
-    GLUtils::setVec2(m_ProgramObj, "u_TexSize", vec2(width, height));
-    GLUtils::setInt(m_ProgramObj, "u_nImgType", format);
+    GLUtils::setVec2(m_ProgramObj, "u_TexSize", vec2(m_RenderImage->width, m_RenderImage->height));
+    GLUtils::setInt(m_ProgramObj, "u_nImgType", m_RenderImage->format);
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, (const void *) 0);
 

@@ -76,6 +76,9 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
 
     private PixelFree mPixelFree;
 
+    // 控制插件层控制台日志的开关（默认开启）
+    private static boolean consoleLogEnabled = true;
+
     private byte[] pixels;
 
     private int openGLTextureId; // 您的 OpenGL 纹理 ID
@@ -148,7 +151,9 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
                         PFSrcType.PFSrcTypeFilter
                 );
 
-                Log.d("[PixelFree]", "bytes len: " + bytes.length + "bytesw len: " + bytes2.length);
+                if (consoleLogEnabled) {
+                    Log.d("[PixelFree]", "bytes len: " + bytes.length + "bytesw len: " + bytes2.length);
+                }
 //        result.success(textureEntry.id());
                 result.success(0);
             }
@@ -494,9 +499,30 @@ public class PixelfreePlugin implements FlutterPlugin, MethodCallHandler {
                 }
                 int level = ((Number) levelObj).intValue();
                 String path = pathObj instanceof String ? (String) pathObj : "";
-                mPixelFree.setLogLevel(level, path);
+        mPixelFree.setLogLevel(level, path);
                 result.success(null);
             }
+      break;
+
+      case "setConsoleLogEnabled": {
+        if (mPixelFree == null) {
+          result.error("NOT_INITIALIZED", "PixelFree not initialized", null);
+          return;
+        }
+        Object enabledObj = call.argument("enabled");
+        if (!(enabledObj instanceof Boolean)) {
+          result.error("INVALID_ARGUMENT", "enabled must be a bool", null);
+          return;
+        }
+        boolean enabled = (Boolean) enabledObj;
+        // 更新插件层日志开关
+        consoleLogEnabled = enabled;
+        // 下发到 SDK，并打印确认日志
+        Log.d("[PixelFree]", "setConsoleLogEnabled called, enabled = " + enabled);
+        mPixelFree.setConsoleLogEnabled(enabled);
+        Log.d("[PixelFree]", "setConsoleLogEnabled dispatched to SDK");
+        result.success(null);
+      }
             break;
 
             case "getFaceRect": {

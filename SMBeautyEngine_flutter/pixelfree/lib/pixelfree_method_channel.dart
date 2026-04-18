@@ -173,6 +173,13 @@ Future<void> setVLogLevel(int level, String? path) async {
   });
 }
 
+  @override
+  Future<void> setConsoleLogEnabled(bool enabled) async {
+    await methodChannel.invokeMethod('setConsoleLogEnabled', {
+      'enabled': enabled,
+    });
+  }
+
 @override
 Future<List<double>> getFaceRect() async {
   final result = await methodChannel.invokeMethod('getFaceRect');

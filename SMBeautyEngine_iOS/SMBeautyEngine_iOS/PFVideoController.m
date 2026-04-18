@@ -7,6 +7,9 @@
 
 #import "PFVideoController.h"
 #import "PFImageController.h"
+#import <OpenGLES/ES2/gl.h>
+#import <OpenGLES/EAGL.h>
+#import "UIColor+PFBeautyEditView.h"
 
 @interface PFVideoController ()<PFCameraDelegate>
 
@@ -18,6 +21,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    // 设置返回按钮颜色
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithHexColorString:@"BAACFF"];
+    
     _mCamera = [[PFCamera alloc] init];
     [_mCamera startCapture];
 //    [_mCamera changeCameraInputDeviceisFront:NO];
@@ -26,6 +32,9 @@
     _openGlView.frame = self.view.bounds;
     _openGlView.contentMode = PFOpenGLViewContentModeScaleAspectFit;
     [self.view insertSubview:self.openGlView atIndex:0];
+    
+    
+    
     
 //    UIButton *lvBtn = [[UIButton alloc] initWithFrame:CGRectMake(20, 100, 140, 44)];
 //    [lvBtn addTarget:self action:@selector(aclick:) forControlEvents:UIControlEventTouchUpInside];
@@ -95,8 +104,39 @@
     }
 }
 
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    // 停止相机采集，及时释放资源
+    if (_mCamera) {
+        [_mCamera stopCapture];
+    }
+    // 提前清理 OpenGL 视图，避免持有 glContext 引用
+    // 注意：这里只移除，不置 nil，因为 dealloc 中会处理
+    if (_openGlView) {
+        [_openGlView removeFromSuperview];
+    }
+    // 强制清理 OpenGL 资源，释放 IOSurface 缓存
+    if (self.mPixelFree && self.mPixelFree.glContext) {
+        [EAGLContext setCurrentContext:self.mPixelFree.glContext];
+        // 强制 OpenGL 完成所有待处理的操作
+        glFinish();
+        [EAGLContext setCurrentContext:nil];
+    }
+}
+
 -(void)dealloc{
-    NSLog(@"dealloc------");
+    // 确保停止相机采集
+    if (_mCamera) {
+        [_mCamera stopCapture];
+        _mCamera.delegate = nil;
+        _mCamera = nil;
+    }
+    // 清理OpenGL视图
+    if (_openGlView) {
+        [_openGlView removeFromSuperview];
+        _openGlView = nil;
+    }
+    NSLog(@"PFVideoController dealloc------");
 }
 
 

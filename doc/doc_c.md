@@ -290,6 +290,7 @@ typedef enum PFBeautyFilterType {
     PFBeautyFilterTypeFaceRuddyStrength,     // 红润（默认0.0，关闭）
     PFBeautyFilterTypeFaceSharpenStrength,   // 锐化（默认0.0，关闭）
     PFBeautyFilterTypeFaceM_newWhitenStrength, // 新美白算法（默认0.0，关闭）
+    // @deprecated v2.5.01 已废弃，请使用 PFBeautyFilterTypeFaceSharpenStrength
     PFBeautyFilterTypeFaceH_qualityStrength, // 画质增强（默认0.0，关闭）
     PFBeautyFilterTypeFaceEyeBrighten,       // 亮眼（默认0.0，关闭）
     PFBeautyFilterName,                      // 滤镜类型
@@ -302,6 +303,24 @@ typedef enum PFBeautyFilterType {
     PFBeautyFilterNasolabial,                // 祛法令纹（默认0.0，关闭）
     PFBeautyFilterBlackEye,                  // 祛黑眼圈（默认0.0，关闭）
     PFBeautyFilterWhitenTeeth,               // 美牙（默认0.0，关闭）
+
+    // ===== 新增：PFWarpFace 细分（默认0.5，取值建议 0.0~1.0）=====
+    PFBeautyFilterTypeFace_eye_y,            // 眼睛上下（>0.5上移，<0.5下移）
+    PFBeautyFilterTypeFace_eye_height,       // 眼高低（>0.5眼裂增大，<0.5眼裂减小）
+    PFBeautyFilterTypeFace_nose_size,        // 鼻子大小（>0.5放大，<0.5缩小）
+    PFBeautyFilterTypeFace_nose_height,      // 鼻子高低（>0.5增高，<0.5降低）
+    PFBeautyFilterTypeFace_nose_y,           // 鼻子上下（>0.5上移，<0.5下移）
+    PFBeautyFilterTypeFace_nose_tip,         // 鼻尖（>0.5更突出，<0.5更收敛）
+    PFBeautyFilterTypeFace_nose_bridge,      // 鼻梁（>0.5更立体，<0.5更平缓）
+    PFBeautyFilterTypeFace_brow_thickness,   // 眉粗细（>0.5加粗，<0.5变细）
+    PFBeautyFilterTypeFace_brow_length,      // 眉长短（>0.5变长，<0.5变短）
+    PFBeautyFilterTypeFace_brow_lift,        // 眉提升（>0.5上提，<0.5下压）
+    PFBeautyFilterTypeFace_brow_distance,    // 眉距离（>0.5拉开，<0.5靠近）
+    PFBeautyFilterTypeFace_brow_tilt,        // 眉倾斜（>0.5眉尾上扬，<0.5眉尾下压）
+    PFBeautyFilterTypeFace_upper_lip_thickness, // 上唇厚度（>0.5变厚，<0.5变薄）
+    PFBeautyFilterTypeFace_lower_lip_thickness, // 下唇厚度（>0.5变厚，<0.5变薄）
+    PFBeautyFilterTypeFace_lip_fullness,     // 丰唇（>0.5更饱满，<0.5更收薄）
+    PFBeautyFilterTypeFace_mouth_width,      // 嘴唇宽度（>0.5变宽，<0.5变窄）
 } PFBeautyFilterType;
 ```
 

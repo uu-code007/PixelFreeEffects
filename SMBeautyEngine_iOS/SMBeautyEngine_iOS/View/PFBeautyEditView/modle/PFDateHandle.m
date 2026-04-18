@@ -47,7 +47,7 @@
 +(NSArray<PFBeautyParam *>*)setupSkinData{
     NSArray *prams = @[@"writen",@"runddy",@"blur",@"sharpen",@"eye_b",@"nasolabialStrength",@"blackEyeStrength",@"teethStrength"];//
     NSDictionary *titelDic = @{@"writen":@"美白",@"runddy":@"红润",@"blur":@"磨皮",@"sharpen":@"锐化",@"newWhitenStrength":@"新美白",@"eye_b":@"亮眼",@"qualityStrength":@"增强画质",@"nasolabialStrength":@"祛法令纹",@"blackEyeStrength":@"祛黑眼圈",@"teethStrength":@"白牙"};
-    NSDictionary *defaultValueDic = @{@"runddy":@(0.6),@"writen":@(0.6),@"blur":@(0.7),@"sharpen":@(0.3),@"eye_b":@(0.0),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.2),@"nasolabialStrength":@(0.0),@"blackEyeStrength":@(0.0),@"teethStrength":@(0.0)};
+    NSDictionary *defaultValueDic = @{@"runddy":@(0.6),@"writen":@(0.6),@"blur":@(0.4),@"sharpen":@(0.6),@"eye_b":@(0.0),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.2),@"nasolabialStrength":@(0.0),@"blackEyeStrength":@(0.0),@"teethStrength":@(0.0)};
     
     NSMutableArray *array = [[NSMutableArray alloc] init];
 
@@ -72,24 +72,72 @@
 //   NSDictionary *defaultValueDic = @{@"faceLiftStrength":@(0.2),@"faceShaveStrength":@(0.2),@"enlargeEyeStrength":@(0.2),@"chinChangeStrength":@(0.2)
 //   };
    
-    NSArray *prams = @[@"face_EyeStrength",@"face_thinning",@"face_narrow",@"face_chin",
-                                      @"face_V",@"face_small",@"face_nose",@"face_forehead",
-                       @"face_mouth",@"face_philtrum",@"face_long_nose",@"face_eye_space",@"face_smile",@"face_eye_rotate",@"face_canthus"];
+    NSArray *prams = @[
+        // 眼部
+        @"face_EyeStrength", @"face_eye_height", @"face_eye_y", @"face_eye_space", @"face_canthus", @"face_eye_rotate",
+        // 面部
+        @"face_small", @"face_forehead", @"face_narrow", @"face_V", @"face_thinning", @"face_chin",
+        // 鼻子
+        @"face_nose", @"face_nose_size", @"face_nose_height", @"face_nose_y", @"face_nose_tip", @"face_nose_bridge",
+        // 眉毛
+        @"face_brow_thickness", @"face_brow_length", @"face_brow_lift", @"face_brow_distance", @"face_brow_tilt",
+        // 嘴唇 / 嘴部
+        @"face_mouth", @"face_philtrum", @"face_smile", @"face_upper_lip_thickness", @"face_lower_lip_thickness", @"face_lip_fullness", @"face_mouth_width"
+    ];
 
-     NSDictionary *titelDic = @{@"face_EyeStrength":@"大眼",@"face_thinning":@"瘦脸",@"face_narrow":@"瘦颧骨",@"face_chin":@"下巴",
-                                @"face_V":@"瘦下颔",@"face_small":@"小脸",@"face_nose":@"瘦鼻",@"face_forehead":@"额头",
-                                @"face_mouth":@"嘴巴",@"face_philtrum":@"人中",@"face_long_nose":@"长鼻",@"face_eye_space":@"眼距",@"face_smile":@"微笑嘴角",@"face_eye_rotate":@"眼睛角度",@"face_canthus":@"开眼角"
+     NSDictionary *titelDic = @{@"face_EyeStrength":@"大眼",@"face_thinning":@"瘦脸",@"face_narrow":@"瘦颧骨",@"face_chin":@"下巴长短",
+                                @"face_V":@"瘦下颔",@"face_small":@"小头",@"face_nose":@"鼻翼",@"face_forehead":@"额头",
+                                @"face_mouth":@"嘴巴大小",@"face_philtrum":@"嘴唇上下",@"face_long_nose":@"长鼻",@"face_eye_space":@"眼距",
+                                @"face_smile":@"微笑",@"face_eye_rotate":@"眼倾斜",@"face_canthus":@"开眼角",
+                                // 新增
+                                @"face_eye_y":@"眼睛上下",
+                                @"face_eye_height":@"眼高低",
+                                @"face_nose_size":@"鼻子大小",
+                                @"face_nose_height":@"鼻子高低",
+                                @"face_nose_y":@"鼻子上下",
+                                @"face_nose_tip":@"鼻尖",
+                                @"face_nose_bridge":@"鼻梁",
+                                @"face_brow_thickness":@"眉粗细",
+                                @"face_brow_length":@"眉长短",
+                                @"face_brow_lift":@"眉提升",
+                                @"face_brow_distance":@"眉距离",
+                                @"face_brow_tilt":@"眉倾斜",
+                                @"face_upper_lip_thickness":@"上唇厚度",
+                                @"face_lower_lip_thickness":@"下唇厚度",
+                                @"face_lip_fullness":@"丰唇",
+                                @"face_mouth_width":@"嘴唇宽度"
      };
     NSDictionary *defaultValueDic = @{@"face_EyeStrength":@(0.2),@"face_thinning":@(0.2),@"face_narrow":@(0.2),@"face_chin":@(0.5),
-                                      @"face_V":@(0.2),@"face_small":@(0.2),@"face_nose":@(0.2),@"face_forehead":@(0.5),
-                                      @"face_mouth":@(0.5),@"face_philtrum":@(0.5),@"face_long_nose":@(0.5),@"face_eye_space":@(0.5),@"face_smile":@(0),@"face_eye_rotate":@(0.5),@"face_canthus":@(0)
+                                      @"face_V":@(0.2),@"face_small":@(0.0),@"face_nose":@(0.2),@"face_forehead":@(0.5),
+                                      @"face_mouth":@(0.5),@"face_philtrum":@(0.5),@"face_long_nose":@(0.5),@"face_eye_space":@(0.5),@"face_smile":@(0),@"face_eye_rotate":@(0.5),@"face_canthus":@(0),
+                                      // 新增：0.5 中性
+                                      @"face_eye_y":@(0.5),
+                                      @"face_eye_height":@(0.5),
+                                      @"face_nose_size":@(0.5),
+                                      @"face_nose_height":@(0.5),
+                                      @"face_nose_y":@(0.5),
+                                      @"face_nose_tip":@(0.5),
+                                      @"face_nose_bridge":@(0.5),
+                                      @"face_brow_thickness":@(0.5),
+                                      @"face_brow_length":@(0.5),
+                                      @"face_brow_lift":@(0.5),
+                                      @"face_brow_distance":@(0.5),
+                                      @"face_brow_tilt":@(0.5),
+                                      @"face_upper_lip_thickness":@(0.5),
+                                      @"face_lower_lip_thickness":@(0.5),
+                                      @"face_lip_fullness":@(0.5),
+                                      @"face_mouth_width":@(0.5)
     };
     
     
    NSMutableArray *array = [[NSMutableArray alloc] init];
    for (NSString *str in prams) {
     BOOL isStyle101 = NO;
-    if ([str isEqualToString:@"face_chin"] || [str isEqualToString:@"face_forehead"] || [str isEqualToString:@"face_mouth"] || [str isEqualToString:@"face_eye_space"] || [str isEqualToString:@"face_long_nose"] || [str isEqualToString:@"face_philtrum"] || [str isEqualToString:@"face_eye_rotate"]) {
+    if ([str isEqualToString:@"face_chin"] || [str isEqualToString:@"face_forehead"] || [str isEqualToString:@"face_mouth"] || [str isEqualToString:@"face_eye_space"] || [str isEqualToString:@"face_long_nose"] || [str isEqualToString:@"face_philtrum"] || [str isEqualToString:@"face_eye_rotate"] ||
+        [str isEqualToString:@"face_eye_y"] || [str isEqualToString:@"face_eye_height"] ||
+        [str isEqualToString:@"face_nose_size"] || [str isEqualToString:@"face_nose_height"] || [str isEqualToString:@"face_nose_y"] || [str isEqualToString:@"face_nose_tip"] || [str isEqualToString:@"face_nose_bridge"] ||
+        [str isEqualToString:@"face_brow_thickness"] || [str isEqualToString:@"face_brow_length"] || [str isEqualToString:@"face_brow_lift"] || [str isEqualToString:@"face_brow_distance"] || [str isEqualToString:@"face_brow_tilt"] ||
+        [str isEqualToString:@"face_upper_lip_thickness"] || [str isEqualToString:@"face_lower_lip_thickness"] || [str isEqualToString:@"face_lip_fullness"] || [str isEqualToString:@"face_mouth_width"]) {
            isStyle101 = YES;
     }
        PFBeautyParam *modle = [[PFBeautyParam alloc] init];

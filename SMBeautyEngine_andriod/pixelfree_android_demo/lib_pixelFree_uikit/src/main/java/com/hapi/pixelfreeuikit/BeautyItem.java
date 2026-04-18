@@ -154,17 +154,31 @@ public class BeautyItem {
     // Check if this item is a two-way adjustment type
     public boolean isTwoWayAdjustment() {
         if (type == null) return false;
-        
-        // 双向调节类型（与BeautyView中的twoWayTypeInts保持一致）
-        int intType = type.getIntType();
-        return intType == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_chin.getIntType() ||
-               intType == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_nose.getIntType() ||
-               intType == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_forehead.getIntType() ||
-               intType == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_mouth.getIntType() ||
-               intType == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_philtrum.getIntType() ||
-               intType == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_long_nose.getIntType() ||
-               intType == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_eye_space.getIntType() ||
-               intType == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_eye_rotate.getIntType();
+
+        // 双向调节类型（与 BeautyView 中 twoWayTypes 保持一致）
+        return type == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_chin ||
+               type == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_forehead ||
+               type == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_mouth ||
+               type == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_philtrum ||
+               type == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_long_nose ||
+               type == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_eye_space ||
+               type == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_eye_rotate ||
+               type == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_eye_y ||
+               type == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_eye_height ||
+               type == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_nose_size ||
+               type == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_nose_height ||
+               type == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_nose_y ||
+               type == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_nose_tip ||
+               type == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_nose_bridge ||
+               type == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_brow_thickness ||
+               type == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_brow_length ||
+               type == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_brow_lift ||
+               type == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_brow_distance ||
+               type == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_brow_tilt ||
+               type == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_upper_lip_thickness ||
+               type == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_lower_lip_thickness ||
+               type == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_lip_fullness ||
+               type == com.hapi.pixelfree.PFBeautyFilterType.PFBeautyFilterTypeFace_mouth_width;
     }
 
     public JSONObject toJSON() throws JSONException {

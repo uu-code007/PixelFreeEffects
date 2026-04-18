@@ -2,27 +2,27 @@ package com.hapi.pixelfree_android
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.opengl.GLES20
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.DisplayMetrics
 import android.util.Log
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
+import android.net.Uri
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.hapi.avparam.ImgFmt
 import com.hapi.avparam.VideoFrame
 import com.hapi.avrender.HapiCapturePreView
 import com.hapi.pixelfree.PFDetectFormat
+import com.hapi.pixelfree.PFFaceDetectMode
 import com.hapi.pixelfree.PFImageInput
 import com.hapi.pixelfree.PFRotationMode
 import com.hapi.pixelfree.PFSrcType
 import com.hapi.pixelfree.PixelFree
 import com.hapi.pixelfreeuikit.PixeBeautyDialog
 import com.hapi.pixelfreeuikit.ColorGradingDialog
-import java.nio.ByteBuffer
 
 class ImageActivity: AppCompatActivity()  {
 
@@ -41,9 +41,14 @@ class ImageActivity: AppCompatActivity()  {
 
     private val handler = Handler(Looper.getMainLooper())
     private var frameCount = 0
-    private lateinit var imageView: ImageView // 声明 ImageView 变量
     private lateinit var rgbaData:ByteArray
     private lateinit var fpstTextView: TextView
+
+    private val pickImageLauncher = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let { handleSelectedImage(it) }
+    }
 
     val hapiCapturePreView by lazy { findViewById<HapiCapturePreView>(R.id.preview) }
 
@@ -70,9 +75,15 @@ class ImageActivity: AppCompatActivity()  {
         // 启动定时任务
         handler.postDelayed(updateImageRunnable, 1)
 
-//        hapiCapturePreView.mHapiGLSurfacePreview.mOpenGLRender.glCreateCall = {
-//            hapiCapturePreView.setMirror(mirrorHorizontal = true)
+        // 相册按钮 & 点击预览均可选择相册图片
+        findViewById<Button>(R.id.btnAlbum).setOnClickListener {
+            pickImageLauncher.launch("image/*")
+        }
+        hapiCapturePreView.setOnClickListener {
+            pickImageLauncher.launch("image/*")
+        }
 
+        hapiCapturePreView.mHapiGLSurfacePreview.mOpenGLRender.glCreateCall = {
             //在绑定上下文后初始化
             mPixelFree.create()
             val authData = mPixelFree.readBundleFile(this@ImageActivity, "pixelfreeAuth.lic")
@@ -89,8 +100,11 @@ class ImageActivity: AppCompatActivity()  {
                 )
             }
 
+            // 设置图片检测模式
+//            mPixelFree.setDetectMode(PFFaceDetectMode.PF_FACE_DETECT_MODE_IMAGE)
+
             mPixeBeautyDialog.show(supportFragmentManager, "")
-//        }
+        }
 
 //        hapiCapturePreView.setScaleType(ScaleType.FIT_CENTER)
         findViewById<Button>(R.id.showBeauty).setOnClickListener {
@@ -139,39 +153,21 @@ class ImageActivity: AppCompatActivity()  {
                     format = PFDetectFormat.PFFORMAT_IMAGE_RGBA
                     rotationMode = PFRotationMode.PFRotationMode0
                 }
-                mPixelFree.processWithBuffer(pxInput)
-
-                val frame = pxInput.p_data0?.let {
-                    val out = VideoFrame(
-                        w, h,
-                        ImgFmt.IMAGE_FORMAT_RGBA,
-                        it,
-                        0,
-                        rowBytes,
-                        0,
-                    )
-                    out.textureID = pxInput.textureID
-                    out
+                if (!isLongPress) {
+                    mPixelFree.processWithBuffer(pxInput)
                 }
 
-                // 截图
-//                if (frameCount == 100) {
-//                    mPixelFree.glThread.runOnGLThread {
-//                        textureIdToBitmap(pxInput.textureID,pxInput.wigth,pxInput.height);
-//                    }
-            //     }
-                if (isLongPress) {
-                    displayBitmap(originBitmap)
-                } else {
-                    mPixelFree.textureIdToBitmap(pxInput.textureID, pxInput.wigth, pxInput.height) { bitmap ->
-                        if (bitmap != null) {
-                            println("[PixelFree] get image bitmap")
-                            displayBitmap(bitmap)
-                        } else {
-                            // Handle error case
-                        }
-                    }
-                }
+                val frame = VideoFrame(
+                    w, h,
+                    ImgFmt.IMAGE_FORMAT_RGBA,
+                    rgbaData,
+                    0,
+                    rowBytes,
+                    0,
+                )
+                // 长按显示原图；松开显示处理后的 texture
+                frame.textureID = if (isLongPress) -1000 else pxInput.textureID
+                hapiCapturePreView.onFrame(frame)
 
                 frameCount++
                 val endTime = System.currentTimeMillis()
@@ -200,23 +196,6 @@ class ImageActivity: AppCompatActivity()  {
         }
     }
 
-    private fun displayBitmap(bitmap: Bitmap) {
-        runOnUiThread { // 确保在主线程更新UI
-            val imageView = findViewById<ImageView>(R.id.imageView) // 替换为您的ImageView ID
-            imageView.setImageBitmap(bitmap)
-
-            val info = """
-        🖼️ Bitmap信息:
-        尺寸: ${bitmap.width}x${bitmap.height}
-        格式: ${bitmap.config}
-        内存: ${bitmap.allocationByteCount / 1024} KB
-        状态: ${if (bitmap.isRecycled) "已回收" else "可用"}
-    """.trimIndent()
-            Log.d("BitmapDebug", info);
-        }
-    }
-
-
     private fun convertBitmapToRGBA(bitmap: Bitmap): ByteArray {
         val width = bitmap.width
         val height = bitmap.height
@@ -224,6 +203,26 @@ class ImageActivity: AppCompatActivity()  {
 
         bitmap.getPixels(rgbaDataa, 0, width, 0, 0, width, height)
         return intArrayToByteArray(rgbaDataa)
+    }
+
+    private fun handleSelectedImage(uri: Uri) {
+        try {
+            contentResolver.openInputStream(uri)?.use { input ->
+                val options = BitmapFactory.Options().apply {
+                    inScaled = false
+                    inDensity = DisplayMetrics.DENSITY_DEFAULT
+                    inTargetDensity = resources.displayMetrics.densityDpi
+                }
+                val bitmap = BitmapFactory.decodeStream(input, null, options) ?: return
+                originBitmap = bitmap
+                w = bitmap.width
+                h = bitmap.height
+                rowBytes = bitmap.rowBytes
+                rgbaData = convertBitmapToRGBA(bitmap)
+            }
+        } catch (e: Exception) {
+            Log.e("ImageActivity", "Failed to load image from gallery", e)
+        }
     }
 
     private fun applyWhiteningFilter(rgbaData: IntArray, width: Int, height: Int): IntArray {
@@ -300,53 +299,4 @@ class ImageActivity: AppCompatActivity()  {
         mPixelFree.release()
         handler.removeCallbacks(updateImageRunnable) // 停止更新
     }
-
-
-    private fun textureIdToBitmap(textureId: Int, width: Int, height: Int): Bitmap? {
-        GLES20.glFinish();
-        var mFrameBuffers = IntArray(1)
-        val mTmpBuffer = ByteBuffer.allocate(width * height * 4)
-        if (textureId != -1) {
-            GLES20.glGenFramebuffers(1, mFrameBuffers, 0)
-            GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
-            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId)
-            GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, mFrameBuffers[0])
-            GLES20.glFramebufferTexture2D(
-                GLES20.GL_FRAMEBUFFER,
-                GLES20.GL_COLOR_ATTACHMENT0,
-                GLES20.GL_TEXTURE_2D,
-                textureId,
-                0
-            )
-        }
-        GLES20.glReadPixels(
-            0,
-            0,
-            width,
-            height,
-            GLES20.GL_RGBA,
-            GLES20.GL_UNSIGNED_BYTE,
-            mTmpBuffer
-        )
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0)
-        GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0)
-
-        // 检查错误
-        val error = GLES20.glGetError()
-        if (error != GLES20.GL_NO_ERROR) {
-            Log.e("OpenGL", "Error reading pixels: $error")
-            return null
-        }
-
-        // 创建 Bitmap
-        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-
-        bitmap.copyPixelsFromBuffer(mTmpBuffer)
-
-        if (mFrameBuffers != null) {
-            GLES20.glDeleteFramebuffers(1, mFrameBuffers, 0)
-        }
-        return bitmap
-    }
-
 }

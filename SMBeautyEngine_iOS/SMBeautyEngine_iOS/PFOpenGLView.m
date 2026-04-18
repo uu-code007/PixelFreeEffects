@@ -287,7 +287,14 @@ enum
             CFRelease(self->videoTextureCache);
             self->videoTextureCache = NULL;
         }
+        // 清理 glContext 引用，避免阻止 mPixelFree 的释放
+        // 注意：这里不释放 glContext，因为它属于 mPixelFree
+        if ([EAGLContext currentContext] == self.glContext) {
+            [EAGLContext setCurrentContext:nil];
+        }
+        self.glContext = nil;
     });
+    NSLog(@"PFOpenGLView dealloc");
 }
 
 - (void)createDisplayFramebuffer

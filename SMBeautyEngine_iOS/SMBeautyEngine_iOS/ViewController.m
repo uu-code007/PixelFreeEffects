@@ -90,6 +90,58 @@
             [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_canthus value:&value];
         }
 
+        // ===== 新增：ins1.png 点位细分 =====
+        if ([param.mParam isEqualToString:@"face_eye_y"]) {
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_eye_y value:&value];
+        }
+        if ([param.mParam isEqualToString:@"face_eye_height"]) {
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_eye_height value:&value];
+        }
+        if ([param.mParam isEqualToString:@"face_nose_size"]) {
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_nose_size value:&value];
+        }
+        if ([param.mParam isEqualToString:@"face_nose_height"]) {
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_nose_height value:&value];
+        }
+        if ([param.mParam isEqualToString:@"face_nose_y"]) {
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_nose_y value:&value];
+        }
+        if ([param.mParam isEqualToString:@"face_nose_tip"]) {
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_nose_tip value:&value];
+        }
+        if ([param.mParam isEqualToString:@"face_nose_bridge"]) {
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_nose_bridge value:&value];
+        }
+
+        if ([param.mParam isEqualToString:@"face_brow_thickness"]) {
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_brow_thickness value:&value];
+        }
+        if ([param.mParam isEqualToString:@"face_brow_length"]) {
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_brow_length value:&value];
+        }
+        if ([param.mParam isEqualToString:@"face_brow_lift"]) {
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_brow_lift value:&value];
+        }
+        if ([param.mParam isEqualToString:@"face_brow_distance"]) {
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_brow_distance value:&value];
+        }
+        if ([param.mParam isEqualToString:@"face_brow_tilt"]) {
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_brow_tilt value:&value];
+        }
+
+        if ([param.mParam isEqualToString:@"face_upper_lip_thickness"]) {
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_upper_lip_thickness value:&value];
+        }
+        if ([param.mParam isEqualToString:@"face_lower_lip_thickness"]) {
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_lower_lip_thickness value:&value];
+        }
+        if ([param.mParam isEqualToString:@"face_lip_fullness"]) {
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_lip_fullness value:&value];
+        }
+        if ([param.mParam isEqualToString:@"face_mouth_width"]) {
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFace_mouth_width value:&value];
+        }
+
           if ([param.mParam isEqualToString:@"runddy"]) {
               [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFaceRuddyStrength value:&value];
           }

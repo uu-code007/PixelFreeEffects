@@ -4,28 +4,476 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient"
     tools:context=".StartActivity">
 
-    <Button
-        android:id="@+id/record"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:text="摄像头"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-    <Button
-        android:id="@+id/image"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="24dp"
+            android:paddingBottom="24dp">
+
+            <!-- Header Section -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/headerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:paddingBottom="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <!-- Icon Container -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/iconContainer"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:elevation="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_launcher"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- Icon (using Material Icon) -->
+                <ImageView
+                    android:id="@+id/iconView"
+                    android:layout_width="52dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_sparkles"
+                    android:scaleType="fitCenter"
+                    android:tint="@color/white"
+                    android:contentDescription="@string/app_name"
+                    app:layout_constraintTop_toTopOf="@id/iconContainer"
+                    app:layout_constraintBottom_toBottomOf="@id/iconContainer"
+                    app:layout_constraintStart_toStartOf="@id/iconContainer"
+                    app:layout_constraintEnd_toEndOf="@id/iconContainer" />
+
+                <!-- Title -->
+                <TextView
+                    android:id="@+id/titleLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_title"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/label_color"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/iconContainer"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <!-- Subtitle -->
+                <TextView
+                    android:id="@+id/subtitleLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_subtitle"
+                    android:textSize="16sp"
+                    android:textColor="@color/secondary_label_color"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintTop_toBottomOf="@id/titleLabel"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Features Section -->
+            <LinearLayout
+                android:id="@+id/featuresView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:paddingTop="24dp"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/headerView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <!-- Feature 1: 智能美颜 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="12dp">
+
+                    <com.hapi.pixelfree_android.AspectRatioFrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/feature_card"
+                        android:elevation="4dp"
+                        app:aspectRatio="1.0">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_smart_beauty"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/feature_smart_beauty" />
+                    </com.hapi.pixelfree_android.AspectRatioFrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/feature_smart_beauty"
+                        android:textSize="12sp"
+                        android:textColor="@color/secondary_label_color"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+
+                <!-- Feature 2: 一键美化 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="12dp">
+
+                    <com.hapi.pixelfree_android.AspectRatioFrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/feature_card"
+                        android:elevation="4dp"
+                        app:aspectRatio="1.0">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_one_click"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/feature_one_click" />
+                    </com.hapi.pixelfree_android.AspectRatioFrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/feature_one_click"
+                        android:textSize="12sp"
+                        android:textColor="@color/secondary_label_color"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+
+                <!-- Feature 3: 滤镜特效 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="12dp">
+
+                    <com.hapi.pixelfree_android.AspectRatioFrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/feature_card"
+                        android:elevation="4dp"
+                        app:aspectRatio="1.0">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_filter"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/feature_filter" />
+                    </com.hapi.pixelfree_android.AspectRatioFrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/feature_filter"
+                        android:textSize="12sp"
+                        android:textColor="@color/secondary_label_color"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+
+                <!-- Feature 4: 美妆 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <com.hapi.pixelfree_android.AspectRatioFrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/feature_card"
+                        android:elevation="4dp"
+                        app:aspectRatio="1.0">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_makeup"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/feature_makeup" />
+                    </com.hapi.pixelfree_android.AspectRatioFrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/feature_makeup"
+                        android:textSize="12sp"
+                        android:textColor="@color/secondary_label_color"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Main Buttons Section -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/buttonsView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:paddingTop="24dp"
+                app:layout_constraintTop_toBottomOf="@id/featuresView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <!-- Camera Button -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cameraButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="88dp"
+                    android:background="@drawable/btn_camera_gradient"
+                    android:elevation="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <!-- Icon Container -->
+                    <View
+                        android:id="@+id/cameraIconContainer"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:background="@drawable/button_icon_container"
+                        android:layout_marginStart="32dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/cameraIcon"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/ic_camera"
+                        android:contentDescription="@string/camera_preview"
+                        app:layout_constraintTop_toTopOf="@id/cameraIconContainer"
+                        app:layout_constraintBottom_toBottomOf="@id/cameraIconContainer"
+                        app:layout_constraintStart_toStartOf="@id/cameraIconContainer"
+                        app:layout_constraintEnd_toEndOf="@id/cameraIconContainer" />
+
+                    <!-- Text Container -->
+                    <LinearLayout
+                        android:id="@+id/cameraTextContainer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintStart_toEndOf="@id/cameraIconContainer"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <TextView
+                            android:id="@+id/cameraTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/camera_preview"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/cameraSubtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/camera_subtitle"
+                            android:textSize="14sp"
+                            android:textColor="#E6FFFFFF"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+
+                    <!-- Arrow -->
+                    <TextView
+                        android:id="@+id/cameraArrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:text="图片"
+                        android:text="→"
+                        android:textSize="24sp"
+                        android:textColor="@color/white"
+                        android:layout_marginEnd="32dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- Image Button -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/imageButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="88dp"
+                    android:background="@drawable/btn_image_gradient"
+                    android:elevation="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/cameraButton"
+                    app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <!-- Icon Container -->
+                    <View
+                        android:id="@+id/imageIconContainer"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:background="@drawable/button_icon_container"
+                        android:layout_marginStart="32dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageIcon"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/ic_photo"
+                        android:contentDescription="@string/image_process"
+                        app:layout_constraintTop_toTopOf="@id/imageIconContainer"
+                        app:layout_constraintBottom_toBottomOf="@id/imageIconContainer"
+                        app:layout_constraintStart_toStartOf="@id/imageIconContainer"
+                        app:layout_constraintEnd_toEndOf="@id/imageIconContainer" />
+
+                    <!-- Text Container -->
+                    <LinearLayout
+                        android:id="@+id/imageTextContainer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintStart_toEndOf="@id/imageIconContainer"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <TextView
+                            android:id="@+id/imageTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/image_process"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/imageSubtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/image_subtitle"
+                            android:textSize="14sp"
+                            android:textColor="#E6FFFFFF"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+
+                    <!-- Arrow -->
+                    <TextView
+                        android:id="@+id/imageArrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+                        android:text="→"
+                        android:textSize="24sp"
+                        android:textColor="@color/white"
+                        android:layout_marginEnd="32dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Footer Section -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/footerView"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/footer_card"
+                android:elevation="4dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintTop_toBottomOf="@id/buttonsView"
+                app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <!-- Status Indicator -->
+                <View
+                    android:id="@+id/statusView"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/status_indicator"
+                    android:layout_marginEnd="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <!-- Status Label -->
+                <TextView
+                    android:id="@+id/statusLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sdk_ready"
+                    android:textSize="14sp"
+                    android:textColor="@color/secondary_label_color"
+                    app:layout_constraintStart_toEndOf="@id/statusView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <!-- Version Label -->
+                <TextView
+                    android:id="@+id/versionLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/version"
+                    android:textSize="14sp"
+                    android:textColor="@color/secondary_label_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
