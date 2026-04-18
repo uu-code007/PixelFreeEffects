@@ -129,6 +129,57 @@ float eyeBrightenValue = 0.3f;
 [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFaceEyeBrighten value:&eyeBrightenValue];
 ```
 
+## 美体参数（v2.5.06+）
+
+基于人体 25 关键点对身体区域塑形，与美型（脸部）独立。`key` 为 `PFBodyBeautyType` 枚举整型，`value` 为 `float *`，一般取值 **0.0 ~ 1.0**，**默认 0.5 表示中性**（无调节效果）。部分项目以 0.5 为分界向两侧增强/反向，含义见下表及 `pixelFree_c.hpp` 内注释。
+
+### pixelFreeSetBodyBeautyParam:value:
+
+```objective-c
+- (void)pixelFreeSetBodyBeautyParam:(int)key value:(void *)value;
+```
+
+**参数：**
+- `key`: `PFBodyBeautyType` 枚举值（与 C 头文件一致）
+- `value`: 指向 `float` 的指针
+
+**示例：**
+```objective-c
+float slim = 0.65f;
+[_mPixelFree pixelFreeSetBodyBeautyParam:PFBodyBeautyTypeSlimBody value:&slim];
+
+float waist = 0.5f; // 中性
+[_mPixelFree pixelFreeSetBodyBeautyParam:PFBodyBeautyTypeSlimWaist value:&waist];
+```
+
+### PFBodyBeautyType 与中文名称对照
+
+| 枚举值 | 枚举名 | 中文（与 Demo 调节项一致） |
+| -----: | ------ | ------------------------- |
+| 0 | `PFBodyBeautyTypePreset` | 体型预设（0~6 子风格，见头文件） |
+| 1 | `PFBodyBeautyTypeSlimBody` | 瘦身 |
+| 2 | `PFBodyBeautyTypeSlimWaist` | 瘦腰 |
+| 3 | `PFBodyBeautyTypeBelly` | 沙漏腰 |
+| 4 | `PFBodyBeautyTypeCurve` | 曲线 |
+| 5 | `PFBodyBeautyTypeFullSlim` | 全身瘦 |
+| 6 | `PFBodyBeautyTypeHipLift` | 提跨（0.5 中性；>0.5 上提，<0.5 下压） |
+| 7 | `PFBodyBeautyTypeHipEnlarge` | 丰臀（0.5 中性；>0.5 丰臀，<0.5 缩臀） |
+| 8 | `PFBodyBeautyTypeBreastEnlarge` | 丰胸 |
+| 9 | `PFBodyBeautyTypeSlimArm` | 手臂（整体） |
+| 10 | `PFBodyBeautyTypeSwanNeck` | 天鹅颈 |
+| 11 | `PFBodyBeautyTypeShoulderThin` | 瘦肩膀 |
+| 12 | `PFBodyBeautyTypeRightAngleShoulder` | 直角肩 |
+| 13 | `PFBodyBeautyTypeLeftUpperArm` | 左大臂 |
+| 14 | `PFBodyBeautyTypeLeftLowerArm` | 左小臂 |
+| 15 | `PFBodyBeautyTypeRightUpperArm` | 右大臂 |
+| 16 | `PFBodyBeautyTypeRightLowerArm` | 右小臂 |
+| 17 | `PFBodyBeautyTypeLeftUpperLeg` | 左大腿 |
+| 18 | `PFBodyBeautyTypeLeftLowerLeg` | 左小腿 |
+| 19 | `PFBodyBeautyTypeRightUpperLeg` | 右大腿 |
+| 20 | `PFBodyBeautyTypeRightLowerLeg` | 右小腿 |
+| 21 | `PFBodyBeautyTypeHeight` | 长腿（0.5 中性；>0.5 拉长，<0.5 缩短） |
+| 22 | `PFBodyBeautyTypeSlimBelly` | 瘦肚子（0.5 中性；径向液化，作用范围小于瘦身） |
+
 ## 资源加载
 
 ### createBeautyItemFormBundle:size:

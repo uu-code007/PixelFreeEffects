@@ -14,7 +14,7 @@
 
 ```gradle
 dependencies {
-    implementation 'io.github.uu-code007:lib_pixelFree:2.4.9'
+    implementation 'io.github.uu-code007:lib_pixelFree:2.5.06'
 }
 ```
 
@@ -167,6 +167,58 @@ pixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFilterWhitenTeeth, 0.5f)
 // 设置亮眼强度
 pixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFiterTypeFaceEyeBrighten, 0.3f)
 ```
+
+## 美体参数（v2.5.06+）
+
+与脸部美型独立，基于人体关键点。**请使用已包含美体 JNI 的 SDK 版本**；接口与 C 层 `PF_pixelFreeSetBodyBeautyParam` 一致：`key` 为美体类型整型（`PFBodyBeautyType` 枚举序号），`value` 为 `Float`，范围建议 **0.0 ~ 1.0**，**0.5 为中性**。
+
+### pixelFreeSetBodyBeautyParam()（以 AAR 实际导出方法名为准）
+
+```kotlin
+fun pixelFreeSetBodyBeautyParam(key: Int, value: Float)
+// 若 SDK 以枚举暴露，则可能是：
+// fun pixelFreeSetBodyBeautyParam(type: PFBodyBeautyType, value: Float)
+```
+
+**参数：**
+- `key` / `type`: 与 `PFBodyBeautyType` 相同的取值（见下表）
+- `value`: 强度，0.0 ~ 1.0，默认中性 0.5
+
+**示例：**
+```kotlin
+pixelFree.pixelFreeSetBodyBeautyParam(1, 0.65f) // PFBodyBeautyTypeSlimBody：瘦身
+pixelFree.pixelFreeSetBodyBeautyParam(22, 0.5f) // PFBodyBeautyTypeSlimBelly：瘦肚子，中性
+```
+
+### PFBodyBeautyType 与中文名称对照
+
+| 值 | 中文 |
+| --: | ---- |
+| 0 | 体型预设 |
+| 1 | 瘦身 |
+| 2 | 瘦腰 |
+| 3 | 沙漏腰 |
+| 4 | 曲线 |
+| 5 | 全身瘦 |
+| 6 | 提跨 |
+| 7 | 丰臀 |
+| 8 | 丰胸 |
+| 9 | 手臂（整体） |
+| 10 | 天鹅颈 |
+| 11 | 瘦肩膀 |
+| 12 | 直角肩 |
+| 13 | 左大臂 |
+| 14 | 左小臂 |
+| 15 | 右大臂 |
+| 16 | 右小臂 |
+| 17 | 左大腿 |
+| 18 | 左小腿 |
+| 19 | 右大腿 |
+| 20 | 右小腿 |
+| 21 | 长腿 |
+| 22 | 瘦肚子 |
+
+详细语义与头文件 `pixelFree_c.hpp` 中 `PFBodyBeautyType` 注释一致。
 
 ### pixelFreeSetBeautyFiterParam()
 

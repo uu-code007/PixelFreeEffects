@@ -272,6 +272,60 @@ float filterStrength = 0.8f;
 PF_pixelFreeSetBeautyFilterParam(handle, PFBeautyFilterStrength, &filterStrength);
 ```
 
+## 美体参数（v2.5.06+）
+
+基于人体 25 关键点，与脸部美型参数独立。使用 `PF_pixelFreeSetBodyBeautyParam` 设置；`key` 为 `PFBodyBeautyType`，`value` 为指向 `float` 的指针，一般 **0.0 ~ 1.0**，**0.5 为中性**。
+
+### PF_pixelFreeSetBodyBeautyParam()
+
+```c
+void PF_pixelFreeSetBodyBeautyParam(PFPixelFree* pixelFree, int key, void *value);
+```
+
+**参数：**
+- `pixelFree`: 实例指针
+- `key`: `PFBodyBeautyType` 枚举值
+- `value`: `float *` 强度
+
+**示例：**
+```c
+float v = 0.65f;
+PF_pixelFreeSetBodyBeautyParam(handle, PFBodyBeautyTypeSlimBody, &v);
+
+float neutral = 0.5f;
+PF_pixelFreeSetBodyBeautyParam(handle, PFBodyBeautyTypeSlimBelly, &neutral);
+```
+
+### PFBodyBeautyType 与中文名称对照
+
+| 值 | 枚举名 | 中文 |
+| --: | ------ | ---- |
+| 0 | `PFBodyBeautyTypePreset` | 体型预设 |
+| 1 | `PFBodyBeautyTypeSlimBody` | 瘦身 |
+| 2 | `PFBodyBeautyTypeSlimWaist` | 瘦腰 |
+| 3 | `PFBodyBeautyTypeBelly` | 沙漏腰 |
+| 4 | `PFBodyBeautyTypeCurve` | 曲线 |
+| 5 | `PFBodyBeautyTypeFullSlim` | 全身瘦 |
+| 6 | `PFBodyBeautyTypeHipLift` | 提跨 |
+| 7 | `PFBodyBeautyTypeHipEnlarge` | 丰臀 |
+| 8 | `PFBodyBeautyTypeBreastEnlarge` | 丰胸 |
+| 9 | `PFBodyBeautyTypeSlimArm` | 手臂（整体） |
+| 10 | `PFBodyBeautyTypeSwanNeck` | 天鹅颈 |
+| 11 | `PFBodyBeautyTypeShoulderThin` | 瘦肩膀 |
+| 12 | `PFBodyBeautyTypeRightAngleShoulder` | 直角肩 |
+| 13 | `PFBodyBeautyTypeLeftUpperArm` | 左大臂 |
+| 14 | `PFBodyBeautyTypeLeftLowerArm` | 左小臂 |
+| 15 | `PFBodyBeautyTypeRightUpperArm` | 右大臂 |
+| 16 | `PFBodyBeautyTypeRightLowerArm` | 右小臂 |
+| 17 | `PFBodyBeautyTypeLeftUpperLeg` | 左大腿 |
+| 18 | `PFBodyBeautyTypeLeftLowerLeg` | 左小腿 |
+| 19 | `PFBodyBeautyTypeRightUpperLeg` | 右大腿 |
+| 20 | `PFBodyBeautyTypeRightLowerLeg` | 右小腿 |
+| 21 | `PFBodyBeautyTypeHeight` | 长腿 |
+| 22 | `PFBodyBeautyTypeSlimBelly` | 瘦肚子 |
+
+方向性说明（提跨、丰臀、长腿、瘦肚子等）以 `pixelFree_c.hpp` 中 `PFBodyBeautyType` 注释为准。
+
 ## 图像处理
 
 ### PF_processWithBuffer()

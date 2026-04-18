@@ -7,47 +7,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "11E66F8E-7FDD-48B8-AA12-F5AA3B045349"
+            uuid = "1BD25EE1-7D63-48F0-A80D-A1171042ECD5"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SMBeautyEngine_iOS/ViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "277"
-            endingLineNumber = "277"
+            startingLineNumber = "329"
+            endingLineNumber = "329"
             landmarkName = "-initPixelFree"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "11E66F8E-7FDD-48B8-AA12-F5AA3B045349 - 6bcc5274eae79d7c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[ViewController initPixelFree]"
-                  moduleName = "SMBeautyEngine_iOS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/user/Desktop/me/PixelFreeEffects/SMBeautyEngine_iOS/SMBeautyEngine_iOS/ViewController.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "278"
-                  endingLineNumber = "278">
-               </Location>
-               <Location
-                  uuid = "11E66F8E-7FDD-48B8-AA12-F5AA3B045349 - 6bcc5274eae79d5d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[ViewController initPixelFree]"
-                  moduleName = "SMBeautyEngine_iOS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/user/Desktop/me/PixelFreeEffects/SMBeautyEngine_iOS/SMBeautyEngine_iOS/ViewController.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "277"
-                  endingLineNumber = "277">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

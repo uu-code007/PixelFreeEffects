@@ -58,4 +58,14 @@ SMBeautyEngine_uniapp/
 
 ## API 文档
 
-详细 API 文档请参考 [doc/doc_uniapp.md](./doc/doc_uniapp.md)
+通用接口说明见仓库根目录：
+
+- [Android API 文档](../doc/api_android.md)
+- [iOS API 文档](../doc/api_iOS.md)
+- [Flutter API 文档](../doc/api_flutter.md)
+
+### 美体（v2.5.06+）
+
+与美颜美型独立，`key` 为 `PFBodyBeautyType` 整型（0～22），`value` 为 **0.0～1.0**（**0.5 中性**）。对照表见 [api_android.md 美体章节](../doc/api_android.md#美体参数v2506) / [api_iOS.md](../doc/api_iOS.md#美体参数v2506)。
+
+当前 UniApp 原生插件需在 Android `PixelFreeModule` / iOS 插件中增加对 `pixelFreeSetBodyBeautyParam` 的封装后，再在 `js_sdk/pixelfree.js` 中暴露对应方法。

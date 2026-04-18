@@ -12,7 +12,7 @@
 
 ```yaml
 dependencies:
-  pixelfree: ^2.4.15
+  pixelfree: ^2.5.06
 ```
 
 ## 导入
@@ -136,6 +136,56 @@ Future<void> pixelFreeSetBeautyTypeParam(PFBeautyFiterType type, int value)
 **参数：**
 - `type`: 美颜参数类型
 - `value`: 风格索引值
+
+## 美体参数（v2.5.06+）
+
+与脸部美型独立。底层与 `PF_pixelFreeSetBodyBeautyParam` 一致。**请使用已暴露该能力的插件版本**；若当前插件尚未封装，可通过 Platform Channel 自行调用原生 `pixelFreeSetBodyBeautyParam` / `PF_pixelFreeSetBodyBeautyParam`。
+
+### pixelFreeSetBodyBeautyParam()（约定）
+
+```dart
+Future<void> pixelFreeSetBodyBeautyParam(int type, double value)
+// 或与 iOS/Android 枚举对齐：
+// Future<void> pixelFreeSetBodyBeautyParam(PFBodyBeautyType type, double value)
+```
+
+**参数：**
+- `type`: `PFBodyBeautyType` 整型，与 C 枚举顺序一致
+- `value`: 0.0 ~ 1.0，**0.5 为中性**
+
+**示例：**
+```dart
+await pixelfree.pixelFreeSetBodyBeautyParam(1, 0.65); // 瘦身
+await pixelfree.pixelFreeSetBodyBeautyParam(22, 0.5); // 瘦肚子，中性
+```
+
+### PFBodyBeautyType 与中文名称对照
+
+| 值 | 中文 |
+| --: | ---- |
+| 0 | 体型预设 |
+| 1 | 瘦身 |
+| 2 | 瘦腰 |
+| 3 | 沙漏腰 |
+| 4 | 曲线 |
+| 5 | 全身瘦 |
+| 6 | 提跨 |
+| 7 | 丰臀 |
+| 8 | 丰胸 |
+| 9 | 手臂（整体） |
+| 10 | 天鹅颈 |
+| 11 | 瘦肩膀 |
+| 12 | 直角肩 |
+| 13 | 左大臂 |
+| 14 | 左小臂 |
+| 15 | 右大臂 |
+| 16 | 右小臂 |
+| 17 | 左大腿 |
+| 18 | 左小腿 |
+| 19 | 右大腿 |
+| 20 | 右小腿 |
+| 21 | 长腿 |
+| 22 | 瘦肚子 |
 
 ## 滤镜设置
 

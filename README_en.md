@@ -73,6 +73,7 @@ Full feature performance test:
 | **Basic Beauty** | Whitening, Skin Smoothing, Rosy, Sharpening, Eye Brightening, Remove Nasolabial Folds, Remove Dark Circles, Teeth Whitening |
 | **Filters** | 50+ options available |
 | **Face Shaping** | Eye Enlarging, Face Slimming, Narrow Face, Forehead, Chin, Nose Slimming, V-Shape, Short Face, Philtrum, Long Nose, Eye Distance, Smile, Eye Rotation, Eye Corner |
+| **Body Shaping** | Full-body slim, belly, waist, hourglass waist, curves, full-body narrow, hip lift, hip/bust enhancement, longer legs, swan neck, shoulders, upper/lower arms and legs, etc. (`PFBodyBeautyType`; default 0.5 neutral, range 0–1) |
 | **One-Tap Beauty** | Natural, Cute, Goddess, Fair |
 | **Camera Tuning** | Brightness, Contrast, Exposure, Highlights, Shadows, Saturation, Temperature, Hue (Global HLS adjustment, key color adjustment) |
 | **Face Stickers** | 60+ 2D stickers available |
