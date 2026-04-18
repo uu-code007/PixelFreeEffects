@@ -59,6 +59,9 @@ __attribute__((visibility("default"))) @interface SMPixelFree : NSObject
 
 - (void)pixelFreeSetBeautyFilterParam:(int)key value:(void *)value;
 
+// 美体参数（基于人体 25 关键点）
+- (void)pixelFreeSetBodyBeautyParam:(int)key value:(void *)value;
+
 // 加载美颜bundle
 - (void)createBeautyItemFormBundleKey:(int)key data:(void*)data size:(int)sz;
 
@@ -88,6 +91,12 @@ __attribute__((visibility("default"))) @interface SMPixelFree : NSObject
 
 // 设置美妆部位程度（与配置叠乘）
 - (void)pixelFreeSetMakeupPart:(int)part degree:(float)degree;
+
+// 设置是否开启皮肤分割（Skin Mask），默认不开启
+- (void)pixelFreeSetSkinMaskEnabled:(BOOL)enabled;
+
+// 设置是否输出日志到控制台（全局开关）
+- (void)setConsoleLogEnabled:(BOOL)enabled;
 
 @end
 

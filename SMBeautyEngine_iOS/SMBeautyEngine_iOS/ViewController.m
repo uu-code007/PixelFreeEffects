@@ -269,7 +269,8 @@
 
 
 -(void)initPixelFree{
-    NSString *face_FiltePath = [[NSBundle mainBundle] pathForResource:@"filter_model.bundle" ofType:nil];
+    NSBundle *libBundle = [NSBundle bundleForClass:[SMPixelFree class]];
+    NSString *face_FiltePath = [libBundle pathForResource:@"filter_model.bundle" ofType:nil];
 //    NSString *face_DetectPath = [[NSBundle mainBundle] pathForResource:@"face_detect.bundle" ofType:nil];
     NSString *authFile = [[NSBundle mainBundle] pathForResource:@"pixelfreeAuth.lic" ofType:nil];
     
@@ -279,8 +280,6 @@
     
 //    NSLog(@"mPixelFree retain  count = %ld\n",CFGetRetainCount((__bridge  CFTypeRef)(self.mPixelFree)));
 
-
-    
     CFAbsoluteTime endTime = (CFAbsoluteTimeGetCurrent() - startTime);
 
     [self.view addSubview:self.beautyEditView];
