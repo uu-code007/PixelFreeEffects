@@ -1,3 +1,7 @@
+## 2.5.7
+- 新增 AI 祛瑕疵参数 `PFBeautyFiterType.fleckFlawClean`
+- 对齐 Android / iOS v2.5.07 SDK 文档说明
+
 ## 2.5.6
 - 磨皮只作用人脸
 - 磨皮自动开启肤色均匀

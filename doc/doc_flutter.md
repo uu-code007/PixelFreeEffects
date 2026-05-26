@@ -25,6 +25,9 @@ dependencies:
    
    // 美牙
    await _pixelFreePlugin.pixelFreeSetBeautyFiterParam(PFBeautyFiterType.whitenTeeth, 0.5);
+
+   // AI 祛瑕疵
+   await _pixelFreePlugin.pixelFreeSetBeautyFilterParam(PFBeautyFiterType.fleckFlawClean, 0.6);
    ```
 
 3. 滤镜与程度
@@ -114,9 +117,10 @@ enum PFBeautyFiterType {
   blackEye,
   // 美牙（默认0.0，关闭）
   whitenTeeth,
+  // AI 祛瑕疵（默认0.0，关闭；v2.5.07+）
+  fleckFlawClean,
 }
 ```
-
 
 
 

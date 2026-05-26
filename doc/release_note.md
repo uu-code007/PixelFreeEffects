@@ -1,4 +1,14 @@
 #### 更新日志
+**2026-05-20 日更新** SDK v2.5.07
+
+- 新增 **AI 祛瑕疵**：
+  - 美颜参数新增 `PFBeautyFilterFleckFlawClean`，强度范围 **0.0 ~ 1.0**，默认 0 关闭。
+  - 支持通过通用美颜参数接口设置：`pixelFreeSetBeautyFilterParam` / `pixelFreeSetBeautyFiterParam`。
+  - C API 增加独立接口 `PF_pixelFreeSetFleckFlawClean(PFPixelFree* pixelFree, float strength)`。
+  - 内部按需开启 skin segmentation 与 delspot 输出，适用于痘印、斑点等面部瑕疵弱化场景。
+- Demo 更新：iOS / Android 美肤面板新增 `AI 祛瑕疵` 入口与四状态 icon。
+- Flutter 文档补充 `PFBeautyFiterType.fleckFlawClean` 使用说明。
+
 **2026-04-18 日更新** SDK v2.5.06
 
 - **美体（身体塑形）**

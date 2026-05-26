@@ -141,6 +141,10 @@ enum PFBeautyFiterType {
   typeOneKey,          // One-key beauty
   watermark,           // Watermark
   extend,              // Extension field
+  nasolabial,          // Remove nasolabial folds
+  blackEye,            // Remove dark circles
+  whitenTeeth,         // Teeth whitening
+  fleckFlawClean,      // AI blemish removal
 }
 ```
 
@@ -196,4 +200,3 @@ This plugin is proprietary software. All rights reserved.
 - Initial public release
 - Basic beauty filter support
 - Image processing capabilities
-

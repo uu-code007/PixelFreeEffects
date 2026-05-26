@@ -42,6 +42,9 @@
    
    // 美牙
    mPixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFilterWhitenTeeth, 0.5f)
+
+   // AI 祛瑕疵
+   mPixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFilterFleckFlawClean, 0.6f)
    
    // 更多参数设置...
    ```
@@ -328,6 +331,8 @@ enum class PFBeautyFiterType(val intType: Int) {
     PFBeautyFilterBlackEye(28),
     // 美牙（默认0.0，关闭）
     PFBeautyFilterWhitenTeeth(29),
+    // AI 祛瑕疵（默认0.0，关闭；v2.5.07+）
+    PFBeautyFilterFleckFlawClean(48),
 }
 ```
 
@@ -378,7 +383,6 @@ enum class PFBeautyFiterType(val intType: Int) {
 3. **用户体验**
    - 提供美妆预览功能，让用户选择合适的美妆效果
    - 支持美妆部位独立调节，提供更灵活的个性化选项
-
 
 
 

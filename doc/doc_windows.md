@@ -127,9 +127,10 @@ typedef enum PFBeautyFiterType{
     PFBeautyFilterBlackEye,
     // 美牙
     PFBeautyFilterWhitenTeeth,
+    // AI 祛瑕疵（默认0.0，关闭；v2.5.07+）
+    PFBeautyFilterFleckFlawClean,
 } PFBeautyFiterType;
 ```
-
 
 
 

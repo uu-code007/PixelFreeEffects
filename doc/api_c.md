@@ -247,6 +247,7 @@ void PF_pixelFreeSetBeautyFiterParam(PFPixelFree* pixelFree, int key, void *valu
   - `PFBeautyFilterNasolabial`: 祛法令纹
   - `PFBeautyFilterBlackEye`: 祛黑眼圈
   - `PFBeautyFilterWhitenTeeth`: 美牙
+  - `PFBeautyFilterFleckFlawClean`: AI 祛瑕疵
   - 更多类型请参考 SDK 文档
 - `value`: 参数值，通常为 `float` 类型指针，范围 0.0 ~ 1.0
 
@@ -265,11 +266,28 @@ PF_pixelFreeSetBeautyFilterParam(handle, PFBeautyFilterWhitenTeeth, &whitenTeeth
 float eyeBrightenValue = 0.3f;
 PF_pixelFreeSetBeautyFilterParam(handle, PFBeautyFilterTypeFaceEyeBrighten, &eyeBrightenValue);
 
+// 设置 AI 祛瑕疵强度
+float fleckFlawCleanValue = 0.6f;
+PF_pixelFreeSetBeautyFilterParam(handle, PFBeautyFilterFleckFlawClean, &fleckFlawCleanValue);
+
 // 设置滤镜
 const char* filterName = "heibai1";
 PF_pixelFreeSetBeautyFilterParam(handle, PFBeautyFilterName, (void*)filterName);
 float filterStrength = 0.8f;
 PF_pixelFreeSetBeautyFilterParam(handle, PFBeautyFilterStrength, &filterStrength);
+```
+
+### PF_pixelFreeSetFleckFlawClean()（v2.5.07+）
+
+独立设置 AI 祛瑕疵强度。强度范围 **0.0 ~ 1.0**，默认 **0.0** 关闭。开启后 SDK 内部会按需启用 skin segmentation 与 delspot 输出。
+
+```c
+int PF_pixelFreeSetFleckFlawClean(PFPixelFree* pixelFree, float strength);
+```
+
+**示例：**
+```c
+PF_pixelFreeSetFleckFlawClean(handle, 0.6f);
 ```
 
 ## 美体参数（v2.5.06+）
@@ -610,4 +628,3 @@ int PF_pixelFreeChangeHLSFilter(PFPixelFree* pixelFree, int handle, PFHLSFilterP
 
 **返回值：**
 - 操作结果状态码
-

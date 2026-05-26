@@ -112,6 +112,7 @@ OpenGL ES 上下文。
   - `PFBeautyFilterNasolabial`: 祛法令纹
   - `PFBeautyFilterBlackEye`: 祛黑眼圈
   - `PFBeautyFilterWhitenTeeth`: 美牙
+  - `PFBeautyFilterFleckFlawClean`: AI 祛瑕疵
 - `value`: 参数值，通常为 `float` 类型指针，范围 0.0 ~ 1.0
 
 **使用示例：**
@@ -127,7 +128,15 @@ float whitenTeethValue = 0.5f;
 // 设置亮眼强度
 float eyeBrightenValue = 0.3f;
 [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFaceEyeBrighten value:&eyeBrightenValue];
+
+// 设置 AI 祛瑕疵强度
+float fleckFlawCleanValue = 0.6f;
+[_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterFleckFlawClean value:&fleckFlawCleanValue];
 ```
+
+### AI 祛瑕疵（v2.5.07+）
+
+`PFBeautyFilterFleckFlawClean` 用于弱化面部痘印、斑点等瑕疵，强度范围 **0.0 ~ 1.0**，默认 **0.0** 关闭。开启后 SDK 内部会按需启用 skin segmentation 与 delspot 输出。
 
 ## 美体参数（v2.5.06+）
 

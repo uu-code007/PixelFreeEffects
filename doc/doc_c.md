@@ -129,6 +129,10 @@ PF_pixelFreeSetBeautyFilterParam(handle, PFBeautyFilterTypeFaceM_newWhitenStreng
 float whitenTeethValue = 0.5f;
 PF_pixelFreeSetBeautyFilterParam(handle, PFBeautyFilterWhitenTeeth, &whitenTeethValue);
 
+// 设置 AI 祛瑕疵
+float fleckFlawCleanValue = 0.6f;
+PF_pixelFreeSetBeautyFilterParam(handle, PFBeautyFilterFleckFlawClean, &fleckFlawCleanValue);
+
 // 设置亮眼
 float eyeBrightenValue = 0.3f;
 PF_pixelFreeSetBeautyFilterParam(handle, PFBeautyFilterTypeFaceEyeBrighten, &eyeBrightenValue);
@@ -303,6 +307,7 @@ typedef enum PFBeautyFilterType {
     PFBeautyFilterNasolabial,                // 祛法令纹（默认0.0，关闭）
     PFBeautyFilterBlackEye,                  // 祛黑眼圈（默认0.0，关闭）
     PFBeautyFilterWhitenTeeth,               // 美牙（默认0.0，关闭）
+    PFBeautyFilterFleckFlawClean = 48,       // AI 祛瑕疵（默认0.0，关闭；v2.5.07+）
 
     // ===== 新增：PFWarpFace 细分（默认0.5，取值建议 0.0~1.0）=====
     PFBeautyFilterTypeFace_eye_y,            // 眼睛上下（>0.5上移，<0.5下移）
@@ -437,4 +442,3 @@ int main() {
 
 4. **Q: 美型功能没有效果？**
    A: 美型功能依赖人脸检测，确保 `rotationMode` 设置正确，且图像中包含清晰的人脸。
-

@@ -38,6 +38,10 @@
    // 美牙
    float whitenTeethValue = 0.5f;
    [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFilterWhitenTeeth value:&whitenTeethValue];
+
+   // AI 祛瑕疵
+   float fleckFlawCleanValue = 0.6f;
+   [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterFleckFlawClean value:&fleckFlawCleanValue];
    ```
 
 3. 滤镜设置 (内置 10 款滤镜 )
@@ -122,6 +126,8 @@ typedef enum PFBeautyFiterType{
     PFBeautyFilterBlackEye,
     // 美牙
     PFBeautyFilterWhitenTeeth,
+    // AI 祛瑕疵（默认0.0，关闭；v2.5.07+）
+    PFBeautyFilterFleckFlawClean,
 } PFBeautyFiterType;
 ```
 
@@ -191,7 +197,6 @@ typedef enum PFBeautyFiterType{
 - [示例代码](https://github.com/uu-code007/PixelFreeEffects/tree/master/SMBeautyEngine_iOS)
 - [常见问题](./frequently_asked_questions.md)
 - [更新日志](./release_note.md)
-
 
 
 

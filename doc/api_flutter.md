@@ -12,7 +12,7 @@
 
 ```yaml
 dependencies:
-  pixelfree: ^2.5.06
+  pixelfree: ^2.5.7
 ```
 
 ## 导入
@@ -98,6 +98,7 @@ Future<void> pixelFreeSetBeautyFilterParam(PFBeautyFiterType type, double value)
   - `PFBeautyFiterType.faceRuddyStrength`: 红润
   - `PFBeautyFiterType.faceEyeBrighten`: 亮眼
   - `PFBeautyFiterType.whitenTeeth`: 美牙
+  - `PFBeautyFiterType.fleckFlawClean`: AI 祛瑕疵
   - 更多类型请参考 SDK 文档
 - `value`: 参数值，范围 0.0-1.0
 
@@ -111,7 +112,14 @@ await pixelfree.pixelFreeSetBeautyFilterParam(PFBeautyFiterType.whitenTeeth, 0.5
 
 // 设置亮眼强度
 await pixelfree.pixelFreeSetBeautyFilterParam(PFBeautyFiterType.faceEyeBrighten, 0.3);
+
+// 设置 AI 祛瑕疵强度
+await pixelfree.pixelFreeSetBeautyFilterParam(PFBeautyFiterType.fleckFlawClean, 0.6);
 ```
+
+### AI 祛瑕疵（v2.5.07+）
+
+`PFBeautyFiterType.fleckFlawClean` 用于弱化面部痘印、斑点等瑕疵，强度范围 **0.0 ~ 1.0**，默认 **0.0** 关闭。开启后 SDK 内部会按需启用 skin segmentation 与 delspot 输出。
 
 ### pixelFreeSetBeautyExtend()
 

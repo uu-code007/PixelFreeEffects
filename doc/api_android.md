@@ -14,7 +14,7 @@
 
 ```gradle
 dependencies {
-    implementation 'io.github.uu-code007:lib_pixelFree:2.5.06'
+    implementation 'io.github.uu-code007:lib_pixelFree:2.5.07'
 }
 ```
 
@@ -153,6 +153,7 @@ fun pixelFreeSetBeautyFiterParam(key: Int, value: Float)
   - `PFBeautyFilterNasolabial`: 祛法令纹
   - `PFBeautyFilterBlackEye`: 祛黑眼圈
   - `PFBeautyFilterWhitenTeeth`: 美牙
+  - `PFBeautyFilterFleckFlawClean`: AI 祛瑕疵
   - 更多类型请参考 SDK 文档
 - `value`: 参数值，范围 0.0-1.0
 
@@ -166,7 +167,14 @@ pixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFilterWhitenTeeth, 0.5f)
 
 // 设置亮眼强度
 pixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFiterTypeFaceEyeBrighten, 0.3f)
+
+// 设置 AI 祛瑕疵强度
+pixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFilterFleckFlawClean, 0.6f)
 ```
+
+### AI 祛瑕疵（v2.5.07+）
+
+`PFBeautyFilterFleckFlawClean` 用于弱化面部痘印、斑点等瑕疵，强度范围 **0.0 ~ 1.0**，默认 **0.0** 关闭。开启后 SDK 内部会按需启用 skin segmentation 与 delspot 输出。
 
 ## 美体参数（v2.5.06+）
 
