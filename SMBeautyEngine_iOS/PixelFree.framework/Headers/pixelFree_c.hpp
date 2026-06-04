@@ -83,6 +83,12 @@ typedef struct {
 } PFFilter;
 
 typedef struct {
+    bool isUse;
+    const char* imagePath;
+    float intensity;
+} PFExternalFilterConfig;
+
+typedef struct {
     bool isOpenLvmu;//false
     bool isVideo;//false
     const char *bgSrcPath;
@@ -122,7 +128,21 @@ typedef struct {
     float similarity; //相似度
 } PFHLSFilterParams;
 
-/* 美体类型（基于人体 25 关键点） */
+typedef struct PFBodyStretchLine {
+    float x0;
+    float y0;
+    float x1;
+    float y1;
+} PFBodyStretchLine;
+
+typedef struct PFBodyLongLegControl {
+    PFBodyStretchLine upper;
+    PFBodyStretchLine lower;
+    int hasAutoPoints;
+    int hasUserOverride;
+} PFBodyLongLegControl;
+
+/* 美体类型 */
 typedef enum PFBodyBeautyType {
     // 预设组合：0~6 对应 H 型 / 沙漏型 / 梨型 / 自然 / 苹果 / 型男 / 双开门
     PFBodyBeautyTypePreset = 0,
@@ -201,7 +221,7 @@ typedef enum PFBeautyFilterType{
     PFBeautyFilterTypeFace_smile,
     //旋转眼睛
     PFBeautyFilterTypeFace_eye_rotate,
-    //开眼角
+    //开眼角（默认0.5，两个方向调节；>0.5 外开，<0.5 内收）
     PFBeautyFilterTypeFace_canthus,
     //磨皮
     PFBeautyFilterTypeFaceBlurStrength,
@@ -292,6 +312,9 @@ typedef enum PFBeautyFilterType{
     // 唇部：嘴唇宽度
     // 默认值：0.5；>0.5 变宽，<0.5 变窄
     PFBeautyFilterTypeFace_mouth_width,
+
+    // 瑕疵祛除（基于 skin segmentation + delspot 输出）
+    PFBeautyFilterFleckFlawClean,
     
 } PFBeautyFilterType;
 
@@ -328,6 +351,11 @@ PF_CAPI_EXPORT extern int PF_processWithBuffer(PFPixelFree* pixelFree,PFImageInp
 
 PF_CAPI_EXPORT extern void PF_pixelFreeSetBeautyFilterParam(PFPixelFree* pixelFree, int key,void *value);
 PF_CAPI_EXPORT extern void PF_pixelFreeSetBodyBeautyParam(PFPixelFree* pixelFree, int key, void *value);
+PF_CAPI_EXPORT extern void PF_pixelFreeResetDetectState(PFPixelFree* pixelFree);
+PF_CAPI_EXPORT extern int PF_pixelFreeGetBodyLongLegControl(PFPixelFree* pixelFree, PFBodyLongLegControl* control);
+PF_CAPI_EXPORT extern int PF_pixelFreeSetBodyLongLegControl(PFPixelFree* pixelFree, const PFBodyLongLegControl* control);
+PF_CAPI_EXPORT extern int PF_pixelFreeSetExternalFilter(PFPixelFree* pixelFree, PFExternalFilterConfig* config);
+PF_CAPI_EXPORT extern int PF_pixelFreeClearExternalFilter(PFPixelFree* pixelFree);
 PF_CAPI_EXPORT extern void PF_createBeautyItemFormBundle(PFPixelFree* pixelFree, void *data,int size,PFSrcType type);
 
 PF_CAPI_EXPORT extern void PF_pixelFreeGetFaceRect(PFPixelFree* pixelFree,float *faceRect);
@@ -356,7 +384,8 @@ typedef enum PFMakeupPart {
     PFMakeupPartLip = 5,
     PFMakeupPartHighlight = 6,
     PFMakeupPartShadow = 7,
-    PFMakeupPartFoundation = 8
+    PFMakeupPartFoundation = 8,
+    PFMakeupPartPupil = 9
 } PFMakeupPart;
 
 // 设置美妆各部位程度值（与配置叠乘）
@@ -364,7 +393,8 @@ PF_CAPI_EXPORT extern int PF_pixelFreeSetMakeupPartDegree(PFPixelFree* pixelFree
 
 // 设置是否开启皮肤分割（Skin Mask），enable != 0 表示开启
 PF_CAPI_EXPORT extern void PF_pixelFreeSetSkinMask(PFPixelFree* pixelFree, int enable);
-
+// 设置是否开启 mask 磨皮，默认关闭；enable != 0 时才生成磨皮用人脸 mask
+PF_CAPI_EXPORT extern void PF_pixelFreeSetSmoothSkinMask(PFPixelFree* pixelFree, int enable);
 #ifdef __cplusplus
 }
 #endif

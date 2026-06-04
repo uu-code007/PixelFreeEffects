@@ -59,8 +59,17 @@ __attribute__((visibility("default"))) @interface SMPixelFree : NSObject
 
 - (void)pixelFreeSetBeautyFilterParam:(int)key value:(void *)value;
 
-// 美体参数（基于人体 25 关键点）
+// 设置外部 256x256 LUT 滤镜。path 传 nil/空字符串或 enabled=NO 可关闭。
+- (int)pixelFreeSetExternalFilterWithPath:(nullable NSString *)path intensity:(float)intensity enabled:(BOOL)enabled;
+- (int)pixelFreeClearExternalFilter;
+
+// 美体参数
 - (void)pixelFreeSetBodyBeautyParam:(int)key value:(void *)value;
+- (int)pixelFreeGetBodyLongLegControl:(PFBodyLongLegControl *)control;
+- (int)pixelFreeSetBodyLongLegControl:(const PFBodyLongLegControl *_Nullable)control;
+
+// 切换图片/视频源时调用，清空人脸与人体检测/跟踪缓存。
+- (void)resetDetectState;
 
 // 加载美颜bundle
 - (void)createBeautyItemFormBundleKey:(int)key data:(void*)data size:(int)sz;
@@ -94,6 +103,8 @@ __attribute__((visibility("default"))) @interface SMPixelFree : NSObject
 
 // 设置是否开启皮肤分割（Skin Mask），默认开启
 - (void)pixelFreeSetSkinMaskEnabled:(BOOL)enabled;
+// 设置是否开启 mask 磨皮，默认关闭
+- (void)pixelFreeSetSmoothSkinMaskEnabled:(BOOL)enabled;
 
 // 设置是否输出日志到控制台（全局开关）
 - (void)setConsoleLogEnabled:(BOOL)enabled;

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hapi.pixelfree" >
+
+    <uses-sdk
+        android:minSdkVersion="19"
+        android:targetSdkVersion="29" />
+
+    <application>
+
+        <!--
+             TensorFlow Lite GPU API requires explicit vendor OpenCL library
+             declarations for apps targeting Android S and above.
+        -->
+        <uses-native-library
+            android:name="libOpenCL.so"
+            android:required="false" />
+        <uses-native-library
+            android:name="libGLES_mali.so"
+            android:required="false" />
+    </application>
+
+</manifest>
