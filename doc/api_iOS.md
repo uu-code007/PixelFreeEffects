@@ -113,6 +113,11 @@ OpenGL ES 上下文。
   - `PFBeautyFilterBlackEye`: 祛黑眼圈
   - `PFBeautyFilterWhitenTeeth`: 美牙
   - `PFBeautyFilterFleckFlawClean`: AI 祛瑕疵
+  - `PFBeautyFilterSkinDetailTexture`: 皮肤细节纹理
+  - `PFBeautyFilterSkinDetailClarity`: 皮肤细节清晰柔光
+  - `PFBeautyFilterSkinDetailHighlight`: 皮肤细节高光柔光
+  - `PFBeautyFilterSkinDetailWaterGlow`: 皮肤细节水光
+  - `PFBeautyFilterSkinDetailMatte`: 皮肤细节哑光
 - `value`: 参数值，通常为 `float` 类型指针，范围 0.0 ~ 1.0
 
 **使用示例：**
@@ -132,11 +137,86 @@ float eyeBrightenValue = 0.3f;
 // 设置 AI 祛瑕疵强度
 float fleckFlawCleanValue = 0.6f;
 [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterFleckFlawClean value:&fleckFlawCleanValue];
+
+// 设置皮肤细节水光强度
+float waterGlowValue = 0.5f;
+[_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterSkinDetailWaterGlow value:&waterGlowValue];
 ```
 
 ### AI 祛瑕疵（v2.5.07+）
 
 `PFBeautyFilterFleckFlawClean` 用于弱化面部痘印、斑点等瑕疵，强度范围 **0.0 ~ 1.0**，默认 **0.0** 关闭。开启后 SDK 内部会按需启用 skin segmentation 与 delspot 输出。
+
+### 皮肤细节（v2.5.08+）
+
+皮肤细节通过 `pixelFreeSetBeautyFilterParam:value:` 设置，强度范围 **0.0 ~ 1.0**，默认 **0.0** 关闭。该能力使用授权位 `authTypeSkinDetail`（值 **512**）。
+
+| 枚举值 | 功能 |
+| ------ | ---- |
+| `PFBeautyFilterSkinDetailTexture` | 纹理 |
+| `PFBeautyFilterSkinDetailClarity` | 清晰柔光 |
+| `PFBeautyFilterSkinDetailHighlight` | 高光柔光 |
+| `PFBeautyFilterSkinDetailWaterGlow` | 水光 |
+| `PFBeautyFilterSkinDetailMatte` | 哑光 |
+
+### 肤色修改（v2.5.08+）
+
+肤色修改支持自然、白皙、粉白、小麦色、美黑 5 种肤色，并支持肤色程度与冷/热色温调节。该能力与皮肤细节共用授权位 `authTypeSkinDetail`（值 **512**）。
+
+使用肤色修改前需要加载 `skin_src.bundle`：
+
+```objective-c
+NSString *skinSrcPath = [[NSBundle mainBundle] pathForResource:@"skin_src" ofType:@"bundle"];
+NSData *skinSrcData = [NSData dataWithContentsOfFile:skinSrcPath];
+[self.mPixelFree createBeautyItemFormBundleKey:PFSrcTypeSkinSrc
+                                           data:(void *)skinSrcData.bytes
+                                           size:(int)skinSrcData.length];
+```
+
+肤色枚举：
+
+```objective-c
+typedef enum PFSkinToneType {
+    PFSkinToneTypeNatural = 0,  // 自然
+    PFSkinToneTypeFair,         // 白皙
+    PFSkinToneTypePinkWhite,    // 粉白
+    PFSkinToneTypeWheat,        // 小麦色
+    PFSkinToneTypeBronze,       // 美黑
+} PFSkinToneType;
+```
+
+参数结构：
+
+```objective-c
+typedef struct {
+    bool isUse;
+    int skinToneType;
+    float intensity;          // 肤色程度，0.0 ~ 1.0
+    float coldWarmIntensity;  // 0.0 偏冷，0.5 中性，1.0 偏热
+} PFSkinToneFilterParams;
+```
+
+接口：
+
+```objective-c
+- (int)pixelFreeSetSkinToneFilter:(PFSkinToneFilterParams *)params;
+- (int)pixelFreeClearSkinToneFilter;
+```
+
+示例：
+
+```objective-c
+PFSkinToneFilterParams params;
+params.isUse = true;
+params.skinToneType = PFSkinToneTypePinkWhite;
+params.intensity = 0.6f;
+params.coldWarmIntensity = 0.5f;
+
+int result = [self.mPixelFree pixelFreeSetSkinToneFilter:&params];
+// result: 0 成功，-1 参数错误，-2 未加载 skin_src.bundle
+```
+
+如果调用肤色修改接口时还没有加载 `skin_src.bundle`，SDK 内部会打印提示：`skin_src.bundle not loaded. Load it with PFSrcTypeSkinSrc before calling skin tone filter.`
 
 ## 美体参数（v2.5.06+）
 

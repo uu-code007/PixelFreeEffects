@@ -59,9 +59,14 @@ __attribute__((visibility("default"))) @interface SMPixelFree : NSObject
 
 - (void)pixelFreeSetBeautyFilterParam:(int)key value:(void *)value;
 
+// 获取最近一次功能设置/渲染后的错误码，0 表示正常。
+- (int)getLastErrorCode;
+
 // 设置外部 256x256 LUT 滤镜。path 传 nil/空字符串或 enabled=NO 可关闭。
 - (int)pixelFreeSetExternalFilterWithPath:(nullable NSString *)path intensity:(float)intensity enabled:(BOOL)enabled;
 - (int)pixelFreeClearExternalFilter;
+- (int)pixelFreeSetSkinToneFilter:(PFSkinToneFilterParams *)params;
+- (int)pixelFreeClearSkinToneFilter;
 
 // 美体参数
 - (void)pixelFreeSetBodyBeautyParam:(int)key value:(void *)value;
@@ -83,6 +88,14 @@ __attribute__((visibility("default"))) @interface SMPixelFree : NSObject
 
 // 获取是否检测到人脸
 - (int)hasFace;
+// 获取最近一次处理是否检测到人体
+- (int)hasHuman;
+// 设置是否开启人体/人像分割，默认关闭；需先加载 body_model.bundle。
+- (void)pixelFreeSetHumanSegmentationEnabled:(BOOL)enabled;
+// 获取最近一次处理的人像分割结果；返回 1 表示 result 中有可用 mask。
+- (int)pixelFreeGetHumanSegmentationResult:(PFHumanSegmentationResult *)result;
+// 按人体 index 获取最近一次处理的人像分割结果；index 从 0 开始。
+- (int)pixelFreeGetHumanSegmentationResultAtIndex:(int)index result:(PFHumanSegmentationResult *)result;
 
 // 图片调色设置
 - (int)pixelFreeSetColorGrading:(PFImageColorGrading *)imageColorGrading;

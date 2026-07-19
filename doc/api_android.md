@@ -105,6 +105,7 @@ fun createBeautyItemFormBundle(data: ByteArray, size: Int, type: PFSrcType)
   - `PFSrcType.PFSrcTypeAuthFile`: 授权文件
   - `PFSrcType.PFSrcTypeStickerFile`: 贴纸资源
   - `PFSrcType.PFSrcTypeMakeup`: 美妆资源
+  - `PFSrcType.PFSrcTypeSkinSrc`: 肤色修改资源 `skin_src.bundle`
 
 **示例：**
 ```kotlin
@@ -115,6 +116,10 @@ pixelFree.createBeautyItemFormBundle(filterData, filterData.size, PFSrcType.PFSr
 // 加载美妆资源
 val makeupData = pixelFree.readBundleFile(context, "makeup_name.bundle")
 pixelFree.createBeautyItemFormBundle(makeupData, makeupData.size, PFSrcType.PFSrcTypeMakeup)
+
+// 加载肤色修改资源
+val skinSrcData = pixelFree.readBundleFile(context, "skin_src.bundle") ?: return
+pixelFree.createBeautyItemFormBundle(skinSrcData, skinSrcData.size, PFSrcType.PFSrcTypeSkinSrc)
 ```
 
 ### readBundleFile()
@@ -139,7 +144,7 @@ fun readBundleFile(context: Context, fileName: String): ByteArray
 设置美颜参数，如磨皮、美白、红润等。
 
 ```kotlin
-fun pixelFreeSetBeautyFiterParam(key: Int, value: Float)
+fun pixelFreeSetBeautyFiterParam(type: PFBeautyFilterType, value: Float)
 ```
 
 **参数：**
@@ -154,6 +159,11 @@ fun pixelFreeSetBeautyFiterParam(key: Int, value: Float)
   - `PFBeautyFilterBlackEye`: 祛黑眼圈
   - `PFBeautyFilterWhitenTeeth`: 美牙
   - `PFBeautyFilterFleckFlawClean`: AI 祛瑕疵
+  - `PFBeautyFilterSkinDetailTexture`: 皮肤细节纹理
+  - `PFBeautyFilterSkinDetailClarity`: 皮肤细节清晰柔光
+  - `PFBeautyFilterSkinDetailHighlight`: 皮肤细节高光柔光
+  - `PFBeautyFilterSkinDetailWaterGlow`: 皮肤细节水光
+  - `PFBeautyFilterSkinDetailMatte`: 皮肤细节哑光
   - 更多类型请参考 SDK 文档
 - `value`: 参数值，范围 0.0-1.0
 
@@ -169,12 +179,75 @@ pixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFilterWhitenTeeth, 0.5f)
 pixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFiterTypeFaceEyeBrighten, 0.3f)
 
 // 设置 AI 祛瑕疵强度
-pixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFilterFleckFlawClean, 0.6f)
+pixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFilterType.PFBeautyFilterFleckFlawClean, 0.6f)
+
+// 设置皮肤细节水光强度
+pixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFilterType.PFBeautyFilterSkinDetailWaterGlow, 0.5f)
 ```
 
 ### AI 祛瑕疵（v2.5.07+）
 
 `PFBeautyFilterFleckFlawClean` 用于弱化面部痘印、斑点等瑕疵，强度范围 **0.0 ~ 1.0**，默认 **0.0** 关闭。开启后 SDK 内部会按需启用 skin segmentation 与 delspot 输出。
+
+### 皮肤细节（v2.5.08+）
+
+皮肤细节通过 `pixelFreeSetBeautyFiterParam()` 设置，强度范围 **0.0 ~ 1.0**，默认 **0.0** 关闭。该能力使用授权位 `authTypeSkinDetail`（值 **512**）。
+
+| 枚举值 | 功能 |
+| ------ | ---- |
+| `PFBeautyFilterType.PFBeautyFilterSkinDetailTexture` | 纹理 |
+| `PFBeautyFilterType.PFBeautyFilterSkinDetailClarity` | 清晰柔光 |
+| `PFBeautyFilterType.PFBeautyFilterSkinDetailHighlight` | 高光柔光 |
+| `PFBeautyFilterType.PFBeautyFilterSkinDetailWaterGlow` | 水光 |
+| `PFBeautyFilterType.PFBeautyFilterSkinDetailMatte` | 哑光 |
+
+### 肤色修改（v2.5.08+）
+
+肤色修改支持自然、白皙、粉白、小麦色、美黑 5 种肤色，并支持肤色程度与冷/热色温调节。该能力与皮肤细节共用授权位 `authTypeSkinDetail`（值 **512**）。
+
+使用肤色修改前需要加载 `skin_src.bundle`：
+
+```kotlin
+val skinSrcData = pixelFree.readBundleFile(context, "skin_src.bundle") ?: return
+pixelFree.createBeautyItemFormBundle(skinSrcData, skinSrcData.size, PFSrcType.PFSrcTypeSkinSrc)
+```
+
+肤色取值：
+
+| type | 功能 |
+| ---: | ---- |
+| 0 | 自然 |
+| 1 | 白皙 |
+| 2 | 粉白 |
+| 3 | 小麦色 |
+| 4 | 美黑 |
+
+接口：
+
+```kotlin
+fun setSkinToneFilter(
+    type: Int,
+    intensity: Float,
+    coldWarmIntensity: Float,
+    enabled: Boolean = true
+): Int
+
+fun clearSkinToneFilter(): Int
+```
+
+示例：
+
+```kotlin
+val result = pixelFree.setSkinToneFilter(
+    type = 2,                 // 粉白
+    intensity = 0.6f,          // 肤色程度
+    coldWarmIntensity = 0.5f,  // 0.0 偏冷，0.5 中性，1.0 偏热
+    enabled = true
+)
+// result: 0 成功，-1 未初始化，native 层 -2 表示未加载 skin_src.bundle
+```
+
+如果调用肤色修改接口时还没有加载 `skin_src.bundle`，SDK 内部会打印提示：`skin_src.bundle not loaded. Load it with PFSrcTypeSkinSrc before calling skin tone filter.`
 
 ## 美体参数（v2.5.06+）
 

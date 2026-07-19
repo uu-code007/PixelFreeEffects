@@ -26,6 +26,11 @@
     
     // 初始化实例
     self.mPixelFree = [[SMPixelFree alloc] initWithProcessContext:nil srcFilterPath:face_FiltePath authFile:authFile];
+
+    // 肤色修改资源，使用肤色修改前加载
+    NSString *skinSrcPath = [[NSBundle mainBundle] pathForResource:@"skin_src" ofType:@"bundle"];
+    NSData *skinSrcData = [NSData dataWithContentsOfFile:skinSrcPath];
+    [self.mPixelFree createBeautyItemFormBundleKey:PFSrcTypeSkinSrc data:(void *)skinSrcData.bytes size:(int)skinSrcData.length];
     
    ```
 
@@ -42,6 +47,14 @@
    // AI 祛瑕疵
    float fleckFlawCleanValue = 0.6f;
    [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterFleckFlawClean value:&fleckFlawCleanValue];
+
+   // 皮肤细节水光
+   float waterGlowValue = 0.5f;
+   [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterSkinDetailWaterGlow value:&waterGlowValue];
+
+   // 肤色修改：粉白，程度 0.6，色温中性
+   PFSkinToneFilterParams skinTone = {true, PFSkinToneTypePinkWhite, 0.6f, 0.5f};
+   [_mPixelFree pixelFreeSetSkinToneFilter:&skinTone];
    ```
 
 3. 滤镜设置 (内置 10 款滤镜 )
@@ -128,8 +141,25 @@ typedef enum PFBeautyFiterType{
     PFBeautyFilterWhitenTeeth,
     // AI 祛瑕疵（默认0.0，关闭；v2.5.07+）
     PFBeautyFilterFleckFlawClean,
+    // 皮肤细节纹理
+    PFBeautyFilterSkinDetailTexture,
+    // 皮肤细节清晰柔光
+    PFBeautyFilterSkinDetailClarity,
+    // 皮肤细节高光柔光
+    PFBeautyFilterSkinDetailHighlight,
+    // 皮肤细节水光
+    PFBeautyFilterSkinDetailWaterGlow,
+    // 皮肤细节哑光
+    PFBeautyFilterSkinDetailMatte,
 } PFBeautyFiterType;
 ```
+
+## ✨ 皮肤细节与肤色修改
+
+- 皮肤细节通过 `pixelFreeSetBeautyFilterParam:value:` 设置，包含纹理、清晰柔光、高光柔光、水光、哑光，参数范围 0.0 ~ 1.0。
+- 肤色修改通过 `pixelFreeSetSkinToneFilter:` 设置，肤色类型为自然、白皙、粉白、小麦色、美黑，支持肤色程度 `intensity` 和冷/热色温 `coldWarmIntensity` 调节。
+- 肤色修改使用前需要加载 `skin_src.bundle`，类型为 `PFSrcTypeSkinSrc`；未加载时接口返回 -2，并在 SDK 内部打印提示。
+- 皮肤细节和肤色修改共用授权位 `authTypeSkinDetail`（值 512）。
 
 ## 💄 美妆功能说明
 
@@ -197,7 +227,6 @@ typedef enum PFBeautyFiterType{
 - [示例代码](https://github.com/uu-code007/PixelFreeEffects/tree/master/SMBeautyEngine_iOS)
 - [常见问题](./frequently_asked_questions.md)
 - [更新日志](./release_note.md)
-
 
 
 

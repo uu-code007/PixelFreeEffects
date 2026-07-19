@@ -28,6 +28,10 @@
    mPixelFree.createBeautyItemFormBundle( face_fiter,
                                           face_fiter.size,
                                           PFSrcType.PFSrcTypeFilter)
+
+   // 设置肤色修改资源
+   val skinSrc = mPixelFree.readBundleFile(this@MainActivity, "skin_src.bundle") ?: return
+   mPixelFree.createBeautyItemFormBundle(skinSrc, skinSrc.size, PFSrcType.PFSrcTypeSkinSrc)
     
    ```
 
@@ -45,6 +49,12 @@
 
    // AI 祛瑕疵
    mPixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFilterFleckFlawClean, 0.6f)
+
+   // 皮肤细节水光
+   mPixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFilterType.PFBeautyFilterSkinDetailWaterGlow, 0.5f)
+
+   // 肤色修改：粉白，程度 0.6，色温中性
+   mPixelFree.setSkinToneFilter(type = 2, intensity = 0.6f, coldWarmIntensity = 0.5f, enabled = true)
    
    // 更多参数设置...
    ```
@@ -333,8 +343,25 @@ enum class PFBeautyFiterType(val intType: Int) {
     PFBeautyFilterWhitenTeeth(29),
     // AI 祛瑕疵（默认0.0，关闭；v2.5.07+）
     PFBeautyFilterFleckFlawClean(48),
+    // 皮肤细节纹理
+    PFBeautyFilterSkinDetailTexture(49),
+    // 皮肤细节清晰柔光
+    PFBeautyFilterSkinDetailClarity(50),
+    // 皮肤细节高光柔光
+    PFBeautyFilterSkinDetailHighlight(51),
+    // 皮肤细节水光
+    PFBeautyFilterSkinDetailWaterGlow(52),
+    // 皮肤细节哑光
+    PFBeautyFilterSkinDetailMatte(53),
 }
 ```
+
+## ✨ 皮肤细节与肤色修改
+
+- 皮肤细节通过 `pixelFreeSetBeautyFiterParam()` 设置，包含纹理、清晰柔光、高光柔光、水光、哑光，参数范围 0.0 ~ 1.0。
+- 肤色修改通过 `setSkinToneFilter(type, intensity, coldWarmIntensity, enabled)` 设置，`type` 取值：0 自然、1 白皙、2 粉白、3 小麦色、4 美黑。
+- 肤色修改使用前需要加载 `skin_src.bundle`，类型为 `PFSrcType.PFSrcTypeSkinSrc`；未加载时 native 层返回 -2，并在 SDK 内部打印提示。
+- 皮肤细节和肤色修改共用授权位 `authTypeSkinDetail`（值 512）。
 
 ## 💄 美妆功能说明
 
@@ -383,8 +410,6 @@ enum class PFBeautyFiterType(val intType: Int) {
 3. **用户体验**
    - 提供美妆预览功能，让用户选择合适的美妆效果
    - 支持美妆部位独立调节，提供更灵活的个性化选项
-
-
 
 
 

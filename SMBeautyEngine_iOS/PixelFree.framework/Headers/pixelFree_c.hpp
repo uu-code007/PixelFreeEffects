@@ -56,6 +56,7 @@ typedef enum PFSrcType{
     PFSrcTypeStickerFile = 3,
     PFSrcTypeMakeup = 4,
     PFSrcTypeHumanProcessor = 5,
+    PFSrcTypeSkinSrc = 6,
 } PFSrcType;
 
 typedef struct {
@@ -87,6 +88,22 @@ typedef struct {
     const char* imagePath;
     float intensity;
 } PFExternalFilterConfig;
+
+typedef enum PFSkinToneType {
+    PFSkinToneTypeNatural = 0,
+    PFSkinToneTypeFair,
+    PFSkinToneTypePinkWhite,
+    PFSkinToneTypeWheat,
+    PFSkinToneTypeBronze,
+} PFSkinToneType;
+
+typedef struct {
+    bool isUse;
+    int skinToneType;
+    float intensity;
+    // 0.0 = cold, 0.5 = neutral, 1.0 = warm.
+    float coldWarmIntensity;
+} PFSkinToneFilterParams;
 
 typedef struct {
     bool isOpenLvmu;//false
@@ -141,6 +158,16 @@ typedef struct PFBodyLongLegControl {
     int hasAutoPoints;
     int hasUserOverride;
 } PFBodyLongLegControl;
+
+typedef struct PFHumanSegmentationResult {
+    // 最近一帧指定人体的人像分割 mask。数据为内部只读缓存，下一次 process/reset/销毁后失效。
+    const float* maskData;
+    int width;
+    int height;
+    int count;
+    int humanCount;
+    int index;
+} PFHumanSegmentationResult;
 
 /* 美体类型 */
 typedef enum PFBodyBeautyType {
@@ -315,6 +342,16 @@ typedef enum PFBeautyFilterType{
 
     // 瑕疵祛除（基于 skin segmentation + delspot 输出）
     PFBeautyFilterFleckFlawClean,
+    // 皮肤细节纹理（SkinDetial/detial.jpg）
+    PFBeautyFilterSkinDetailTexture,
+    // 皮肤细节清晰柔光（SkinDetial/SoftLight_detial.jpg）
+    PFBeautyFilterSkinDetailClarity,
+    // 皮肤细节高光柔光（SkinDetial/SoftLight.jpg）
+    PFBeautyFilterSkinDetailHighlight,
+    // 皮肤细节水光（SkinDetial/HighlightMask.png）
+    PFBeautyFilterSkinDetailWaterGlow,
+    // 皮肤细节哑光
+    PFBeautyFilterSkinDetailMatte,
     
 } PFBeautyFilterType;
 
@@ -330,8 +367,29 @@ typedef enum PFBeautyTypeOneKey{
     PFBeautyTypeOneKeyGoddess,
     // 白净
     PFBeautyTypeOneKeyFair,
+    // 甜美
+    PFBeautyTypeOneKeySweet,
+    // 质感
+    PFBeautyTypeOneKeyTexture,
+    // 硬派
+    PFBeautyTypeOneKeyHard,
     
 }PFBeautyTypeOneKey;
+
+typedef enum PFSDKErrorCode {
+    PFSDKErrorCodeOK = 0,
+    PFSDKErrorCodeInvalidArgument = 1001,
+    PFSDKErrorCodeFaceProcessorInitFailed = 1101,
+    PFSDKErrorCodeHumanProcessorInitFailed = 1102,
+    PFSDKErrorCodeGLInitFailed = 1103,
+    PFSDKErrorCodeAuthBundleNotAllowed = 2001,
+    PFSDKErrorCodeAuthPlatformNotAllowed = 2002,
+    PFSDKErrorCodeAuthExpired = 2003,
+    PFSDKErrorCodeAuthFeatureNotAllowed = 2004,
+    PFSDKErrorCodeRenderStopped = 2005,
+    PFSDKErrorCodeNoFaceDetected = 3001,
+    PFSDKErrorCodeNoHumanDetected = 3002,
+} PFSDKErrorCode;
 
 PF_CAPI_EXPORT extern const char* PF_Version();
 
@@ -349,6 +407,9 @@ PF_CAPI_EXPORT extern void PF_DeletePixelFree(PFPixelFree* pixelFree);
 //目前仅支持双输入。GPU 纹理由于渲染，cpu buffer 用检测
 PF_CAPI_EXPORT extern int PF_processWithBuffer(PFPixelFree* pixelFree,PFImageInput inputImage);
 
+// 获取最近一次功能设置/渲染后的错误码，0 表示正常。
+PF_CAPI_EXPORT extern int PF_pixelFreeGetLastErrorCode(PFPixelFree* pixelFree);
+
 PF_CAPI_EXPORT extern void PF_pixelFreeSetBeautyFilterParam(PFPixelFree* pixelFree, int key,void *value);
 PF_CAPI_EXPORT extern void PF_pixelFreeSetBodyBeautyParam(PFPixelFree* pixelFree, int key, void *value);
 PF_CAPI_EXPORT extern void PF_pixelFreeResetDetectState(PFPixelFree* pixelFree);
@@ -356,6 +417,8 @@ PF_CAPI_EXPORT extern int PF_pixelFreeGetBodyLongLegControl(PFPixelFree* pixelFr
 PF_CAPI_EXPORT extern int PF_pixelFreeSetBodyLongLegControl(PFPixelFree* pixelFree, const PFBodyLongLegControl* control);
 PF_CAPI_EXPORT extern int PF_pixelFreeSetExternalFilter(PFPixelFree* pixelFree, PFExternalFilterConfig* config);
 PF_CAPI_EXPORT extern int PF_pixelFreeClearExternalFilter(PFPixelFree* pixelFree);
+PF_CAPI_EXPORT extern int PF_pixelFreeSetSkinToneFilter(PFPixelFree* pixelFree, PFSkinToneFilterParams* params);
+PF_CAPI_EXPORT extern int PF_pixelFreeClearSkinToneFilter(PFPixelFree* pixelFree);
 PF_CAPI_EXPORT extern void PF_createBeautyItemFormBundle(PFPixelFree* pixelFree, void *data,int size,PFSrcType type);
 
 PF_CAPI_EXPORT extern void PF_pixelFreeGetFaceRect(PFPixelFree* pixelFree,float *faceRect);
@@ -365,6 +428,13 @@ PF_CAPI_EXPORT extern int PF_pixelFreeHaveFaceSize(PFPixelFree* pixelFree);
 PF_CAPI_EXPORT extern void PF_pixelFreeSetDetectMode(PFPixelFree* pixelFree, PFFaceDetectMode mode);
 
 PF_CAPI_EXPORT extern int PF_pixelFreeHasFace(PFPixelFree* pixelFree);
+PF_CAPI_EXPORT extern int PF_pixelFreeHasHuman(PFPixelFree* pixelFree);
+// 设置是否开启人体/人像分割；需要先加载 PFSrcTypeHumanProcessor bundle。
+PF_CAPI_EXPORT extern void PF_pixelFreeSetHumanSegmentation(PFPixelFree* pixelFree, int enable);
+// 获取最近一次 process 后的人像分割结果；返回 1 表示有 mask，0 表示当前无可用 mask。
+PF_CAPI_EXPORT extern int PF_pixelFreeGetHumanSegmentationResult(PFPixelFree* pixelFree, PFHumanSegmentationResult* result);
+// 按人体 index 获取最近一次 process 后的人像分割结果；index 从 0 开始。
+PF_CAPI_EXPORT extern int PF_pixelFreeGetHumanSegmentationResultAtIndex(PFPixelFree* pixelFree, int index, PFHumanSegmentationResult* result);
 
 PF_CAPI_EXPORT extern int PF_pixelFreeColorGrading(PFPixelFree* pixelFree,PFImageColorGrading* ImageColorGrading);
 PF_CAPI_EXPORT extern int PF_pixelFreeAddHLSFilter(PFPixelFree* pixelFree,PFHLSFilterParams* HLSFilterParams);
