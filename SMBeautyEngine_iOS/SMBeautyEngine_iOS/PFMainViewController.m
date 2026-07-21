@@ -215,10 +215,10 @@
     [cameraButton addTarget:self action:@selector(cameraButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.buttonsView addSubview:cameraButton];
     
-    // Image Process Button
-    UIButton *imageButton = [self createMainButtonWithTitle:@"图片处理" 
-                                                  subtitle:@"照片美化编辑" 
-                                                      icon:@"photo.fill" 
+    // Image / Video Process Button
+    UIButton *imageButton = [self createMainButtonWithTitle:@"图片/视频处理"
+                                                  subtitle:@"照片与视频单帧美化"
+                                                      icon:@"photo.on.rectangle.angled"
                                                  gradientColors:@[
                                                      (id)[UIColor systemPurpleColor].CGColor,
                                                      (id)[UIColor systemBlueColor].CGColor
@@ -376,7 +376,7 @@
     
     UILabel *versionLabel = [[UILabel alloc] init];
     versionLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    versionLabel.text = @"v2.5.05";
+    versionLabel.text = @"2.6.01";
     versionLabel.font = [UIFont systemFontOfSize:14];
     versionLabel.textColor = [UIColor secondaryLabelColor];
     [self.footerView addSubview:versionLabel];
@@ -459,7 +459,7 @@
 }
 
 - (void)imageButtonTapped:(id)sender {
-    NSLog(@"打开图片处理");
+    NSLog(@"打开图片/视频处理");
     PFImageController *imageController = [[PFImageController alloc] init];
     [self.navigationController pushViewController:imageController animated:YES];
 }

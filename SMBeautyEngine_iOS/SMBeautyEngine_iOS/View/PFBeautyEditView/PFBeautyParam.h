@@ -15,7 +15,8 @@ typedef NS_ENUM(NSUInteger, FUDataType) {
     FUDataTypeFilter,
     FUDataTypeStickers,
     FUDataTypeOneKey,
-    FUDataTypeMakeup
+    FUDataTypeMakeup,
+    FUDataTypeSkinTone
 };
 
 @interface PFBeautyParam : NSObject
@@ -34,6 +35,18 @@ typedef NS_ENUM(NSUInteger, FUDataType) {
 @property (nonatomic,assign)FUDataType type;
 
 @property (nonatomic,assign) BOOL isUse;
+
+@property (nonatomic,copy) NSString *iconURL;
+
+@property (nonatomic,copy) NSString *bundleURL;
+
+@property (nonatomic,copy) NSString *localBundlePath;
+
+@property (nonatomic,assign) BOOL isRemoteResource;
+
+@property (nonatomic,assign) BOOL isDownloaded;
+
+@property (nonatomic,assign) BOOL isDownloading;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -55,6 +55,11 @@
     
     FUBeautyCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FUBeautyCell" forIndexPath:indexPath];
     
+    [self configureCell:cell atIndexPath:indexPath];
+    return cell ;
+}
+
+- (void)configureCell:(FUBeautyCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row < self.dataArray.count){
         PFBeautyParam *modle = self.dataArray[indexPath.row] ;
         NSString *imageName  = modle.mTitle;
@@ -80,7 +85,18 @@
         cell.titleLabel.text = NSLocalizedString(modle.mTitle,nil);
         cell.titleLabel.textColor = _selectedIndex == indexPath.row ? [UIColor colorWithHexColorString:@"BAACFF"] : [UIColor whiteColor];
     }
-    return cell ;
+}
+
+- (void)refreshItemAtIndex:(NSInteger)index {
+    if (index < 0 || index >= self.dataArray.count) {
+        return;
+    }
+
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+    FUBeautyCell *cell = (FUBeautyCell *)[self cellForItemAtIndexPath:indexPath];
+    if (cell) {
+        [self configureCell:cell atIndexPath:indexPath];
+    }
 }
 
 #pragma mark ---- UICollectionViewDelegate

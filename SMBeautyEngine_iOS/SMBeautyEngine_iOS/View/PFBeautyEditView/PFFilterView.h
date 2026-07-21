@@ -28,10 +28,14 @@
 
 -(void)setDefaultFilter:(PFBeautyParam *)filter;
 
+- (void)refreshItemAtIndex:(NSInteger)index;
+
 @end
 
 @interface FUFilterCell : UICollectionViewCell
 
 @property (nonatomic, strong) UIImageView *imageView ;
 @property (nonatomic, strong) UILabel *titleLabel ;
+@property (nonatomic, strong) UIImageView *downloadBadgeView;
+@property (nonatomic, strong) UIActivityIndicatorView *downloadIndicatorView;
 @end

@@ -147,7 +147,8 @@ static NSString *colorCellID = @"PFMuColorCellID";
         UIVisualEffectView *effectview = [[UIVisualEffectView alloc] initWithEffect:blur];
         effectview.alpha = 1.0;
         [self insertSubview:effectview atIndex:0];
-        effectview.frame = frame;
+        effectview.frame = self.bounds;
+        effectview.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     }
     return self;
 }

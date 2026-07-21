@@ -10,8 +10,73 @@
 #import "PFBeautyView.h"
 #import "PFBeautyParam.h"
 #import "PFDateHandle.h"
+#import "PFEffectResourceManager.h"
+#import "UIColor+PFBeautyEditView.h"
 
 static const NSInteger PFBeautyEditViewButtonTagBase = 101;
+static NSString * const PFSkinToneParamOff = @"skinTone.off";
+static NSString * const PFSkinToneParamNatural = @"skinTone.natural";
+static NSString * const PFSkinToneParamFair = @"skinTone.fair";
+static NSString * const PFSkinToneParamPinkWhite = @"skinTone.pinkWhite";
+static NSString * const PFSkinToneParamWheat = @"skinTone.wheat";
+static NSString * const PFSkinToneParamBronze = @"skinTone.bronze";
+static NSString * const PFSkinToneParamIntensity = @"skinTone.intensity";
+static NSString * const PFSkinToneParamTemperature = @"skinTone.temperature";
+
+typedef NS_ENUM(NSInteger, PFSkinToneSliderMode) {
+    PFSkinToneSliderModeIntensity = 0,
+    PFSkinToneSliderModeTemperature = 1,
+};
+
+@interface PFSkinToneCell : UICollectionViewCell
+
+@property (nonatomic, strong) UIView *swatchView;
+@property (nonatomic, strong) UILabel *titleLabel;
+
+- (void)configureWithParam:(PFBeautyParam *)param color:(UIColor *)color selected:(BOOL)selected;
+
+@end
+
+@implementation PFSkinToneCell
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.swatchView = [[UIView alloc] initWithFrame:CGRectZero];
+        self.swatchView.layer.masksToBounds = YES;
+        self.swatchView.layer.shadowColor = [UIColor blackColor].CGColor;
+        self.swatchView.layer.shadowOffset = CGSizeMake(0, 2);
+        self.swatchView.layer.shadowOpacity = 0.18;
+        self.swatchView.layer.shadowRadius = 5.0;
+        [self.contentView addSubview:self.swatchView];
+
+        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        self.titleLabel.textAlignment = NSTextAlignmentCenter;
+        self.titleLabel.textColor = [UIColor whiteColor];
+        self.titleLabel.font = [UIFont systemFontOfSize:12.0 weight:UIFontWeightRegular];
+        [self.contentView addSubview:self.titleLabel];
+    }
+    return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    CGFloat swatch = 52.0;
+    CGFloat x = (CGRectGetWidth(self.contentView.bounds) - swatch) * 0.5;
+    self.swatchView.frame = CGRectMake(x, 0, swatch, swatch);
+    self.swatchView.layer.cornerRadius = swatch * 0.5;
+    self.titleLabel.frame = CGRectMake(-8, swatch + 6, CGRectGetWidth(self.contentView.bounds) + 16, 18);
+}
+
+- (void)configureWithParam:(PFBeautyParam *)param color:(UIColor *)color selected:(BOOL)selected {
+    self.titleLabel.text = NSLocalizedString(param.mTitle, nil);
+    self.swatchView.backgroundColor = color;
+    self.swatchView.layer.borderWidth = selected ? 2.0 : 0.0;
+    self.swatchView.layer.borderColor = selected ? [UIColor colorWithHexColorString:@"BAACFF"].CGColor : [UIColor clearColor].CGColor;
+    self.titleLabel.textColor = selected ? [UIColor colorWithHexColorString:@"BAACFF"] : [UIColor whiteColor];
+}
+
+@end
 
 static NSArray<NSNumber *> *PFBeautyEditViewDefaultModules(void) {
     return @[
@@ -19,8 +84,13 @@ static NSArray<NSNumber *> *PFBeautyEditViewDefaultModules(void) {
         @(PFBeautyEditViewModuleTypeSkin),
         @(PFBeautyEditViewModuleTypeShape),
         @(PFBeautyEditViewModuleTypeFilter),
+        @(PFBeautyEditViewModuleTypeMakeup),
+        @(PFBeautyEditViewModuleTypeSkinTone),
         @(PFBeautyEditViewModuleTypeStickers),
-        @(PFBeautyEditViewModuleTypeMakeup)
+        @(PFBeautyEditViewModuleTypeBody),
+        @(PFBeautyEditViewModuleTypeSkinDetail),
+        @(PFBeautyEditViewModuleTypeColorGrading),
+        @(PFBeautyEditViewModuleTypeGlobalHLS),
     ];
 }
 
@@ -36,32 +106,65 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
             return NSLocalizedString(@"滤镜", nil);
         case PFBeautyEditViewModuleTypeMakeup:
             return NSLocalizedString(@"美妆", nil);
+        case PFBeautyEditViewModuleTypeSkinTone:
+            return NSLocalizedString(@"肤色", nil);
         case PFBeautyEditViewModuleTypeStickers:
             return NSLocalizedString(@"贴纸", nil);
+        case PFBeautyEditViewModuleTypeColorGrading:
+            return NSLocalizedString(@"调色", nil);
+        case PFBeautyEditViewModuleTypeGlobalHLS:
+            return NSLocalizedString(@"全局HLS", nil);
+        case PFBeautyEditViewModuleTypeBody:
+            return NSLocalizedString(@"美体", nil);
+        case PFBeautyEditViewModuleTypeSkinDetail:
+            return NSLocalizedString(@"皮肤细节", nil);
         default:
             return @"";
     }
 }
 
-@interface PFBeautyEditView ()<PFFilterViewDelegate, PFBeautyViewDelegate>
+static BOOL PFBeautyEditViewIsExternalModule(PFBeautyEditViewModuleType type) {
+    return type == PFBeautyEditViewModuleTypeColorGrading
+        || type == PFBeautyEditViewModuleTypeGlobalHLS
+        || type == PFBeautyEditViewModuleTypeBody
+        || type == PFBeautyEditViewModuleTypeSkinDetail;
+}
+
+@interface PFBeautyEditView ()<PFFilterViewDelegate, PFBeautyViewDelegate, UIScrollViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (nonatomic, strong) UIButton *comparisonButton;
 @property (nonatomic, strong) UIView *topView;
 @property (nonatomic, strong) UIView *contentContainer;
 @property (nonatomic, strong) UIView *separatorView;
 @property (nonatomic, strong) UIView *bottomContainer;
-@property (nonatomic, strong) UIStackView *bottomStackView;
+@property (nonatomic, strong) UIScrollView *tabScrollView;
+@property (nonatomic, strong) UIStackView *tabStackView;
+@property (nonatomic, strong) UIView *tabIndicator;
 @property (nonatomic, strong) PFSlider *beautySlider;
 @property (nonatomic, strong) PFFilterView *faceTypeView;
 @property (nonatomic, strong) PFFilterView *beautyFilterView;
 @property (nonatomic, strong) PFFilterView *makeupView;
 @property (nonatomic, strong) PFFilterView *stickersView;
+@property (nonatomic, strong) UICollectionView *skinToneView;
 @property (nonatomic, strong) PFBeautyView *shapeView;
 @property (nonatomic, strong) PFBeautyView *skinView;
 @property (nonatomic, strong) NSArray<UIView *> *contentViews;
 @property (nonatomic, strong) NSMutableDictionary<NSNumber *, UIButton *> *moduleButtonMap;
 @property (nonatomic, assign) PFBeautyEditViewModuleType currentModuleType;
 @property (strong, nonatomic) PFBeautyParam *seletedParam;
+@property (nonatomic, strong) NSArray<PFBeautyParam *> *skinToneParams;
+@property (nonatomic, strong) NSArray<UIColor *> *skinToneColors;
+@property (nonatomic, strong) PFBeautyParam *skinToneIntensityParam;
+@property (nonatomic, strong) PFBeautyParam *skinToneTemperatureParam;
+@property (nonatomic, assign) NSInteger skinToneSelectedIndex;
+@property (nonatomic, assign) PFSkinToneSliderMode skinToneSliderMode;
+@property (nonatomic, strong) UIStackView *skinToneModeStackView;
+@property (nonatomic, strong) UIButton *skinToneIntensityButton;
+@property (nonatomic, strong) UIButton *skinToneTemperatureButton;
+@property (nonatomic, strong) NSLayoutConstraint *beautySliderDefaultLeadingConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *beautySliderSkinToneLeadingConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *bottomContainerTopToSeparatorConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *bottomContainerTopToSelfConstraint;
 
 @end
 
@@ -112,7 +215,7 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
 
     self.bottomContainer = [[UIView alloc] init];
     self.bottomContainer.translatesAutoresizingMaskIntoConstraints = NO;
-    self.bottomContainer.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.50];
+    self.bottomContainer.backgroundColor = [[UIColor colorWithWhite:0.12 alpha:1.0] colorWithAlphaComponent:0.96];
     [self addSubview:self.bottomContainer];
 
     self.separatorView = [[UIView alloc] init];
@@ -130,26 +233,63 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
         [self.topView.topAnchor constraintEqualToAnchor:self.topAnchor constant:70],
     ]];
 
-    self.bottomStackView = [[UIStackView alloc] init];
-    self.bottomStackView.axis = UILayoutConstraintAxisHorizontal;
-    self.bottomStackView.spacing = 12;
-    self.bottomStackView.distribution = UIStackViewDistributionFillEqually;
-    self.bottomStackView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.bottomContainer addSubview:self.bottomStackView];
+    self.tabScrollView = [[UIScrollView alloc] init];
+    self.tabScrollView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.tabScrollView.showsHorizontalScrollIndicator = NO;
+    self.tabScrollView.alwaysBounceHorizontal = YES;
+    self.tabScrollView.delegate = self;
+    self.tabScrollView.backgroundColor = [UIColor clearColor];
+    [self.bottomContainer addSubview:self.tabScrollView];
+
+    self.tabStackView = [[UIStackView alloc] init];
+    self.tabStackView.axis = UILayoutConstraintAxisHorizontal;
+    self.tabStackView.spacing = 20;
+    self.tabStackView.alignment = UIStackViewAlignmentCenter;
+    self.tabStackView.distribution = UIStackViewDistributionFill;
+    self.tabStackView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.tabScrollView addSubview:self.tabStackView];
+
+    self.tabIndicator = [[UIView alloc] init];
+    self.tabIndicator.translatesAutoresizingMaskIntoConstraints = NO;
+    self.tabIndicator.backgroundColor = [UIColor colorWithHexColorString:@"BAACFF"];
+    self.tabIndicator.layer.cornerRadius = 1.5;
+    [self.tabScrollView addSubview:self.tabIndicator];
 
     [NSLayoutConstraint activateConstraints:@[
-        [self.bottomStackView.leadingAnchor constraintEqualToAnchor:self.bottomContainer.leadingAnchor constant:16],
-        [self.bottomStackView.trailingAnchor constraintEqualToAnchor:self.bottomContainer.trailingAnchor constant:-16],
-        [self.bottomStackView.topAnchor constraintEqualToAnchor:self.bottomContainer.topAnchor constant:8],
-        [self.bottomStackView.bottomAnchor constraintEqualToAnchor:self.bottomContainer.bottomAnchor constant:-8]
+        [self.tabScrollView.leadingAnchor constraintEqualToAnchor:self.bottomContainer.leadingAnchor],
+        [self.tabScrollView.trailingAnchor constraintEqualToAnchor:self.bottomContainer.trailingAnchor],
+        [self.tabScrollView.topAnchor constraintEqualToAnchor:self.bottomContainer.topAnchor constant:4],
+        [self.tabScrollView.bottomAnchor constraintEqualToAnchor:self.bottomContainer.bottomAnchor constant:-4],
+        [self.tabScrollView.heightAnchor constraintGreaterThanOrEqualToConstant:40]
     ]];
+
+    if (@available(iOS 11.0, *)) {
+        [NSLayoutConstraint activateConstraints:@[
+            [self.tabStackView.topAnchor constraintEqualToAnchor:self.tabScrollView.contentLayoutGuide.topAnchor],
+            [self.tabStackView.bottomAnchor constraintEqualToAnchor:self.tabScrollView.contentLayoutGuide.bottomAnchor],
+            [self.tabStackView.leadingAnchor constraintEqualToAnchor:self.tabScrollView.contentLayoutGuide.leadingAnchor constant:12],
+            [self.tabStackView.trailingAnchor constraintEqualToAnchor:self.tabScrollView.contentLayoutGuide.trailingAnchor constant:-12],
+            [self.tabStackView.heightAnchor constraintEqualToAnchor:self.tabScrollView.frameLayoutGuide.heightAnchor]
+        ]];
+    } else {
+        [NSLayoutConstraint activateConstraints:@[
+            [self.tabStackView.topAnchor constraintEqualToAnchor:self.tabScrollView.topAnchor],
+            [self.tabStackView.bottomAnchor constraintEqualToAnchor:self.tabScrollView.bottomAnchor],
+            [self.tabStackView.leadingAnchor constraintEqualToAnchor:self.tabScrollView.leadingAnchor constant:12],
+            [self.tabStackView.trailingAnchor constraintEqualToAnchor:self.tabScrollView.trailingAnchor constant:-12],
+            [self.tabStackView.heightAnchor constraintEqualToAnchor:self.tabScrollView.heightAnchor]
+        ]];
+    }
+
+    self.bottomContainerTopToSeparatorConstraint = [self.bottomContainer.topAnchor constraintEqualToAnchor:self.separatorView.bottomAnchor];
+    self.bottomContainerTopToSelfConstraint = [self.bottomContainer.topAnchor constraintEqualToAnchor:self.topAnchor];
 
     [NSLayoutConstraint activateConstraints:@[
         [self.separatorView.leadingAnchor constraintEqualToAnchor:self.topView.leadingAnchor constant:8],
         [self.separatorView.trailingAnchor constraintEqualToAnchor:self.topView.trailingAnchor constant:-8],
         [self.separatorView.bottomAnchor constraintEqualToAnchor:self.topView.bottomAnchor],
         [self.separatorView.heightAnchor constraintEqualToConstant:1],
-        [self.bottomContainer.topAnchor constraintEqualToAnchor:self.separatorView.bottomAnchor]
+        self.bottomContainerTopToSeparatorConstraint
     ]];
 
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleBackgroundTap:)];
@@ -172,18 +312,37 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
     [self.beautySlider addTarget:self action:@selector(filterSliderValueChange:) forControlEvents:UIControlEventValueChanged];
     [self.topView addSubview:self.beautySlider];
 
+    self.skinToneIntensityButton = [self buildSkinToneModeButtonWithTitle:@"肤色" mode:PFSkinToneSliderModeIntensity];
+    self.skinToneTemperatureButton = [self buildSkinToneModeButtonWithTitle:@"冷暖" mode:PFSkinToneSliderModeTemperature];
+    self.skinToneModeStackView = [[UIStackView alloc] initWithArrangedSubviews:@[self.skinToneIntensityButton, self.skinToneTemperatureButton]];
+    self.skinToneModeStackView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.skinToneModeStackView.axis = UILayoutConstraintAxisHorizontal;
+    self.skinToneModeStackView.spacing = 6.0;
+    self.skinToneModeStackView.distribution = UIStackViewDistributionFillEqually;
+    self.skinToneModeStackView.hidden = YES;
+    [self.topView addSubview:self.skinToneModeStackView];
+
     self.contentContainer = [[UIView alloc] init];
     self.contentContainer.translatesAutoresizingMaskIntoConstraints = NO;
     self.contentContainer.backgroundColor = [UIColor clearColor];
     [self.topView addSubview:self.contentContainer];
     
+    self.beautySliderDefaultLeadingConstraint = [self.beautySlider.leadingAnchor constraintEqualToAnchor:self.topView.leadingAnchor constant:56];
+    self.beautySliderSkinToneLeadingConstraint = [self.beautySlider.leadingAnchor constraintEqualToAnchor:self.skinToneModeStackView.trailingAnchor constant:12];
+    self.beautySliderSkinToneLeadingConstraint.active = NO;
+
     [NSLayoutConstraint activateConstraints:@[
         [self.comparisonButton.trailingAnchor constraintEqualToAnchor:self.topView.trailingAnchor constant:-8],
         [self.comparisonButton.topAnchor constraintEqualToAnchor:self.topView.topAnchor constant:12],
         [self.comparisonButton.widthAnchor constraintEqualToConstant:44],
         [self.comparisonButton.heightAnchor constraintEqualToConstant:44],
 
-        [self.beautySlider.leadingAnchor constraintEqualToAnchor:self.topView.leadingAnchor constant:56],
+        [self.skinToneModeStackView.leadingAnchor constraintEqualToAnchor:self.topView.leadingAnchor constant:10],
+        [self.skinToneModeStackView.centerYAnchor constraintEqualToAnchor:self.comparisonButton.centerYAnchor],
+        [self.skinToneModeStackView.widthAnchor constraintEqualToConstant:94],
+        [self.skinToneModeStackView.heightAnchor constraintEqualToConstant:32],
+
+        self.beautySliderDefaultLeadingConstraint,
         [self.beautySlider.trailingAnchor constraintEqualToAnchor:self.topView.trailingAnchor constant:-56],
         [self.beautySlider.centerYAnchor constraintEqualToAnchor:self.comparisonButton.centerYAnchor],
         [self.beautySlider.heightAnchor constraintEqualToConstant:34],
@@ -193,6 +352,33 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
         [self.contentContainer.trailingAnchor constraintEqualToAnchor:self.topView.trailingAnchor],
         [self.contentContainer.bottomAnchor constraintEqualToAnchor:self.topView.bottomAnchor constant:-8]
     ]];
+}
+
+- (UIButton *)buildSkinToneModeButtonWithTitle:(NSString *)title mode:(PFSkinToneSliderMode)mode {
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.tag = mode;
+    button.titleLabel.font = [UIFont systemFontOfSize:13.0 weight:UIFontWeightMedium];
+    [button setTitle:title forState:UIControlStateNormal];
+    [button setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.65] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    button.layer.cornerRadius = 16.0;
+    button.layer.masksToBounds = YES;
+    button.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.12];
+    [button addTarget:self action:@selector(skinToneModeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    return button;
+}
+
+- (void)updateContainerLayoutMode {
+    // 紧凑模式（例如高度为 56，仅展示底部 tab）下，解除 topView -> bottomContainer 的串联约束，
+    // 改为 bottomContainer 直接贴顶，避免在小高度下产生不可满足约束。
+    BOOL compactMode = CGRectGetHeight(self.bounds) <= 80.0;
+    if (compactMode) {
+        self.bottomContainerTopToSeparatorConstraint.active = NO;
+        self.bottomContainerTopToSelfConstraint.active = YES;
+    } else {
+        self.bottomContainerTopToSelfConstraint.active = NO;
+        self.bottomContainerTopToSeparatorConstraint.active = YES;
+    }
 }
 
 - (UICollectionViewFlowLayout *)layoutWithItemSize:(CGSize)size
@@ -286,6 +472,19 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
     self.makeupView.mDelegate = self;
     [self addContentView:self.makeupView toCollection:contentViews horizontalInset:0];
 
+    UICollectionViewFlowLayout *skinToneLayout = [self layoutWithItemSize:CGSizeMake(64, 78)
+                                                                    inset:UIEdgeInsetsMake(14, 18, 6, 18)
+                                                              lineSpacing:18
+                                                           interItemSpace:18];
+    self.skinToneView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:skinToneLayout];
+    self.skinToneView.showsHorizontalScrollIndicator = NO;
+    self.skinToneView.alwaysBounceHorizontal = YES;
+    self.skinToneView.backgroundColor = [UIColor clearColor];
+    self.skinToneView.delegate = self;
+    self.skinToneView.dataSource = self;
+    [self.skinToneView registerClass:[PFSkinToneCell class] forCellWithReuseIdentifier:@"PFSkinToneCell"];
+    [self addContentView:self.skinToneView toCollection:contentViews horizontalInset:0];
+
     self.contentViews = contentViews;
 }
 
@@ -306,6 +505,11 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
     }
     [self.faceTypeView reloadData];
 
+    if (self.skinToneSelectedIndex < 0 || self.skinToneSelectedIndex >= self.skinToneParams.count) {
+        self.skinToneSelectedIndex = 0;
+    }
+    [self.skinToneView reloadData];
+
     self.stickersView.filters = _stickersParams;
     if (_stickersParams.count > 0) {
         [self.stickersView setDefaultFilter:_stickersParams[0]];
@@ -319,7 +523,26 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
     _skinParams = [PFDateHandle setupSkinData];
     _faceTypeParams = [PFDateHandle setupFaceType];
     self.makeupParams = [self buildDefaultMakeupParams];
-    _stickersParams = [PFDateHandle setupStickers];
+    _stickersParams = [[PFEffectResourceManager sharedManager] originParamsForType:FUDataTypeStickers];
+    self.skinToneParams = [self buildDefaultSkinToneParams];
+    self.skinToneColors = @[
+        [[UIColor whiteColor] colorWithAlphaComponent:0.22],
+        [UIColor colorWithRed:0.94 green:0.86 blue:0.80 alpha:1.0],
+        [UIColor colorWithRed:1.00 green:0.96 blue:0.92 alpha:1.0],
+        [UIColor colorWithRed:0.98 green:0.82 blue:0.80 alpha:1.0],
+        [UIColor colorWithRed:0.79 green:0.55 blue:0.42 alpha:1.0],
+        [UIColor colorWithRed:0.48 green:0.30 blue:0.22 alpha:1.0],
+    ];
+    self.skinToneIntensityParam = [self buildSkinToneControlParamWithTitle:@"肤色程度"
+                                                                     param:PFSkinToneParamIntensity
+                                                                     value:0.6f
+                                                               style101:NO];
+    self.skinToneTemperatureParam = [self buildSkinToneControlParamWithTitle:@"肤色色温"
+                                                                       param:PFSkinToneParamTemperature
+                                                                       value:0.5f
+                                                                 style101:YES];
+    self.skinToneSelectedIndex = 0;
+    self.skinToneSliderMode = PFSkinToneSliderModeIntensity;
 }
 
 - (void)setMakeupParams:(NSArray<PFBeautyParam *> *)makeupParams {
@@ -337,20 +560,68 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
     [self.makeupView reloadData];
 }
 
-- (NSArray<PFBeautyParam *> *)buildDefaultMakeupParams {
-    NSArray *names = @[@"origin", @"大气", @"撩人", @"清新", @"唯美", @"温柔", @"氧气", @"妖媚", @"夜魅", @"御姐", @"知性"];
-    NSArray *folders = @[@"origin", @"大气", @"撩人", @"清新", @"唯美", @"温柔", @"氧气", @"妖媚", @"夜魅", @"御姐", @"知性"];
-    NSMutableArray *array = [NSMutableArray array];
-    for (NSInteger i = 0; i < names.count; i++) {
-        PFBeautyParam *param = [[PFBeautyParam alloc] init];
-        param.mTitle = names[i];
-        param.mParam = folders[i];
-        param.type = FUDataTypeMakeup;
-        param.mValue = i == 0 ? 0.0f : 1.0f;
-        param.defaultValue = param.mValue;
-        [array addObject:param];
+- (void)setStickersParams:(NSArray<PFBeautyParam *> *)stickersParams {
+    _stickersParams = stickersParams;
+    if (!self.stickersView) {
+        return;
     }
-    return [array copy];
+    self.stickersView.filters = stickersParams;
+    if (stickersParams.count > 0 && (self.stickersView.selectedIndex < 0 || self.stickersView.selectedIndex >= stickersParams.count)) {
+        self.stickersView.selectedIndex = 0;
+    }
+    [self.stickersView reloadData];
+}
+
+- (void)refreshResourceParam:(PFBeautyParam *)param {
+    NSInteger makeupIndex = [self.makeupParams indexOfObject:param];
+    if (makeupIndex != NSNotFound) {
+        [self.makeupView refreshItemAtIndex:makeupIndex];
+        return;
+    }
+    NSInteger stickerIndex = [self.stickersParams indexOfObject:param];
+    if (stickerIndex != NSNotFound) {
+        [self.stickersView refreshItemAtIndex:stickerIndex];
+    }
+}
+
+- (NSArray<PFBeautyParam *> *)buildDefaultMakeupParams {
+    return [[PFEffectResourceManager sharedManager] originParamsForType:FUDataTypeMakeup];
+}
+
+- (PFBeautyParam *)buildSkinToneControlParamWithTitle:(NSString *)title
+                                               param:(NSString *)param
+                                               value:(float)value
+                                            style101:(BOOL)style101 {
+    PFBeautyParam *model = [[PFBeautyParam alloc] init];
+    model.mTitle = title;
+    model.mParam = param;
+    model.mValue = value;
+    model.defaultValue = value;
+    model.iSStyle101 = style101;
+    model.type = FUDataTypeSkinTone;
+    return model;
+}
+
+- (NSArray<PFBeautyParam *> *)buildDefaultSkinToneParams {
+    NSArray<NSDictionary *> *configs = @[
+        @{@"title": @"关闭", @"param": PFSkinToneParamOff},
+        @{@"title": @"自然", @"param": PFSkinToneParamNatural},
+        @{@"title": @"白皙", @"param": PFSkinToneParamFair},
+        @{@"title": @"粉白", @"param": PFSkinToneParamPinkWhite},
+        @{@"title": @"小麦色", @"param": PFSkinToneParamWheat},
+        @{@"title": @"美黑", @"param": PFSkinToneParamBronze},
+    ];
+    NSMutableArray<PFBeautyParam *> *params = [NSMutableArray arrayWithCapacity:configs.count];
+    for (NSDictionary *config in configs) {
+        PFBeautyParam *model = [[PFBeautyParam alloc] init];
+        model.mTitle = config[@"title"];
+        model.mParam = config[@"param"];
+        model.mValue = 0.6f;
+        model.defaultValue = 0.6f;
+        model.type = FUDataTypeSkinTone;
+        [params addObject:model];
+    }
+    return params;
 }
 
 - (NSArray<NSNumber *> *)sanitizedModuleTypes:(NSArray<NSNumber *> *)moduleTypes {
@@ -361,7 +632,7 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
         if (type == PFBeautyEditViewModuleTypeNone) {
             continue;
         }
-        if (![self contentViewForType:type]) {
+        if (![self contentViewForType:type] && !PFBeautyEditViewIsExternalModule(type)) {
             continue;
         }
         [ordered addObject:@(type)];
@@ -379,8 +650,8 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
 }
 
 - (void)rebuildModuleButtons {
-    for (UIView *view in self.bottomStackView.arrangedSubviews) {
-        [self.bottomStackView removeArrangedSubview:view];
+    for (UIView *view in self.tabStackView.arrangedSubviews) {
+        [self.tabStackView removeArrangedSubview:view];
         [view removeFromSuperview];
     }
     [self.moduleButtonMap removeAllObjects];
@@ -389,43 +660,40 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
     for (NSNumber *number in self.moduleTypes) {
         PFBeautyEditViewModuleType type = (PFBeautyEditViewModuleType)number.integerValue;
         UIButton *button = [self buildModuleButtonForType:type];
-        [self.bottomStackView addArrangedSubview:button];
+        [self.tabStackView addArrangedSubview:button];
         self.moduleButtonMap[@(type)] = button;
     }
 
     self.bottomContainer.hidden = self.moduleButtonMap.count == 0;
 
-    NSNumber *preferred = nil;
-    for (NSNumber *number in self.moduleTypes) {
-        if (number.integerValue == PFBeautyEditViewModuleTypeSkin) {
-            preferred = number;
-            break;
-        }
-    }
-    NSNumber *target = preferred ?: self.moduleTypes.firstObject;
+    NSNumber *target = self.moduleTypes.firstObject;
     if (target) {
         [self selectModuleType:(PFBeautyEditViewModuleType)target.integerValue userInitiated:NO];
     }
+    // selectModuleType 内会 updateTabUnderline，但此时 tab 可能尚未完成 Auto Layout，再布局一次避免首次进入指示条错位
+    [self layoutIfNeeded];
+    [self updateTabUnderline];
 }
 
 - (UIButton *)buildModuleButtonForType:(PFBeautyEditViewModuleType)type {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.tag = PFBeautyEditViewButtonTagBase + type;
     [button setTitle:PFBeautyEditViewTitleForType(type) forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont systemFontOfSize:13 weight:UIFontWeightMedium];
-    [button setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.65] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
+    UIColor *inactive = [[UIColor whiteColor] colorWithAlphaComponent:0.45];
+    [button setTitleColor:inactive forState:UIControlStateNormal];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-    button.layer.cornerRadius = 16;
-    button.layer.masksToBounds = YES;
-    [[button.heightAnchor constraintGreaterThanOrEqualToConstant:44] setActive:YES];
+    [button setTitleColor:inactive forState:UIControlStateHighlighted];
     button.backgroundColor = [UIColor clearColor];
+    button.contentEdgeInsets = UIEdgeInsetsMake(8, 2, 10, 2);
+    [button setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
     [button addTarget:self action:@selector(moduleButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     return button;
 }
 
 - (void)moduleButtonTapped:(UIButton *)sender {
     PFBeautyEditViewModuleType type = (PFBeautyEditViewModuleType)(sender.tag - PFBeautyEditViewButtonTagBase);
-    if (self.currentModuleType == type && !self.topView.hidden) {
+    if (self.currentModuleType == type && !PFBeautyEditViewIsExternalModule(type) && !self.topView.hidden) {
         [self hiddenTopViewWithAnimation:YES];
         return;
     }
@@ -438,12 +706,23 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
     }
 
     self.currentModuleType = type;
-
     [self.moduleButtonMap enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, UIButton * _Nonnull obj, BOOL * _Nonnull stop) {
-        BOOL selected = key.integerValue == type;
-        obj.selected = selected;
-        obj.backgroundColor = selected ? [[UIColor whiteColor] colorWithAlphaComponent:0.18] : [UIColor clearColor];
+        obj.selected = (key.integerValue == type);
     }];
+
+    if (PFBeautyEditViewIsExternalModule(type)) {
+        [self hideAllContentViews];
+        self.beautySlider.hidden = YES;
+        [self updateSkinToneModeVisibility:NO];
+        self.seletedParam = nil;
+        self.topView.hidden = YES;
+        [self updateTabUnderline];
+        [self scrollSelectedTabIntoView];
+        if (userInitiated && [self.mDelegate respondsToSelector:@selector(bottomDidChange:)]) {
+            [self.mDelegate bottomDidChange:(int)type];
+        }
+        return;
+    }
 
     [self hideAllContentViews];
     UIView *target = [self contentViewForType:type];
@@ -452,6 +731,9 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
     [self refreshSliderForCurrentModule];
     [self showTopViewWithAnimation:self.topView.isHidden];
 
+    [self updateTabUnderline];
+    [self scrollSelectedTabIntoView];
+
     if (userInitiated && [self.mDelegate respondsToSelector:@selector(bottomDidChange:)]) {
         [self.mDelegate bottomDidChange:(int)type];
     }
@@ -459,6 +741,7 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
 
 - (void)refreshSliderForCurrentModule {
     self.beautySlider.hidden = YES;
+    [self updateSkinToneModeVisibility:NO];
     self.seletedParam = nil;
 
     switch (self.currentModuleType) {
@@ -504,6 +787,10 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
                 }
             }
         } break;
+        case PFBeautyEditViewModuleTypeSkinTone: {
+            [self updateSkinToneModeVisibility:YES];
+            [self refreshSkinToneSlider];
+        } break;
         case PFBeautyEditViewModuleTypeOneKey: {
             NSInteger index = self.faceTypeView.selectedIndex;
             if (index >= 0 && index < self.faceTypeView.filters.count) {
@@ -521,6 +808,47 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
     }
 
     [self setSliderTyep:self.seletedParam];
+}
+
+- (void)updateSkinToneModeVisibility:(BOOL)visible {
+    self.skinToneModeStackView.hidden = !visible;
+    self.beautySliderDefaultLeadingConstraint.active = !visible;
+    self.beautySliderSkinToneLeadingConstraint.active = visible;
+}
+
+- (void)refreshSkinToneSlider {
+    self.skinToneIntensityButton.selected = self.skinToneSliderMode == PFSkinToneSliderModeIntensity;
+    self.skinToneTemperatureButton.selected = self.skinToneSliderMode == PFSkinToneSliderModeTemperature;
+    [self updateSkinToneModeButton:self.skinToneIntensityButton selected:self.skinToneIntensityButton.selected];
+    [self updateSkinToneModeButton:self.skinToneTemperatureButton selected:self.skinToneTemperatureButton.selected];
+
+    if ([self isSkinToneOffSelected]) {
+        self.seletedParam = nil;
+        self.beautySlider.hidden = YES;
+        return;
+    }
+
+    self.seletedParam = self.skinToneSliderMode == PFSkinToneSliderModeIntensity ? self.skinToneIntensityParam : self.skinToneTemperatureParam;
+    self.beautySlider.hidden = NO;
+    self.beautySlider.type = self.seletedParam.iSStyle101 ? FUFilterSliderType101 : FUFilterSliderType01;
+    self.beautySlider.value = self.seletedParam.mValue;
+}
+
+- (void)updateSkinToneModeButton:(UIButton *)button selected:(BOOL)selected {
+    button.backgroundColor = selected ? [UIColor colorWithHexColorString:@"8D73FF"] : [[UIColor whiteColor] colorWithAlphaComponent:0.12];
+}
+
+- (void)skinToneModeButtonTapped:(UIButton *)sender {
+    self.skinToneSliderMode = (PFSkinToneSliderMode)sender.tag;
+    [self refreshSkinToneSlider];
+}
+
+- (BOOL)isSkinToneOffSelected {
+    NSInteger index = self.skinToneSelectedIndex;
+    if (index < 0 || index >= self.skinToneParams.count) {
+        return NO;
+    }
+    return [self.skinToneParams[index].mParam isEqualToString:PFSkinToneParamOff];
 }
 
 - (void)hideAllContentViews {
@@ -541,6 +869,8 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
             return self.beautyFilterView;
         case PFBeautyEditViewModuleTypeMakeup:
             return self.makeupView;
+        case PFBeautyEditViewModuleTypeSkinTone:
+            return self.skinToneView;
         case PFBeautyEditViewModuleTypeStickers:
             return self.stickersView;
         default:
@@ -555,6 +885,7 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
     [self.beautyFilterView reloadData];
     self.makeupView.filters = _makeupParams;
     [self.makeupView reloadData];
+    [self.skinToneView reloadData];
     self.stickersView.filters = _stickersParams;
     [self.stickersView reloadData];
     self.shapeView.dataArray = _shapeParams;
@@ -607,11 +938,12 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
         self.topView.transform = CGAffineTransformIdentity ;
         [self hideAllContentViews];
         self.beautySlider.hidden = YES;
+        [self updateSkinToneModeVisibility:NO];
         self.currentModuleType = PFBeautyEditViewModuleTypeNone;
         [self.moduleButtonMap enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, UIButton * _Nonnull obj, BOOL * _Nonnull stop) {
             obj.selected = NO;
-            obj.backgroundColor = [UIColor clearColor];
         }];
+        [self updateTabUnderline];
     };
 
     if (animation) {
@@ -660,8 +992,8 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
     for (PFBeautyParam *param in _shapeParams) {
         if([dic.allKeys containsObject:param.mParam]) {
             param.mValue = [dic[param.mParam] floatValue];
-        }else {
-            param.mValue = 0.0f;
+        } else {
+            param.mValue = param.iSStyle101 ? param.defaultValue : 0.0f;
         }
 
         if (_mDelegate && [_mDelegate respondsToSelector:@selector(filterValueChange:)]) {
@@ -754,6 +1086,45 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
     }
 }
 
+#pragma mark ---- UICollectionViewDataSource
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    if (collectionView == self.skinToneView) {
+        return self.skinToneParams.count;
+    }
+    return 0;
+}
+
+- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (collectionView == self.skinToneView) {
+        PFSkinToneCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PFSkinToneCell" forIndexPath:indexPath];
+        UIColor *color = indexPath.item < self.skinToneColors.count ? self.skinToneColors[indexPath.item] : [UIColor whiteColor];
+        [cell configureWithParam:self.skinToneParams[indexPath.item]
+                           color:color
+                        selected:indexPath.item == self.skinToneSelectedIndex];
+        return cell;
+    }
+    return [UICollectionViewCell new];
+}
+
+#pragma mark ---- UICollectionViewDelegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (collectionView != self.skinToneView || indexPath.item >= self.skinToneParams.count) {
+        return;
+    }
+
+    self.skinToneSelectedIndex = indexPath.item;
+    [self.skinToneView reloadData];
+    [self refreshSkinToneSlider];
+
+    PFBeautyParam *param = self.skinToneParams[indexPath.item];
+    param.mValue = self.skinToneIntensityParam.mValue;
+    if (_mDelegate && [_mDelegate respondsToSelector:@selector(filterValueChange:)]) {
+        [_mDelegate filterValueChange:param];
+    }
+}
+
 -(void)beautyCollectionView:(PFBeautyView *)beautyView didSelectedParam:(PFBeautyParam *)param{
     _seletedParam = param;
     self.beautySlider.value = param.mValue;
@@ -764,12 +1135,33 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
 
 // 滑条滑动
 - (IBAction)filterSliderValueChange:(PFSlider *)sender {
+    if (!_seletedParam) {
+        return;
+    }
+
     _seletedParam.mValue = sender.value;
     if (_mDelegate && [_mDelegate respondsToSelector:@selector(filterValueChange:)]) {
         [_mDelegate filterValueChange:_seletedParam];
     }
-    [_shapeView reloadData];
-    [_skinView reloadData];
+
+    switch (self.currentModuleType) {
+        case PFBeautyEditViewModuleTypeSkinTone:
+            if (self.skinToneSliderMode == PFSkinToneSliderModeIntensity) {
+                NSInteger index = self.skinToneSelectedIndex;
+                if (index >= 0 && index < self.skinToneParams.count) {
+                    self.skinToneParams[index].mValue = sender.value;
+                }
+            }
+            break;
+        case PFBeautyEditViewModuleTypeSkin:
+            [self.skinView refreshItemAtIndex:self.skinView.selectedIndex];
+            break;
+        case PFBeautyEditViewModuleTypeShape:
+            [self.shapeView refreshItemAtIndex:self.shapeView.selectedIndex];
+            break;
+        default:
+            break;
+    }
 }
 
 - (IBAction)isOpenFURender:(UISwitch *)sender {
@@ -809,6 +1201,48 @@ static NSString *PFBeautyEditViewTitleForType(PFBeautyEditViewModuleType type) {
 -(void)reloadFilterView:(NSArray<PFBeautyParam *> *)filterParams{
     _beautyFilterView.filters = filterParams;
     [_beautyFilterView reloadData];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    [self updateContainerLayoutMode];
+    [self updateTabUnderline];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (scrollView == self.tabScrollView) {
+        [self updateTabUnderline];
+    }
+}
+
+- (void)updateTabUnderline {
+    [self.tabScrollView layoutIfNeeded];
+    [self.tabStackView layoutIfNeeded];
+    [self.tabScrollView bringSubviewToFront:self.tabIndicator];
+    UIButton *btn = self.moduleButtonMap[@(self.currentModuleType)];
+    if (!btn || self.currentModuleType == PFBeautyEditViewModuleTypeNone) {
+        self.tabIndicator.hidden = YES;
+        return;
+    }
+    self.tabIndicator.hidden = NO;
+    CGRect r = [self.tabScrollView convertRect:btn.bounds fromView:btn];
+    CGFloat w = MIN(36.0, MAX(20.0, r.size.width * 0.55));
+    CGFloat x = CGRectGetMidX(r) - w * 0.5;
+    CGRect stackInScroll = [self.tabScrollView convertRect:self.tabStackView.bounds fromView:self.tabStackView];
+    CGFloat y = CGRectGetMaxY(stackInScroll) - 3.0;
+    if (y < 0) {
+        y = 0;
+    }
+    self.tabIndicator.frame = CGRectMake(x, y, w, 3.0);
+}
+
+- (void)scrollSelectedTabIntoView {
+    UIButton *btn = self.moduleButtonMap[@(self.currentModuleType)];
+    if (!btn) {
+        return;
+    }
+    CGRect r = [self.tabScrollView convertRect:btn.bounds fromView:btn];
+    [self.tabScrollView scrollRectToVisible:CGRectInset(r, -28, -6) animated:YES];
 }
 
 @end

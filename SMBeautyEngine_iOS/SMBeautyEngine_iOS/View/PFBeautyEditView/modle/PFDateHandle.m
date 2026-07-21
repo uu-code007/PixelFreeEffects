@@ -45,9 +45,9 @@
 }
 
 +(NSArray<PFBeautyParam *>*)setupSkinData{
-    NSArray *prams = @[@"writen",@"runddy",@"blur",@"sharpen",@"eye_b",@"nasolabialStrength",@"blackEyeStrength",@"teethStrength"];//
-    NSDictionary *titelDic = @{@"writen":@"美白",@"runddy":@"红润",@"blur":@"磨皮",@"sharpen":@"锐化",@"newWhitenStrength":@"新美白",@"eye_b":@"亮眼",@"qualityStrength":@"增强画质",@"nasolabialStrength":@"祛法令纹",@"blackEyeStrength":@"祛黑眼圈",@"teethStrength":@"白牙"};
-    NSDictionary *defaultValueDic = @{@"runddy":@(0.6),@"writen":@(0.6),@"blur":@(0.4),@"sharpen":@(0.6),@"eye_b":@(0.0),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.2),@"nasolabialStrength":@(0.0),@"blackEyeStrength":@(0.0),@"teethStrength":@(0.0)};
+    NSArray *prams = @[@"writen",@"runddy",@"blur",@"sharpen",@"eye_b",@"nasolabialStrength",@"blackEyeStrength",@"teethStrength",@"fleckFlawClean"];//
+    NSDictionary *titelDic = @{@"writen":@"美白",@"runddy":@"红润",@"blur":@"磨皮",@"sharpen":@"锐化",@"newWhitenStrength":@"新美白",@"eye_b":@"亮眼",@"qualityStrength":@"增强画质",@"nasolabialStrength":@"祛法令纹",@"blackEyeStrength":@"祛黑眼圈",@"teethStrength":@"白牙",@"fleckFlawClean":@"AI 祛瑕疵"};
+    NSDictionary *defaultValueDic = @{@"runddy":@(0.6),@"writen":@(0.6),@"blur":@(0.4),@"sharpen":@(0.6),@"eye_b":@(0.0),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.2),@"nasolabialStrength":@(0.0),@"blackEyeStrength":@(0.0),@"teethStrength":@(0.0),@"fleckFlawClean":@(0.0)};
     
     NSMutableArray *array = [[NSMutableArray alloc] init];
 
@@ -82,7 +82,7 @@
         // 眉毛
         @"face_brow_thickness", @"face_brow_length", @"face_brow_lift", @"face_brow_distance", @"face_brow_tilt",
         // 嘴唇 / 嘴部
-        @"face_mouth", @"face_philtrum", @"face_smile", @"face_upper_lip_thickness", @"face_lower_lip_thickness", @"face_lip_fullness", @"face_mouth_width"
+        @"face_mouth", @"face_philtrum", @"face_smile", @"face_lip_fullness", @"face_mouth_width"
     ];
 
      NSDictionary *titelDic = @{@"face_EyeStrength":@"大眼",@"face_thinning":@"瘦脸",@"face_narrow":@"瘦颧骨",@"face_chin":@"下巴长短",
@@ -102,14 +102,14 @@
                                 @"face_brow_lift":@"眉提升",
                                 @"face_brow_distance":@"眉距离",
                                 @"face_brow_tilt":@"眉倾斜",
-                                @"face_upper_lip_thickness":@"上唇厚度",
-                                @"face_lower_lip_thickness":@"下唇厚度",
+//                                @"face_upper_lip_thickness":@"上唇厚度",
+//                                @"face_lower_lip_thickness":@"下唇厚度",
                                 @"face_lip_fullness":@"丰唇",
                                 @"face_mouth_width":@"嘴唇宽度"
      };
     NSDictionary *defaultValueDic = @{@"face_EyeStrength":@(0.2),@"face_thinning":@(0.2),@"face_narrow":@(0.2),@"face_chin":@(0.5),
                                       @"face_V":@(0.2),@"face_small":@(0.0),@"face_nose":@(0.2),@"face_forehead":@(0.5),
-                                      @"face_mouth":@(0.5),@"face_philtrum":@(0.5),@"face_long_nose":@(0.5),@"face_eye_space":@(0.5),@"face_smile":@(0),@"face_eye_rotate":@(0.5),@"face_canthus":@(0),
+                                      @"face_mouth":@(0.5),@"face_philtrum":@(0.5),@"face_long_nose":@(0.5),@"face_eye_space":@(0.5),@"face_smile":@(0),@"face_eye_rotate":@(0.5),@"face_canthus":@(0.5),
                                       // 新增：0.5 中性
                                       @"face_eye_y":@(0.5),
                                       @"face_eye_height":@(0.5),
@@ -133,7 +133,7 @@
    NSMutableArray *array = [[NSMutableArray alloc] init];
    for (NSString *str in prams) {
     BOOL isStyle101 = NO;
-    if ([str isEqualToString:@"face_chin"] || [str isEqualToString:@"face_forehead"] || [str isEqualToString:@"face_mouth"] || [str isEqualToString:@"face_eye_space"] || [str isEqualToString:@"face_long_nose"] || [str isEqualToString:@"face_philtrum"] || [str isEqualToString:@"face_eye_rotate"] ||
+    if ([str isEqualToString:@"face_chin"] || [str isEqualToString:@"face_forehead"] || [str isEqualToString:@"face_mouth"] || [str isEqualToString:@"face_eye_space"] || [str isEqualToString:@"face_long_nose"] || [str isEqualToString:@"face_philtrum"] || [str isEqualToString:@"face_eye_rotate"] || [str isEqualToString:@"face_canthus"] ||
         [str isEqualToString:@"face_eye_y"] || [str isEqualToString:@"face_eye_height"] ||
         [str isEqualToString:@"face_nose_size"] || [str isEqualToString:@"face_nose_height"] || [str isEqualToString:@"face_nose_y"] || [str isEqualToString:@"face_nose_tip"] || [str isEqualToString:@"face_nose_bridge"] ||
         [str isEqualToString:@"face_brow_thickness"] || [str isEqualToString:@"face_brow_length"] || [str isEqualToString:@"face_brow_lift"] || [str isEqualToString:@"face_brow_distance"] || [str isEqualToString:@"face_brow_tilt"] ||
@@ -154,9 +154,9 @@
 }
 
 +(NSArray<PFBeautyParam *>*)setupFaceType{
-   NSArray *prams = @[@"origin",@"ziran",@"keai",@"nvshen",@"baijing"];//,@"chri1"
+   NSArray *prams = @[@"origin",@"ziran",@"keai",@"nvshen",@"baijing",@"tianmei",@"zhigan",@"yingpai"];//,@"chri1"
 
-  NSDictionary *titelDic = @{@"origin":@"origin",@"ziran":@"自然",@"keai":@"可爱",@"nvshen":@"女神",@"baijing":@"白净"};
+  NSDictionary *titelDic = @{@"origin":@"origin",@"ziran":@"自然",@"keai":@"可爱",@"nvshen":@"女神",@"baijing":@"白净",@"tianmei":@"甜美",@"zhigan":@"质感",@"yingpai":@"硬派"};
     
    NSMutableArray *array = [[NSMutableArray alloc] init];
    for (NSString *str in prams) {
@@ -195,26 +195,44 @@
     NSDictionary *defaultValueDic = nil;
     switch (face) {
         case 1://自然
-            defaultValueDic = @{@"runddy":@(0.6),@"writen":@(0.6),@"blur":@(0.7),@"sharpen":@(0.2),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.2),@"face_EyeStrength":@(0.2),@"face_thinning":@(0.2),@"face_narrow":@(0.2),@"face_chin":@(0.5),
+            defaultValueDic = @{@"runddy":@(0.6),@"writen":@(0.6),@"blur":@(0.7),@"sharpen":@(0.2),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.2),@"nasolabialStrength":@(0.2),@"blackEyeStrength":@(0.25),@"teethStrength":@(0.2),@"fleckFlawClean":@(0.1),@"face_EyeStrength":@(0.2),@"face_thinning":@(0.2),@"face_narrow":@(0.2),@"face_chin":@(0.5),
                                               @"face_V":@(0.2),@"face_small":@(0.2),@"face_nose":@(0.2),@"face_forehead":@(0.5),
                                               @"face_mouth":@(0.5),@"face_philtrum":@(0.5),@"face_long_nose":@(0.5),@"face_eye_space":@(0.5)
             };
             break;
         case 2://可爱
-            defaultValueDic = @{@"runddy":@(0.6),@"writen":@(0.6),@"blur":@(0.7),@"sharpen":@(0.3),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.3),@"face_EyeStrength":@(0.6),@"face_thinning":@(0.3),@"face_narrow":@(0.0),@"face_chin":@(0.2),
+            defaultValueDic = @{@"runddy":@(0.6),@"writen":@(0.6),@"blur":@(0.7),@"sharpen":@(0.3),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.3),@"nasolabialStrength":@(0.2),@"blackEyeStrength":@(0.3),@"teethStrength":@(0.25),@"fleckFlawClean":@(0.1),@"face_EyeStrength":@(0.6),@"face_thinning":@(0.3),@"face_narrow":@(0.0),@"face_chin":@(0.2),
                                               @"face_V":@(0.0),@"face_small":@(0.2),@"face_nose":@(0.2),@"face_forehead":@(0.2),
                                               @"face_mouth":@(0.5),@"face_philtrum":@(0.5),@"face_long_nose":@(0.5),@"face_eye_space":@(0.5)
             };
             break;
         case 3://女神
-            defaultValueDic = @{@"runddy":@(0.5),@"writen":@(0.5),@"blur":@(0.6),@"sharpen":@(0.2),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.2),@"face_EyeStrength":@(0.4),@"face_thinning":@(0.3),@"face_narrow":@(0.4),@"face_chin":@(0.5),
+            defaultValueDic = @{@"runddy":@(0.5),@"writen":@(0.5),@"blur":@(0.6),@"sharpen":@(0.2),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.2),@"nasolabialStrength":@(0.25),@"blackEyeStrength":@(0.3),@"teethStrength":@(0.2),@"fleckFlawClean":@(0.12),@"face_EyeStrength":@(0.4),@"face_thinning":@(0.3),@"face_narrow":@(0.4),@"face_chin":@(0.5),
                                               @"face_V":@(0.2),@"face_small":@(0.2),@"face_nose":@(0.2),@"face_forehead":@(0.5),
                                               @"face_mouth":@(0.5),@"face_philtrum":@(0.5),@"face_long_nose":@(0.5),@"face_eye_space":@(0.5)
             };
             break;
         case 4://净白
-            defaultValueDic = @{@"runddy":@(0.5),@"writen":@(0.8),@"blur":@(0.7),@"sharpen":@(0.2),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.2),@"face_EyeStrength":@(0.2),@"face_thinning":@(0.2),@"face_narrow":@(0.0),@"face_chin":@(0.5),
+            defaultValueDic = @{@"runddy":@(0.5),@"writen":@(0.8),@"blur":@(0.7),@"sharpen":@(0.2),@"newWhitenStrength":@(0.2),@"qualityStrength":@(0.2),@"nasolabialStrength":@(0.2),@"blackEyeStrength":@(0.25),@"teethStrength":@(0.3),@"fleckFlawClean":@(0.1),@"face_EyeStrength":@(0.2),@"face_thinning":@(0.2),@"face_narrow":@(0.0),@"face_chin":@(0.5),
                                               @"face_V":@(0.0),@"face_small":@(0.0),@"face_nose":@(0.5),@"face_forehead":@(0.5),
+                                              @"face_mouth":@(0.5),@"face_philtrum":@(0.5),@"face_long_nose":@(0.5),@"face_eye_space":@(0.5)
+            };
+            break;
+        case 5://甜美
+            defaultValueDic = @{@"runddy":@(0.65),@"writen":@(0.65),@"blur":@(0.75),@"sharpen":@(0.25),@"newWhitenStrength":@(0.65),@"qualityStrength":@(0.15),@"nasolabialStrength":@(0.25),@"blackEyeStrength":@(0.35),@"teethStrength":@(0.3),@"fleckFlawClean":@(0.12),@"face_EyeStrength":@(0.5),@"face_thinning":@(0.25),@"face_narrow":@(0.1),@"face_chin":@(0.35),
+                                              @"face_V":@(0.1),@"face_small":@(0.2),@"face_nose":@(0.2),@"face_forehead":@(0.35),
+                                              @"face_mouth":@(0.55),@"face_philtrum":@(0.5),@"face_long_nose":@(0.45),@"face_eye_space":@(0.5)
+            };
+            break;
+        case 6://质感
+            defaultValueDic = @{@"runddy":@(0.35),@"writen":@(0.45),@"blur":@(0.45),@"sharpen":@(0.55),@"newWhitenStrength":@(0.45),@"qualityStrength":@(0.45),@"nasolabialStrength":@(0.2),@"blackEyeStrength":@(0.25),@"teethStrength":@(0.2),@"fleckFlawClean":@(0.08),@"face_EyeStrength":@(0.15),@"face_thinning":@(0.15),@"face_narrow":@(0.15),@"face_chin":@(0.5),
+                                              @"face_V":@(0.1),@"face_small":@(0.1),@"face_nose":@(0.25),@"face_forehead":@(0.5),
+                                              @"face_mouth":@(0.5),@"face_philtrum":@(0.5),@"face_long_nose":@(0.5),@"face_eye_space":@(0.5)
+            };
+            break;
+        case 7://硬派
+            defaultValueDic = @{@"runddy":@(0.2),@"writen":@(0.25),@"blur":@(0.35),@"sharpen":@(0.6),@"newWhitenStrength":@(0.25),@"qualityStrength":@(0.4),@"nasolabialStrength":@(0.15),@"blackEyeStrength":@(0.2),@"teethStrength":@(0.15),@"fleckFlawClean":@(0.05),@"face_EyeStrength":@(0.05),@"face_thinning":@(0.0),@"face_narrow":@(0.0),@"face_chin":@(0.5),
+                                              @"face_V":@(0.0),@"face_small":@(0.0),@"face_nose":@(0.25),@"face_forehead":@(0.5),
                                               @"face_mouth":@(0.5),@"face_philtrum":@(0.5),@"face_long_nose":@(0.5),@"face_eye_space":@(0.5)
             };
             break;

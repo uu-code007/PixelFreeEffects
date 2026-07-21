@@ -11,15 +11,71 @@
 #import <OpenGLES/EAGL.h>
 #import "UIColor+PFBeautyEditView.h"
 
-@interface PFVideoController ()<PFCameraDelegate>
+@interface PFVideoController ()<PFCameraDelegate, UIGestureRecognizerDelegate>
+
+@property (nonatomic, weak) id<UIGestureRecognizerDelegate> previousInteractivePopGestureDelegate;
+@property (nonatomic, assign) BOOL previousInteractivePopGestureEnabled;
+@property (nonatomic, assign) BOOL hasDisabledInteractivePopGesture;
 
 @end
 
 @implementation PFVideoController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self pf_disablePreviewPopGesture];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self pf_disablePreviewPopGesture];
+}
+
+- (void)pf_disablePreviewPopGesture {
+    UIGestureRecognizer *popGesture = self.navigationController.interactivePopGestureRecognizer;
+    if (!popGesture) {
+        return;
+    }
+    if (!self.hasDisabledInteractivePopGesture) {
+        self.previousInteractivePopGestureDelegate = popGesture.delegate;
+        self.previousInteractivePopGestureEnabled = popGesture.enabled;
+        self.hasDisabledInteractivePopGesture = YES;
+    }
+    // 同时设置 enabled 和 delegate。即使系统稍后重新启用手势，delegate 也会拒绝开始。
+    popGesture.enabled = NO;
+    popGesture.delegate = self;
+}
+
+- (void)pf_restorePreviewPopGestureIfNeeded {
+    if (!self.hasDisabledInteractivePopGesture) {
+        return;
+    }
+    UIGestureRecognizer *popGesture = self.navigationController.interactivePopGestureRecognizer;
+    popGesture.delegate = self.previousInteractivePopGestureDelegate;
+    popGesture.enabled = self.previousInteractivePopGestureEnabled;
+    self.hasDisabledInteractivePopGesture = NO;
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer == self.navigationController.interactivePopGestureRecognizer) {
+        return NO;
+    }
+    return YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    // 相机页仅保留基础美颜模块，不展示调色/全局HLS/美体
+    self.beautyEditView.moduleTypes = @[
+        @(PFBeautyEditViewModuleTypeOneKey),
+        @(PFBeautyEditViewModuleTypeSkin),
+        @(PFBeautyEditViewModuleTypeShape),
+        @(PFBeautyEditViewModuleTypeFilter),
+        @(PFBeautyEditViewModuleTypeMakeup),
+        @(PFBeautyEditViewModuleTypeSkinTone),
+        @(PFBeautyEditViewModuleTypeStickers),
+    ];
     
     // 设置返回按钮颜色
     self.navigationController.navigationBar.tintColor = [UIColor colorWithHexColorString:@"BAACFF"];
@@ -60,6 +116,7 @@
         CFAbsoluteTime startTime = CFAbsoluteTimeGetCurrent();
         
         [self.mPixelFree processWithBuffer:pixbuffer rotationMode:PFRotationMode0];
+        [self pf_updateDetectHintNeedsFace:YES needsHuman:NO];
         CFAbsoluteTime durtion = (CFAbsoluteTimeGetCurrent() - startTime);
         
 //        float rect[4] = {0};
@@ -106,6 +163,10 @@
 
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    if (self.isMovingFromParentViewController ||
+        ![self.navigationController.viewControllers containsObject:self]) {
+        [self pf_restorePreviewPopGestureIfNeeded];
+    }
     // 停止相机采集，及时释放资源
     if (_mCamera) {
         [_mCamera stopCapture];

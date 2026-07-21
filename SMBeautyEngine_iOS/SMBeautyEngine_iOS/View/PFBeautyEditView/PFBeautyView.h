@@ -24,6 +24,8 @@
 
 @property (nonatomic, strong) NSArray <PFBeautyParam *>*dataArray;
 
+- (void)refreshItemAtIndex:(NSInteger)index;
+
 
 @end
 

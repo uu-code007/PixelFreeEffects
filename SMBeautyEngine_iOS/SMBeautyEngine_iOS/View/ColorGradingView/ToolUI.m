@@ -22,9 +22,15 @@
         self.tableView.dataSource = self;
         self.tableView.delegate = self;
         [self.tableView registerClass:[AdjustmentCell class] forCellReuseIdentifier:@"AdjustmentCell"];
+        self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self addSubview:self.tableView];
     }
     return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.tableView.frame = self.bounds;
 }
 
 #pragma mark - UITableViewDataSource

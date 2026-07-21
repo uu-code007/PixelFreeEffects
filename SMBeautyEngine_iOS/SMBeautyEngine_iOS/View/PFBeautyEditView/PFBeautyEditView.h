@@ -13,7 +13,13 @@ typedef NS_ENUM(NSInteger, PFBeautyEditViewModuleType) {
     PFBeautyEditViewModuleTypeShape      = 2,
     PFBeautyEditViewModuleTypeFilter     = 3,
     PFBeautyEditViewModuleTypeMakeup     = 4,
-    PFBeautyEditViewModuleTypeStickers   = 5,
+    PFBeautyEditViewModuleTypeSkinTone   = 5,
+    PFBeautyEditViewModuleTypeStickers   = 6,
+    /// 调色（由宿主展示 ToolUI 等独立面板）
+    PFBeautyEditViewModuleTypeColorGrading = 7,
+    PFBeautyEditViewModuleTypeGlobalHLS    = 8,
+    PFBeautyEditViewModuleTypeBody         = 9,
+    PFBeautyEditViewModuleTypeSkinDetail   = 10,
 };
 
 @protocol PFBeautyEditViewDelegate <NSObject>
@@ -64,6 +70,8 @@ typedef NS_ENUM(NSInteger, PFBeautyEditViewModuleType) {
 -(void)setDefaultFilter:(PFBeautyParam *)filter;
 
 -(void)updateDemoBar;
+
+- (void)refreshResourceParam:(PFBeautyParam *)param;
 
 
 @end

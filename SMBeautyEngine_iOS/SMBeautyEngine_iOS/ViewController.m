@@ -7,19 +7,64 @@
 
 #import "ViewController.h"
 #import "PFDateHandle.h"
+#import "PFEffectResourceManager.h"
+
+@interface PFDetectHintLabel : UILabel
+@end
+
+@implementation PFDetectHintLabel
+
+- (void)drawTextInRect:(CGRect)rect {
+    [super drawTextInRect:UIEdgeInsetsInsetRect(rect, UIEdgeInsetsMake(8, 16, 8, 16))];
+}
+
+- (CGSize)intrinsicContentSize {
+    CGSize size = [super intrinsicContentSize];
+    size.width += 32.0;
+    size.height += 16.0;
+    return size;
+}
+
+@end
 
 @interface ViewController ()<PFBeautyEditViewDelegate>
 
 @property (nonatomic, strong) NSUserDefaults *def;
 @property (nonatomic, copy) NSString *currentMakeupKey;
+@property (nonatomic, strong) PFDetectHintLabel *detectHintLabel;
+@property (nonatomic, copy) NSString *currentDetectHintText;
+@property (nonatomic, assign) NSTimeInterval lastDetectHintCheckTime;
+@property (nonatomic, assign) int currentSkinToneType;
+@property (nonatomic, assign) float skinToneIntensity;
+@property (nonatomic, assign) float skinToneColdWarmIntensity;
+@property (nonatomic, assign) BOOL skinToneBundleLoaded;
 @end
 
 @implementation ViewController
 
+- (CGFloat)pf_effectivePanelBottomInset {
+    CGFloat h = CGRectGetHeight(self.view.bounds);
+    if (h <= 0) {
+        return 0;
+    }
+    if (@available(iOS 11.0, *)) {
+        CGFloat safeMaxY = CGRectGetMaxY(self.view.safeAreaLayoutGuide.layoutFrame);
+        CGFloat fromGuide = h - safeMaxY;
+        if (fromGuide > 0.5) {
+            return fromGuide;
+        }
+    }
+    CGFloat sb = self.view.safeAreaInsets.bottom;
+    if (sb > 0.5) {
+        return sb;
+    }
+    return 16.0;
+}
 
 -(PFBeautyEditView *)beautyEditView {
     if (!_beautyEditView) {
-        _beautyEditView = [[PFBeautyEditView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 280, self.view.frame.size.width, 280)];
+        CGFloat inset = [self pf_effectivePanelBottomInset];
+        _beautyEditView = [[PFBeautyEditView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 280.0 - inset, self.view.frame.size.width, 280.0)];
         
         _beautyEditView.mDelegate = self;
     }
@@ -30,6 +75,237 @@
     self.clickCompare = state;
 }
 
+- (PFDetectHintLabel *)pf_detectHintLabel {
+    if (!_detectHintLabel) {
+        _detectHintLabel = [[PFDetectHintLabel alloc] init];
+        _detectHintLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        _detectHintLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.72];
+        _detectHintLabel.textColor = UIColor.whiteColor;
+        _detectHintLabel.textAlignment = NSTextAlignmentCenter;
+        _detectHintLabel.font = [UIFont systemFontOfSize:15.0 weight:UIFontWeightMedium];
+        _detectHintLabel.numberOfLines = 0;
+        _detectHintLabel.alpha = 0.0;
+        _detectHintLabel.hidden = YES;
+        _detectHintLabel.layer.cornerRadius = 18.0;
+        _detectHintLabel.clipsToBounds = YES;
+        [_detectHintLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+        [self.view addSubview:_detectHintLabel];
+
+        NSLayoutConstraint *topConstraint = nil;
+        if (@available(iOS 11.0, *)) {
+            topConstraint = [_detectHintLabel.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:16.0];
+        } else {
+            topConstraint = [_detectHintLabel.topAnchor constraintEqualToAnchor:self.topLayoutGuide.bottomAnchor constant:16.0];
+        }
+
+        [NSLayoutConstraint activateConstraints:@[
+            topConstraint,
+            [_detectHintLabel.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+            [_detectHintLabel.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.leadingAnchor constant:24.0],
+            [_detectHintLabel.trailingAnchor constraintLessThanOrEqualToAnchor:self.view.trailingAnchor constant:-24.0],
+            [_detectHintLabel.heightAnchor constraintGreaterThanOrEqualToConstant:36.0]
+        ]];
+    }
+    return _detectHintLabel;
+}
+
+- (void)pf_showDetectHintText:(NSString *)text {
+    if (![NSThread isMainThread]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self pf_showDetectHintText:text];
+        });
+        return;
+    }
+    if (text.length == 0) {
+        [self pf_hideDetectHint];
+        return;
+    }
+    PFDetectHintLabel *label = [self pf_detectHintLabel];
+    if ([self.currentDetectHintText isEqualToString:text] && !label.hidden && label.alpha >= 0.99) {
+        [self.view bringSubviewToFront:label];
+        return;
+    }
+    self.currentDetectHintText = text;
+    label.text = text;
+    label.hidden = NO;
+    [label invalidateIntrinsicContentSize];
+    [self.view bringSubviewToFront:label];
+    [UIView animateWithDuration:0.18 animations:^{
+        label.alpha = 1.0;
+    }];
+}
+
+- (void)pf_hideDetectHint {
+    if (![NSThread isMainThread]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self pf_hideDetectHint];
+        });
+        return;
+    }
+    if (!_detectHintLabel || _detectHintLabel.hidden) {
+        self.currentDetectHintText = nil;
+        return;
+    }
+    self.currentDetectHintText = nil;
+    [UIView animateWithDuration:0.18 animations:^{
+        self.detectHintLabel.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        if (self.currentDetectHintText.length == 0) {
+            self.detectHintLabel.hidden = YES;
+        }
+    }];
+}
+
+- (void)pf_updateDetectHintNeedsFace:(BOOL)needsFace needsHuman:(BOOL)needsHuman {
+    NSTimeInterval now = CFAbsoluteTimeGetCurrent();
+    if (now - self.lastDetectHintCheckTime < 0.3) {
+        return;
+    }
+    self.lastDetectHintCheckTime = now;
+
+    if (!needsFace && !needsHuman) {
+        [self pf_hideDetectHint];
+        return;
+    }
+    if (!self.mPixelFree) {
+        [self pf_hideDetectHint];
+        return;
+    }
+
+    NSMutableArray<NSString *> *messages = [NSMutableArray arrayWithCapacity:2];
+    if (needsFace && [self.mPixelFree hasFace] <= 0) {
+        [messages addObject:@"未检测到人脸"];
+    }
+    if (needsHuman && [self.mPixelFree hasHuman] <= 0) {
+        [messages addObject:@"未检测到人体"];
+    }
+
+    if (messages.count > 0) {
+        [self pf_showDetectHintText:[messages componentsJoinedByString:@"\n"]];
+    } else {
+        [self pf_hideDetectHint];
+    }
+}
+
+- (NSString *)pf_bundlePathForParam:(PFBeautyParam *)param {
+    return [[PFEffectResourceManager sharedManager] bundlePathForParam:param];
+}
+
+- (void)pf_downloadBundleForParam:(PFBeautyParam *)param completion:(void (^)(NSString *path))completion {
+    param.isDownloading = YES;
+    [self.beautyEditView refreshResourceParam:param];
+    [[PFEffectResourceManager sharedManager] downloadBundleForParam:param completion:^(NSString * _Nullable path, NSError * _Nullable error) {
+        [self.beautyEditView refreshResourceParam:param];
+        if (error) {
+            NSLog(@"[Effects] bundle download failed: %@", error.localizedDescription);
+        }
+        if (completion) {
+            completion(path);
+        }
+    }];
+}
+
+- (void)pf_fetchRemoteEffects {
+    [[PFEffectResourceManager sharedManager] fetchEffectListWithCompletion:^(NSArray<PFBeautyParam *> *stickers, NSArray<PFBeautyParam *> *makeup, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"[Effects] fetch failed: %@", error.localizedDescription);
+            return;
+        }
+        if (stickers.count > 1) {
+            self.beautyEditView.stickersParams = stickers;
+            self.beautyEditView.stickersIndex = 0;
+            [self filterValueChange:stickers[0]];
+        }
+        if (makeup.count > 1) {
+            self.beautyEditView.makeupParams = makeup;
+        }
+        [self.beautyEditView updateDemoBar];
+    }];
+}
+
+- (float)pf_clamp01:(float)value {
+    if (value < 0.0f) {
+        return 0.0f;
+    }
+    if (value > 1.0f) {
+        return 1.0f;
+    }
+    return value;
+}
+
+- (void)pf_loadSkinToneBundleIfNeeded {
+    if (self.skinToneBundleLoaded) {
+        return;
+    }
+    NSString *skinSrcPath = [[NSBundle mainBundle] pathForResource:@"skin_src.bundle" ofType:nil];
+    NSData *skinSrcData = [NSData dataWithContentsOfFile:skinSrcPath];
+    if (!skinSrcData) {
+        NSLog(@"[SkinTone] skin_src.bundle not found at %@", skinSrcPath);
+        return;
+    }
+    [self.mPixelFree createBeautyItemFormBundleKey:PFSrcTypeSkinSrc
+                                             data:(void *)skinSrcData.bytes
+                                             size:(int)skinSrcData.length];
+    self.skinToneBundleLoaded = YES;
+}
+
+- (int)pf_skinToneTypeForParamName:(NSString *)paramName {
+    if ([paramName isEqualToString:@"skinTone.fair"]) {
+        return PFSkinToneTypeFair;
+    }
+    if ([paramName isEqualToString:@"skinTone.pinkWhite"]) {
+        return PFSkinToneTypePinkWhite;
+    }
+    if ([paramName isEqualToString:@"skinTone.wheat"]) {
+        return PFSkinToneTypeWheat;
+    }
+    if ([paramName isEqualToString:@"skinTone.bronze"]) {
+        return PFSkinToneTypeBronze;
+    }
+    return PFSkinToneTypeNatural;
+}
+
+- (void)pf_applySkinToneFilter {
+    if (!self.skinToneBundleLoaded) {
+        NSLog(@"[SkinTone] skin_src.bundle has not been loaded before applying skin tone.");
+    }
+    if (![self.mPixelFree respondsToSelector:@selector(pixelFreeSetSkinToneFilter:)]) {
+        NSLog(@"[SkinTone] pixelFreeSetSkinToneFilter is not available in current SDK.");
+        return;
+    }
+
+    PFSkinToneFilterParams params = {};
+    params.isUse = YES;
+    params.skinToneType = self.currentSkinToneType;
+    params.intensity = [self pf_clamp01:self.skinToneIntensity];
+    params.coldWarmIntensity = [self pf_clamp01:self.skinToneColdWarmIntensity];
+    [self.mPixelFree pixelFreeSetSkinToneFilter:&params];
+}
+
+- (BOOL)pf_handleSkinToneParam:(PFBeautyParam *)param {
+    if (param.type != FUDataTypeSkinTone) {
+        return NO;
+    }
+
+    if ([param.mParam isEqualToString:@"skinTone.off"]) {
+        if ([self.mPixelFree respondsToSelector:@selector(pixelFreeClearSkinToneFilter)]) {
+            [self.mPixelFree pixelFreeClearSkinToneFilter];
+        } else {
+            NSLog(@"[SkinTone] pixelFreeClearSkinToneFilter is not available in current SDK.");
+        }
+        return YES;
+    } else if ([param.mParam isEqualToString:@"skinTone.intensity"]) {
+        self.skinToneIntensity = [self pf_clamp01:param.mValue];
+    } else if ([param.mParam isEqualToString:@"skinTone.temperature"]) {
+        self.skinToneColdWarmIntensity = [self pf_clamp01:param.mValue];
+    } else {
+        self.currentSkinToneType = [self pf_skinToneTypeForParamName:param.mParam];
+    }
+
+    [self pf_applySkinToneFilter];
+    return YES;
+}
+
 
 -(void)filterValueChange:(PFBeautyParam *)param{
 
@@ -37,6 +313,9 @@
 
 
     float value = param.mValue;
+    if ([self pf_handleSkinToneParam:param]) {
+        return;
+    }
     if(param.type == FUDataTypeBeautify){
         if ([param.mParam isEqualToString:@"face_EyeStrength"]) {
 
@@ -175,6 +454,9 @@
         if ([param.mParam isEqualToString:@"teethStrength"]) {
             [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterWhitenTeeth value:&value];
         }
+        if ([param.mParam isEqualToString:@"fleckFlawClean"]) {
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterFleckFlawClean value:&value];
+        }
         
     }
 
@@ -194,8 +476,19 @@
 //            const char *aaa = [currentFolder UTF8String];
 //            [self.mPixelFree  pixelFreeSetFiterStickerWithPath:currentFolder];
             
-            NSString *name = [NSString stringWithFormat:@"%@.bundle",param.mParam];
-            NSString *paths = [[NSBundle mainBundle] pathForResource:name ofType:nil];
+            NSString *paths = [self pf_bundlePathForParam:param];
+            if (!paths && param.isRemoteResource) {
+                [self pf_downloadBundleForParam:param completion:^(NSString *path) {
+                    if (path.length > 0) {
+                        [self filterValueChange:param];
+                    }
+                }];
+                return;
+            }
+            if (!paths) {
+                NSLog(@"[Sticker] bundle not found for %@", param.mParam);
+                return;
+            }
             [self.mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterSticker2DFilter value:(void *)[paths UTF8String]];
             
 //            NSString *path =  [[NSBundle mainBundle] pathForResource:@"effect" ofType:nil];
@@ -214,13 +507,15 @@
             return;
         }
         if (![param.mParam isEqualToString:self.currentMakeupKey]) {
-            NSString *makeupRoot = [[NSBundle mainBundle] pathForResource:@"makeup" ofType:nil];
-            if (!makeupRoot) {
-                NSLog(@"[Makeup] makeup folder missing");
+            NSString *bundlePath = [self pf_bundlePathForParam:param];
+            if (!bundlePath && param.isRemoteResource) {
+                [self pf_downloadBundleForParam:param completion:^(NSString *path) {
+                    if (path.length > 0) {
+                        [self filterValueChange:param];
+                    }
+                }];
                 return;
             }
-            NSString *bundleName = [NSString stringWithFormat:@"%@.bundle", param.mParam];
-            NSString *bundlePath = [makeupRoot stringByAppendingPathComponent:bundleName];
             NSData *bundleData = [NSData dataWithContentsOfFile:bundlePath];
             if (!bundleData) {
                 NSLog(@"[Makeup] bundle not found at %@", bundlePath);
@@ -261,6 +556,21 @@
             int value = PFBeautyTypeOneKeyFair;
             [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeOneKey value:&value];
            
+        }
+        if ([param.mTitle isEqualToString:@"甜美"]) {
+            int value = PFBeautyTypeOneKeySweet;
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeOneKey value:&value];
+            
+        }
+        if ([param.mTitle isEqualToString:@"质感"]) {
+            int value = PFBeautyTypeOneKeyTexture;
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeOneKey value:&value];
+            
+        }
+        if ([param.mTitle isEqualToString:@"硬派"]) {
+            int value = PFBeautyTypeOneKeyHard;
+            [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeOneKey value:&value];
+            
         }
 
     }
@@ -321,18 +631,25 @@
 
 
 -(void)initPixelFree{
-    NSBundle *libBundle = [NSBundle bundleForClass:[SMPixelFree class]];
-    NSString *face_FiltePath = [libBundle pathForResource:@"filter_model.bundle" ofType:nil];
+    NSString *face_FiltePath = [[NSBundle mainBundle] pathForResource:@"filter_model.bundle" ofType:nil];
 //    NSString *face_DetectPath = [[NSBundle mainBundle] pathForResource:@"face_detect.bundle" ofType:nil];
     NSString *authFile = [[NSBundle mainBundle] pathForResource:@"pixelfreeAuth.lic" ofType:nil];
+    self.currentSkinToneType = PFSkinToneTypeNatural;
+    self.skinToneIntensity = 0.6f;
+    self.skinToneColdWarmIntensity = 0.5f;
     
     CFAbsoluteTime startTime = CFAbsoluteTimeGetCurrent();
 
     self.mPixelFree = [[SMPixelFree alloc] initWithProcessContext:nil srcFilterPath:face_FiltePath authFile:authFile];
+    [self pf_loadSkinToneBundleIfNeeded];
     
 //    NSLog(@"mPixelFree retain  count = %ld\n",CFGetRetainCount((__bridge  CFTypeRef)(self.mPixelFree)));
 
+
+    
     CFAbsoluteTime endTime = (CFAbsoluteTimeGetCurrent() - startTime);
+    
+    NSLog(@"initPixelFree --- %d",endTime/1000);
 
     [self.view addSubview:self.beautyEditView];
 }
@@ -342,7 +659,8 @@
     NSArray<PFBeautyParam *>* defaultSkinData = [PFDateHandle setupSkinData];
     NSArray<PFBeautyParam *>* defaultfiltersData = [PFDateHandle setupFilterData];
     NSArray<PFBeautyParam *>* defaultfaceData = [PFDateHandle setupFaceType];
-    NSArray<PFBeautyParam *>* defaultStickerseData = [PFDateHandle setupStickers];
+    NSArray<PFBeautyParam *>* defaultStickerseData = [[PFEffectResourceManager sharedManager] originParamsForType:FUDataTypeStickers];
+    NSArray<PFBeautyParam *>* defaultMakeupData = [[PFEffectResourceManager sharedManager] originParamsForType:FUDataTypeMakeup];
     
     // 读本地缓存
     NSData *data = [self readDatafileName:@"shapeParamsData"];
@@ -365,22 +683,27 @@
         defaultfaceData = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     }
     
-    data = [self readDatafileName:@"stickerseData"];
-    if (data) {
-        defaultStickerseData = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    }
-
     // 更新 UI
     self.beautyEditView.shapeParams = defaultData;
     self.beautyEditView.skinParams = defaultSkinData;
     self.beautyEditView.filtersParams = defaultfiltersData;
     self.beautyEditView.faceTypeParams = defaultfaceData;
     self.beautyEditView.stickersParams = defaultStickerseData;
+    self.beautyEditView.makeupParams = defaultMakeupData;
     
     NSUserDefaults*userDefaults = [NSUserDefaults standardUserDefaults];
     int oneKeyType = (int)[userDefaults integerForKey:@"oneKeyType"];
     int filtersIndex = (int)[userDefaults integerForKey:@"filtersUseIndex"];
     int stickerIndex = (int)[userDefaults integerForKey:@"stickerUseIndex"];
+    if (oneKeyType < 0 || oneKeyType >= defaultfaceData.count) {
+        oneKeyType = 0;
+    }
+    if (filtersIndex < 0 || filtersIndex >= defaultfiltersData.count) {
+        filtersIndex = 0;
+    }
+    if (stickerIndex < 0 || stickerIndex >= defaultStickerseData.count) {
+        stickerIndex = 0;
+    }
 
     self.beautyEditView.oneKeyType = oneKeyType;
     self.beautyEditView.filterIndex = filtersIndex;
@@ -406,9 +729,20 @@
     
     param = defaultStickerseData[stickerIndex];
     [self filterValueChange:param];
+    [self pf_fetchRemoteEffects];
     
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    if (_beautyEditView.superview == self.view) {
+        CGFloat w = CGRectGetWidth(self.view.bounds);
+        CGFloat h = CGRectGetHeight(self.view.bounds);
+        CGFloat panelH = 280.0;
+        CGFloat panelBottomInset = [self pf_effectivePanelBottomInset];
+        _beautyEditView.frame = CGRectMake(0, h - panelH - panelBottomInset, w, panelH);
+    }
+}
 
 -(void)appBecomeActive{
     [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
@@ -464,13 +798,13 @@
 //    
 //    if (exists && isDirectory) {
 //        NSLog(@"[Makeup] 文件夹存在，应用美妆");
-////            int ret = [self.mPixelFree pixelFreeSetMakeupWithJsonPath:currentFolder];
+//            int ret = [self.mPixelFree pixelFreeSetMakeupWithJsonPath:currentFolder];
 //        
-//        NSString *name = [NSString stringWithFormat:@"%@.bundle",@"大气"];
-//        NSString *currentBundle = [path stringByAppendingPathComponent:name];
-//        NSData *date = [NSData dataWithContentsOfFile:currentBundle];
-//        
-//        [self.mPixelFree createBeautyItemFormBundleKey:PFSrcTypeMakeup data:(void *)date.bytes size:date.length];
+////        NSString *name = [NSString stringWithFormat:@"%@.bundle",@"大气"];
+////        NSString *currentBundle = [path stringByAppendingPathComponent:name];
+////        NSData *date = [NSData dataWithContentsOfFile:currentBundle];
+////        
+////        [self.mPixelFree createBeautyItemFormBundleKey:PFSrcTypeMakeup data:(void *)date.bytes size:date.length];
 ////            NSLog(@"[Makeup] 应用美妆返回值: %d", ret);
 //    } else {
 //        NSLog(@"[Makeup] 错误: 美妆文件夹不存在: %@", currentFolder);
