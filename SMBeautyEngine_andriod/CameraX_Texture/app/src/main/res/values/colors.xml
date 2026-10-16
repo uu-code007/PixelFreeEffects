@@ -1,0 +1,7 @@
+<resources>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="control_bg">#CC111111</color>
+    <color name="record_red">#E53935</color>
+    <color name="record_dark">#8E1B1B</color>
+</resources>

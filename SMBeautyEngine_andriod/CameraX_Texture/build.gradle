@@ -1,0 +1,67 @@
+buildscript {
+    repositories {
+        maven { url 'https://jitpack.io' }
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.1.2'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10'
+    }
+}
+
+allprojects {
+    apply plugin: HapiDependPlugin
+    repositories {
+        maven { url 'https://jitpack.io' }
+        google()
+        mavenCentral()
+    }
+    configurations.all {
+        resolutionStrategy.force 'androidx.lifecycle:lifecycle-viewmodel:2.5.0'
+        resolutionStrategy.force 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0'
+        resolutionStrategy.force 'androidx.lifecycle:lifecycle-runtime:2.5.0'
+        resolutionStrategy.force 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.0'
+        resolutionStrategy.force 'androidx.lifecycle:lifecycle-common:2.5.0'
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+public class HapiDependPlugin implements Plugin<Project> {
+    void apply(Project project) {
+        project.extensions.create("depend", DependsComp)
+    }
+}
+
+public class DependsComp {
+    int compileSdkVersion = 32
+    int minSdkVersion = 21
+    int targetSdkVersion = 32
+    String androidxVersion = "1.5.0"
+    String designVersion = "1.0.0"
+    def lifecycle_version = "2.5.0"
+
+    def appcompat() { return "androidx.appcompat:appcompat:${androidxVersion}" }
+    def corektx() { return "androidx.core:core-ktx:1.7.0" }
+    def cardview() { return "androidx.cardview:cardview:${designVersion}" }
+    def recyclerview() { return "androidx.recyclerview:recyclerview:1.2.1" }
+    def constraintLayout() { return "androidx.constraintlayout:constraintlayout:2.1.4" }
+    def fragment() { return "androidx.fragment:fragment:1.4.1" }
+    def viewpager() { return "androidx.viewpager:viewpager:${designVersion}" }
+    def annotations() { return "androidx.annotation:annotation:${androidxVersion}" }
+    def coroutines() { return "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2" }
+    def lifecycle() { return "androidx.lifecycle:lifecycle-extensions:2.2.0" }
+    def runtime_ktx() { return "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version" }
+    def lifecycleCompiler() { return "androidx.lifecycle:lifecycle-compiler:$lifecycle_version" }
+    def activityKtx() { return "androidx.activity:activity-ktx:1.4.0" }
+    def fragmentKtx() { return "androidx.fragment:fragment-ktx:1.4.1" }
+    def swiperefreshlayout() { return "androidx.swiperefreshlayout:swiperefreshlayout:${designVersion}" }
+    def glide() { return "com.github.bumptech.glide:glide:4.11.0" }
+    def baseRecyclerViewAdapterHelper() { return "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.8" }
+    def okhttp3() { return "com.squareup.okhttp3:okhttp:4.2.2" }
+    def fastjson() { return 'com.alibaba:fastjson:1.1.72.android' }
+    def okLoggingInterceptor() { return 'com.squareup.okhttp3:logging-interceptor:3.8.0' }
+}

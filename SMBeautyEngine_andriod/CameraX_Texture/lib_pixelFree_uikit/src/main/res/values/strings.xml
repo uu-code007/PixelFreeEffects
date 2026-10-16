@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="seekbar_content_description">Adjust value</string>
+    <string name="color_grading_list_description">Color grading adjustment list</string>
+</resources> 

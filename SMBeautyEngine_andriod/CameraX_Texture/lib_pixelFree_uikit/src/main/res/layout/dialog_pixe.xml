@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="278dp"
+        android:layout_gravity="bottom">
+
+        <RadioButton
+            android:id="@+id/compBtn"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:button="@null"
+            android:gravity="center"
+            android:layout_gravity="right"
+            android:drawableTop="@mipmap/comparison_icon"
+            android:textColor="@drawable/color_pixe_op" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:layout_gravity="bottom"
+            android:background="#cc000000" />
+
+        <com.hapi.pixelfreeuikit.BeautyViewPage
+            android:id="@+id/vpEffect"
+            android:layout_width="match_parent"
+            android:layout_height="239dp"
+            android:layout_gravity="bottom"
+            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck">
+
+        </com.hapi.pixelfreeuikit.BeautyViewPage>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="40dp"
+            android:background="#E0E0E0" />
+
+        <RadioGroup
+            android:id="@+id/rgOP"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbFaceOnekey"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:text="一键美颜"
+                android:textColor="@drawable/color_pixe_op" />
+
+            <RadioButton
+                android:id="@+id/rbBaseBeauty"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:text="美肤"
+                android:textColor="@drawable/color_pixe_op" />
+
+            <RadioButton
+                android:id="@+id/rbShapeBeauty"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:text="美形"
+                android:textColor="@drawable/color_pixe_op" />
+
+            <RadioButton
+                android:id="@+id/rbFilter"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:text="滤镜"
+                android:textColor="@drawable/color_pixe_op" />
+
+            <RadioButton
+                android:id="@+id/rbSticker"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:text="贴纸"
+                android:textColor="@drawable/color_pixe_op" />
+
+            <RadioButton
+                android:id="@+id/rbMakeup"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:text="美妆"
+                android:textColor="@drawable/color_pixe_op" />
+
+        </RadioGroup>
+
+    </FrameLayout>
+
+
+</FrameLayout>

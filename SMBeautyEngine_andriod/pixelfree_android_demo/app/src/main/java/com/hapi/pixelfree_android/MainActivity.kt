@@ -1,6 +1,5 @@
 package com.hapi.pixelfree_android
 
-import android.opengl.GLES20
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -10,14 +9,15 @@ import com.hapi.avcapture.FrameCall
 import com.hapi.avcapture.HapiTrackFactory
 import com.hapi.avparam.VideoFrame
 import com.hapi.avrender.HapiCapturePreView
-import com.hapi.pixelfreeuikit.IndicatorSeekBar
 import com.hapi.pixelfreeuikit.PixeBeautyDialog
-import java.nio.ByteBuffer
 import java.util.concurrent.CountDownLatch
 
 class MainActivity : AppCompatActivity() {
 
-    var isLongPress = false
+    @Volatile var isLongPress = false
+    @Volatile private var glReady = false
+    @Volatile private var closing = false
+    private val frameLock = Any()
 
     private val mPixelFree by lazy {
         PixelFree()
@@ -36,27 +36,42 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onProcessFrame(frame: VideoFrame): VideoFrame {
-                    if (mPixelFree.isCreate()) {
-                        val pxInput = PFImageInput().apply {
-                            wigth = frame.width
-                            height = frame.height
-                            p_data0 = frame.data
-                            p_data1 = frame.data
-                            p_data2 = frame.data
-                            stride_0 = frame.rowStride
-                            stride_1 = frame.rowStride
-                            stride_2 = frame.rowStride
-                            format = PFDetectFormat.PFFORMAT_IMAGE_RGBA
-                            rotationMode = PFRotationMode.PFRotationMode90
+                    val done = CountDownLatch(1)
+                    synchronized(frameLock) {
+                        if (!glReady || closing) return frame
+                        hapiCapturePreView.mHapiGLSurfacePreview.queueEvent {
+                            try {
+                                if (!glReady || closing) return@queueEvent
+                                val compare = isLongPress
+                                val pxInput = PFImageInput().apply {
+                                    wigth = frame.width
+                                    height = frame.height
+                                    p_data0 = frame.data
+                                    p_data1 = null
+                                    p_data2 = null
+                                    stride_0 = frame.rowStride
+                                    stride_1 = 0
+                                    stride_2 = 0
+                                    format = PFDetectFormat.PFFORMAT_IMAGE_RGBA
+                                    // CameraX uses clockwise correction; PixelFree uses counterclockwise rotation.
+                                    rotationMode = when (frame.rotationDegrees) {
+                                        90 -> PFRotationMode.PFRotationMode270
+                                        180 -> PFRotationMode.PFRotationMode180
+                                        270 -> PFRotationMode.PFRotationMode90
+                                        else -> PFRotationMode.PFRotationMode0
+                                    }
+                                }
+                                if (!compare) mPixelFree.processWithBufferOnCurrentGLThread(pxInput)
+                                frame.textureID = if (compare) 0 else pxInput.textureID
+                                hapiCapturePreView.onFrame(frame)
+                            } finally {
+                                done.countDown()
+                            }
                         }
-                        val startTime = System.currentTimeMillis()
-                        mPixelFree.processWithBuffer(pxInput)
-                        val endTime = System.currentTimeMillis()
-                        val timeCost = endTime - startTime
-//                        println("processWithBuffer 耗时：$timeCost 毫秒")
-                        frame.textureID = if (isLongPress) 0 else pxInput.textureID;
                     }
-                    return super.onProcessFrame(frame)
+                    // CameraX reuses the RGBA buffer after this callback returns.
+                    done.await()
+                    return frame
                 }
             }
         }
@@ -65,30 +80,39 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        cameTrack.playerView = hapiCapturePreView
-        cameTrack.start()
-
         hapiCapturePreView.mHapiGLSurfacePreview.mOpenGLRender.glCreateCall = {
-            //在绑定上下文后初始化
-            mPixelFree.create()
-            val authData = mPixelFree.readBundleFile(this@MainActivity, "pixelfreeAuth.lic")
-            if (authData != null) {
-                mPixelFree.auth(this.applicationContext, authData, authData.size)
-            }
-            val face_fiter =
-                mPixelFree.readBundleFile(this@MainActivity, "filter_model.bundle")
-            if (face_fiter != null) {
-                mPixelFree.createBeautyItemFormBundle(
-                    face_fiter,
-                    face_fiter.size,
-                    PFSrcType.PFSrcTypeFilter
-                )
-            }
+            if (!closing) {
+                mPixelFree.setRenderThreadDispatcher(Thread.currentThread()) { task ->
+                    hapiCapturePreView.mHapiGLSurfacePreview.queueEvent(task)
+                }
+                mPixelFree.createOnCurrentGLThread()
+                val authData = mPixelFree.readBundleFile(this@MainActivity, "pixelfreeAuth.lic")
+                if (authData != null) {
+                    mPixelFree.auth(this.applicationContext, authData, authData.size)
+                }
+                val face_fiter =
+                    mPixelFree.readBundleFile(this@MainActivity, "filter_model.bundle")
+                if (face_fiter != null) {
+                    mPixelFree.createBeautyItemFormBundle(
+                        face_fiter,
+                        face_fiter.size,
+                        PFSrcType.PFSrcTypeFilter
+                    )
+                }
 
-            mPixeBeautyDialog.show(supportFragmentManager, "")
+                synchronized(frameLock) {
+                    if (closing) {
+                        mPixelFree.releaseOnCurrentGLThread()
+                    } else {
+                        glReady = true
+                        runOnUiThread { showBeautyDialog() }
+                    }
+                }
+            }
         }
+        cameTrack.start()
         findViewById<Button>(R.id.showBeauty).setOnClickListener {
-            mPixeBeautyDialog.show(supportFragmentManager, "")
+            showBeautyDialog()
         }
 
         mPixeBeautyDialog.setOnCompButtonStateListener(object : PixeBeautyDialog.OnCompButtonStateListener {
@@ -105,8 +129,21 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    private fun showBeautyDialog() {
+        if (glReady && !closing && !isFinishing && !supportFragmentManager.isStateSaved &&
+            !mPixeBeautyDialog.isAdded && supportFragmentManager.findFragmentByTag("beauty") == null) {
+            mPixeBeautyDialog.show(supportFragmentManager, "beauty")
+        }
+    }
+
     override fun onDestroy() {
-        mPixelFree.release()
+        val initialized = synchronized(frameLock) {
+            closing = true
+            glReady
+        }
+        cameTrack.frameCall = null
+        if (initialized) mPixelFree.release()
+        glReady = false
         super.onDestroy()
     }
 }

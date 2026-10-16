@@ -15,6 +15,27 @@
 #else
 #define PF_CAPI_EXPORT
 #endif
+#if defined(_MSC_VER) && !defined(PF_BUILD_SHARED_LIB) && !defined(PF_NO_AUTO_LINK)
+#pragma comment(lib, "kernel32.lib")
+#pragma comment(lib, "user32.lib")
+#pragma comment(lib, "gdi32.lib")
+#pragma comment(lib, "winspool.lib")
+#pragma comment(lib, "shell32.lib")
+#pragma comment(lib, "ole32.lib")
+#pragma comment(lib, "oleaut32.lib")
+#pragma comment(lib, "uuid.lib")
+#pragma comment(lib, "comdlg32.lib")
+#pragma comment(lib, "advapi32.lib")
+#pragma comment(lib, "opengl32.lib")
+#pragma comment(lib, "glu32.lib")
+#pragma comment(lib, "ws2_32.lib")
+#pragma comment(lib, "wldap32.lib")
+#pragma comment(lib, "crypt32.lib")
+#pragma comment(lib, "secur32.lib")
+#pragma comment(lib, "bcrypt.lib")
+#pragma comment(lib, "normaliz.lib")
+#pragma comment(lib, "iphlpapi.lib")
+#endif
 #else
 #define PF_CAPI_EXPORT __attribute__((visibility("default")))
 #endif  // _WIN32
@@ -168,6 +189,16 @@ typedef struct PFHumanSegmentationResult {
     int humanCount;
     int index;
 } PFHumanSegmentationResult;
+
+// Live detection result, copied by value. index is local to the latest detection;
+// it is not a persistent person ID. rect is x0,y0,x1,y1 normalized in the RAW
+// input image (top-left origin), matching GetFaceRects. Apply input rotation in UI.
+typedef struct PFHumanDetectionInfo {
+    int index;
+    int trackId; // Diagnostic only: the detector may return duplicate track IDs.
+    float rect[4];
+    int hasRect;
+} PFHumanDetectionInfo;
 
 /* 美体类型 */
 typedef enum PFBodyBeautyType {
@@ -396,6 +427,150 @@ PF_CAPI_EXPORT extern const char* PF_Version();
 
 typedef struct PFPixelFree PFPixelFree;
 
+/* Immutable owned detection. Views below are borrowed until the result is released.
+ * Geometry is normalized in the orientation-corrected full image, top-left origin.
+ * Same-aspect resizes with the same rotation are supported. Crops, warps and new
+ * source images require a new detection; callers must track their source version.
+ * Results survive subsequent detection/reset calls; they belong to the engine
+ * instance that created them. Legacy hasFace/getFaceRects query the live detector;
+ * use PF_getFaceDetectionCount/Info for explicit image sessions.
+ * Creation requires a valid advanced beauty (BeautyV2) certificate. Basic
+ * beauty/style-only certificates return PFFaceErrorUnauthorized, even if other
+ * features are licensed. Authorized snapshots remain readable until released.
+ */
+typedef struct PFFaceDetectionResult PFFaceDetectionResult;
+typedef enum PFFacePayloadFormat {
+    PFFacePayloadFloat32 = 1,
+    PFFacePayloadUInt8 = 2,
+} PFFacePayloadFormat;
+typedef struct PFFacePayloadView {
+    const void* data;
+    int width;
+    int height;
+    int channels;
+    PFFacePayloadFormat format;
+    float rect[4]; // Mapping into the orientation-corrected image: x0,y0,x1,y1.
+} PFFacePayloadView;
+typedef struct PFDetectedFaceInfo {
+    int faceId; // Unique only within this result; never a cross-image identity.
+    float rect[4];
+    const float* landmarks; // Fixed 168-point layout, 336 interleaved x,y floats.
+                           // Same ordering as PF_pixelFreeGetFaceLandmarks168,
+                           // including estimated forehead and outer-ring points.
+                           // Normalized coordinates may extend beyond the image.
+    int landmarkCount; // Always 168 in public snapshot views; not float count.
+    float quaternion[4]; // Native x,y,z,w orientation.
+    PFFacePayloadView skinMask;
+    PFFacePayloadView occlusionMask;
+    PFFacePayloadView repairImage;
+    int sourceWidth;
+    int sourceHeight;
+    PFRotationMode rotationMode;
+    unsigned int coordinateSpace; // 1 = normalized, orientation-corrected image.
+    unsigned int schemaVersion; // 1.
+    unsigned long long sourceVersion; // Monotonic detection serial for this engine.
+} PFDetectedFaceInfo;
+typedef struct PFFaceParameter {
+    PFBeautyFilterType key;
+    float value; // Finite [0,1]. Numeric face keys only; unspecified keys are neutral.
+                 // Legacy whiten/quality are aliases of new whitening/sharpening.
+} PFFaceParameter;
+typedef struct PFFaceRenderConfig {
+    int faceId;
+    const PFFaceParameter* parameters;
+    int parameterCount;
+    const char* makeupJsonPath; // Optional local JSON path, directory, or encrypted .bundle file (legacy field name).
+    float makeupStrength; // Finite [0,1], independent for each face.
+} PFFaceRenderConfig;
+// Separate configuration keeps PFFaceRenderConfig's existing ABI unchanged.
+typedef struct PFFaceStickerConfig {
+    int faceId;
+    const char* stickerPath; // Local encrypted .bundle or sticker directory; null clears this face.
+} PFFaceStickerConfig;
+typedef enum PFFaceError {
+    PFFaceErrorInvalidArgument = -4101,
+    PFFaceErrorInvalidSnapshot = -4102,
+    PFFaceErrorDuplicateID = -4103,
+    PFFaceErrorUnknownID = -4104,
+    PFFaceErrorSourceMismatch = -4105,
+    PFFaceErrorUnauthorized = -4106,
+    PFFaceErrorDetectorUnavailable = -4107,
+    PFFaceErrorMakeupResource = -4108,
+    PFFaceErrorInternal = -4109,
+    PFFaceErrorStickerResource = -4110,
+} PFFaceError;
+
+// Detection never renders or modifies input pixels. Requires valid BeautyV2
+// authorization; returns 0 or a negative error (Unauthorized = -4106).
+PF_CAPI_EXPORT extern int PF_detectFacesWithBuffer(PFPixelFree*, PFImageInput, PFFaceDetectionResult**);
+PF_CAPI_EXPORT extern void PF_releaseFaceDetectionResult(PFFaceDetectionResult*);
+PF_CAPI_EXPORT extern int PF_getFaceDetectionCount(const PFFaceDetectionResult*);
+PF_CAPI_EXPORT extern int PF_getFaceDetectionInfo(const PFFaceDetectionResult*, int index, PFDetectedFaceInfo*);
+// Render returns the output texture ID or a negative error. Retain the snapshot
+// through the synchronous call. Zero configs means global effects only.
+PF_CAPI_EXPORT extern int PF_processWithBufferAndFace(PFPixelFree*, PFImageInput, const PFFaceDetectionResult*, const PFFaceRenderConfig*);
+PF_CAPI_EXPORT extern int PF_processWithBufferAndFaces(PFPixelFree*, PFImageInput, const PFFaceDetectionResult*, const PFFaceRenderConfig*, int count);
+// Explicit stickers are independent per face. Unspecified faces have no sticker;
+// the legacy global sticker is ignored. Beauty/global stages still run once.
+PF_CAPI_EXPORT extern int PF_processWithBufferAndFaceEffects(PFPixelFree*, PFImageInput, const PFFaceDetectionResult*,
+    const PFFaceRenderConfig*, int count, const PFFaceStickerConfig*, int stickerCount);
+
+// Owned, image-only body snapshot. Coordinates match explicit face snapshots:
+// normalized upright image, top-left origin (not the legacy RAW live rects).
+// Body IDs are unique only within this snapshot; trackId is diagnostic only.
+typedef struct PFBodyDetectionResult PFBodyDetectionResult;
+typedef struct PFDetectedBodyInfo {
+    int bodyId;
+    int trackId;
+    float rect[4]; // x0,y0,x1,y1, clamped to [0,1].
+    int sourceWidth;
+    int sourceHeight;
+    PFRotationMode rotationMode;
+    unsigned int coordinateSpace; // 1 = normalized upright image.
+    unsigned int schemaVersion; // 1.
+    unsigned long long sourceVersion;
+} PFDetectedBodyInfo;
+typedef struct PFBodyParameter {
+    PFBodyBeautyType key;
+    float value; // Finite [0,1], neutral .5. Preset: integer [0,6].
+} PFBodyParameter;
+typedef struct PFBodyRenderConfig {
+    int bodyId;
+    const PFBodyParameter* parameters;
+    int parameterCount; // Unspecified parameters are neutral, never inherited.
+} PFBodyRenderConfig;
+typedef enum PFBodyError {
+    PFBodyErrorInvalidArgument = -4201,
+    PFBodyErrorInvalidSnapshot = -4202,
+    PFBodyErrorDuplicateID = -4203,
+    PFBodyErrorUnknownID = -4204,
+    PFBodyErrorSourceMismatch = -4205,
+    PFBodyErrorUnauthorized = -4206,
+    PFBodyErrorDetectorUnavailable = -4207,
+    PFBodyErrorInternal = -4209,
+} PFBodyError;
+// CPU-only synchronous inference. Requires body authorization and loaded model.
+// No GL context needed. Snapshots remain valid until explicitly released,
+// including across resetDetectState and subsequent detector runs. Body info
+// exposes metadata only; keypoints and confidences stay inside the snapshot.
+PF_CAPI_EXPORT extern int PF_detectBodiesWithBuffer(PFPixelFree*, PFImageInput, PFBodyDetectionResult**);
+PF_CAPI_EXPORT extern void PF_releaseBodyDetectionResult(PFBodyDetectionResult*);
+PF_CAPI_EXPORT extern int PF_getBodyDetectionCount(const PFBodyDetectionResult*);
+PF_CAPI_EXPORT extern int PF_getBodyDetectionInfo(const PFBodyDetectionResult*, int index, PFDetectedBodyInfo*);
+// Render returns output texture ID or a negative error. Always rerender from the
+// original source. Body snapshots never trigger human inference; zero body tasks
+// means no body effects. Configurations are applied in snapshot order.
+PF_CAPI_EXPORT extern int PF_processWithBufferAndBodies(PFPixelFree*, PFImageInput,
+    const PFBodyDetectionResult*, const PFBodyRenderConfig*, int bodyCount);
+// Optional face/body snapshots; at least one is required. A missing snapshot
+// requires zero matching configs and DISABLES that legacy face/body stage.
+// Global color/filter stages still run once. No global makeup/sticker fallback.
+// Face errors use PFFaceError, body errors use PFBodyError.
+PF_CAPI_EXPORT extern int PF_processWithBufferAndEffects(PFPixelFree*, PFImageInput,
+    const PFFaceDetectionResult*, const PFFaceRenderConfig*, int faceCount,
+    const PFFaceStickerConfig*, int stickerCount,
+    const PFBodyDetectionResult*, const PFBodyRenderConfig*, int bodyCount);
+
 PF_CAPI_EXPORT extern void PF_VLogSetLevel(PFPixelFree* pixelFree,int level,char *path);
 // 启用/禁用日志输出到控制台（1: 启用，0: 禁用），全局开关
 PF_CAPI_EXPORT extern void PF_VLogSetConsoleEnabled(int enabled);
@@ -403,6 +578,10 @@ PF_CAPI_EXPORT extern void PF_VLogSetConsoleEnabled(int enabled);
 PF_CAPI_EXPORT extern PFPixelFree* PF_NewPixelFree();
 
 PF_CAPI_EXPORT extern void PF_DeletePixelFree(PFPixelFree* pixelFree);
+
+// 仅释放当前 GL 上下文相关资源，不销毁 PixelFree 实例、授权、模型和参数。
+// 需在拥有对应 GL 上下文的线程调用；下一次 PF_processWithBuffer 会重新初始化 GL。
+PF_CAPI_EXPORT extern void PF_ReleaseGLResources(PFPixelFree* pixelFree);
 
 //目前仅支持双输入。GPU 纹理由于渲染，cpu buffer 用检测
 PF_CAPI_EXPORT extern int PF_processWithBuffer(PFPixelFree* pixelFree,PFImageInput inputImage);
@@ -412,6 +591,7 @@ PF_CAPI_EXPORT extern int PF_pixelFreeGetLastErrorCode(PFPixelFree* pixelFree);
 
 PF_CAPI_EXPORT extern void PF_pixelFreeSetBeautyFilterParam(PFPixelFree* pixelFree, int key,void *value);
 PF_CAPI_EXPORT extern void PF_pixelFreeSetBodyBeautyParam(PFPixelFree* pixelFree, int key, void *value);
+// IMAGE 模式会复用人脸、人体及相关 AI 结果；换图或图像方向变化后调用此接口失效缓存。
 PF_CAPI_EXPORT extern void PF_pixelFreeResetDetectState(PFPixelFree* pixelFree);
 PF_CAPI_EXPORT extern int PF_pixelFreeGetBodyLongLegControl(PFPixelFree* pixelFree, PFBodyLongLegControl* control);
 PF_CAPI_EXPORT extern int PF_pixelFreeSetBodyLongLegControl(PFPixelFree* pixelFree, const PFBodyLongLegControl* control);
@@ -422,6 +602,12 @@ PF_CAPI_EXPORT extern int PF_pixelFreeClearSkinToneFilter(PFPixelFree* pixelFree
 PF_CAPI_EXPORT extern void PF_createBeautyItemFormBundle(PFPixelFree* pixelFree, void *data,int size,PFSrcType type);
 
 PF_CAPI_EXPORT extern void PF_pixelFreeGetFaceRect(PFPixelFree* pixelFree,float *faceRect);
+// faceRects 每张脸 4 个值：x, y, x1, y1，相对输入图宽高归一化，原点在左上角。返回写入的人脸数。
+PF_CAPI_EXPORT extern int PF_pixelFreeGetFaceRects(PFPixelFree* pixelFree, float *faceRects, int maxCount);
+// 与 GetFaceRects 同序，写入检测器人脸 id。返回写入的人脸数。
+PF_CAPI_EXPORT extern int PF_pixelFreeGetFaceIds(PFPixelFree* pixelFree, int *faceIds, int maxCount);
+// points 每张脸 168 个点、336 个 float（x,y 交错），相对输入图归一化，原点左上。需要高级证书中的美型授权，否则返回 0。
+PF_CAPI_EXPORT extern int PF_pixelFreeGetFaceLandmarks168(PFPixelFree* pixelFree, float *points, int maxFaces);
 
 PF_CAPI_EXPORT extern int PF_pixelFreeHaveFaceSize(PFPixelFree* pixelFree);
 
@@ -429,6 +615,22 @@ PF_CAPI_EXPORT extern void PF_pixelFreeSetDetectMode(PFPixelFree* pixelFree, PFF
 
 PF_CAPI_EXPORT extern int PF_pixelFreeHasFace(PFPixelFree* pixelFree);
 PF_CAPI_EXPORT extern int PF_pixelFreeHasHuman(PFPixelFree* pixelFree);
+// Load a HumanProcessor bundle and process once in IMAGE mode before querying.
+PF_CAPI_EXPORT extern int PF_pixelFreeGetHumanCount(PFPixelFree* pixelFree);
+// Returns 1 on success, 0 for unavailable/invalid index; always clears *info first.
+PF_CAPI_EXPORT extern int PF_pixelFreeGetHumanInfo(PFPixelFree* pixelFree, int index, PFHumanDetectionInfo* info);
+// Four floats per body, preserving detection order; unavailable rects are zeros.
+PF_CAPI_EXPORT extern int PF_pixelFreeGetHumanRects(PFPixelFree* pixelFree, float* rects, int maxCount);
+// 0 = success, -1 = invalid index or unauthorized. -1 index restores the legacy
+// body processing. An explicit index selects just that body's geometry for all
+// existing SetBodyBeautyParam calls, including explicit face snapshot rendering.
+// Long legs retain the original full-width stretch; selection changes hipY only.
+// Image-mode indices survive slider renders; reset/mode or source changes clear
+// selection. Redetection may reorder indices in VIDEO mode; not a tracking API.
+// Parameters are shared, not saved per person: the editor owns per-person values.
+PF_CAPI_EXPORT extern int PF_pixelFreeSetBodyBeautyTargetIndex(PFPixelFree* pixelFree, int index);
+// -2 = IMAGE cache invalidated: body effects pause until reselected after process.
+PF_CAPI_EXPORT extern int PF_pixelFreeGetBodyBeautyTargetIndex(PFPixelFree* pixelFree);
 // 设置是否开启人体/人像分割；需要先加载 PFSrcTypeHumanProcessor bundle。
 PF_CAPI_EXPORT extern void PF_pixelFreeSetHumanSegmentation(PFPixelFree* pixelFree, int enable);
 // 获取最近一次 process 后的人像分割结果；返回 1 表示有 mask，0 表示当前无可用 mask。
@@ -460,6 +662,8 @@ typedef enum PFMakeupPart {
 
 // 设置美妆各部位程度值（与配置叠乘）
 PF_CAPI_EXPORT extern int PF_pixelFreeSetMakeupPartDegree(PFPixelFree* pixelFree, int part, float degree);
+// 设置美妆是否开启面部遮挡分割；默认开启，妆只作用在非遮挡区域
+PF_CAPI_EXPORT extern void PF_pixelFreeSetMakeupFaceOccu(PFPixelFree* pixelFree, int enable);
 
 // 设置是否开启皮肤分割（Skin Mask），enable != 0 表示开启
 PF_CAPI_EXPORT extern void PF_pixelFreeSetSkinMask(PFPixelFree* pixelFree, int enable);

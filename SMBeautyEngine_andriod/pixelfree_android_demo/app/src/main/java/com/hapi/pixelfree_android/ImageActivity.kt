@@ -26,7 +26,10 @@ import com.hapi.pixelfreeuikit.ColorGradingDialog
 
 class ImageActivity: AppCompatActivity()  {
 
-    var isLongPress = false
+    @Volatile var isLongPress = false
+    @Volatile private var glReady = false
+    @Volatile private var closing = false
+    private val lifecycleLock = Any()
     lateinit var originBitmap: Bitmap;
 
     private val mPixelFree by lazy {
@@ -69,11 +72,8 @@ class ImageActivity: AppCompatActivity()  {
 
         w = originBitmap.width;
         h = originBitmap.height;
-        rowBytes = originBitmap.rowBytes
+        rowBytes = w * 4
         rgbaData = convertBitmapToRGBA(originBitmap);
-
-        // 启动定时任务
-        handler.postDelayed(updateImageRunnable, 1)
 
         // 相册按钮 & 点击预览均可选择相册图片
         findViewById<Button>(R.id.btnAlbum).setOnClickListener {
@@ -84,31 +84,46 @@ class ImageActivity: AppCompatActivity()  {
         }
 
         hapiCapturePreView.mHapiGLSurfacePreview.mOpenGLRender.glCreateCall = {
-            //在绑定上下文后初始化
-            mPixelFree.create()
-            val authData = mPixelFree.readBundleFile(this@ImageActivity, "pixelfreeAuth.lic")
-            if (authData != null) {
-                mPixelFree.auth(this.applicationContext, authData, authData.size)
-            }
-            val face_fiter =
-                mPixelFree.readBundleFile(this@ImageActivity, "filter_model.bundle")
-            if (face_fiter != null) {
-                mPixelFree.createBeautyItemFormBundle(
-                    face_fiter,
-                    face_fiter.size,
-                    PFSrcType.PFSrcTypeFilter
-                )
-            }
+            if (!closing) {
+                mPixelFree.setRenderThreadDispatcher(Thread.currentThread()) { task ->
+                    hapiCapturePreView.mHapiGLSurfacePreview.queueEvent(task)
+                }
+                mPixelFree.createOnCurrentGLThread()
+                val authData = mPixelFree.readBundleFile(this@ImageActivity, "pixelfreeAuth.lic")
+                if (authData != null) {
+                    mPixelFree.auth(this.applicationContext, authData, authData.size)
+                }
+                val face_fiter =
+                    mPixelFree.readBundleFile(this@ImageActivity, "filter_model.bundle")
+                if (face_fiter != null) {
+                    mPixelFree.createBeautyItemFormBundle(
+                        face_fiter,
+                        face_fiter.size,
+                        PFSrcType.PFSrcTypeFilter
+                    )
+                }
 
-            // 设置图片检测模式
-//            mPixelFree.setDetectMode(PFFaceDetectMode.PF_FACE_DETECT_MODE_IMAGE)
-
-            mPixeBeautyDialog.show(supportFragmentManager, "")
+                mPixelFree.setDetectModeOnCurrentGLThread(PFFaceDetectMode.PF_FACE_DETECT_MODE_IMAGE)
+                synchronized(lifecycleLock) {
+                    if (closing) {
+                        mPixelFree.releaseOnCurrentGLThread()
+                    } else {
+                        glReady = true
+                        handler.post {
+                            if (!closing) {
+                                handler.removeCallbacks(updateImageRunnable)
+                                handler.post(updateImageRunnable)
+                                showBeautyDialog()
+                            }
+                        }
+                    }
+                }
+            }
         }
 
 //        hapiCapturePreView.setScaleType(ScaleType.FIT_CENTER)
         findViewById<Button>(R.id.showBeauty).setOnClickListener {
-            mPixeBeautyDialog.show(supportFragmentManager, "")
+            showBeautyDialog()
         }
         mPixeBeautyDialog.setOnCompButtonStateListener(object : PixeBeautyDialog.OnCompButtonStateListener {
             override fun onCompButtonPressed(isPressed: Boolean) {
@@ -126,7 +141,7 @@ class ImageActivity: AppCompatActivity()  {
 
         // 添加颜色调节按钮
         findViewById<Button>(R.id.showColorGrading).setOnClickListener {
-            mColorGradingDialog.show()
+            if (glReady && !closing) mColorGradingDialog.show()
         }
 
         fpstTextView = findViewById<TextView>(R.id.fpst)
@@ -137,62 +152,59 @@ class ImageActivity: AppCompatActivity()  {
         private var frameCount = 0
         private var startTimeMillis = System.currentTimeMillis()
         override fun run() {
-            val startTime = System.currentTimeMillis() // 或者使用 System.nanoTime()
-
-            if (mPixelFree.isCreate()) {
+            if (closing || !glReady) return
+            val startTime = System.currentTimeMillis()
+            val width = w
+            val height = h
+            val pixels = rgbaData
+            val stride = rowBytes
+            val compare = isLongPress
+            hapiCapturePreView.mHapiGLSurfacePreview.queueEvent {
+                if (closing || !glReady) return@queueEvent
                 val pxInput = PFImageInput().apply {
-                    wigth = w
-                    height = h
-                    p_data0 = rgbaData;
+                    wigth = width
+                    this.height = height
+                    p_data0 = pixels
                     p_data1 = null
                     p_data2 = null
-                    stride_0 = rowBytes
+                    stride_0 = stride
                     stride_1 = 0
                     stride_2 = 0
                     textureID = 0
                     format = PFDetectFormat.PFFORMAT_IMAGE_RGBA
                     rotationMode = PFRotationMode.PFRotationMode0
                 }
-                if (!isLongPress) {
-                    mPixelFree.processWithBuffer(pxInput)
+                if (!compare) {
+                    mPixelFree.processWithBufferOnCurrentGLThread(pxInput)
                 }
 
                 val frame = VideoFrame(
-                    w, h,
+                    width, height,
                     ImgFmt.IMAGE_FORMAT_RGBA,
-                    rgbaData,
+                    pixels,
                     0,
-                    rowBytes,
+                    4,
                     0,
                 )
                 // 长按显示原图；松开显示处理后的 texture
-                frame.textureID = if (isLongPress) -1000 else pxInput.textureID
+                frame.textureID = if (compare) -1000 else pxInput.textureID
                 hapiCapturePreView.onFrame(frame)
-
-                frameCount++
-                val endTime = System.currentTimeMillis()
-                val duration = endTime - startTime
-                val elapsedTime = endTime - startTimeMillis
-
-                if (elapsedTime >= 60000) { // 一分钟已经过去
-                    val fps = (frameCount * 1000 / elapsedTime).toInt() // 计算平均 FPS
-                    fpstTextView.text = "FPS: $fps one:$duration ms" // 更新 TextView 上的文字
-                    frameCount = 0
-                    startTimeMillis = System.currentTimeMillis()
+                handler.post {
+                    if (!closing) {
+                        frameCount++
+                        val endTime = System.currentTimeMillis()
+                        val duration = endTime - startTime
+                        val elapsedTime = endTime - startTimeMillis
+                        if (elapsedTime >= 60000) {
+                            val fps = frameCount * 1000 / elapsedTime
+                            fpstTextView.text = "FPS: $fps one:$duration ms"
+                            frameCount = 0
+                            startTimeMillis = endTime
+                        }
+                        handler.postDelayed(this, (80L - duration).coerceAtLeast(0))
+                    }
                 }
             }
-
-            val endTime = System.currentTimeMillis() // 或者使用 System.nanoTime()
-
-            val duration = endTime - startTime // 耗时（毫秒）
-            println("[PixelFree] processWithBuffer all: $duration ms")
-
-            var delay = 80L - duration
-            if (delay < 0) {
-                delay = 0L;
-            }
-
-            handler.postDelayed(this, delay) // 每分钟调用 30 次
         }
     }
 
@@ -217,8 +229,11 @@ class ImageActivity: AppCompatActivity()  {
                 originBitmap = bitmap
                 w = bitmap.width
                 h = bitmap.height
-                rowBytes = bitmap.rowBytes
+                rowBytes = w * 4
                 rgbaData = convertBitmapToRGBA(bitmap)
+                hapiCapturePreView.mHapiGLSurfacePreview.queueEvent {
+                    if (!closing && glReady) mPixelFree.resetDetectStateOnCurrentGLThread()
+                }
             }
         } catch (e: Exception) {
             Log.e("ImageActivity", "Failed to load image from gallery", e)
@@ -294,9 +309,21 @@ class ImageActivity: AppCompatActivity()  {
 
 
 
+    private fun showBeautyDialog() {
+        if (glReady && !closing && !isFinishing && !supportFragmentManager.isStateSaved &&
+            !mPixeBeautyDialog.isAdded && supportFragmentManager.findFragmentByTag("beauty") == null) {
+            mPixeBeautyDialog.show(supportFragmentManager, "beauty")
+        }
+    }
+
     override fun onDestroy() {
+        val initialized = synchronized(lifecycleLock) {
+            closing = true
+            glReady
+        }
+        handler.removeCallbacksAndMessages(null)
+        if (initialized) mPixelFree.release()
+        glReady = false
         super.onDestroy()
-        mPixelFree.release()
-        handler.removeCallbacks(updateImageRunnable) // 停止更新
     }
 }
