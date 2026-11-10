@@ -11,6 +11,7 @@
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 #import "pixelFree_c.hpp"
+#import "PFColorGradingParams.h"
 NS_ASSUME_NONNULL_BEGIN
 
 /// Immutable snapshot. Borrowed face views remain valid for this object's lifetime.
@@ -29,6 +30,15 @@ __attribute__((visibility("default"))) @interface SMPixelFreeFaceDetection : NSO
 __attribute__((visibility("default"))) @interface SMPixelFreeBodyDetection : NSObject
 @property(nonatomic, readonly) NSInteger bodyCount;
 - (BOOL)getBodyInfo:(PFDetectedBodyInfo *)info atIndex:(NSInteger)index;
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
+@end
+
+/// Immutable owned semantic masks, valid after reset, reload or engine destruction.
+/// Borrowed maskData remains valid for this object's lifetime. Probabilities are
+/// [0,1], in whole-frame RAW input coordinates, top-left origin; no person IDs.
+__attribute__((visibility("default"))) @interface SMPixelFreeSegmentation : NSObject
+- (BOOL)getMask:(PFSegmentationMask *)mask type:(PFSegmentationType)type;
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 @end
@@ -53,6 +63,8 @@ __attribute__((visibility("default"))) @interface SMPixelFree : NSObject
  @param width 宽度
  @param height 高度
  */
+/// Processes in place in glContext, including configured grading. Returns the
+/// supplied texture on success, or a negative error; no CPU output readback.
 - (int)processWithTexture:(GLuint)texture width:(GLint)width height:(GLint)height rotation:(PFRotationMode)rotation;
 
 /**
@@ -63,7 +75,30 @@ __attribute__((visibility("default"))) @interface SMPixelFree : NSObject
 @param rotationMode 人脸检测方向
 
 */
+/// Applies configured grading after beauty/body/stickers, before final writeback.
+/// Supports BGRA and bi-planar NV12; output pixels are ready when the call returns.
+/// Rerender from original pixels. In IMAGE mode call resetDetectState on a source
+/// or rotation change; beauty reuse and source revisions are managed internally.
 - (int)processWithBuffer:(CVPixelBufferRef)pixelBuffer rotationMode:(PFRotationMode)rotationMode;
+
+/// Available PFSegmentationType bits; sky is reserved and currently unavailable.
+- (unsigned int)getSegmentationAvailability;
+/// Synchronous CPU-only, fresh inference. Supports BGRA and full-range bi-planar
+/// NV12 (BT.601). Video-range NV12 is rejected as an invalid argument;
+/// never modifies pixels or invokes GL. Model interpreters are lazily cached.
+/// types is an OR of PFSegmentationType bits. Failure returns nil, no partial
+/// result, and an NSError in domain "PixelFreeSegmentation" with the C status.
+- (nullable SMPixelFreeSegmentation *)segmentWithBuffer:(CVPixelBufferRef)pixelBuffer
+                                         rotationMode:(PFRotationMode)rotationMode
+                                                types:(unsigned int)types
+                                                error:(NSError * _Nullable * _Nullable)error;
+/// Optional HairFaceContext enhances hair with fresh face-local context and
+/// requires Hair in types. The existing overload uses PFSegmentationOptionNone.
+- (nullable SMPixelFreeSegmentation *)segmentWithBuffer:(CVPixelBufferRef)pixelBuffer
+                                         rotationMode:(PFRotationMode)rotationMode
+                                                types:(unsigned int)types
+                                              options:(unsigned int)options
+                                                error:(NSError * _Nullable * _Nullable)error;
 
 /// Synchronous detection only; supports BGRA and bi-planar NV12 pixel buffers.
 /// Requires valid advanced beauty (BeautyV2) authorization; basic beauty and
@@ -184,13 +219,22 @@ __attribute__((visibility("default"))) @interface SMPixelFree : NSObject
 // 按人体 index 获取最近一次处理的人像分割结果；index 从 0 开始。
 - (int)pixelFreeGetHumanSegmentationResultAtIndex:(int)index result:(PFHumanSegmentationResult *)result;
 
-// 图片调色设置
-- (int)pixelFreeSetColorGrading:(PFImageColorGrading *)imageColorGrading;
+/// Copies validated settings. Initialize with PF_initColorGradingParams.
+/// Normal buffer/image/texture processing automatically applies grading after
+/// beauty/body/stickers and before final writeback. No second pass is required.
+/// Grading changes preserve the core's IMAGE beauty cache; VIDEO is never reused.
+- (int)pixelFreeSetColorGrading:(const PFColorGradingParams *)params;
+/// Restores neutral grading without invalidating cached beauty.
+- (int)pixelFreeResetColorGrading;
 
-// HLS 功能
-- (int)pixelFreeAddHLSFilter:(PFHLSFilterParams*)HLSFilterParams;
-- (int)pixelFreeDeleteHLSFilter:(int)handle;
-- (int)pixelFreeChangeHLSFilter:(int)handle params:(PFHLSFilterParams*)HLSFilterParams;
+/// Standalone color transfer. Does not run face, body, beauty, makeup, sticker or grading.
+/// Enable PFColorTransferFeatureColor or the call only copies the source. Reference supplies
+/// the palette; source is the image being recolored. params.strength is the transfer degree
+/// in [0,1]; changing only strength reuses the last coefficient grid. Output is caller-owned.
+- (int)processColorTransferWithSource:(PFImageInput)source
+                            reference:(PFImageInput)reference
+                               params:(const PFColorTransferParams *)params
+                               output:(PFColorTransferOutput *)output;
 
 // 自定义贴纸专属
 - (void)pixelFreeSetFiterStickerWithPath:(NSString *)path;
@@ -205,6 +249,8 @@ __attribute__((visibility("default"))) @interface SMPixelFree : NSObject
 
 // 设置是否开启皮肤分割（Skin Mask），默认开启
 - (void)pixelFreeSetSkinMaskEnabled:(BOOL)enabled;
+// Bits: 1 filling, 2 smoothing, 4 packed lifting, 8 contour, 0x10 teeth, 0x20 contour smooth. No inference or GL work.
+- (unsigned int)pixelFreeGetRejuvenationAvailability;
 // 设置是否开启 mask 磨皮，默认关闭
 - (void)pixelFreeSetSmoothSkinMaskEnabled:(BOOL)enabled;
 

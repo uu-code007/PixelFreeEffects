@@ -9,6 +9,7 @@
 #define pixelFree_c_hpp
 
 #include <stdio.h>
+#include "PFColorGradingParams.h"
 #if defined(_WIN32)
 #ifdef PF_BUILD_SHARED_LIB
 #define PF_CAPI_EXPORT __declspec(dllexport)
@@ -100,6 +101,47 @@ typedef struct {
   PFRotationMode rotationMode;
 } PFImageInput;
 
+// Bit flags. Masks are semantic (all matching pixels), not person instances.
+typedef enum PFSegmentationType {
+    PFSegmentationHair = 1,
+    PFSegmentationHead = 2,
+    PFSegmentationSkin = 4,
+    PFSegmentationHuman = 8,
+    PFSegmentationSky = 16, // Reserved; unavailable until a sky model is supplied.
+} PFSegmentationType;
+
+typedef enum PFSegmentationOption {
+    PFSegmentationOptionNone = 0,
+    PFSegmentationOptionHairFaceContext = 1,
+} PFSegmentationOption;
+
+typedef enum PFSegmentationError {
+    PFSegmentationSuccess = 0,
+    PFSegmentationErrorInvalidArgument = -1,
+    PFSegmentationErrorUnauthorized = -2,
+    PFSegmentationErrorUnavailable = -3,
+    PFSegmentationErrorInference = -4,
+    PFSegmentationErrorInvalidResult = -5,
+    PFSegmentationErrorInternal = -6,
+} PFSegmentationError;
+
+typedef struct PFSegmentationResult PFSegmentationResult;
+typedef struct PFSegmentationMask {
+    PFSegmentationType type;
+    // Owned by PFSegmentationResult; valid until its explicit release, even
+    // after another inference, resetDetectState, bundle reload or engine release.
+    const float* maskData; // [0,1], 1 = foreground; one channel, row-major.
+    int width; // Output longest side <=512; not necessarily source resolution.
+    int height;
+    int stride; // Float elements per row, not bytes.
+    int sourceWidth;
+    int sourceHeight;
+    PFRotationMode rotationMode;
+    // Normalized RAW input rect, top-left origin. Currently always [0,0,1,1].
+    // The mask is already mapped to RAW; apply rotation only when displaying it.
+    float rect[4];
+} PFSegmentationMask;
+
 typedef struct {
   char *imagePath;
 } PFFilter;
@@ -142,29 +184,6 @@ typedef struct {
     bool isMirror; // false
 } PFFilterWatermark;
 
-
-typedef struct {
-    bool isUse; //false
-    float brightness;// -1.0 to 1.0
-    float contrast; // Contrast ranges from 0.0 to 4.0 (max contrast), with 1.0 as the normal level
-    float exposure; // Exposure ranges from -10.0 to 10.0, with 0.0 as the normal level
-    float highlights; //0 - 1, increase to lighten shadows.
-    float shadows;  //0 - 1, decrease to darken highlights.
-    float saturation; //Saturation ranges from 0.0 (fully desaturated) to 2.0 (max saturation), with 1.0 as the normal level
-    float temperature;//choose color temperature, in degrees Kelvin  default 5000.0
-    float tint;       //adjust tint to compensate
-    float hue;       //0-360
-    
-} PFImageColorGrading;
-
-
-typedef struct {
-    float key_color[3]; // 0~1
-    float hue;
-    float saturation;// 0-1.0
-    float brightness;  // 0-1.0
-    float similarity; //相似度
-} PFHLSFilterParams;
 
 typedef struct PFBodyStretchLine {
     float x0;
@@ -383,6 +402,23 @@ typedef enum PFBeautyFilterType{
     PFBeautyFilterSkinDetailWaterGlow,
     // 皮肤细节哑光
     PFBeautyFilterSkinDetailMatte,
+    PFBeautyFilterFaceFillForehead,
+    PFBeautyFilterFaceFillTearTrough,
+    PFBeautyFilterFaceFillEyeSocket,
+    PFBeautyFilterFaceFillAppleCheeks,
+    PFBeautyFilterFaceFillChin,
+    PFBeautyFilterFaceFillCheeks,
+    PFBeautyFilterFaceFillBrowArch,
+    PFBeautyFilterFaceFillNasalBase,
+    PFBeautyFilterFaceFillMouthCorner,
+    PFBeautyFilterFaceLiftForehead,
+    PFBeautyFilterFaceLiftPeriorbital,
+    PFBeautyFilterFaceLiftMalar,
+    PFBeautyFilterFaceLiftPerioral,
+    PFBeautyFilterFaceLiftContour,
+    // Independent controls, range [0,1], default 0. Teeth whitening is unchanged.
+    PFBeautyFilterTeethRetouch = 68,
+    PFBeautyFilterFaceContourSmooth = 69,
     
 } PFBeautyFilterType;
 
@@ -426,6 +462,26 @@ PF_CAPI_EXPORT extern const char* PF_Version();
 
 
 typedef struct PFPixelFree PFPixelFree;
+
+// CPU-only, synchronous, read-only input. No GL context needed. Head requests
+// and opt-in hair face context locate fresh faces internally.
+// Each explicit call analyzes fresh pixels. Reuse the owned result for image
+// adjustments. Model interpreters are lazy-loaded and reused by the engine.
+// types is an OR of PFSegmentationType flags. Failure returns no partial result.
+// Texture-only input is unsupported; pass CPU pixels (including YUV planes).
+// YUV inputs use full-range BT.601. Convert limited-range/other matrices first.
+// Hair/head/skin require BeautyV2 authorization; human requires body authorization.
+PF_CAPI_EXPORT unsigned int PF_getSegmentationAvailability(PFPixelFree* engine);
+PF_CAPI_EXPORT int PF_segmentWithBuffer(PFPixelFree* engine, PFImageInput input,
+    unsigned int types, PFSegmentationResult** result);
+// Legacy PF_segmentWithBuffer uses options=0. HairFaceContext requires Hair in
+// types and enhances its full-frame mask with face-local context. Unknown options
+// or HairFaceContext without Hair return PFSegmentationErrorInvalidArgument.
+PF_CAPI_EXPORT int PF_segmentWithBufferOptions(PFPixelFree* engine, PFImageInput input,
+    unsigned int types, unsigned int options, PFSegmentationResult** result);
+PF_CAPI_EXPORT int PF_getSegmentationMask(const PFSegmentationResult* result,
+    PFSegmentationType type, PFSegmentationMask* mask);
+PF_CAPI_EXPORT void PF_releaseSegmentationResult(PFSegmentationResult* result);
 
 /* Immutable owned detection. Views below are borrowed until the result is released.
  * Geometry is normalized in the orientation-corrected full image, top-left origin.
@@ -585,13 +641,17 @@ PF_CAPI_EXPORT extern void PF_ReleaseGLResources(PFPixelFree* pixelFree);
 
 //目前仅支持双输入。GPU 纹理由于渲染，cpu buffer 用检测
 PF_CAPI_EXPORT extern int PF_processWithBuffer(PFPixelFree* pixelFree,PFImageInput inputImage);
+// Full beauty+grading output without final caller-texture/YUV writeback or output
+// synchronization. Consume the SDK texture before the next process or GL release
+// in the same GL context. The ordinary entry point above also includes grading.
+PF_CAPI_EXPORT extern int PF_processWithBufferToTexture(PFPixelFree* pixelFree, PFImageInput inputImage);
 
 // 获取最近一次功能设置/渲染后的错误码，0 表示正常。
 PF_CAPI_EXPORT extern int PF_pixelFreeGetLastErrorCode(PFPixelFree* pixelFree);
 
 PF_CAPI_EXPORT extern void PF_pixelFreeSetBeautyFilterParam(PFPixelFree* pixelFree, int key,void *value);
 PF_CAPI_EXPORT extern void PF_pixelFreeSetBodyBeautyParam(PFPixelFree* pixelFree, int key, void *value);
-// IMAGE 模式会复用人脸、人体及相关 AI 结果；换图或图像方向变化后调用此接口失效缓存。
+// IMAGE 模式复用 AI 和未调色美颜结果；换图时调用此接口清除缓存，保留调色参数。
 PF_CAPI_EXPORT extern void PF_pixelFreeResetDetectState(PFPixelFree* pixelFree);
 PF_CAPI_EXPORT extern int PF_pixelFreeGetBodyLongLegControl(PFPixelFree* pixelFree, PFBodyLongLegControl* control);
 PF_CAPI_EXPORT extern int PF_pixelFreeSetBodyLongLegControl(PFPixelFree* pixelFree, const PFBodyLongLegControl* control);
@@ -638,10 +698,11 @@ PF_CAPI_EXPORT extern int PF_pixelFreeGetHumanSegmentationResult(PFPixelFree* pi
 // 按人体 index 获取最近一次 process 后的人像分割结果；index 从 0 开始。
 PF_CAPI_EXPORT extern int PF_pixelFreeGetHumanSegmentationResultAtIndex(PFPixelFree* pixelFree, int index, PFHumanSegmentationResult* result);
 
-PF_CAPI_EXPORT extern int PF_pixelFreeColorGrading(PFPixelFree* pixelFree,PFImageColorGrading* ImageColorGrading);
-PF_CAPI_EXPORT extern int PF_pixelFreeAddHLSFilter(PFPixelFree* pixelFree,PFHLSFilterParams* HLSFilterParams);
-PF_CAPI_EXPORT extern int PF_pixelFreeDeleteHLSFilter(PFPixelFree* pixelFree,int handle);
-PF_CAPI_EXPORT extern int PF_pixelFreeChangeHLSFilter(PFPixelFree* pixelFree,int handle,PFHLSFilterParams* HLSFilterParams);
+// Grading runs at the end of the existing beauty pipeline before final output.
+// Signed sliders default to 0; empty curves are identity. No source version is required.
+PF_CAPI_EXPORT extern void PF_initColorGradingParams(PFColorGradingParams* params);
+PF_CAPI_EXPORT extern int PF_setColorGrading(PFPixelFree* pixelFree, const PFColorGradingParams* params);
+PF_CAPI_EXPORT extern int PF_resetColorGrading(PFPixelFree* pixelFree);
 // 独立美妆：传入 makeup.json 路径
 PF_CAPI_EXPORT extern int PF_pixelFreeSetMakeupPath(PFPixelFree* pixelFree, const char* makeupJsonPath);
 PF_CAPI_EXPORT extern int PF_pixelFreeClearMakeup(PFPixelFree* pixelFree);
@@ -665,8 +726,43 @@ PF_CAPI_EXPORT extern int PF_pixelFreeSetMakeupPartDegree(PFPixelFree* pixelFree
 // 设置美妆是否开启面部遮挡分割；默认开启，妆只作用在非遮挡区域
 PF_CAPI_EXPORT extern void PF_pixelFreeSetMakeupFaceOccu(PFPixelFree* pixelFree, int enable);
 
+// 仿色功能项。未置位的项不会加载模型，也不会参与计算。
+typedef enum PFColorTransferFeature {
+    PFColorTransferFeatureColor = 1 << 0,
+} PFColorTransferFeature;
+
+typedef struct PFColorTransferParams {
+    unsigned int features; // PFColorTransferFeature 位。0 表示只回写原图。
+    float strength;        // 程度 [0,1]。0 保持原图，1 为完整仿色。同一对图只改程度时复用上次推理系数。
+} PFColorTransferParams;
+
+typedef struct PFColorTransferOutput {
+    void* data;
+    int width;  // 必须与原图一致；0 表示使用原图宽高，缓冲区仍由调用方分配。
+    int height;
+    int stride; // 字节/行。0 表示紧凑排列。
+    PFDetectFormat format; // PFFORMAT_UNKNOWN 表示与原图相同。支持 RGB/BGR/RGBA/BGRA/ARGB/ABGR。
+} PFColorTransferOutput;
+
+typedef enum PFColorTransferError {
+    PFColorTransferErrorInvalidArgument = -4301,
+    PFColorTransferErrorUnauthorized = -4302,
+    PFColorTransferErrorModel = -4303,
+    PFColorTransferErrorInternal = -4304,
+} PFColorTransferError;
+
+// 默认 features=0、strength=1。需要仿色时打开 PFColorTransferFeatureColor，用 strength 调程度。
+PF_CAPI_EXPORT extern void PF_initColorTransferParams(PFColorTransferParams* params);
+// 单独仿色。不跑人脸、人体、美颜、美妆、贴纸和调色。证书需要美体授权。
+// 原图是被着色的图，参考图提供色彩。同一引擎实例下，源图/参考图未变时只改 strength 不会重跑模型。
+// 返回 0 或 PFColorTransferError。
+PF_CAPI_EXPORT extern int PF_processColorTransfer(PFPixelFree* pixelFree, PFImageInput source,
+    PFImageInput reference, const PFColorTransferParams* params, PFColorTransferOutput* output);
+
 // 设置是否开启皮肤分割（Skin Mask），enable != 0 表示开启
 PF_CAPI_EXPORT extern void PF_pixelFreeSetSkinMask(PFPixelFree* pixelFree, int enable);
+// Bits: 1 filling, 2 smoothing, 4 packed lifting, 8 contour, 0x10 teeth, 0x20 contour smooth. No inference or GL work.
+PF_CAPI_EXPORT extern unsigned int PF_pixelFreeGetRejuvenationAvailability(PFPixelFree* pixelFree);
 // 设置是否开启 mask 磨皮，默认关闭；enable != 0 时才生成磨皮用人脸 mask
 PF_CAPI_EXPORT extern void PF_pixelFreeSetSmoothSkinMask(PFPixelFree* pixelFree, int enable);
 #ifdef __cplusplus

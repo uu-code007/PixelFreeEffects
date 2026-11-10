@@ -1,232 +1,157 @@
-# pixelFree 美颜SDK使用文档 
+# PixelFree iOS 接入指南
 
-#### iOS 接入方式
+[项目概览](../README.md) · [iOS API](./api_iOS.md) · [Android 接入](./doc_android.md)
 
-1.  手动接入
+本文以仓库当前的 [SMPixelFree.h](../SMBeautyEngine_iOS/PixelFree.framework/Headers/SMPixelFree.h)、[C 类型定义](../SMBeautyEngine_iOS/PixelFree.framework/Headers/pixelFree_c.hpp) 和 [调色参数](../SMBeautyEngine_iOS/PixelFree.framework/Headers/PFColorGradingParams.h) 为准。示例使用 Objective-C++（`.mm`）和 ARC，只调用交付包的公开接口。
 
-    Demo 工程中有接入 PixelFree.framework，参考 demo 接入
+## 1. 集成准备
 
-2. pod 导入
+| 项目 | 当前要求 |
+| :--- | :--- |
+| Framework | [PixelFree.framework](../SMBeautyEngine_iOS/PixelFree.framework)，动态 Framework，加入目标的链接与 Embed & Sign 配置 |
+| 系统与架构 | 当前包为 iPhoneOS `arm64`，包声明最低 iOS 12.0；[Demo](../SMBeautyEngine_iOS) 部署目标为 iOS 15.0，不含模拟器切片 |
+| 头文件 | `#import <PixelFree/SMPixelFree.h>` |
+| 图形环境 | OpenGL ES；渲染、参数更新、资源加载与销毁在同一串行队列上管理 |
+| 授权 | 提供与应用 Bundle ID、平台、有效期和功能匹配的 `pixelfreeAuth.lic` |
 
-   ```objective-c
-     pod 'PixelFree'
-   ```
+将配套资源加入应用目标的 Copy Bundle Resources，使用实际文件路径加载。不要仅替换二进制而沿用旧头文件或旧模型。本页采用仓库交付包手动接入，不将旧 Pod 版本视为当前接口的替代品。
 
+| 资源 | 用途 | 加载入口 |
+| :--- | :--- | :--- |
+| `filter_model.bundle` | 基础美颜及相关资源 | 初始化的 `srcFilterPath` |
+| `pixelfreeAuth.lic` | 授权 | 初始化的 `authFile` |
+| `body_model.bundle` | 人体检测、美体及相关功能 | `PFSrcTypeHumanProcessor` |
+| `skin_src.bundle` | 肤色调整 | `PFSrcTypeSkinSrc` |
+| 美妆包 | 妆容资源 | `PFSrcTypeMakeup` |
+| 贴纸／LUT | 特效素材 | 对应路径接口，见 [API](./api_iOS.md) |
 
-####  仅需四步，完成接入使用  
+采集、预览、音视频编码和图片保存由应用负责。先使用基础美颜确认图像链路，再按授权和资源启用其他功能。
 
-1. 初始化
+## 2. 创建并复用引擎
 
-   ```
-   // 素材路径
-    NSString *face_FiltePath = [[NSBundle mainBundle] pathForResource:@"filter_model.bundle" ofType:nil];
-    
-    // 授权文件
-    NSString *authFile = [[NSBundle mainBundle] pathForResource:@"pixelfreeAuth.lic" ofType:nil];
-    
-    // 初始化实例
-    self.mPixelFree = [[SMPixelFree alloc] initWithProcessContext:nil srcFilterPath:face_FiltePath authFile:authFile];
+下列函数接收应用已解析好的资源路径；例如可用 `NSBundle` 的 `pathForResource:ofType:` 查找应用内文件。初始化失败应由上层停止提交帧并提示资源或环境问题。
 
-    // 肤色修改资源，使用肤色修改前加载
-    NSString *skinSrcPath = [[NSBundle mainBundle] pathForResource:@"skin_src" ofType:@"bundle"];
-    NSData *skinSrcData = [NSData dataWithContentsOfFile:skinSrcPath];
-    [self.mPixelFree createBeautyItemFormBundleKey:PFSrcTypeSkinSrc data:(void *)skinSrcData.bytes size:(int)skinSrcData.length];
-    
-   ```
+```objective-c++
+#import <PixelFree/SMPixelFree.h>
 
-2. 美颜参数设置
+SMPixelFree *CreateBeautyEngine(NSString *modelPath, NSString *licensePath) {
+    if (modelPath.length == 0 || licensePath.length == 0) return nil;
+    EAGLContext *previous = [EAGLContext currentContext];
+    EAGLContext *context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+    if (!context || ![EAGLContext setCurrentContext:context]) return nil;
 
-    ```
-   // 大眼
-   [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterTypeFace_EyeStrength value:&value];
-   
-   // 美牙
-   float whitenTeethValue = 0.5f;
-   [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFilterWhitenTeeth value:&whitenTeethValue];
-
-   // AI 祛瑕疵
-   float fleckFlawCleanValue = 0.6f;
-   [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterFleckFlawClean value:&fleckFlawCleanValue];
-
-   // 皮肤细节水光
-   float waterGlowValue = 0.5f;
-   [_mPixelFree pixelFreeSetBeautyFilterParam:PFBeautyFilterSkinDetailWaterGlow value:&waterGlowValue];
-
-   // 肤色修改：粉白，程度 0.6，色温中性
-   PFSkinToneFilterParams skinTone = {true, PFSkinToneTypePinkWhite, 0.6f, 0.5f};
-   [_mPixelFree pixelFreeSetSkinToneFilter:&skinTone];
-   ```
-
-3. 滤镜设置 (内置 10 款滤镜 )
-
-   ```
-   // 滤镜类型，类型字段查看，滤镜表格
-   const char *aaa = [param.mParam UTF8String];
-   [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterName value:(void *)aaa];
-   // 滤镜程度
-   [_mPixelFree pixelFreeSetBeautyFiterParam:PFBeautyFiterStrength value:&value];
-   ```
-
-4. 图像渲染处理，内部会内存回写
-
-   ```
-   // pixbuffer 视频数据
-   [_mPixelFree processWithBuffer:pixbuffer];
-   ```
-
-   
-
-#### 设置美颜参数说明,参数范围 （0.0~1.0）
-
-```objective-c
-typedef enum PFBeautyFiterType{
-    PFBeautyFiterTypeFace_EyeStrength = 0,
-    //瘦脸
-    PFBeautyFiterTypeFace_thinning,
-    //窄脸
-    PFBeautyFiterTypeFace_narrow,
-    //下巴 （默认0.5，两个方向调节）
-    PFBeautyFiterTypeFace_chin,
-    //v脸
-    PFBeautyFiterTypeFace_V,
-    //small
-    PFBeautyFiterTypeFace_small,
-    //鼻子
-    PFBeautyFiterTypeFace_nose,
-    //额头（默认0.5，两个方向调节）
-    PFBeautyFiterTypeFace_forehead,
-    //嘴巴（默认0.5，两个方向调节）
-    PFBeautyFiterTypeFace_mouth,
-    //人中（默认0.5，两个方向调节）
-    PFBeautyFiterTypeFace_philtrum,
-    //长鼻（默认0.5，两个方向调节）
-    PFBeautyFiterTypeFace_long_nose = 10,
-    //眼距（默认0.5，两个方向调节）
-    PFBeautyFiterTypeFace_eye_space,
-    //微笑嘴角
-    PFBeautyFiterTypeFace_smile,
-    //旋转眼睛（默认0.5，两个方向调节）
-    PFBeautyFiterTypeFace_eye_rotate,
-    //开眼角
-    PFBeautyFiterTypeFace_canthus,
-    //磨皮
-    PFBeautyFiterTypeFaceBlurStrength,
-    //美白
-    PFBeautyFiterTypeFaceWhitenStrength,
-    //红润
-    PFBeautyFiterTypeFaceRuddyStrength,
-    //锐化
-    PFBeautyFiterTypeFaceSharpenStrength,
-    //新美白算法
-    PFBeautyFiterTypeFaceM_newWhitenStrength,
-    //画质增强
-    PFBeautyFiterTypeFaceH_qualityStrength,
-    //滤镜类型
-    PFBeautyFiterName,
-    //滤镜强度
-    PFBeautyFiterStrength,
-    //绿幕
-    PFBeautyFiterLvmu,
-    // 2D 贴纸
-    PFBeautyFiterSticker2DFilter,
-    // 一键美颜
-    PFBeautyFiterTypeOneKey,
-    // 扩展字段
-    PFBeautyFiterExtend,
-    // 祛法令纹
-    PFBeautyFilterNasolabial,
-    // 祛黑眼圈
-    PFBeautyFilterBlackEye,
-    // 美牙
-    PFBeautyFilterWhitenTeeth,
-    // AI 祛瑕疵（默认0.0，关闭；v2.5.07+）
-    PFBeautyFilterFleckFlawClean,
-    // 皮肤细节纹理
-    PFBeautyFilterSkinDetailTexture,
-    // 皮肤细节清晰柔光
-    PFBeautyFilterSkinDetailClarity,
-    // 皮肤细节高光柔光
-    PFBeautyFilterSkinDetailHighlight,
-    // 皮肤细节水光
-    PFBeautyFilterSkinDetailWaterGlow,
-    // 皮肤细节哑光
-    PFBeautyFilterSkinDetailMatte,
-} PFBeautyFiterType;
+    SMPixelFree *engine = [[SMPixelFree alloc] initWithProcessContext:context
+                                                    srcFilterPath:modelPath
+                                                         authFile:licensePath];
+    if (engine) {
+        [engine setDetectMode:PF_FACE_DETECT_MODE_VIDEO];
+        float smoothing = 0.5f;
+        [engine pixelFreeSetBeautyFilterParam:PFBeautyFilterTypeFaceBlurStrength
+                                       value:&smoothing];
+    }
+    [EAGLContext setCurrentContext:previous];
+    return engine;
+}
 ```
 
-## ✨ 皮肤细节与肤色修改
+将返回的实例保存在业务对象的强引用属性中，整个会话复用。实例创建成功不代表所有模块均已授权；配置或处理后检查 `getLastErrorCode`，独立功能还需检查其返回值。
 
-- 皮肤细节通过 `pixelFreeSetBeautyFilterParam:value:` 设置，包含纹理、清晰柔光、高光柔光、水光、哑光，参数范围 0.0 ~ 1.0。
-- 肤色修改通过 `pixelFreeSetSkinToneFilter:` 设置，肤色类型为自然、白皙、粉白、小麦色、美黑，支持肤色程度 `intensity` 和冷/热色温 `coldWarmIntensity` 调节。
-- 肤色修改使用前需要加载 `skin_src.bundle`，类型为 `PFSrcTypeSkinSrc`；未加载时接口返回 -2，并在 SDK 内部打印提示。
-- 皮肤细节和肤色修改共用授权位 `authTypeSkinDetail`（值 512）。
+## 3. 处理相机帧
 
-## 💄 美妆功能说明
+常规 buffer 入口接受 BGRA 和双平面 NV12 `CVPixelBufferRef`。旋转参数使用 `PFRotationMode0/90/180/270`，应与输入图像方向匹配。调用会回写输入像素，返回时输出可用；需要保留原图时先创建工作副本。
 
-### 美妆部位类型
+```objective-c++
+int ProcessVideoFrame(SMPixelFree *engine, CVPixelBufferRef pixelBuffer,
+                      PFRotationMode rotation) {
+    if (!engine || !pixelBuffer) return -1;
+    EAGLContext *previous = [EAGLContext currentContext];
+    if (![EAGLContext setCurrentContext:engine.glContext]) return -1;
+    int texture = [engine processWithBuffer:pixelBuffer rotationMode:rotation];
+    int error = [engine getLastErrorCode];
+    if (texture < 0 || error != 0) {
+        NSLog(@"PixelFree render=%d, lastError=%d", texture, error);
+    }
+    [EAGLContext setCurrentContext:previous];
+    return texture;
+}
+```
 
-美妆支持以下部位，可通过 `pixelFreeSetMakeupPart:degree:` 方法单独调节：
+这里的 `int` 返回值是纹理 ID 或负错误值，不是统一的“0 成功”状态码。示例中的 `-1` 也用于应用侧参数／上下文检查失败。若后续只使用回写后的 CPU 像素，无需使用纹理 ID。
 
-- **眉毛** (`PFMakeupPartBrow`): 调节眉毛颜色和形状
-- **腮红** (`PFMakeupPartBlusher`): 调节腮红颜色和强度
-- **眼影** (`PFMakeupPartEyeShadow`): 调节眼影颜色和效果
-- **眼线** (`PFMakeupPartEyeLiner`): 调节眼线粗细和颜色
-- **睫毛** (`PFMakeupPartEyeLash`): 调节睫毛长度和浓密程度
-- **唇彩** (`PFMakeupPartLip`): 调节唇色和光泽度
-- **高光** (`PFMakeupPartHighlight`): 调节高光位置和强度
-- **阴影** (`PFMakeupPartShadow`): 调节阴影位置和强度
-- **粉底** (`PFMakeupPartFoundation`): 调节粉底颜色和遮瑕度
+在相机回调外异步处理时，应用必须在入队前持有 `CVPixelBufferRef`，完成后释放，并避免采集端与处理端同时改写同一帧。不要阻塞主线程执行逐帧处理。
 
-### 美妆加载方式
+### 直接处理已有纹理
 
-1. **Bundle 方式**：推荐使用，性能更好
-   - 将美妆资源打包为 `.bundle` 文件
-   - 使用 `createBeautyItemFormBundleKey:data:size:` 加载
+在 `engine.glContext` 当前有效的队列上调用 `processWithTexture:width:height:rotation:`。该接口原位处理输入纹理，成功返回同一纹理 ID，不进行 CPU 输出读回。纹理必须在该上下文可访问；其他图形 API 或不共享上下文的纹理不能只传 ID 使用。
 
-2. **JSON 配置方式**：适合动态配置
-   - 使用 JSON 文件配置美妆参数
-   - 使用 `pixelFreeSetMakeupWithJsonPath:` 加载
+## 4. 加载可选资源
 
-### 美妆程度调节
+在与渲染相同的串行队列、有效 GL 上下文中加载。下例先检查资源内容和长度，再调用当前带类型参数的加载方法。
 
-- 程度值范围：0.0 ~ 1.0
-- 与配置中的程度值叠乘，例如：配置中为 0.5，设置 degree 为 0.8，最终效果为 0.5 × 0.8 = 0.4
-- 可在加载美妆后随时调节各部位程度
+```objective-c++
+#include <limits.h>
 
-## 💡 使用建议
+BOOL LoadEffectBundle(SMPixelFree *engine, NSString *path, PFSrcType type) {
+    if (!engine || path.length == 0) return NO;
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    if (data.length == 0 || data.length > INT_MAX) return NO;
+    [engine createBeautyItemFormBundleKey:type
+                                    data:(void *)data.bytes
+                                    size:(int)data.length];
+    return [engine getLastErrorCode] == 0;
+}
+```
 
-1. **性能优化**
-   - 建议在后台线程进行图像处理
-   - 适当调整美颜参数，避免过度处理
-   - 注意内存管理，及时释放资源
+例如将人体资源与 `PFSrcTypeHumanProcessor` 配对，将肤色资源与 `PFSrcTypeSkinSrc` 配对。加载 API 返回 `void`；上面的布尔值是应用对最近错误码的检查，不是 SDK 的原始返回值。
 
-2. **参数调节**
-   - 所有参数范围均为 0.0 ~ 1.0
-   - 建议从较小值开始调节
-   - 注意参数间的相互影响
+## 5. 开启调色与图片编辑
 
-3. **美妆使用**
-   - 建议使用 bundle 方式加载美妆，性能更优
-   - 美妆资源文件较大，注意内存管理
-   - 切换美妆前建议先调用 `clearMakeup` 清除之前的美妆效果
+专业调色通过一个 `PFColorGradingParams` 配置，随下一次正常处理自动应用，不需要另外串联一次美颜处理。
 
-4. **常见问题**
-   - 确保授权文件正确配置
-   - 检查资源文件路径是否正确
-   - 注意内存使用和性能监控
+```objective-c++
+int ApplyGrading(SMPixelFree *engine) {
+    PFColorGradingParams params;
+    PF_initColorGradingParams(&params);
+    params.contrast = 0.1f;
+    params.temperature = 0.05f;
+    return [engine pixelFreeSetColorGrading:&params];
+}
+```
 
-## 📝 注意事项
+该设置接口返回 `0` 成功或负错误码。复原调色调用 `pixelFreeResetColorGrading`。
 
-1. 请确保正确配置授权文件
-2. 注意资源文件的正确引入
-3. 建议在真机上进行测试
-4. 注意内存管理和性能优化
+图片场景有两种接法：
 
-## 🔗 相关资源
+| 场景 | 接入方式 |
+| :--- | :--- |
+| 全图统一参数 | `setDetectMode:PF_FACE_DETECT_MODE_IMAGE`；每次从原图副本调用 `processWithBuffer:rotationMode:`，换图或改变方向时 `resetDetectState` |
+| 逐人脸／逐人体编辑 | 先 `detectFacesWithBuffer:rotationMode:`／`detectBodiesWithBuffer:rotationMode:` 获取快照，再传入逐人配置渲染；换源图、裁剪或变形后重新检测 |
 
-- [示例代码](https://github.com/uu-code007/PixelFreeEffects/tree/master/SMBeautyEngine_iOS)
+需要 `UIImage` 便捷入口时使用 `processWithImage:rotationMode:`。多人快照、独立分割和仿色的完整示例见 [API 文档](./api_iOS.md)，不要把实时检测框接口当成独立快照查询接口。
+
+## 6. 生命周期与错误处理
+
+- 停止采集或提交帧后，等待已入队操作完成，再在引擎所属处理队列与 GL 上下文中释放强引用。`SMPixelFree` 没有公开的 Objective-C `release()` 方法；ARC 负责对象释放。
+- 不同线程不能同时把同一个 GL 上下文设为当前并执行渲染。参数、资源切换与销毁必须和帧处理串行。
+- 帧缓冲、配置数组和素材路径对应的数据必须在同步调用返回前保持有效且不被修改。
+- 人脸／人体快照需要在渲染结束前持有；iOS 的关键点和 Mask 指针是借用视图，不得超出所属结果对象的生命周期。
+- 分割的 `NSError`、渲染返回的负值、调色／仿色状态码与 `getLastErrorCode` 属于不同错误通道，应分别检查。
+
+| 现象 | 优先检查 |
+| :--- | :--- |
+| 找不到头文件或类型 | Framework 搜索路径、`PixelFree` 模块名、全部配套头文件是否同步更新 |
+| 模拟器无法链接 | 当前包只含 iPhoneOS arm64，使用真机或另行获取匹配的模拟器交付包 |
+| 有画面但效果不生效 | 授权功能、资源加载、参数中性值、检测结果和最近错误码 |
+| 图像方向或遮罩叠加不正确 | 输入旋转、RAW 与方向校正后的坐标区别、显示层镜像 |
+| 滑杆反复调节后变形累积 | 是否每次都从未处理的原图生成工作副本 |
+| 分割返回错误 | 输入是否为 BGRA／全范围 NV12、请求类型是否可用、授权和资源是否满足 |
+
+## 后续阅读
+
+- [iOS API：参数、逐人编辑、分割、调色与仿色](./api_iOS.md)
+- [Android API](./api_android.md)
+- [自定义贴纸](./custom_stickers.md)
 - [常见问题](./frequently_asked_questions.md)
-- [更新日志](./release_note.md)
 
 
 

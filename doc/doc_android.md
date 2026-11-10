@@ -1,415 +1,197 @@
-# pixelFree 美颜SDK使用文档 
+# PixelFree Android 接入指南
 
-#### adroid 接入方式
+[项目概览](../README.md) · [Android API](./api_android.md) · [iOS 接入](./doc_iOS.md)
 
-1. 手动接入
+本文对照仓库当前 [lib_pixelFree.aar](../SMBeautyEngine_andriod/pixelfree_android_demo/sdk-aar/lib_pixelFree.aar) 的公开 Kotlin/Java 接口编写。示例使用 Kotlin；方法名和枚举均以当前 AAR 为准。
 
-   Demo 工程中有子工程 sdk-aar 拖入到你的项目中，并引用
+## 1. 集成交付包
 
-2. Maven 导入
+| 项目 | 当前交付说明 |
+| :--- | :--- |
+| 系统要求 | AAR 清单声明最低 API 19；[Demo](../SMBeautyEngine_andriod/pixelfree_android_demo) 为 API 21 / Android 5.0 起，应用依赖可能要求更高版本 |
+| ABI | `arm64-v8a`、`armeabi-v7a`，当前包不含 x86/x86_64 |
+| 包名 | `com.hapi.pixelfree` |
+| 图像输入 | `PFImageInput`，字段 `wigth` 为公开接口的实际拼写 |
+| 授权 | 使用匹配应用包名、平台、有效期和模块的 `pixelfreeAuth.lic` |
 
-   ```
-   implementation 'io.github.uu-code007:lib_pixelFree:2.4.9'
-   ```
+将当前 AAR 放入应用模块的 `libs` 目录，并在模块级 `build.gradle` 中声明：
 
-
-####  仅需四步，完成接入使用  
-
-1. 初始化
-
-   ```kotlin
-   mPixelFree.create()
-   // 授权
-   val authData = mPixelFree.readBundleFile(this@MainActivity, "pixelfreeAuth.lic")
-   mPixelFree.auth(this.applicationContext, authData, authData.size)
-   
-   // 设置滤镜资源
-   val face_fiter = mPixelFree.readBundleFile(this@MainActivity,"filter_model.bundle")
-   mPixelFree.createBeautyItemFormBundle( face_fiter,
-                                          face_fiter.size,
-                                          PFSrcType.PFSrcTypeFilter)
-
-   // 设置肤色修改资源
-   val skinSrc = mPixelFree.readBundleFile(this@MainActivity, "skin_src.bundle") ?: return
-   mPixelFree.createBeautyItemFormBundle(skinSrc, skinSrc.size, PFSrcType.PFSrcTypeSkinSrc)
-    
-   ```
-
-2. 美颜参数设置
-
-   ```kotlin
-   // 大眼
-   mPixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFiterTypeFace_EyeStrength, 0.5f)
-   
-   // 瘦脸
-   mPixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFiterTypeFace_thinning, 0.5f)
-   
-   // 美牙
-   mPixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFilterWhitenTeeth, 0.5f)
-
-   // AI 祛瑕疵
-   mPixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFilterFleckFlawClean, 0.6f)
-
-   // 皮肤细节水光
-   mPixelFree.pixelFreeSetBeautyFiterParam(PFBeautyFilterType.PFBeautyFilterSkinDetailWaterGlow, 0.5f)
-
-   // 肤色修改：粉白，程度 0.6，色温中性
-   mPixelFree.setSkinToneFilter(type = 2, intensity = 0.6f, coldWarmIntensity = 0.5f, enabled = true)
-   
-   // 更多参数设置...
-   ```
-
-3. 滤镜与程度
-
-   ```kotlin
-   // 滤镜类型与程度  0 ~ 1.0
-   mPixelFree.pixelFreeSetBeautyFiterParam("heibai1",0.5); 
-   ```
-
-4. 图像渲染处理，内部会内存回写
-
-   ```kotlin
-   // pixbuffer 视频数据
-   mPixelFree.processWithBuffer(pxInput)
-   ```
-
-5. 美妆功能使用（可选）
-
-   ```kotlin
-   // 方式一：通过 bundle 文件加载美妆（推荐）
-   val makeupData = mPixelFree.readBundleFile(this@MainActivity, "makeup/makeup_name.bundle")
-   mPixelFree.createBeautyItemFormBundle(makeupData, makeupData.size, PFSrcType.PFSrcTypeMakeup)
-   
-   // 方式二：通过 JSON 配置文件加载美妆 （废弃）
-   mPixelFree.setMakeupPath("makeup/makeup_config.json")
-   
-   // 设置美妆部位程度（可选，与配置叠乘）
-   mPixelFree.setMakeupPartDegree(PFMakeupPart.PFMakeupPartLip, 0.8f)
-   
-   // 清除美妆
-   mPixelFree.clearMakeup()
-   ```
-
-#### processWithBuffer 详细使用说明
-
-`processWithBuffer` 是美颜SDK的核心处理方法，用于对输入图像进行美颜处理。该方法需要传入一个 `PFImageInput` 对象，包含图像的所有必要信息。
-
-##### PFImageInput 参数详解
-
-```kotlin
-val pxInput = PFImageInput().apply {
-    // 图像尺寸
-    wigth = frame.width          // 图像宽度
-    height = frame.height        // 图像高度
-    
-    // 图像数据指针（根据format格式设置）
-    p_data0 = frame.data         // 主要数据通道（Y或RGBA）
-    p_data1 = frame.data         // 第二数据通道（UV或null）
-    p_data2 = frame.data         // 第三数据通道（通常为null）
-    
-    // 每行字节数
-    stride_0 = frame.rowStride   // 第一通道行步长
-    stride_1 = frame.rowStride   // 第二通道行步长
-    stride_2 = frame.rowStride   // 第三通道行步长
-    
-    // 图像格式
-    format = PFDetectFormat.PFFORMAT_IMAGE_RGBA  // 图像格式
-    
-    // 旋转模式
-    rotationMode = PFRotationMode.PFRotationMode90  // 图像旋转
-    
-    // 纹理ID（纹理模式下使用）
-    textureID = 0  // OpenGL纹理ID，buffer模式下为0
+```groovy
+dependencies {
+    implementation files('libs/lib_pixelFree.aar')
 }
 ```
 
-##### 支持的图像格式
+也可复用 Demo 的 `sdk-aar` 模块。只选择一种依赖方式，避免同时引用旧 Maven 包和本地 AAR。不要将旧文档中的固定 Maven 版本当作本文新版接口的交付版本。
+
+当前 AAR 内含 `filter_model.bundle`、`body_model.bundle`、`skin_src.bundle` 和原生库。应用仍需按功能调用资源加载接口，并把自己的授权文件放入 `src/main/assets`。不要在应用 assets 中保留与 AAR 同名但版本不匹配的模型。
+
+| 资源 | 对应类型／接口 |
+| :--- | :--- |
+| `pixelfreeAuth.lic` | `auth(context, data, size)` |
+| `filter_model.bundle` | `PFSrcType.PFSrcTypeFilter` |
+| `body_model.bundle` | `PFSrcType.PFSrcTypeHumanProcessor` |
+| `skin_src.bundle` | `PFSrcType.PFSrcTypeSkinSrc` |
+| 美妆 bundle | `PFSrcType.PFSrcTypeMakeup` |
+
+相机采集、权限申请、预览和编码由应用负责。发布前检查合并后的 manifest、ABI 打包结果及 AAR 自带的混淆配置是否正确应用。
+
+## 2. 最小 RGBA 处理会话
+
+下面的会话使用 SDK 管理的 GL 调度。应用在整个处理会话内复用一个对象，将帧处理放入工作队列，并将参数更新和关闭与处理操作串行化。`processRgba` 会修改传入数组；图片编辑时传入原图副本。
 
 ```kotlin
-enum class PFDetectFormat(val intType: Int) {
-    PFFORMAT_UNKNOWN(0),           // 未知格式
-    PFFORMAT_IMAGE_RGB(1),         // RGB格式
-    PFFORMAT_IMAGE_BGR(2),         // BGR格式
-    PFFORMAT_IMAGE_RGBA(3),        // RGBA格式（推荐）
-    PFFORMAT_IMAGE_BGRA(4),        // BGRA格式
-    PFFORMAT_IMAGE_ARGB(5),        // ARGB格式
-    PFFORMAT_IMAGE_ABGR(6),        // ABGR格式
-    PFFORMAT_IMAGE_GRAY(7),        // 灰度图
-    PFFORMAT_IMAGE_YUV_NV12(8),    // YUV NV12格式
-    PFFORMAT_IMAGE_YUV_NV21(9),    // YUV NV21格式
-    PFFORMAT_IMAGE_YUV_I420(10),   // YUV I420格式
-    PFFORMAT_IMAGE_TEXTURE(11),    // OpenGL纹理格式
-}
-```
+import android.content.Context
+import com.hapi.pixelfree.*
+import java.io.Closeable
 
-##### 旋转模式（用于人脸检测方向）
+class BeautySession(context: Context) : Closeable {
+    private val engine = PixelFree()
+    private var closed = false
 
-```kotlin
-enum class PFRotationMode(val intType: Int) {
-    PFRotationMode0(0),    // 0度旋转
-    PFRotationMode90(1),   // 90度旋转
-    PFRotationMode180(2),  // 180度旋转
-    PFRotationMode270(3),  // 270度旋转
-}
-```
-
-##### 使用示例
-
-**1. RGBA格式图像处理（推荐）**
-
-```kotlin
-// 摄像头实时处理示例
-override fun onProcessFrame(frame: VideoFrame): VideoFrame {
-    if (mPixelFree.isCreate()) {
-        val pxInput = PFImageInput().apply {
-            wigth = frame.width
-            height = frame.height
-            p_data0 = frame.data
-            p_data1 = frame.data
-            p_data2 = frame.data
-            stride_0 = frame.rowStride
-            stride_1 = frame.rowStride
-            stride_2 = frame.rowStride
-            format = PFDetectFormat.PFFORMAT_IMAGE_RGBA
-            rotationMode = PFRotationMode.PFRotationMode90
+    init {
+        engine.create()
+        try {
+            check(engine.isCreate()) { "PixelFree instance was not created" }
+            val license = requireNotNull(engine.readBundleFile(context, "pixelfreeAuth.lic"))
+            engine.auth(context, license, license.size)
+            val model = requireNotNull(engine.readBundleFile(context, "filter_model.bundle"))
+            engine.createBeautyItemFormBundle(model, model.size, PFSrcType.PFSrcTypeFilter)
+            engine.setDetectMode(PFFaceDetectMode.PF_FACE_DETECT_MODE_VIDEO)
+            engine.pixelFreeSetBeautyFiterParam(
+                PFBeautyFilterType.PFBeautyFilterTypeFaceBlurStrength, 0.5f
+            )
+        } catch (failure: Throwable) {
+            engine.release()
+            throw failure
         }
-        
-        // 执行美颜处理
-        mPixelFree.processWithBuffer(pxInput)
-        // 获取处理后的data,源数据会被覆盖，
-        pxInput.p_data0;        
     }
-    return super.onProcessFrame(frame)
+
+    fun processRgba(
+        pixels: ByteArray, width: Int, height: Int,
+        rotation: PFRotationMode = PFRotationMode.PFRotationMode0
+    ) {
+        check(!closed)
+        require(width > 0 && height > 0)
+        require(pixels.size.toLong() == width.toLong() * height * 4)
+        val input = PFImageInput().also {
+            it.wigth = width
+            it.height = height
+            it.p_data0 = pixels
+            it.stride_0 = width * 4
+            it.format = PFDetectFormat.PFFORMAT_IMAGE_RGBA
+            it.rotationMode = rotation
+        }
+        engine.processWithBuffer(input)
+        val error = engine.getLastErrorCode()
+        check(error == 0 && input.textureID > 0) { "PixelFree error: $error" }
+    }
+
+    override fun close() {
+        if (!closed) {
+            engine.release()
+            closed = true
+        }
+    }
 }
 ```
 
-**2. 静态图像处理**
+`processWithBuffer` 返回 `Unit`，不能把它赋给纹理 ID 或状态码变量。输出写入输入平面，同时更新 `input.textureID`；该纹理只能在正确的 GL 上下文中使用。`isCreate()` 只表示实例存在，不表示授权验证或所有模块开通成功。
+
+示例用 `check` 展示失败检测。业务中应根据错误码决定提示、降级、重试或停止处理，而不是让异常直接终止相机页面。
+
+## 3. YUV 输入与行步长
+
+以紧凑 NV21 为例，构造独立的 Y、VU 平面：
 
 ```kotlin
-// 处理Bitmap图像
-val pxInput = PFImageInput().apply {
-    wigth = bitmap.width
-    height = bitmap.height
-    p_data0 = rgbaData        // RGBA字节数组
-    p_data1 = null
-    p_data2 = null
-    stride_0 = rowBytes       // 每行字节数 = width * 4
-    stride_1 = 0
-    stride_2 = 0
-    textureID = 0
-    format = PFDetectFormat.PFFORMAT_IMAGE_RGBA
-    rotationMode = PFRotationMode.PFRotationMode0
+fun makeNv21Input(
+    bytes: ByteArray, width: Int, height: Int, rotation: PFRotationMode
+): PFImageInput {
+    require(width > 0 && height > 0 && width % 2 == 0 && height % 2 == 0)
+    val ySize = width.toLong() * height
+    require(bytes.size.toLong() == ySize + ySize / 2)
+    val yEnd = ySize.toInt()
+    return PFImageInput().also {
+        it.wigth = width
+        it.height = height
+        it.p_data0 = bytes.copyOfRange(0, yEnd)
+        it.p_data1 = bytes.copyOfRange(yEnd, bytes.size)
+        it.stride_0 = width
+        it.stride_1 = width
+        it.format = PFDetectFormat.PFFORMAT_IMAGE_YUV_NV21
+        it.rotationMode = rotation
+    }
 }
-
-mPixelFree.processWithBuffer(pxInput)
-
-// 获取处理后的data,源数据会被覆盖，
-   pxInput.p_data0; 
 ```
 
-**3. YUV格式处理**
+将结果传给 `processWithBuffer`。由于此函数复制了平面，输出在返回对象的 `p_data0`／`p_data1` 中，不会自动写回原始 `bytes`；若编码器需要连续 NV21，请按输出平面重新拼接。
+
+相机提供的 `YUV_420_888` 可能含非紧凑行步长与像素步长，不能直接当作上例的 NV21。应先按采集 API 的实际布局转换，或使用经过验证的纹理路径。`PFDetectFormat` 中有某个枚举值不代表所有处理入口都支持它；独立分割的格式限制见 [API](./api_android.md)。
+
+## 4. 接入应用已有的 GL 渲染线程
+
+对已有 EGL 上下文的预览／RTC 管线，选择一套一致的线程模式：
+
+| 模式 | 适用方式 |
+| :--- | :--- |
+| SDK 调度 | `create()` 与普通处理接口；SDK 负责将相关操作调度到其 GL 队列 |
+| 绑定应用渲染队列 | 用 `setRenderThreadDispatcher(ownerThread, dispatcher)` 绑定真实渲染线程；普通接口通过该队列运行 |
+| 调用方直接执行 | 当前线程已有有效 EGL 上下文，使用 `createOnCurrentGLThread()`、`processWithBufferOnCurrentGLThread(...)` 及对应直接调用方法 |
+
+下面函数只用于已经创建、授权、加载资源的“调用方直接执行”模式，输入必须是在当前 GL 上下文可访问的二维纹理。
 
 ```kotlin
-// YUV NV21格式处理
-val pxInput = PFImageInput().apply {
-    wigth = width
-    height = height
-    
-    // YUV数据分离
-    val ySize = width * height
-    val uvSize = width * height / 2
-    val yData = ByteArray(ySize)
-    val uvData = ByteArray(uvSize)
-    
-    System.arraycopy(yuvData, 0, yData, 0, ySize)
-    System.arraycopy(yuvData, ySize, uvData, 0, uvSize)
-    
-    p_data0 = yData
-    p_data1 = uvData
-    p_data2 = null
-    stride_0 = width
-    stride_1 = width
-    stride_2 = 0
-    format = PFDetectFormat.PFFORMAT_IMAGE_YUV_NV21
-    rotationMode = PFRotationMode.PFRotationMode90
-}
-
-mPixelFree.processWithBuffer(pxInput)
-// 获取处理后的data,源数据会被覆盖，
-pxInput.p_data0;
-pxInput.p_data1;
-```
-
-**4. OpenGL纹理处理**
-
-```kotlin
-// 纹理模式处理
-val pxInput = PFImageInput().apply {
-    wigth = width
-    height = height
-    p_data0 = null
-    p_data1 = null
-    p_data2 = null
-    stride_0 = 0
-    stride_1 = 0
-    stride_2 = 0
-    format = PFDetectFormat.PFFORMAT_IMAGE_TEXTURE
-    rotationMode = PFRotationMode.PFRotationMode0
-    textureID = inputTextureID  // 输入纹理ID
-}
-
-mPixelFree.processWithBuffer(pxInput)
-val outputTextureID = pxInput.textureID  // 输出纹理ID
-```
-
-##### 注意事项
-
-1. **数据格式匹配**：确保 `format` 与实际的图像数据格式一致
-2. **内存管理**：处理过程中SDK会修改输入数据，注意数据备份
-3. **OpenGL上下文**：纹理模式需要在正确的OpenGL上下文中调用
-4. **性能优化**：建议在子线程中处理，避免阻塞UI线程
-5. **错误处理**：检查 `mPixelFree.isCreate()` 确保SDK已正确初始化
-
-##### 返回值说明
-
-`processWithBuffer` 方法执行后，`pxInput.textureID` 会被设置为处理后的OpenGL纹理ID，可用于后续渲染显示。
-
-   
-
-#### 设置美颜参数说明,参数范围 （0.0~1.0）
-
-```java
-/* 美颜类型 */
-enum class PFBeautyFiterType(val intType: Int) {
-    //大眼 （默认0.0，关闭）
-    PFBeautyFiterTypeFace_EyeStrength(0),
-    //瘦脸（默认0.0，关闭）
-    PFBeautyFiterTypeFace_thinning(1),
-    //窄脸（默认0.0，关闭）
-    PFBeautyFiterTypeFace_narrow(2),
-    //下巴 （默认0.5，两个方向调节）
-    PFBeautyFiterTypeFace_chin(3),
-    //v脸（默认0.0，关闭）
-    PFBeautyFiterTypeFace_V(4),
-    //small（默认0.0，关闭）
-    PFBeautyFiterTypeFace_small(5),
-    //鼻子（默认0.0，关闭）
-    PFBeautyFiterTypeFace_nose(6),
-    //额头 （默认0.5，两个方向调节）
-    PFBeautyFiterTypeFace_forehead(7),
-    //嘴巴 （默认0.5，两个方向调节）
-    PFBeautyFiterTypeFace_mouth(8),
-    //人中 （默认0.5，两个方向调节）
-    PFBeautyFiterTypeFace_philtrum(9),
-    //长鼻 （默认0.5，两个方向调节）
-    PFBeautyFiterTypeFace_long_nose(10),
-    //眼距 （默认0.5，两个方向调节）
-    PFBeautyFiterTypeFace_eye_space(11),
-    //微笑嘴角（默认0.0，关闭）
-    PFBeautyFiterTypeFace_smile(12),
-    //旋转眼睛 （默认0.5，两个方向调节）
-    PFBeautyFiterTypeFace_eye_rotate(13),
-    //开眼角（默认0.0，关闭）
-    PFBeautyFiterTypeFace_canthus(14),
-    //磨皮（默认0.0，关闭）
-    PFBeautyFiterTypeFaceBlurStrength(15),
-    //美白（默认0.0，关闭）
-    PFBeautyFiterTypeFaceWhitenStrength(16),
-    //红润（默认0.0，关闭）
-    PFBeautyFiterTypeFaceRuddyStrength(17),
-    //锐化（默认0.0，关闭）
-    PFBeautyFiterTypeFaceSharpenStrength(18),
-    //新美白算法（默认0.0，关闭）
-    PFBeautyFiterTypeFaceM_newWhitenStrength(19),
-    //画质增强（默认0.0，关闭）
-    PFBeautyFiterTypeFaceH_qualityStrength(20),
-    //亮眼（默认0.0，关闭）
-    PFBeautyFiterTypeFaceEyeBrighten(21),
-    //滤镜类型（默认 origin，原图）
-    PFBeautyFiterName(22),
-    //滤镜强度
-    PFBeautyFiterStrength(23),
-    // 2D贴纸 
-    PFBeautyFiterSticker2DFilter(24),
-    // 一键美颜
-    PFBeautyFiterTypeOneKey(25),
-    // 扩展字段
-    PFBeautyFiterExtend(26),
-    // 祛法令纹（默认0.0，关闭）
-    PFBeautyFilterNasolabial(27),
-    // 祛黑眼圈（默认0.0，关闭）
-    PFBeautyFilterBlackEye(28),
-    // 美牙（默认0.0，关闭）
-    PFBeautyFilterWhitenTeeth(29),
-    // AI 祛瑕疵（默认0.0，关闭；v2.5.07+）
-    PFBeautyFilterFleckFlawClean(48),
-    // 皮肤细节纹理
-    PFBeautyFilterSkinDetailTexture(49),
-    // 皮肤细节清晰柔光
-    PFBeautyFilterSkinDetailClarity(50),
-    // 皮肤细节高光柔光
-    PFBeautyFilterSkinDetailHighlight(51),
-    // 皮肤细节水光
-    PFBeautyFilterSkinDetailWaterGlow(52),
-    // 皮肤细节哑光
-    PFBeautyFilterSkinDetailMatte(53),
+fun processCurrentTexture(engine: PixelFree, texture: Int, width: Int, height: Int): Int {
+    require(texture > 0 && width > 0 && height > 0)
+    val input = PFImageInput().also {
+        it.wigth = width
+        it.height = height
+        it.textureID = texture
+        it.format = PFDetectFormat.PFFORMAT_IMAGE_TEXTURE
+        it.rotationMode = PFRotationMode.PFRotationMode0
+    }
+    engine.processWithBufferToTextureOnCurrentGLThread(input)
+    val error = engine.getLastErrorCodeOnCurrentGLThread()
+    check(error == 0 && input.textureID > 0) { "PixelFree error: $error" }
+    return input.textureID
 }
 ```
 
-## ✨ 皮肤细节与肤色修改
+`ToTexture` 路径输出 SDK 纹理，不执行最终 CPU／输入纹理回写或最终 GPU 等待。调用方必须在同一上下文中、下一次处理或 GL 资源释放前消费该纹理，跨上下文使用还需正确共享和同步。它不承诺检测阶段完全没有读回开销。需要常规回写时使用不带 `ToTexture` 的入口。
 
-- 皮肤细节通过 `pixelFreeSetBeautyFiterParam()` 设置，包含纹理、清晰柔光、高光柔光、水光、哑光，参数范围 0.0 ~ 1.0。
-- 肤色修改通过 `setSkinToneFilter(type, intensity, coldWarmIntensity, enabled)` 设置，`type` 取值：0 自然、1 白皙、2 粉白、3 小麦色、4 美黑。
-- 肤色修改使用前需要加载 `skin_src.bundle`，类型为 `PFSrcType.PFSrcTypeSkinSrc`；未加载时 native 层返回 -2，并在 SDK 内部打印提示。
-- 皮肤细节和肤色修改共用授权位 `authTypeSkinDetail`（值 512）。
+不要把相机 OES 纹理、Vulkan 句柄或其他上下文的纹理 ID 当作普通二维纹理直接使用。切换自有离屏 GL 与应用 GL 时，结合 `prepareForExternalGL()`、`releaseGLResources()` 管理旧资源；详见 [线程与生命周期 API](./api_android.md)。
 
-## 💄 美妆功能说明
+## 5. 扩展功能与图片工作流
 
-### 美妆部位类型
+| 需求 | 当前入口 |
+| :--- | :--- |
+| 内置滤镜 | `pixelFreeSetFilterParam(name, intensity)` |
+| 外部 LUT | `setExternalFilter(path, intensity, enabled)` |
+| 专业调色 | `setColorGrading(PFColorGradingParams(...))`；随下一次正常处理自动应用 |
+| 肤色 | 加载 `skin_src.bundle` 后 `setSkinToneFilter(...)` |
+| 美体 | 加载 `body_model.bundle` 后 `pixelFreeSetBodyBeautyParam(...)` |
+| 独立检测和逐人编辑 | `detectFacesWithBuffer(...)`、`detectBodiesWithBuffer(...)`、`processWithBufferAndEffects(...)` |
+| 智能分割 | 查询 `getSegmentationAvailability()` 后调用 `segmentWithBuffer(...)` |
+| 参考图仿色 | `processColorTransfer(...)`；独立于普通美颜／调色 |
 
-美妆支持以下部位，可通过 `setMakeupPartDegree` 方法单独调节：
+图片统一调节使用 `PF_FACE_DETECT_MODE_IMAGE`，每次从原图副本渲染；换图或方向变化后 `resetDetectState()`。逐人编辑先检测并保留快照，在同一引擎中从原图工作副本重渲染。人脸／人体快照用完调用 `close()`，再释放引擎；不要为每次滑杆更新重新创建整个引擎。
 
-- **眉毛** (`PFMakeupPart.PFMakeupPartBrow`): 调节眉毛颜色和形状
-- **腮红** (`PFMakeupPart.PFMakeupPartBlusher`): 调节腮红颜色和强度
-- **眼影** (`PFMakeupPart.PFMakeupPartEyeShadow`): 调节眼影颜色和效果
-- **眼线** (`PFMakeupPart.PFMakeupPartEyeLiner`): 调节眼线粗细和颜色
-- **睫毛** (`PFMakeupPart.PFMakeupPartEyeLash`): 调节睫毛长度和浓密程度
-- **唇彩** (`PFMakeupPart.PFMakeupPartLip`): 调节唇色和光泽度
-- **高光** (`PFMakeupPart.PFMakeupPartHighlight`): 调节高光位置和强度
-- **阴影** (`PFMakeupPart.PFMakeupPartShadow`): 调节阴影位置和强度
-- **粉底** (`PFMakeupPart.PFMakeupPartFoundation`): 调节粉底颜色和遮瑕度
+## 6. 结束会话与排查
 
-### 美妆加载方式
+先停止提交新帧，排空业务队列，再关闭快照和引擎。直接 GL 模式使用 `releaseOnCurrentGLThread()`；仅重建图形资源时使用 `releaseGLResourcesOnCurrentGLThread()`，保留实例、授权、资源和参数。需要等待 SDK 调度返回的调用，不应与正在等待它的渲染线程相互阻塞。
 
-1. **Bundle 方式**：推荐使用，性能更好
-   - 将美妆资源打包为 `.bundle` 文件
-   - 使用 `createBeautyItemFormBundle` 加载，类型为 `PFSrcType.PFSrcTypeMakeup`
+| 现象 | 优先检查 |
+| :--- | :--- |
+| 找不到方法或枚举 | 是否实际引用当前 AAR，是否残留旧 Maven 依赖，是否误写 `Filter`／`Fiter` |
+| 原生库无法加载 | 应用 ABI 是否与 AAR 中的 arm64-v8a／armeabi-v7a 匹配 |
+| 无效果或被停止渲染 | 授权、资源、检测结果和 `getLastErrorCode()` |
+| 花屏／颜色偏差 | RGBA/BGRA 顺序、YUV 平面顺序、stride、旋转和纹理类型 |
+| 黑屏或偶发纹理错误 | GL 上下文、线程归属、输出纹理生命周期和跨上下文同步 |
+| 图片越调越变形 | 是否把已经处理的结果再次作为输入 |
+| 分割失败 | 可用类型位、对应授权、CPU 平面和支持格式，读取异常的 `errorCode` |
 
-2. **JSON 配置方式**：适合动态配置
-   - 使用 JSON 文件配置美妆参数
-   - 使用 `setMakeupPath` 加载
-
-### 美妆程度调节
-
-- 程度值范围：0.0 ~ 1.0
-- 与配置中的程度值叠乘，例如：配置中为 0.5，设置 degree 为 0.8，最终效果为 0.5 × 0.8 = 0.4
-- 可在加载美妆后随时调节各部位程度
-- 支持批量设置所有部位程度
-
-### 使用建议
-
-1. **性能优化**
-   - 建议使用 bundle 方式加载美妆，性能更优
-   - 美妆资源文件较大，注意内存管理
-   - 切换美妆前建议先调用 `clearMakeup` 清除之前的美妆效果
-
-2. **资源管理**
-   - 美妆 bundle 文件通常较大，建议按需加载
-   - 及时释放不需要的美妆资源
-
-3. **用户体验**
-   - 提供美妆预览功能，让用户选择合适的美妆效果
-   - 支持美妆部位独立调节，提供更灵活的个性化选项
+更多参数、快照、分割与仿色示例见 [Android API](./api_android.md)。
 
 
 
